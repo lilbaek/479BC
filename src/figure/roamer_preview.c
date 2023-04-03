@@ -2,7 +2,6 @@
 
 #include "building/industry.h"
 #include "building/properties.h"
-#include "building/rotation.h"
 #include "core/config.h"
 #include "figure/figure.h"
 #include "figure/movement.h"
@@ -10,6 +9,7 @@
 #include "map/building.h"
 #include "map/grid.h"
 #include "map/road_access.h"
+#include "building/rotation.h"
 
 #include <string.h>
 
@@ -188,7 +188,7 @@ static int determine_road_access(int x, int y, int size, building_type type, map
         case BUILDING_WAREHOUSE:
             building_orientation = building_rotation_get_building_orientation(building_rotation_get_rotation());
             return map_has_road_access_rotation(building_orientation, x, y, size, road) ||
-                map_has_road_access_rotation(building_orientation, x, y, 3, road);
+                   map_has_road_access_rotation(building_orientation, x, y, 3, road);
         case BUILDING_HIPPODROME:
             building_orientation = building_rotation_get_building_orientation(building_rotation_get_rotation());
             return map_has_road_access_hippodrome_rotation(x, y, road, building_orientation);

@@ -20,6 +20,8 @@
 #include "scenario/property.h"
 #include "translation/translation.h"
 #include "widget/city_draw_highway.h"
+#include "assets/assets.h"
+#include "core/textures.h"
 
 static int show_building_religion(const building *b)
 {
@@ -441,7 +443,7 @@ static int terrain_on_water_overlay(void)
 {
     return
         TERRAIN_TREE | TERRAIN_ROCK | TERRAIN_WATER | TERRAIN_SHRUB | TERRAIN_MEADOW |
-        TERRAIN_GARDEN | TERRAIN_ROAD | TERRAIN_AQUEDUCT | TERRAIN_ELEVATION |
+        TERRAIN_GARDEN | TERRAIN_ROAD | TERRAIN_ELEVATION |
         TERRAIN_ACCESS_RAMP | TERRAIN_RUBBLE | TERRAIN_HIGHWAY;
 }
 
@@ -457,7 +459,7 @@ static int draw_footprint_water(int x, int y, float scale, int grid_offset)
         image_draw_isometric_footprint_from_draw_tile(map_image_at(grid_offset), x, y, 0, scale);
     } else if (map_terrain_is(grid_offset, TERRAIN_WALL)) {
         // display grass
-        int image_id = image_group(GROUP_TERRAIN_GRASS_1) + (map_random_get(grid_offset) & 7);
+        int image_id = assets_get_image_id(TEXTURE_TERRAIN_NAME, TEXTURE_GRASS_1) + (map_random_get(grid_offset) & 7);
         image_draw_isometric_footprint_from_draw_tile(image_id, x, y, 0, scale);
     } else if (is_building) {
         building *b = building_get(map_building_at(grid_offset));
@@ -482,7 +484,7 @@ static int draw_footprint_water(int x, int y, float scale, int grid_offset)
         }
         city_with_overlay_draw_building_footprint(x, y, grid_offset, image_offset);
     } else {
-        int image_id = image_group(GROUP_TERRAIN_OVERLAY);
+        int image_id = assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_OVERLAY);
         switch (map_terrain_get(grid_offset) & (TERRAIN_RESERVOIR_RANGE | TERRAIN_FOUNTAIN_RANGE)) {
             case TERRAIN_RESERVOIR_RANGE | TERRAIN_FOUNTAIN_RANGE:
                 image_id += 27;
@@ -556,16 +558,16 @@ static void blend_color_to_footprint(int x, int y, int size, color_t color, floa
 
     for (int step = 1; step <= total_steps; step++) {
         if (tiles % 2) {
-            image_draw(image_group(GROUP_TERRAIN_FLAT_TILE), x, y, color, scale);
+            image_draw(assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_FLAT_TILE), x, y, color, scale);
         }
-        int y_offset = 15 + 15 * (tiles % 2);
+        int y_offset = HALF_TILE_HEIGHT_PIXELS + HALF_TILE_HEIGHT_PIXELS * (tiles % 2);
 
         for (int i = 1; i <= tiles / 2; i++) {
-            image_draw(image_group(GROUP_TERRAIN_FLAT_TILE), x, y - y_offset, color, scale);
-            image_draw(image_group(GROUP_TERRAIN_FLAT_TILE), x, y + y_offset, color, scale);
-            y_offset += 30;
+            image_draw(assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_FLAT_TILE), x, y - y_offset, color, scale);
+            image_draw(assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_FLAT_TILE), x, y + y_offset, color, scale);
+            y_offset += HALF_TILE_WIDTH_PIXELS;
         }
-        x += 30;
+        x += HALF_TILE_WIDTH_PIXELS;
         step < size ? tiles++ : tiles--;
     }
 }
@@ -667,9 +669,9 @@ static int draw_footprint_desirability(int x, int y, float scale, int grid_offse
         if (map_property_is_draw_tile(grid_offset)) {
             image_draw_isometric_footprint_from_draw_tile(map_image_at(grid_offset), x, y, color_mask, scale);
         }
-    } else if (map_terrain_is(grid_offset, TERRAIN_AQUEDUCT | TERRAIN_WALL)) {
+    } else if (map_terrain_is(grid_offset, TERRAIN_WALL)) {
         // display empty land/grass
-        int image_id = image_group(GROUP_TERRAIN_GRASS_1) + (map_random_get(grid_offset) & 7);
+        int image_id = assets_get_image_id(TEXTURE_TERRAIN_NAME, TEXTURE_GRASS_1) + (map_random_get(grid_offset) & 7);
         image_draw_isometric_footprint_from_draw_tile(image_id, x, y, color_mask, scale);
     } else if (map_terrain_is(grid_offset, TERRAIN_BUILDING)) {
         if (has_deleted_building(grid_offset)) {
@@ -699,7 +701,7 @@ static int draw_top_desirability(int x, int y, float scale, int grid_offset)
         if (map_property_is_draw_tile(grid_offset)) {
             image_draw_isometric_top_from_draw_tile(map_image_at(grid_offset), x, y, color_mask, scale);
         }
-    } else if (map_terrain_is(grid_offset, TERRAIN_AQUEDUCT | TERRAIN_WALL)) {
+    } else if (map_terrain_is(grid_offset, TERRAIN_WALL)) {
         // grass, no top needed
     } else if (map_terrain_is(grid_offset, TERRAIN_BUILDING)) {
         if (has_deleted_building(grid_offset)) {

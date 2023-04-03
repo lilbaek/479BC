@@ -3,7 +3,7 @@
 
 #include "core/buffer.h"
 
-// TODO get rid of these
+// TODO get rid of these?
 #define VIEW_X_MAX 165
 #define VIEW_Y_MAX 325
 

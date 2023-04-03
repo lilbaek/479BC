@@ -248,14 +248,3 @@ void building_construction_warning_check_food_stocks(building_type type)
         }
     }
 }
-
-void building_construction_warning_check_reservoir(building_type type)
-{
-    if (!has_warning && type == BUILDING_RESERVOIR) {
-        if (building_count_active(BUILDING_RESERVOIR)) {
-            show(WARNING_CONNECT_TO_RESERVOIR);
-        } else {
-            show(WARNING_PLACE_RESERVOIR_NEXT_TO_WATER);
-        }
-    }
-}

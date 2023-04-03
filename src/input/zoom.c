@@ -131,13 +131,10 @@ int zoom_update_value(int *zoom, int max, pixel_offset *camera_position)
         speed_clear(&data.step);
         data.restore = 0;
         int current_zoom = data.touch.current_zoom;
-        if (current_zoom > 90 && current_zoom < 110) {
-            current_zoom = 100;
-        }
         step = current_zoom - *zoom;
     }
 
-    int result = calc_bound(*zoom + step, 50, max);
+    int result = calc_bound(*zoom + step, 180, max);
     if (*zoom == result) {
         speed_clear(&data.step);
         data.delta = 0;

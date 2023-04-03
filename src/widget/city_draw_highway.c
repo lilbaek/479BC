@@ -4,7 +4,6 @@
 #include "building/building.h"
 #include "city/view.h"
 #include "graphics/image.h"
-#include "map/aqueduct.h"
 #include "map/building.h"
 #include "map/grid.h"
 #include "map/random.h"
@@ -84,10 +83,6 @@ void city_draw_highway_footprint(int x, int y, float scale, int grid_offset)
     image_draw_isometric_footprint_from_draw_tile(base_image_id, x, y, 0, scale);
     draw_barrier_image(grid_offset, 1, x, y, scale);
     draw_barrier_image(grid_offset, 2, x, y, scale);
-    if (map_terrain_is(grid_offset, TERRAIN_AQUEDUCT)) {
-        int aqueduct_image_id = map_tiles_highway_get_aqueduct_image(grid_offset);
-        image_draw_isometric_footprint_from_draw_tile(aqueduct_image_id, x, y, 0, scale);
-    }
     draw_barrier_image(grid_offset, 0, x, y, scale);
     draw_barrier_image(grid_offset, 3, x, y, scale);
 }

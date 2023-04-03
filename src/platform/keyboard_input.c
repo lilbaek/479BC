@@ -293,17 +293,6 @@ void platform_handle_key_down(SDL_KeyboardEvent *event)
             case SDLK_k:
                 game_cheat_activate();
                 break;
-            case SDLK_c:
-                game_cheat_money();
-                break;
-            case SDLK_v:
-                game_cheat_victory();
-                break;
-            case SDLK_b:
-                game_cheat_breakpoint();
-                break;
-            case SDLK_x:
-                game_cheat_console();
         }
     }
 }

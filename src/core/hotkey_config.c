@@ -11,7 +11,7 @@
 #define MAX_LINE 100
 #define MAX_MAPPINGS HOTKEY_MAX_ITEMS * 2
 
-static const char *INI_FILENAME = "augustus-hotkeys.ini";
+static const char *INI_FILENAME = "tiberius-hotkeys.ini";
 
 // Keep this in the same order as the actions in hotkey_config.h
 static const char *ini_keys[] = {
@@ -41,7 +41,6 @@ static const char *ini_keys[] = {
     "build_wall",
     "build_gatehouse",
     "build_reservoir",
-    "build_aqueduct",
     "build_fountain",
     "build_roadblock",
     "show_advisor_labor",
@@ -149,12 +148,11 @@ static void set_layout_mapping(
 static void init_defaults(void)
 {
     memset(data.default_mappings, 0, sizeof(data.default_mappings));
-    set_mapping(KEY_TYPE_UP, KEY_MOD_NONE, HOTKEY_ARROW_UP);
-    set_mapping(KEY_TYPE_DOWN, KEY_MOD_NONE, HOTKEY_ARROW_DOWN);
-    set_mapping(KEY_TYPE_LEFT, KEY_MOD_NONE, HOTKEY_ARROW_LEFT);
-    set_mapping(KEY_TYPE_RIGHT, KEY_MOD_NONE, HOTKEY_ARROW_RIGHT);
-    set_layout_mapping("P", KEY_TYPE_P, KEY_MOD_NONE, HOTKEY_TOGGLE_PAUSE);
-    set_mapping(KEY_TYPE_SPACE, KEY_MOD_NONE, HOTKEY_TOGGLE_OVERLAY);
+    set_layout_mapping("W", KEY_TYPE_W, KEY_MOD_NONE, HOTKEY_ARROW_UP);
+    set_layout_mapping("S", KEY_TYPE_S, KEY_MOD_NONE, HOTKEY_ARROW_DOWN);
+    set_layout_mapping("A", KEY_TYPE_A, KEY_MOD_NONE, HOTKEY_ARROW_LEFT);
+    set_layout_mapping("D", KEY_TYPE_D, KEY_MOD_NONE, HOTKEY_ARROW_RIGHT);
+    set_mapping(KEY_TYPE_SPACE, KEY_MOD_NONE, HOTKEY_TOGGLE_PAUSE);
     set_layout_mapping("L", KEY_TYPE_L, KEY_MOD_NONE, HOTKEY_CYCLE_LEGION);
     set_layout_mapping("[", KEY_TYPE_LEFTBRACKET, KEY_MOD_NONE, HOTKEY_DECREASE_GAME_SPEED);
     set_layout_mapping("]", KEY_TYPE_RIGHTBRACKET, KEY_MOD_NONE, HOTKEY_INCREASE_GAME_SPEED);
@@ -187,12 +185,7 @@ static void init_defaults(void)
     set_mapping(KEY_TYPE_KP_0, KEY_MOD_NONE, HOTKEY_SHOW_ADVISOR_RELIGION);
     set_layout_mapping("-", KEY_TYPE_MINUS, KEY_MOD_NONE, HOTKEY_SHOW_ADVISOR_FINANCIAL);
     set_layout_mapping("=", KEY_TYPE_EQUALS, KEY_MOD_NONE, HOTKEY_SHOW_ADVISOR_CHIEF);
-    set_layout_mapping("W", KEY_TYPE_W, KEY_MOD_NONE, HOTKEY_SHOW_OVERLAY_WATER);
-    set_layout_mapping("F", KEY_TYPE_F, KEY_MOD_NONE, HOTKEY_SHOW_OVERLAY_FIRE);
-    set_layout_mapping("D", KEY_TYPE_D, KEY_MOD_NONE, HOTKEY_SHOW_OVERLAY_DAMAGE);
-    set_layout_mapping("C", KEY_TYPE_C, KEY_MOD_NONE, HOTKEY_SHOW_OVERLAY_CRIME);
     set_layout_mapping("T", KEY_TYPE_T, KEY_MOD_NONE, HOTKEY_SHOW_OVERLAY_PROBLEMS);
-    set_layout_mapping("A", KEY_TYPE_A, KEY_MOD_CTRL, HOTKEY_EDITOR_TOGGLE_BATTLE_INFO);
     set_layout_mapping("O", KEY_TYPE_O, KEY_MOD_CTRL, HOTKEY_LOAD_FILE);
     set_layout_mapping("S", KEY_TYPE_S, KEY_MOD_CTRL, HOTKEY_SAVE_FILE);
     set_mapping(KEY_TYPE_F1, KEY_MOD_NONE, HOTKEY_GO_TO_BOOKMARK_1);

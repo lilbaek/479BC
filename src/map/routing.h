@@ -7,7 +7,6 @@
 typedef enum {
     ROUTED_BUILDING_ROAD = 0,
     ROUTED_BUILDING_WALL = 1,
-    ROUTED_BUILDING_AQUEDUCT = 2,
     ROUTED_BUILDING_AQUEDUCT_WITHOUT_GRAPHIC = 4,
     ROUTED_BUILDING_HIGHWAY = 5,
 } routed_building_type;
@@ -27,7 +26,7 @@ void map_routing_calculate_distances_water_flotsam(int x, int y);
 
 int map_routing_calculate_distances_for_building(routed_building_type type, int x, int y);
 
-void map_routing_delete_first_wall_or_aqueduct(int x, int y);
+void map_routing_delete_first_wall(int x, int y);
 
 int map_routing_distance(int grid_offset);
 

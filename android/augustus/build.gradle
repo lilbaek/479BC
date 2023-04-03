@@ -70,7 +70,7 @@ android {
     ndkVersion "25.1.8937393"
 
     defaultConfig {
-        applicationId "com.github.Keriew.augustus"
+        applicationId "com.github.Keriew.tiberius"
         minSdkVersion 21
         targetSdkVersion 33
 
@@ -104,9 +104,9 @@ android {
         release {
             def isCI = System.getenv("CI") == "true"
             if (isCI) {
-                storeFile file("../augustus.keystore")
+                storeFile file("../tiberius.keystore")
                 storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
-                keyAlias "augustus"
+                keyAlias "tiberius"
                 keyPassword System.getenv("ANDROID_KEYSTORE_KEY_PASSWORD")
             }
         }
@@ -129,7 +129,7 @@ android {
             path "../../CMakeLists.txt"
         }
     }
-    namespace 'com.github.Keriew.augustus'
+    namespace 'com.github.Keriew.tiberius'
 }
 
 /** play {

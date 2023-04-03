@@ -118,6 +118,7 @@ void settings_load(void)
 {
     load_default_settings();
 
+    // TODO: Fix me
     int size = io_read_file_into_buffer("c3.inf", NOT_LOCALIZED, data.inf_file, INF_SIZE);
     if (!size) {
         return;

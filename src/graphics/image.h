@@ -25,4 +25,5 @@ void image_draw_isometric_top(int image_id, int x, int y, color_t color_mask, fl
 void image_draw_isometric_top_from_draw_tile(int image_id, int x, int y, color_t color_mask, float scale);
 void image_draw_set_isometric_top_from_draw_tile(int image_id, int x, int y, color_t color_mask, float scale);
 
+image *image_get_image_from_id(int image_id);
 #endif // GRAPHICS_IMAGE_H

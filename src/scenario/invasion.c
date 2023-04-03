@@ -301,7 +301,7 @@ static int start_invasion(int enemy_type, int amount, int invasion_point, int at
         if (!map_terrain_is(grid_offset, TERRAIN_ROAD)) { // bridge
             return -1;
         }
-    } else if (map_terrain_is(grid_offset, TERRAIN_BUILDING | TERRAIN_AQUEDUCT | TERRAIN_GATEHOUSE | TERRAIN_WALL)) {
+    } else if (map_terrain_is(grid_offset, TERRAIN_BUILDING | TERRAIN_GATEHOUSE | TERRAIN_WALL)) {
         building_destroy_by_enemy(x, y, grid_offset);
     }
     // spawn the lot!

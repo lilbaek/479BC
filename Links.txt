@@ -1,0 +1,14 @@
+https://github.com/crudelios/japacker/tree/main/src
+https://github.com/rxi/microui
+https://github.com/Immediate-Mode-UI/Nuklear
+https://github.com/Immediate-Mode-UI/Nuklear/wiki/Complete-font-guide#configuring-the-font
+https://github.com/actsl/kiss_sdl
+https://github.com/bvschaik/julius/issues/513
+https://github.com/bvschaik/citybuilding-tools/wiki/SG-file-format
+https://github.com/oz123/awesome-c
+https://github.com/jcorporation/sds
+
+https://game-icons.net/
+https://game-icons.net/tags/greek-roman.html
+
+Commit - Commits on Mar 13, 2023 - GitHub

@@ -19,7 +19,6 @@ typedef enum {
     TERRAIN_INFO_SHRUB = 4,
     TERRAIN_INFO_EARTHQUAKE = 5,
     TERRAIN_INFO_ROAD = 6,
-    TERRAIN_INFO_AQUEDUCT = 7,
     TERRAIN_INFO_RUBBLE = 8,
     TERRAIN_INFO_WALL = 9,
     TERRAIN_INFO_EMPTY = 10,
@@ -42,7 +41,6 @@ typedef struct {
     int has_road_access;
     int worker_percentage;
     int has_reservoir_pipes;
-    int aqueduct_has_water;
     int formation_id;
     int formation_types;
     int barracks_soldiers_requested;

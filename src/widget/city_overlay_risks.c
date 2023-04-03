@@ -11,6 +11,8 @@
 #include "map/terrain.h"
 #include "translation/translation.h"
 #include "widget/city_draw_highway.h"
+#include "assets/assets.h"
+#include "core/textures.h"
 
 enum crime_level {
     NO_CRIME = 0,
@@ -399,9 +401,9 @@ static int draw_footprint_native(int x, int y, float scale, int grid_offset)
         } else {
             image_draw_isometric_footprint_from_draw_tile(map_image_at(grid_offset), x, y, 0, scale);
         }
-    } else if (map_terrain_is(grid_offset, TERRAIN_AQUEDUCT | TERRAIN_WALL)) {
+    } else if (map_terrain_is(grid_offset, TERRAIN_WALL)) {
         // display grass
-        int image_id = image_group(GROUP_TERRAIN_GRASS_1) + (map_random_get(grid_offset) & 7);
+        int image_id = assets_get_image_id(TEXTURE_TERRAIN_NAME, TEXTURE_GRASS_1) + (map_random_get(grid_offset) & 7);
         image_draw_isometric_footprint_from_draw_tile(image_id, x, y, 0, scale);
     } else if (map_terrain_is(grid_offset, TERRAIN_BUILDING)) {
         city_with_overlay_draw_building_footprint(x, y, grid_offset, 0);

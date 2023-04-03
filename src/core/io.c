@@ -4,6 +4,23 @@
 
 #include "core/file.h"
 
+int io_read_file_into_buffer_asset(const char *filepath, void *buffer, int max_size)
+{
+    FILE *fp = file_open(filepath, "r");
+    if (!fp) {
+        return 0;
+    }
+    fseek(fp, 0, SEEK_END);
+    long size = ftell(fp);
+    if (size > max_size) {
+        size = max_size;
+    }
+    fseek(fp, 0, SEEK_SET);
+    int bytes_read = (int) fread(buffer, 1, (size_t) size, fp);
+    file_close(fp);
+    return bytes_read;
+}
+
 int io_read_file_into_buffer(const char *filepath, int localizable, void *buffer, int max_size)
 {
     const char *cased_file = dir_get_file(filepath, localizable);

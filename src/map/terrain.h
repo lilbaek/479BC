@@ -3,6 +3,7 @@
 
 #include "core/buffer.h"
 
+// TODO: TERRAIN_TYPES
 enum {
     TERRAIN_TREE = 1,
     TERRAIN_ROCK = 2,
@@ -12,7 +13,6 @@ enum {
     TERRAIN_GARDEN = 0x20,
     TERRAIN_ROAD = 0x40,
     TERRAIN_RESERVOIR_RANGE = 0x80,
-    TERRAIN_AQUEDUCT = 0x100,
     TERRAIN_ELEVATION = 0x200,
     TERRAIN_ACCESS_RAMP = 0x400,
     TERRAIN_MEADOW = 0x800,

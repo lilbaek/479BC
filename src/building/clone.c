@@ -89,8 +89,6 @@ building_type building_clone_type_from_grid_offset(int grid_offset)
         }
     } else if (terrain & TERRAIN_RUBBLE) {
         return get_clone_type_from_building(0, map_rubble_building_type(grid_offset));
-    } else if (terrain & TERRAIN_AQUEDUCT) {
-        return BUILDING_AQUEDUCT;
     } else if (terrain & TERRAIN_WALL) {
         return BUILDING_WALL;
     } else if (terrain & TERRAIN_GARDEN) {

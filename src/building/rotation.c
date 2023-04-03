@@ -20,7 +20,6 @@ static struct {
     int rotation;
     int extra_rotation;
     int road_orientation;
-    uint8_t rotation_text[100];
     int warning_id;
 } data = { 0, 0, 1 };
 
@@ -59,19 +58,6 @@ static int get_num_rotations(building_type type)
     }
 }
 
-static void update_rotation_message(void)
-{
-    uint8_t *cursor = data.rotation_text;
-    building_type type = building_construction_type();
-    cursor += string_from_int(cursor, data.extra_rotation + 1, 0);
-    cursor = string_copy(string_from_ascii("/"), cursor, 100 - (int) (cursor - data.rotation_text));
-    cursor += string_from_int(cursor, get_num_rotations(type), 0);
-    cursor = string_copy(string_from_ascii(" "), cursor, 100 -  (int) (cursor - data.rotation_text));
-    string_copy(lang_get_string(28, type), cursor, 100 - (int) (cursor - data.rotation_text));
-
-    data.warning_id = city_warning_show_custom(data.rotation_text, data.warning_id);
-}
-
 static void rotate_forward(void)
 {
     building_construction_cycle_forward();
@@ -84,7 +70,6 @@ static void rotate_forward(void)
     if (data.extra_rotation >= get_num_rotations(type)) {
         data.extra_rotation = 0;
     }
-    update_rotation_message();
 }
 
 static void rotate_backward(void)
@@ -98,7 +83,6 @@ static void rotate_backward(void)
     if (data.extra_rotation < 0) {
         data.extra_rotation = get_num_rotations(building_construction_type()) - 1;
     }
-    update_rotation_message();
 }
 
 int building_rotation_get_road_orientation(void)
@@ -149,15 +133,6 @@ void building_rotation_reset_rotation(void)
 void building_rotation_setup_rotation(void)
 {
     building_rotation_reset_rotation();
-    data.warning_id = 0;
-
-    update_rotation_message();
-}
-
-void building_rotation_remove_rotation(void)
-{
-    city_warning_clear_id(data.warning_id);
-    data.warning_id = 0;
 }
 
 int building_rotation_get_building_orientation(int building_rotation)

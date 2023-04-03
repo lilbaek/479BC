@@ -276,10 +276,6 @@ static void set_definition_for_action(hotkey_action action, hotkey_definition *d
             def->action = &data.hotkey_state.building;
             def->value = BUILDING_DRAGGABLE_RESERVOIR;
             break;
-        case HOTKEY_BUILD_AQUEDUCT:
-            def->action = &data.hotkey_state.building;
-            def->value = BUILDING_AQUEDUCT;
-            break;
         case HOTKEY_BUILD_FOUNTAIN:
             def->action = &data.hotkey_state.building;
             def->value = BUILDING_FOUNTAIN;

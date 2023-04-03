@@ -224,7 +224,7 @@ static int evolve_large_tent(building *house, house_demands *demands)
         evolve_status status = check_requirements(house, demands);
         if (!has_devolve_delay(house, status)) {
             if (status == EVOLVE) {
-                building_house_change_to(house, BUILDING_HOUSE_SMALL_SHACK);
+                building_house_change_to(house, BUILDING_HOUSE_SMALL_HOVEL);
             } else if (status == DEVOLVE) {
                 building_house_change_to(house, BUILDING_HOUSE_SMALL_TENT);
             }
@@ -269,7 +269,7 @@ static int evolve_small_hovel(building *house, house_demands *demands)
         if (status == EVOLVE) {
             building_house_change_to(house, BUILDING_HOUSE_LARGE_HOVEL);
         } else if (status == DEVOLVE) {
-            building_house_change_to(house, BUILDING_HOUSE_LARGE_SHACK);
+            building_house_change_to(house, BUILDING_HOUSE_LARGE_TENT);
         }
     }
     return 0;

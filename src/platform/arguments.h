@@ -7,8 +7,8 @@ typedef struct {
     int cursor_scale_percentage;
     int force_windowed;
     int launch_asset_previewer;
-} augustus_args;
+} Tiberius_args;
 
-int platform_parse_arguments(int argc, char **argv, augustus_args *output_args);
+int platform_parse_arguments(int argc, char **argv, Tiberius_args *output_args);
 
 #endif // PLATFORM_ARGUMENTS_H

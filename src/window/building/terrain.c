@@ -20,15 +20,12 @@ void window_building_draw_terrain(building_info_context *c)
 {
     switch (c->terrain_type) {
         case TERRAIN_INFO_ROAD: c->help_id = 57; break;
-        case TERRAIN_INFO_AQUEDUCT: c->help_id = 60; break;
         case TERRAIN_INFO_WALL: c->help_id = 85; break;
         case TERRAIN_INFO_BRIDGE: c->help_id = 58; break;
         default: c->help_id = 0; break;
     }
 
-    if (c->terrain_type == TERRAIN_INFO_AQUEDUCT) {
-        window_building_draw_aqueduct(c);
-    } else if (c->terrain_type == TERRAIN_INFO_RUBBLE) {
+    if (c->terrain_type == TERRAIN_INFO_RUBBLE) {
         window_building_draw_rubble(c);
     } else if (c->terrain_type == TERRAIN_INFO_WALL) {
         window_building_draw_wall(c);

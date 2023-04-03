@@ -74,6 +74,8 @@ typedef struct {
     const image_atlas_data *(*prepare_image_atlas)(atlas_type type, int num_images, int last_width, int last_height);
     int (*create_image_atlas)(const image_atlas_data *data, int delete_buffers);
     const image_atlas_data *(*get_image_atlas)(atlas_type type);
+    int (*get_extra_atlas_height)();
+    int (*get_extra_atlas_width)();
     int (*has_image_atlas)(atlas_type type);
     void (*free_image_atlas)(atlas_type type);
 

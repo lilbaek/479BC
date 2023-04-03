@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE assetlist>
+<assetlist name="religionex">
+    <!-- Files related to temple_ceres -->
+    <image id="temple_ceres_01" width="236" height="192" isometric="true">
+      <layer src="temple_ceres_01"/>
+    </image>
+    <!-- Files related to temple_mars -->
+    <image id="temple_mars_01" width="236" height="188" isometric="true">
+      <layer src="temple_mars_01"/>
+    </image>
+    <!-- Files related to temple_mercury -->
+    <image id="temple_mercury_01" width="236" height="188" isometric="true">
+      <layer src="temple_mercury_01"/>
+    </image>
+    <!-- Files related to temple_neptune -->
+    <image id="temple_neptune_01" width="236" height="192" isometric="true">
+      <layer src="temple_neptune_01"/>
+    </image>
+    <!-- Files related to temple_venus -->
+    <image id="temple_venus_01" width="236" height="188" isometric="true">
+      <layer src="temple_venus_01"/>
+    </image>
+</assetlist>

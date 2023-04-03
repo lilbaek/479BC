@@ -284,7 +284,7 @@ static void create_full_city_screenshot(void)
     int error = 0;
     int base_height = image_set_loop_height_limits(min_height, max_height);
     int size;
-    city_view_set_scale(100);
+    city_view_set_scale(180);
     graphics_set_clip_rectangle(0, TOP_MENU_HEIGHT, canvas_width, IMAGE_HEIGHT_CHUNK);
     int viewport_x, viewport_y, viewport_width, viewport_height;
     city_view_get_viewport(&viewport_x, &viewport_y, &viewport_width, &viewport_height);

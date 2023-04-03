@@ -217,6 +217,7 @@ typedef enum {
     TR_BUILDING_PANTHEON_DESC_MODULE_2,
     TR_BUILDING_GRAND_TEMPLE_MENU,
     TR_BUILDING_ROADBLOCK,
+    TR_BUILDING_VACANT_LOT,
     TR_BUILDING_ROADBLOCK_DESC,
     TR_BUILDING_WORK_CAMP,
     TR_BUILDING_WORK_CAMP_DESC,
@@ -840,7 +841,6 @@ typedef enum {
     TR_BUILDING_CITY_MINT_PHASE_1,
     TR_BUILDING_CITY_MINT_PHASE_1_TEXT,
     TR_BUILDING_CITY_MINT_DESC,
-    TR_BUILDING_CITY_MINT_DESC_ALTERNATIVE,
     TR_BUILDING_CITY_MINT_DESC_NO_PALACE,
     TR_BUILDING_CITY_MINT_DESC_PALACE,
     TR_BUILDING_CITY_MINT_NO_EMPLOYEES,
@@ -852,11 +852,6 @@ typedef enum {
     TR_BUILDING_CITY_MINT_NO_GOLD,
     TR_BUILDING_CITY_MINT_STORED_GOLD,
     TR_BUILDING_CITY_MINT_NO_SENATE,
-    TR_BUILDING_CITY_MINT_CONVERT,
-    TR_BUILDING_CITY_MINT_GOLD_TO_DN,
-    TR_BUILDING_CITY_MINT_DN_TO_GOLD,
-    TR_BUILDING_CITY_MINT_CHANGE_PRODUCTION,
-    TR_BUILDING_CITY_MINT_PROGRESS_WILL_BE_LOST,
     TR_ADVISOR_NO_ACTIVE_COLOSSEUM,
     TR_ADVISOR_ACTIVE_COLOSSEUM,
     TR_ADVISOR_NO_ACTIVE_HIPPODROME,
@@ -906,9 +901,6 @@ typedef enum {
     TR_EDITOR_SELECTED_COORDS,
     TR_EDITOR_MAX_WAGES,
     TR_EDITOR_MIN_WAGES,
-    TR_EDITOR_FAVOUR_DISFAVOR,
-    TR_EDITOR_FAVOUR_IGNORED,
-    TR_EDITOR_FAVOUR_EXTENSION_MONTHS,
     TRANSLATION_MAX_KEY
 } translation_key;
 
@@ -922,17 +914,8 @@ void translation_load(language_type language);
 uint8_t *translation_for(translation_key key);
 
 void translation_english(const translation_string **strings, int *num_strings);
-void translation_french(const translation_string **strings, int *num_strings);
-void translation_german(const translation_string **strings, int *num_strings);
-void translation_italian(const translation_string **strings, int *num_strings);
-void translation_japanese(const translation_string **strings, int *num_strings);
-void translation_korean(const translation_string **strings, int *num_strings);
-void translation_polish(const translation_string **strings, int *num_strings);
-void translation_portuguese(const translation_string **strings, int *num_strings);
-void translation_russian(const translation_string **strings, int *num_strings);
-void translation_spanish(const translation_string **strings, int *num_strings);
-void translation_simplified_chinese(const translation_string **strings, int *num_strings);
-void translation_swedish(const translation_string **strings, int *num_strings);
-void translation_traditional_chinese(const translation_string **strings, int *num_strings);
+void translation_danish(const translation_string **strings, int *num_strings);
+
+char* gettext(char* string);
 
 #endif // TRANSLATION_TRANSLATION_H

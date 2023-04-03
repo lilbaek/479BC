@@ -15,22 +15,22 @@
 
 static void display_crash_message(void)
 {
-    platform_screen_show_error_message_box("Augustus has crashed :(",
-        "There was an unrecoverable error in Augustus, which will now close.\n\n"
+    platform_screen_show_error_message_box("tiberius has crashed :(",
+        "There was an unrecoverable error in tiberius, which will now close.\n\n"
 #ifdef HAS_STACK_TRACE
-        "The piece of code that caused the crash has been saved to augustus-log.txt.\n\n"
+        "The piece of code that caused the crash has been saved to tiberius-log.txt.\n\n"
 #endif
         "If you can, please create an issue by going to:\n\n"
-        "https://github.com/Keriew/augustus/issues/new \n\n"
+        "https://github.com/Keriew/tiberius/issues/new \n\n"
         "Please attach "
 #ifdef HAS_STACK_TRACE
-        "augustus-log.txt and "
+        "tiberius-log.txt and "
 #endif
         "your city save to the issue report.\n\n"
         "Also, please describe what you were doing when the game crashed.\n\n"
         "With your help, we can avoid this crash in the future.\n\n"
         "Thanks!\n\n"
-        "- The Augustus dev team");
+        "- The tiberius dev team");
 }
 
 #if defined(__GNUC__) && !defined(_WIN32)

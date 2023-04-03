@@ -218,7 +218,7 @@ static void draw_scenario_info(void)
 
 static void draw_background(void)
 {
-    image_draw_fullscreen_background(image_group(GROUP_INTERMEZZO_BACKGROUND) + 25);
+    image_draw_fullscreen_background(assets_get_image_id("screens", "default"));
 
     graphics_set_clip_rectangle(0, 0,
         WINDOW_WIDTH, WINDOW_HEIGHT);

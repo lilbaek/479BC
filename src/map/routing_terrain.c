@@ -12,6 +12,7 @@
 #include "map/routing_data.h"
 #include "map/sprite.h"
 #include "map/terrain.h"
+#include "assets/assets.h"
 
 static void map_routing_update_land_noncitizen(void);
 
@@ -71,51 +72,8 @@ static int get_land_type_citizen_building(int grid_offset)
                 }
             }
             break;
-        case BUILDING_GRANARY:
-            switch (map_property_multi_tile_xy(grid_offset)) {
-                case EDGE_X1Y0:
-                case EDGE_X0Y1:
-                case EDGE_X1Y1:
-                case EDGE_X2Y1:
-                case EDGE_X1Y2:
-                    type = CITIZEN_0_ROAD;
-                    break;
-            }
-            break;
-        case BUILDING_RESERVOIR:
-            switch (map_property_multi_tile_xy(grid_offset)) {
-                case EDGE_X1Y0:
-                case EDGE_X0Y1:
-                case EDGE_X2Y1:
-                case EDGE_X1Y2:
-                    type = CITIZEN_N4_RESERVOIR_CONNECTOR; // aqueduct connect points
-                    break;
-            }
-            break;
     }
     return type;
-}
-
-static int get_land_type_citizen_aqueduct(int grid_offset)
-{
-    int image_id = map_image_at(grid_offset) - image_group(GROUP_BUILDING_AQUEDUCT);
-    if (image_id <= 3) {
-        return CITIZEN_N3_AQUEDUCT;
-    } else if (image_id <= 7) {
-        return CITIZEN_N1_BLOCKED;
-    } else if (image_id <= 9) {
-        return CITIZEN_N3_AQUEDUCT;
-    } else if (image_id <= 14) {
-        return CITIZEN_N1_BLOCKED;
-    } else if (image_id <= 18) {
-        return CITIZEN_N3_AQUEDUCT;
-    } else if (image_id <= 22) {
-        return CITIZEN_N1_BLOCKED;
-    } else if (image_id <= 24) {
-        return CITIZEN_N3_AQUEDUCT;
-    } else {
-        return CITIZEN_N1_BLOCKED;
-    }
 }
 
 void map_routing_update_land_citizen(void)
@@ -136,14 +94,12 @@ void map_routing_update_land_citizen(void)
                     // shouldn't happen
                     terrain_land_noncitizen.items[grid_offset] = CITIZEN_4_CLEAR_TERRAIN; // BUG: should be citizen?
                     map_terrain_remove(grid_offset, TERRAIN_BUILDING);
-                    map_image_set(grid_offset, (map_random_get(grid_offset) & 7) + image_group(GROUP_TERRAIN_GRASS_1));
+                    map_image_set(grid_offset, (map_random_get(grid_offset) & 7) + assets_get_image_id("terrain", "grass_1_01"));
                     map_property_mark_draw_tile(grid_offset);
                     map_property_set_multi_tile_size(grid_offset, 1);
                     continue;
                 }
                 terrain_land_citizen.items[grid_offset] = get_land_type_citizen_building(grid_offset);
-            } else if (terrain & TERRAIN_AQUEDUCT) {
-                terrain_land_citizen.items[grid_offset] = get_land_type_citizen_aqueduct(grid_offset);
             } else if (terrain & TERRAIN_NOT_CLEAR) {
                 terrain_land_citizen.items[grid_offset] = CITIZEN_N1_BLOCKED;
             } else {
@@ -210,9 +166,7 @@ static void map_routing_update_land_noncitizen(void)
                 terrain_land_noncitizen.items[grid_offset] = NONCITIZEN_0_PASSABLE;
             } else if (terrain & (TERRAIN_GARDEN | TERRAIN_ACCESS_RAMP | TERRAIN_RUBBLE)) {
                 terrain_land_noncitizen.items[grid_offset] = NONCITIZEN_2_CLEARABLE;
-            } else if (terrain & TERRAIN_AQUEDUCT) {
-                terrain_land_noncitizen.items[grid_offset] = NONCITIZEN_2_CLEARABLE;
-            } else if (terrain & TERRAIN_WALL) {
+            }  else if (terrain & TERRAIN_WALL) {
                 terrain_land_noncitizen.items[grid_offset] = NONCITIZEN_3_WALL;
             } else if (terrain & TERRAIN_NOT_CLEAR) {
                 terrain_land_noncitizen.items[grid_offset] = NONCITIZEN_N1_BLOCKED;

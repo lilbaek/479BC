@@ -441,9 +441,7 @@ static void draw_minimap_tile(int x_view, int y_view, int grid_offset)
     }
     int rand = data.functions->offset.random(grid_offset);
     const tile_color *colors;
-    if (terrain & TERRAIN_AQUEDUCT) {
-        colors = &minimap_colors.aqueduct;
-    } else if (terrain & TERRAIN_ROAD) {
+    if (terrain & TERRAIN_ROAD) {
         colors = &minimap_colors.climate->road;
     } else if (terrain & TERRAIN_HIGHWAY) {
         colors = &minimap_colors.climate->highway;
@@ -541,7 +539,7 @@ void widget_minimap_draw_decorated(int x_offset, int y_offset, int width, int he
     graphics_draw_line(x_offset - 1, x_offset - 1 + width, y_offset - 1, y_offset - 1, COLOR_MINIMAP_DARK);
     graphics_draw_line(x_offset - 1, x_offset - 1, y_offset, y_offset + height, COLOR_MINIMAP_DARK);
     graphics_draw_line(x_offset - 1 + width, x_offset - 1 + width, y_offset,
-        y_offset + height, COLOR_MINIMAP_LIGHT);
+        y_offset + height, COLOR_MINIMAP_DARK);
 }
 
 static void update_mouse_grid_offset(int x_view, int y_view, int grid_offset)

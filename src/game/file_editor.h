@@ -13,6 +13,12 @@ void game_file_editor_clear_data(void);
 void game_file_editor_create_scenario(int size);
 
 /**
+ * Create data for a new scenario
+ * @param size Size of the map to create
+ */
+void game_file_editor_create_random_scenario(int size);
+
+/**
  * Load scenario from disk and init it for using in the editor
  * @param scenario_file File to load
  * @return Boolean true on success, false on failure

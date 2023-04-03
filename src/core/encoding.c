@@ -597,32 +597,8 @@ encoding_type encoding_determine(language_type language)
     // - Windows-1251 (Cyrillic) is used in Russian only
     // - Windows-950 (Big5) is used in Traditional Chinese only
     // - Windows-1252 (Western Europe) is used in all other languages
-    if (language == LANGUAGE_POLISH) {
-        data.to_utf8_table = HIGH_TO_UTF8_EASTERN;
-        data.encoding = ENCODING_EASTERN_EUROPE;
-    } else if (language == LANGUAGE_RUSSIAN) {
-        data.to_utf8_table = HIGH_TO_UTF8_CYRILLIC;
-        data.encoding = ENCODING_CYRILLIC;
-    } else if (language == LANGUAGE_TRADITIONAL_CHINESE) {
-        encoding_trad_chinese_init();
-        data.to_utf8_table = NULL;
-        data.encoding = ENCODING_TRADITIONAL_CHINESE;
-    } else if (language == LANGUAGE_SIMPLIFIED_CHINESE) {
-        encoding_simp_chinese_init();
-        data.to_utf8_table = NULL;
-        data.encoding = ENCODING_SIMPLIFIED_CHINESE;
-    } else if (language == LANGUAGE_KOREAN) {
-        encoding_korean_init();
-        data.to_utf8_table = NULL;
-        data.encoding = ENCODING_KOREAN;
-    } else if (language == LANGUAGE_JAPANESE) {
-        encoding_japanese_init();
-        data.to_utf8_table = NULL;
-        data.encoding = ENCODING_JAPANESE;
-    } else { // assume Western encoding
-        data.to_utf8_table = HIGH_TO_UTF8_DEFAULT;
-        data.encoding = ENCODING_WESTERN_EUROPE;
-    }
+    data.to_utf8_table = HIGH_TO_UTF8_DEFAULT;
+    data.encoding = ENCODING_WESTERN_EUROPE;
     build_reverse_lookup_table();
     build_decomposed_lookup_table();
     return data.encoding;

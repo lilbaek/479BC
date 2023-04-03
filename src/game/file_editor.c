@@ -1,3 +1,4 @@
+#include <time.h>
 #include "file_editor.h"
 
 #include "building/construction.h"
@@ -22,8 +23,7 @@
 #include "game/animation.h"
 #include "game/file_io.h"
 #include "game/state.h"
-#include "game/time.h"
-#include "map/aqueduct.h"
+#include "game/time.h"41
 #include "map/building.h"
 #include "map/desirability.h"
 #include "map/elevation.h"
@@ -47,6 +47,7 @@
 #include "scenario/property.h"
 #include "sound/city.h"
 #include "sound/music.h"
+#include "noise/mapgenerator.h"
 
 void game_file_editor_clear_data(void)
 {
@@ -76,7 +77,6 @@ static void clear_map_data(void)
     map_image_clear();
     map_building_clear();
     map_terrain_clear();
-    map_aqueduct_clear();
     map_figure_clear();
     map_property_clear();
     map_sprite_clear();
@@ -98,7 +98,7 @@ static void create_blank_map(int size)
     scenario_map_init();
     clear_map_data();
     map_image_init_edges();
-    city_view_set_scale(100);
+    city_view_set_scale(850);
     city_view_set_camera(76, 152);
     city_view_reset_orientation();
 }
@@ -115,7 +115,11 @@ static void prepare_map_for_editing(void)
     figure_create_editor_flags();
     figure_create_flotsam();
 
-    map_tiles_update_all_elevation();
+    map_routing_update_all(); // Need routing to create roads in generator
+
+    srand(time(NULL));
+    noise_fill_map( 543354323 - rand() % 2000);
+
     map_tiles_update_all_water();
     map_tiles_update_all_earthquake();
     map_tiles_update_all_rocks();
@@ -125,12 +129,16 @@ static void prepare_map_for_editing(void)
     map_tiles_update_all_highways();
     map_tiles_update_all_plazas();
     map_tiles_update_all_walls();
-    map_tiles_update_all_aqueducts(0);
     map_natives_init_editor();
     map_routing_update_all();
 
     city_view_init();
     game_state_unpause();
+}
+
+void game_file_editor_create_random_scenario(int size)
+{
+    create_blank_map(size);
 }
 
 void game_file_editor_create_scenario(int size)

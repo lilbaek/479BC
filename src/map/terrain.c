@@ -5,6 +5,8 @@
 #include "map/grid.h"
 #include "map/ring.h"
 #include "map/routing.h"
+#include "assets/assets.h"
+#include "core/textures.h"
 
 static grid_u32 terrain_grid;
 static grid_u32 terrain_grid_backup;
@@ -439,7 +441,7 @@ static void determine_original_trees(buffer *images, int legacy_buffer)
                 if (images) {
                     buffer_set(images, (x + GRID_SIZE * y) * (legacy_buffer ? 2 : 4));
                     int image_id = legacy_buffer ? buffer_read_u16(images) : buffer_read_u32(images);
-                    int image_tree_group = image_group(GROUP_TERRAIN_TREE);
+                    int image_tree_group = get_terrain_image_id_prefix(TEXTURE_TREE_PREFIX, 0);
                     int ring;
                     if (image_id >= image_tree_group + 8 && image_id < image_tree_group + 16) {
                         ring = 1;

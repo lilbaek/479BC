@@ -42,6 +42,7 @@
 #include "widget/sidebar/extra.h"
 #include "window/building_info.h"
 #include "window/city.h"
+#include "widget/bottombar/city.h"
 
 static struct {
     map_tile current_tile;
@@ -660,6 +661,10 @@ static void handle_mouse(const mouse *m)
 void widget_city_handle_input(const mouse *m, const hotkeys *h)
 {
     scroll_map(m);
+
+    if (widget_bottom_bar_city_handle_mouse(m)) {
+        return;
+    }
 
     if (m->is_touch) {
         handle_touch();

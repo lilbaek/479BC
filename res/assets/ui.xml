@@ -48,8 +48,6 @@
 	<!-- Note: Banner images for Construction Sites -->
 	<image id="Const. Banner 01" src="Construction_Banner_01"/>
 	<image id="Const. Banner 02" src="Construction_Banner_02"/>
-	<!-- Note: Banner with Augustus Logo for Main Menu  -->
-	<image id="Main Menu Banner" src="Augustus_Main_Menu_Banner_Sml"/>
 	<!-- Note: Border for Campaign Map Selection Screen  -->
 	<image id="Mission Selection Border" src="Map_Selection_Overlay_Border_Top"/>
 	<image src="Map_Selection_Overlay_Border_Left"/>
@@ -172,6 +170,7 @@
 	<image id="Victory_Banner" src="Victory_Banner"/>
 	<!-- Grid image by crudelios -->
 	<image id="Grid_Full" src="Grid_Full"/>
+	<image id="Grid_Full_Large" src="Grid_Full_Large"/>
 	<!-- Note: Buttons for play/pause game -->
 	<!-- Button assets created by Ouaz -->
 	<image src="Play_Button_Idle" id="Play Button"/>

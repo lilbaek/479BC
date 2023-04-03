@@ -1,0 +1,522 @@
+<?xml version="1.0"?>
+<!DOCTYPE assetlist>
+<assetlist name="terrain">
+    <!-- Files related to grass_1 -->
+    <image id="grass_1_01" src="grass_1_01"/>
+    <image id="grass_1_02" src="grass_1_02"/>
+    <image id="grass_1_03" src="grass_1_03"/>
+    <image id="grass_1_04" src="grass_1_04"/>
+    <image id="grass_1_05" src="grass_1_05"/>
+    <image id="grass_1_06" src="grass_1_06"/>
+    <image id="grass_1_07" src="grass_1_07"/>
+    <image id="grass_1_08" src="grass_1_08"/>
+    <image id="grass_1_09" src="grass_1_09"/>
+    <image id="grass_1_10" src="grass_1_10"/>
+    <image id="grass_1_11" src="grass_1_11"/>
+    <image id="grass_1_12" src="grass_1_12"/>
+    <image id="grass_1_13" src="grass_1_13"/>
+    <image id="grass_1_14" src="grass_1_14"/>
+    <image id="grass_1_15" src="grass_1_15"/>
+    <image id="grass_1_16" src="grass_1_16"/>
+    <image id="grass_1_17" src="grass_1_17"/>
+    <image id="grass_1_18" src="grass_1_18"/>
+    <image id="grass_1_19" src="grass_1_19"/>
+    <image id="grass_1_20" src="grass_1_20"/>
+    <image id="grass_1_21" src="grass_1_21"/>
+    <image id="grass_1_22" src="grass_1_22"/>
+    <image id="grass_1_23" src="grass_1_23"/>
+    <image id="grass_1_24" src="grass_1_24"/>
+    <image id="grass_1_25" src="grass_1_25"/>
+    <image id="grass_1_26" src="grass_1_26"/>
+    <image id="grass_1_27" src="grass_1_27"/>
+    <image id="grass_1_28" src="grass_1_28"/>
+    <image id="grass_1_29" src="grass_1_29"/>
+    <image id="grass_1_30" src="grass_1_30"/>
+    <image id="grass_1_31" src="grass_1_31"/>
+    <image id="grass_1_32" src="grass_1_32"/>
+    <image id="grass_1_33" src="grass_1_33"/>
+    <image id="grass_1_34" src="grass_1_34"/>
+    <image id="grass_1_35" src="grass_1_35"/>
+    <image id="grass_1_36" src="grass_1_36"/>
+    <image id="grass_1_37" src="grass_1_37"/>
+    <image id="grass_1_38" src="grass_1_38"/>
+    <image id="grass_1_39" src="grass_1_39"/>
+    <image id="grass_1_40" src="grass_1_40"/>
+    <image id="grass_1_41" src="grass_1_41"/>
+    <image id="grass_1_42" src="grass_1_42"/>
+    <image id="grass_1_43" src="grass_1_43"/>
+    <image id="grass_1_44" src="grass_1_44"/>
+    <image id="grass_1_45" src="grass_1_45"/>
+    <image id="grass_1_46" src="grass_1_46"/>
+    <image id="grass_1_47" src="grass_1_47"/>
+    <image id="grass_1_48" src="grass_1_48"/>
+    <image id="grass_1_49" src="grass_1_49"/>
+    <image id="grass_1_50" src="grass_1_50"/>
+    <image id="grass_1_51" src="grass_1_51"/>
+    <image id="grass_1_52" src="grass_1_52"/>
+    <image id="grass_1_53" src="grass_1_53"/>
+    <image id="grass_1_54" src="grass_1_54"/>
+    <image id="grass_1_55" src="grass_1_55"/>
+    <image id="grass_1_56" src="grass_1_56"/>
+    <image id="grass_1_57" src="grass_1_57"/>
+    <image id="grass_1_58" src="grass_1_58"/>
+    <image id="grass_1_59" src="grass_1_59"/>
+    <image id="grass_1_60" src="grass_1_60"/>
+    <image id="grass_1_61" src="grass_1_61"/>
+    <image id="grass_1_62" src="grass_1_62"/>
+    <image id="grass_1_63" src="grass_1_63"/>
+    <image id="grass_1_64" src="grass_1_64"/>
+    <image id="grass_1" src="grass_1_01">
+      <layer group="this" image="grass_1_01" x="0" y="0"/>
+      <layer group="this" image="grass_1_02" x="0" y="0"/>
+      <layer group="this" image="grass_1_03" x="0" y="0"/>
+      <layer group="this" image="grass_1_04" x="0" y="0"/>
+      <layer group="this" image="grass_1_05" x="0" y="0"/>
+      <layer group="this" image="grass_1_06" x="0" y="0"/>
+      <layer group="this" image="grass_1_07" x="0" y="0"/>
+      <layer group="this" image="grass_1_08" x="0" y="0"/>
+      <layer group="this" image="grass_1_09" x="0" y="0"/>
+      <layer group="this" image="grass_1_10" x="0" y="0"/>
+      <layer group="this" image="grass_1_11" x="0" y="0"/>
+      <layer group="this" image="grass_1_12" x="0" y="0"/>
+      <layer group="this" image="grass_1_13" x="0" y="0"/>
+      <layer group="this" image="grass_1_14" x="0" y="0"/>
+      <layer group="this" image="grass_1_15" x="0" y="0"/>
+      <layer group="this" image="grass_1_16" x="0" y="0"/>
+      <layer group="this" image="grass_1_17" x="0" y="0"/>
+      <layer group="this" image="grass_1_18" x="0" y="0"/>
+      <layer group="this" image="grass_1_19" x="0" y="0"/>
+      <layer group="this" image="grass_1_20" x="0" y="0"/>
+      <layer group="this" image="grass_1_21" x="0" y="0"/>
+      <layer group="this" image="grass_1_22" x="0" y="0"/>
+      <layer group="this" image="grass_1_23" x="0" y="0"/>
+      <layer group="this" image="grass_1_24" x="0" y="0"/>
+      <layer group="this" image="grass_1_25" x="0" y="0"/>
+      <layer group="this" image="grass_1_26" x="0" y="0"/>
+      <layer group="this" image="grass_1_27" x="0" y="0"/>
+      <layer group="this" image="grass_1_28" x="0" y="0"/>
+      <layer group="this" image="grass_1_29" x="0" y="0"/>
+      <layer group="this" image="grass_1_30" x="0" y="0"/>
+      <layer group="this" image="grass_1_31" x="0" y="0"/>
+      <layer group="this" image="grass_1_32" x="0" y="0"/>
+      <layer group="this" image="grass_1_33" x="0" y="0"/>
+      <layer group="this" image="grass_1_34" x="0" y="0"/>
+      <layer group="this" image="grass_1_35" x="0" y="0"/>
+      <layer group="this" image="grass_1_36" x="0" y="0"/>
+      <layer group="this" image="grass_1_37" x="0" y="0"/>
+      <layer group="this" image="grass_1_38" x="0" y="0"/>
+      <layer group="this" image="grass_1_39" x="0" y="0"/>
+      <layer group="this" image="grass_1_40" x="0" y="0"/>
+      <layer group="this" image="grass_1_41" x="0" y="0"/>
+      <layer group="this" image="grass_1_42" x="0" y="0"/>
+      <layer group="this" image="grass_1_43" x="0" y="0"/>
+      <layer group="this" image="grass_1_44" x="0" y="0"/>
+      <layer group="this" image="grass_1_45" x="0" y="0"/>
+      <layer group="this" image="grass_1_46" x="0" y="0"/>
+      <layer group="this" image="grass_1_47" x="0" y="0"/>
+      <layer group="this" image="grass_1_48" x="0" y="0"/>
+      <layer group="this" image="grass_1_49" x="0" y="0"/>
+      <layer group="this" image="grass_1_50" x="0" y="0"/>
+      <layer group="this" image="grass_1_51" x="0" y="0"/>
+      <layer group="this" image="grass_1_52" x="0" y="0"/>
+      <layer group="this" image="grass_1_53" x="0" y="0"/>
+      <layer group="this" image="grass_1_54" x="0" y="0"/>
+      <layer group="this" image="grass_1_55" x="0" y="0"/>
+      <layer group="this" image="grass_1_56" x="0" y="0"/>
+      <layer group="this" image="grass_1_57" x="0" y="0"/>
+      <layer group="this" image="grass_1_58" x="0" y="0"/>
+      <layer group="this" image="grass_1_59" x="0" y="0"/>
+      <layer group="this" image="grass_1_60" x="0" y="0"/>
+      <layer group="this" image="grass_1_61" x="0" y="0"/>
+      <layer group="this" image="grass_1_62" x="0" y="0"/>
+      <layer group="this" image="grass_1_63" x="0" y="0"/>
+      <layer group="this" image="grass_1_64" x="0" y="0"/>
+    </image>
+    <!-- Files related to meadow -->
+    <image id="meadow_01" width="116" height="60" isometric="true">
+      <layer src="meadow_01"/>
+    </image>
+    <image id="meadow_02" width="116" height="64" isometric="true">
+      <layer src="meadow_02"/>
+    </image>
+    <image id="meadow_03" width="116" height="62" isometric="true">
+      <layer src="meadow_03"/>
+    </image>
+    <image id="meadow_04" width="116" height="62" isometric="true">
+      <layer src="meadow_04"/>
+    </image>
+    <image id="meadow_05" width="116" height="66" isometric="true">
+      <layer src="meadow_05"/>
+    </image>
+    <image id="meadow_06" width="116" height="64" isometric="true">
+      <layer src="meadow_06"/>
+    </image>
+    <image id="meadow_07" width="116" height="64" isometric="true">
+      <layer src="meadow_07"/>
+    </image>
+    <image id="meadow_08" width="116" height="62" isometric="true">
+      <layer src="meadow_08"/>
+    </image>
+    <image id="meadow_09" width="116" height="64" isometric="true">
+      <layer src="meadow_09"/>
+    </image>
+    <image id="meadow_10" width="116" height="66" isometric="true">
+      <layer src="meadow_10"/>
+    </image>
+    <image id="meadow_11" width="116" height="66" isometric="true">
+      <layer src="meadow_11"/>
+    </image>
+    <image id="meadow_12" width="116" height="64" isometric="true">
+      <layer src="meadow_12"/>
+    </image>
+    <!-- Files related to rock -->
+    <image id="rock_01" width="116" height="60" isometric="true">
+      <layer src="rock_01"/>
+    </image>
+    <image id="rock_02" width="116" height="64" isometric="true">
+      <layer src="rock_02"/>
+    </image>
+    <image id="rock_03" width="116" height="60" isometric="true">
+      <layer src="rock_03"/>
+    </image>
+    <image id="rock_04" width="116" height="68" isometric="true">
+      <layer src="rock_04"/>
+    </image>
+    <image id="rock_05" width="116" height="60" isometric="true">
+      <layer src="rock_05"/>
+    </image>
+    <image id="rock_06" width="116" height="62" isometric="true">
+      <layer src="rock_06"/>
+    </image>
+    <image id="rock_07" width="116" height="60" isometric="true">
+      <layer src="rock_07"/>
+    </image>
+    <image id="rock_08" width="116" height="60" isometric="true">
+      <layer src="rock_08"/>
+    </image>
+    <image id="rock_09" width="236" height="164" isometric="true">
+      <layer src="rock_09"/>
+    </image>
+    <image id="rock_10" width="236" height="136" isometric="true">
+      <layer src="rock_10"/>
+    </image>
+    <image id="rock_11" width="236" height="134" isometric="true">
+      <layer src="rock_11"/>
+    </image>
+    <image id="rock_12" width="236" height="146" isometric="true">
+      <layer src="rock_12"/>
+    </image>
+    <image id="rock_13" width="356" height="234" isometric="true">
+      <layer src="rock_13"/>
+    </image>
+    <image id="rock_14" width="356" height="234" isometric="true">
+      <layer src="rock_14"/>
+    </image>
+    <image id="rock_15" width="236" height="134" isometric="true">
+      <layer src="rock_15"/>
+    </image>
+    <!-- Files related to shrub -->
+    <image id="shrub_01" width="116" height="140" isometric="true">
+      <layer src="shrub_01"/>
+    </image>
+    <image id="shrub_02" width="116" height="128" isometric="true">
+      <layer src="shrub_02"/>
+    </image>
+    <image id="shrub_03" width="116" height="112" isometric="true">
+      <layer src="shrub_03"/>
+    </image>
+    <image id="shrub_04" width="116" height="120" isometric="true">
+      <layer src="shrub_04"/>
+    </image>
+    <image id="shrub_05" width="116" height="130" isometric="true">
+      <layer src="shrub_05"/>
+    </image>
+    <image id="shrub_06" width="116" height="94" isometric="true">
+      <layer src="shrub_06"/>
+    </image>
+    <image id="shrub_07" width="116" height="88" isometric="true">
+      <layer src="shrub_07"/>
+    </image>
+    <image id="shrub_08" width="116" height="86" isometric="true">
+      <layer src="shrub_08"/>
+    </image>
+    <!-- Files related to tree -->
+    <image id="tree_01" width="116" height="60" isometric="true">
+      <layer src="tree_01"/>
+    </image>
+    <image id="tree_02" width="116" height="62" isometric="true">
+      <layer src="tree_02"/>
+    </image>
+    <image id="tree_03" width="116" height="70" isometric="true">
+      <layer src="tree_03"/>
+    </image>
+    <image id="tree_04" width="116" height="84" isometric="true">
+      <layer src="tree_04"/>
+    </image>
+    <image id="tree_05" width="116" height="74" isometric="true">
+      <layer src="tree_05"/>
+    </image>
+    <image id="tree_06" width="116" height="82" isometric="true">
+      <layer src="tree_06"/>
+    </image>
+    <image id="tree_07" width="116" height="82" isometric="true">
+      <layer src="tree_07"/>
+    </image>
+    <image id="tree_08" width="116" height="60" isometric="true">
+      <layer src="tree_08"/>
+    </image>
+    <image id="tree_09" width="116" height="90" isometric="true">
+      <layer src="tree_09"/>
+    </image>
+    <image id="tree_10" width="116" height="74" isometric="true">
+      <layer src="tree_10"/>
+    </image>
+    <image id="tree_11" width="116" height="60" isometric="true">
+      <layer src="tree_11"/>
+    </image>
+    <image id="tree_12" width="116" height="78" isometric="true">
+      <layer src="tree_12"/>
+    </image>
+    <image id="tree_13" width="116" height="86" isometric="true">
+      <layer src="tree_13"/>
+    </image>
+    <image id="tree_14" width="116" height="88" isometric="true">
+      <layer src="tree_14"/>
+    </image>
+    <image id="tree_15" width="116" height="92" isometric="true">
+      <layer src="tree_15"/>
+    </image>
+    <image id="tree_16" width="116" height="98" isometric="true">
+      <layer src="tree_16"/>
+    </image>
+    <image id="tree_17" width="116" height="82" isometric="true">
+      <layer src="tree_17"/>
+    </image>
+    <image id="tree_18" width="116" height="84" isometric="true">
+      <layer src="tree_18"/>
+    </image>
+    <image id="tree_19" width="116" height="88" isometric="true">
+      <layer src="tree_19"/>
+    </image>
+    <image id="tree_20" width="116" height="80" isometric="true">
+      <layer src="tree_20"/>
+    </image>
+    <image id="tree_21" width="116" height="82" isometric="true">
+      <layer src="tree_21"/>
+    </image>
+    <image id="tree_22" width="116" height="80" isometric="true">
+      <layer src="tree_22"/>
+    </image>
+    <image id="tree_23" width="116" height="84" isometric="true">
+      <layer src="tree_23"/>
+    </image>
+    <image id="tree_24" width="116" height="70" isometric="true">
+      <layer src="tree_24"/>
+    </image>
+    <image id="tree_25" width="116" height="102" isometric="true">
+      <layer src="tree_25"/>
+    </image>
+    <image id="tree_26" width="116" height="80" isometric="true">
+      <layer src="tree_26"/>
+    </image>
+    <image id="tree_27" width="116" height="104" isometric="true">
+      <layer src="tree_27"/>
+    </image>
+    <image id="tree_28" width="116" height="84" isometric="true">
+      <layer src="tree_28"/>
+    </image>
+    <image id="tree_29" width="116" height="86" isometric="true">
+      <layer src="tree_29"/>
+    </image>
+    <image id="tree_30" width="116" height="134" isometric="true">
+      <layer src="tree_30"/>
+    </image>
+    <image id="tree_31" width="116" height="106" isometric="true">
+      <layer src="tree_31"/>
+    </image>
+    <image id="tree_32" width="116" height="102" isometric="true">
+      <layer src="tree_32"/>
+    </image>
+    <!-- Files related to ugly_grass -->
+    <image id="ugly_grass_01" src="ugly_grass_01"/>
+    <image id="ugly_grass_02" src="ugly_grass_02"/>
+    <image id="ugly_grass_03" src="ugly_grass_03"/>
+    <image id="ugly_grass_04" src="ugly_grass_04"/>
+    <image id="ugly_grass_05" src="ugly_grass_05"/>
+    <image id="ugly_grass_06" src="ugly_grass_06"/>
+    <image id="ugly_grass_07" src="ugly_grass_07"/>
+    <image id="ugly_grass_08" src="ugly_grass_08"/>
+    <image id="ugly_grass" src="ugly_grass_01">
+      <layer group="this" image="ugly_grass_01" x="0" y="0"/>
+      <layer group="this" image="ugly_grass_02" x="0" y="0"/>
+      <layer group="this" image="ugly_grass_03" x="0" y="0"/>
+      <layer group="this" image="ugly_grass_04" x="0" y="0"/>
+      <layer group="this" image="ugly_grass_05" x="0" y="0"/>
+      <layer group="this" image="ugly_grass_06" x="0" y="0"/>
+      <layer group="this" image="ugly_grass_07" x="0" y="0"/>
+      <layer group="this" image="ugly_grass_08" x="0" y="0"/>
+    </image>
+    <!-- Files related to water -->
+    <image id="water_01" src="water_01"/>
+    <image id="water_02" src="water_02"/>
+    <image id="water_03" src="water_03"/>
+    <image id="water_04" src="water_04"/>
+    <image id="water_05" src="water_05"/>
+    <image id="water_06" src="water_06"/>
+    <image id="water_07" src="water_07"/>
+    <image id="water_08" src="water_08"/>
+    <image id="water_09" src="water_09"/>
+    <image id="water_10" src="water_10"/>
+    <image id="water_11" src="water_11"/>
+    <image id="water_12" src="water_12"/>
+    <image id="water_13" src="water_13"/>
+    <image id="water_14" src="water_14"/>
+    <image id="water_15" src="water_15"/>
+    <image id="water_16" src="water_16"/>
+    <image id="water_17" src="water_17"/>
+    <image id="water_18" src="water_18"/>
+    <image id="water_19" src="water_19"/>
+    <image id="water_20" src="water_20"/>
+    <image id="water_21" src="water_21"/>
+    <image id="water_22" src="water_22"/>
+    <image id="water_23" src="water_23"/>
+    <image id="water_24" src="water_24"/>
+    <image id="water_25" src="water_25"/>
+    <image id="water_26" src="water_26"/>
+    <image id="water_27" src="water_27"/>
+    <image id="water_28" src="water_28"/>
+    <image id="water_29" src="water_29"/>
+    <image id="water_30" src="water_30"/>
+    <image id="water_31" src="water_31"/>
+    <image id="water_32" src="water_32"/>
+    <image id="water_33" src="water_33"/>
+    <image id="water_34" src="water_34"/>
+    <image id="water_35" src="water_35"/>
+    <image id="water_36" src="water_36"/>
+    <image id="water_37" src="water_37"/>
+    <image id="water_38" src="water_38"/>
+    <image id="water_39" src="water_39"/>
+    <image id="water_40" src="water_40"/>
+    <image id="water_41" src="water_41"/>
+    <image id="water_42" src="water_42"/>
+    <image id="water_43" src="water_43"/>
+    <image id="water_44" src="water_44"/>
+    <image id="water_45" src="water_45"/>
+    <image id="water_46" src="water_46"/>
+    <image id="water_47" src="water_47"/>
+    <image id="water_48" src="water_48"/>
+    <image id="water_49" src="water_49"/>
+    <image id="water_50" src="water_50"/>
+    <image id="water_51" src="water_51"/>
+    <image id="water_52" src="water_52"/>
+    <image id="water_53" src="water_53"/>
+    <image id="water_54" src="water_54"/>
+    <image id="water_55" src="water_55"/>
+    <image id="water_56" src="water_56"/>
+    <image id="water_57" src="water_57"/>
+    <image id="water_58" src="water_58"/>
+    <image id="water_59" src="water_59"/>
+    <image id="water_60" src="water_60"/>
+    <image id="water_61" src="water_61"/>
+    <image id="water_62" src="water_62"/>
+    <image id="water_63" src="water_63"/>
+    <image id="water_64" src="water_64"/>
+    <image id="water_65" src="water_65"/>
+    <image id="water_66" src="water_66"/>
+    <image id="water_67" src="water_67"/>
+    <image id="water_68" src="water_68"/>
+    <image id="water_69" src="water_69"/>
+    <image id="water_70" src="water_70"/>
+    <image id="water_71" src="water_71"/>
+    <image id="water_72" src="water_72"/>
+    <image id="water_73" src="water_73"/>
+    <image id="water_74" src="water_74"/>
+    <image id="water_75" src="water_75"/>
+    <image id="water_76" src="water_76"/>
+    <image id="water_77" src="water_77"/>
+    <image id="water_78" src="water_78"/>
+    <image id="water_79" src="water_79"/>
+    <image id="water_80" src="water_80"/>
+    <image id="water" src="water_01">
+      <layer group="this" image="water_01" x="0" y="0"/>
+      <layer group="this" image="water_02" x="0" y="0"/>
+      <layer group="this" image="water_03" x="0" y="0"/>
+      <layer group="this" image="water_04" x="0" y="0"/>
+      <layer group="this" image="water_05" x="0" y="0"/>
+      <layer group="this" image="water_06" x="0" y="0"/>
+      <layer group="this" image="water_07" x="0" y="0"/>
+      <layer group="this" image="water_08" x="0" y="0"/>
+      <layer group="this" image="water_09" x="0" y="0"/>
+      <layer group="this" image="water_10" x="0" y="0"/>
+      <layer group="this" image="water_11" x="0" y="0"/>
+      <layer group="this" image="water_12" x="0" y="0"/>
+      <layer group="this" image="water_13" x="0" y="0"/>
+      <layer group="this" image="water_14" x="0" y="0"/>
+      <layer group="this" image="water_15" x="0" y="0"/>
+      <layer group="this" image="water_16" x="0" y="0"/>
+      <layer group="this" image="water_17" x="0" y="0"/>
+      <layer group="this" image="water_18" x="0" y="0"/>
+      <layer group="this" image="water_19" x="0" y="0"/>
+      <layer group="this" image="water_20" x="0" y="0"/>
+      <layer group="this" image="water_21" x="0" y="0"/>
+      <layer group="this" image="water_22" x="0" y="0"/>
+      <layer group="this" image="water_23" x="0" y="0"/>
+      <layer group="this" image="water_24" x="0" y="0"/>
+      <layer group="this" image="water_25" x="0" y="0"/>
+      <layer group="this" image="water_26" x="0" y="0"/>
+      <layer group="this" image="water_27" x="0" y="0"/>
+      <layer group="this" image="water_28" x="0" y="0"/>
+      <layer group="this" image="water_29" x="0" y="0"/>
+      <layer group="this" image="water_30" x="0" y="0"/>
+      <layer group="this" image="water_31" x="0" y="0"/>
+      <layer group="this" image="water_32" x="0" y="0"/>
+      <layer group="this" image="water_33" x="0" y="0"/>
+      <layer group="this" image="water_34" x="0" y="0"/>
+      <layer group="this" image="water_35" x="0" y="0"/>
+      <layer group="this" image="water_36" x="0" y="0"/>
+      <layer group="this" image="water_37" x="0" y="0"/>
+      <layer group="this" image="water_38" x="0" y="0"/>
+      <layer group="this" image="water_39" x="0" y="0"/>
+      <layer group="this" image="water_40" x="0" y="0"/>
+      <layer group="this" image="water_41" x="0" y="0"/>
+      <layer group="this" image="water_42" x="0" y="0"/>
+      <layer group="this" image="water_43" x="0" y="0"/>
+      <layer group="this" image="water_44" x="0" y="0"/>
+      <layer group="this" image="water_45" x="0" y="0"/>
+      <layer group="this" image="water_46" x="0" y="0"/>
+      <layer group="this" image="water_47" x="0" y="0"/>
+      <layer group="this" image="water_48" x="0" y="0"/>
+      <layer group="this" image="water_49" x="0" y="0"/>
+      <layer group="this" image="water_50" x="0" y="0"/>
+      <layer group="this" image="water_51" x="0" y="0"/>
+      <layer group="this" image="water_52" x="0" y="0"/>
+      <layer group="this" image="water_53" x="0" y="0"/>
+      <layer group="this" image="water_54" x="0" y="0"/>
+      <layer group="this" image="water_55" x="0" y="0"/>
+      <layer group="this" image="water_56" x="0" y="0"/>
+      <layer group="this" image="water_57" x="0" y="0"/>
+      <layer group="this" image="water_58" x="0" y="0"/>
+      <layer group="this" image="water_59" x="0" y="0"/>
+      <layer group="this" image="water_60" x="0" y="0"/>
+      <layer group="this" image="water_61" x="0" y="0"/>
+      <layer group="this" image="water_62" x="0" y="0"/>
+      <layer group="this" image="water_63" x="0" y="0"/>
+      <layer group="this" image="water_64" x="0" y="0"/>
+      <layer group="this" image="water_65" x="0" y="0"/>
+      <layer group="this" image="water_66" x="0" y="0"/>
+      <layer group="this" image="water_67" x="0" y="0"/>
+      <layer group="this" image="water_68" x="0" y="0"/>
+      <layer group="this" image="water_69" x="0" y="0"/>
+      <layer group="this" image="water_70" x="0" y="0"/>
+      <layer group="this" image="water_71" x="0" y="0"/>
+      <layer group="this" image="water_72" x="0" y="0"/>
+      <layer group="this" image="water_73" x="0" y="0"/>
+      <layer group="this" image="water_74" x="0" y="0"/>
+      <layer group="this" image="water_75" x="0" y="0"/>
+      <layer group="this" image="water_76" x="0" y="0"/>
+      <layer group="this" image="water_77" x="0" y="0"/>
+      <layer group="this" image="water_78" x="0" y="0"/>
+      <layer group="this" image="water_79" x="0" y="0"/>
+      <layer group="this" image="water_80" x="0" y="0"/>
+    </image>
+</assetlist>

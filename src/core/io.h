@@ -3,6 +3,8 @@
 
 #include "core/dir.h"
 
+int io_read_file_into_buffer_asset(const char *filepath, void *buffer, int max_size);
+
 /**
  * @file
  * I/O functions.

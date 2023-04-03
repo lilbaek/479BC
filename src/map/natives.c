@@ -45,7 +45,7 @@ static int has_building_on_native_land(int x, int y, int size, int radius)
                     type != BUILDING_ROADBLOCK) {
                     return 1;
                 }
-            } else if (map_terrain_is(map_grid_offset(xx, yy), TERRAIN_AQUEDUCT | TERRAIN_WALL | TERRAIN_GARDEN)) {
+            } else if (map_terrain_is(map_grid_offset(xx, yy), TERRAIN_WALL | TERRAIN_GARDEN)) {
                 return 1;
             }
         }

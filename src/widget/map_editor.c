@@ -26,6 +26,7 @@
 #include "widget/city_figure.h"
 #include "widget/map_editor_pause_menu.h"
 #include "widget/map_editor_tool.h"
+#include "core/textures.h"
 
 
 static struct {
@@ -48,11 +49,11 @@ static void init_draw_context(void)
 {
     draw_context.advance_water_animation = 0;
     time_millis now = time_get_millis();
-    if (now - draw_context.last_water_animation_time > 60) {
+    if (now - draw_context.last_water_animation_time > 660) {
         draw_context.last_water_animation_time = now;
         draw_context.advance_water_animation = 1;
     }
-    draw_context.image_id_water_first = image_group(GROUP_TERRAIN_WATER);
+    draw_context.image_id_water_first = assets_get_image_id(TEXTURE_TERRAIN_NAME, TEXTURE_WATER);
     draw_context.image_id_water_last = 5 + draw_context.image_id_water_first;
     draw_context.scale = city_view_get_scale() / 100.0f;
 }
@@ -78,7 +79,7 @@ static void draw_footprint(int x, int y, int grid_offset)
     if (config_get(CONFIG_UI_SHOW_GRID) && draw_context.scale <= 2.0f) {
         static int grid_id = 0;
         if (!grid_id) {
-            grid_id = assets_get_image_id("UI", "Grid_Full");
+            grid_id = assets_get_image_id("UI", GRID_IMAGE);
         }
         image_draw(grid_id, x, y, COLOR_GRID, draw_context.scale);
     }

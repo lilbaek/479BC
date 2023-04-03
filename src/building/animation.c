@@ -36,7 +36,7 @@ int building_animation_offset(building *b, int image_id, int grid_offset)
             return 0;
         }
     }
-    if ((b->type == BUILDING_PREFECTURE || b->type == BUILDING_ENGINEERS_POST) && b->num_workers <= 0) {
+    if ((b->type == BUILDING_PREFECTURE || b->type == BUILDING_ENGINEERS_POST)) {
         return 0;
     }
     if (b->type == BUILDING_MARKET && b->num_workers <= 0) {
@@ -64,7 +64,7 @@ int building_animation_offset(building *b, int image_id, int grid_offset)
         b->type != BUILDING_HIPPODROME && b->num_workers <= 0) {
         return 0;
     }
-    if (b->type == BUILDING_GRANARY && b->num_workers < model_get_building(b->type)->laborers) {
+    if (b->type == BUILDING_GRANARY) {
         return 0;
     }
     if (building_monument_is_monument(b) && (b->type != BUILDING_ORACLE && b->type != BUILDING_NYMPHAEUM &&

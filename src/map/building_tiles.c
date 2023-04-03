@@ -5,7 +5,6 @@
 #include "city/view.h"
 #include "core/direction.h"
 #include "core/image.h"
-#include "map/aqueduct.h"
 #include "map/bridge.h"
 #include "map/building.h"
 #include "map/figure.h"
@@ -16,6 +15,8 @@
 #include "map/sprite.h"
 #include "map/terrain.h"
 #include "map/tiles.h"
+#include "assets/assets.h"
+#include "core/textures.h"
 
 void map_building_tiles_add_remove(int building_id, int x, int y, int size, int image_id, int terrain_to_add, int terrain_to_remove)
 {
@@ -132,14 +133,6 @@ void map_building_tiles_add_farm(int building_id, int x, int y, int crop_image_i
     set_crop_tile(building_id, x, y, 2, 0, crop_image_id, growth_per_tile);
 }
 
-int map_building_tiles_add_aqueduct(int x, int y)
-{
-    int grid_offset = map_grid_offset(x, y);
-    map_terrain_add(grid_offset, TERRAIN_AQUEDUCT);
-    map_property_clear_constructing(grid_offset);
-    return 1;
-}
-
 static int north_tile_grid_offset(int x, int y, int *size)
 {
     int grid_offset = map_grid_offset(x, y);
@@ -182,7 +175,6 @@ void map_building_tiles_remove(int building_id, int x, int y)
             map_property_set_multi_tile_size(grid_offset, 1);
             map_property_clear_multi_tile_xy(grid_offset);
             map_property_mark_draw_tile(grid_offset);
-            map_aqueduct_remove(grid_offset);
             map_building_set(grid_offset, 0);
             map_building_damage_clear(grid_offset);
             map_sprite_clear_tile(grid_offset);
@@ -191,7 +183,7 @@ void map_building_tiles_remove(int building_id, int x, int y)
                 map_tiles_set_water(x + dx, y + dy);
             } else {
                 map_image_set(grid_offset,
-                    image_group(GROUP_TERRAIN_UGLY_GRASS) +
+                              assets_get_image_id(TEXTURE_TERRAIN_NAME, TEXTURE_UGLY_GRASS) +
                     (map_random_get(grid_offset) & 7));
                 map_terrain_remove(grid_offset, TERRAIN_CLEARABLE & ~TERRAIN_HIGHWAY);
             }
@@ -221,7 +213,6 @@ void map_building_tiles_set_rubble(int building_id, int x, int y, int size)
             }
             map_property_clear_constructing(grid_offset);
             map_property_set_multi_tile_size(grid_offset, 1);
-            map_aqueduct_remove(grid_offset);
             map_building_set(grid_offset, 0);
             map_building_damage_clear(grid_offset);
             map_sprite_clear_tile(grid_offset);

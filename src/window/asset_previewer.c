@@ -30,6 +30,7 @@
 #include "sound/music.h"
 #include "window/popup_dialog.h"
 #include "window/select_list.h"
+#include "core/textures.h"
 
 #include <string.h>
 
@@ -348,7 +349,7 @@ static void draw_terrain_background(void)
         for (int x = 0; x < x_tiles; x++) {
             random_generate_next();
             int image_offset = random_byte() % NUM_GRASS_TILES;
-            int group = (random_byte_alt() & 1) ? GROUP_TERRAIN_GRASS_1 : GROUP_TERRAIN_GRASS_2;
+            int group = assets_get_image_id(TEXTURE_TERRAIN_NAME, TEXTURE_GRASS_1);
             image_draw_isometric_footprint(image_group(group) + image_offset, x_offset, y_offset,
                 COLOR_MASK_NONE, SCALE_NONE);
             x_offset += TILE_X_SIZE;

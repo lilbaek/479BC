@@ -6,7 +6,6 @@
 #include "building/monument.h"
 #include "building/list.h"
 #include "core/image.h"
-#include "map/aqueduct.h"
 #include "map/building_tiles.h"
 #include "map/data.h"
 #include "map/desirability.h"
@@ -73,116 +72,15 @@ void map_water_supply_update_houses(void)
     }
 }
 
-static void set_all_aqueducts_to_no_water(void)
-{
-    int grid_offset = map_data.start_offset;
-    for (int y = 0; y < map_data.height; y++, grid_offset += map_data.border_size) {
-        for (int x = 0; x < map_data.width; x++, grid_offset++) {
-            if (map_terrain_is(grid_offset, TERRAIN_AQUEDUCT)) {
-                map_aqueduct_set_water_access(grid_offset, 0);
-                int image_id = map_image_at(grid_offset);
-                if (image_id < image_group(GROUP_BUILDING_AQUEDUCT_NO_WATER)) {
-                    map_image_set(grid_offset, image_id + 15);
-                } else if(map_terrain_is(grid_offset, TERRAIN_HIGHWAY)) {
-                    image_id = map_tiles_highway_get_aqueduct_image(grid_offset);
-                    map_image_set(grid_offset, image_id);
-                }
-            }
-        }
-    }
-}
-
-static void fill_aqueducts_from_offset(int grid_offset)
-{
-    if (!map_terrain_is(grid_offset, TERRAIN_AQUEDUCT)) {
-        return;
-    }
-    memset(&queue, 0, sizeof(queue));
-    int guard = 0;
-    int next_offset;
-
-    do {
-        if (++guard >= GRID_SIZE * GRID_SIZE) {
-            break;
-        }
-        map_aqueduct_set_water_access(grid_offset, 1);
-        int image_id = map_image_at(grid_offset);
-        if (map_terrain_is(grid_offset, TERRAIN_HIGHWAY)) {
-            image_id = map_tiles_highway_get_aqueduct_image(grid_offset);
-            map_image_set(grid_offset, image_id);
-        } else if (image_id >= image_group(GROUP_BUILDING_AQUEDUCT_NO_WATER)) {
-            map_image_set(grid_offset, image_id - 15);
-        }
-        next_offset = -1;
-        for (int i = 0; i < 4; i++) {
-            int new_offset = grid_offset + ADJACENT_OFFSETS[i];
-            building *b = building_get(map_building_at(new_offset));
-            if (b->id && b->type == BUILDING_RESERVOIR) {
-                // check if aqueduct connects to reservoir --> doesn't connect to corner
-                int xy = map_property_multi_tile_xy(new_offset);
-                if (xy != EDGE_X0Y0 && xy != EDGE_X2Y0 && xy != EDGE_X0Y2 && xy != EDGE_X2Y2) {
-                    if (!b->has_water_access) {
-                        b->has_water_access = 2;
-                    }
-                }
-            } else if (map_terrain_is(new_offset, TERRAIN_AQUEDUCT)) {
-                if (!map_aqueduct_has_water_access_at(new_offset)) {
-                    if (next_offset == -1) {
-                        next_offset = new_offset;
-                    } else {
-                        queue.items[queue.tail++] = new_offset;
-                        if (queue.tail >= MAX_QUEUE) {
-                            queue.tail = 0;
-                        }
-                    }
-                }
-            }
-        }
-        if (next_offset == -1) {
-            if (queue.head == queue.tail) {
-                return;
-            }
-            next_offset = queue.items[queue.head++];
-            if (queue.head >= MAX_QUEUE) {
-                queue.head = 0;
-            }
-        }
-        grid_offset = next_offset;
-    } while (next_offset > -1);
-}
-
 void map_water_supply_update_reservoir_fountain(void)
 {
     map_terrain_remove_all(TERRAIN_FOUNTAIN_RANGE | TERRAIN_RESERVOIR_RANGE);
     // reservoirs
-    set_all_aqueducts_to_no_water();
     for (building *b = building_first_of_type(BUILDING_RESERVOIR); b; b = b->next_of_type) {
         if (b->state != BUILDING_STATE_IN_USE) {
             continue;
         }
-        if (map_terrain_exists_tile_in_area_with_type(b->x - 1, b->y - 1, 5, TERRAIN_WATER)) {
-            b->has_water_access = 2;
-        } else {
-            b->has_water_access = 0;
-        }
-    }
-    // fill reservoirs from full ones
-    int changed = 1;
-    static const int CONNECTOR_OFFSETS[] = { OFFSET(1,-1), OFFSET(3,1), OFFSET(1,3), OFFSET(-1,1) };
-    while (changed == 1) {
-        changed = 0;
-        for (building *b = building_first_of_type(BUILDING_RESERVOIR); b; b = b->next_of_type) {
-            if (b->state != BUILDING_STATE_IN_USE) {
-                continue;
-            }
-            if (b->has_water_access == 2) {
-                b->has_water_access = 1;
-                changed = 1;
-                for (int d = 0; d < 4; d++) {
-                    fill_aqueducts_from_offset(b->grid_offset + CONNECTOR_OFFSETS[d]);
-                }
-            }
-        }
+        b->has_water_access = 2;
     }
     // mark reservoir ranges
     for (building *b = building_first_of_type(BUILDING_RESERVOIR); b; b = b->next_of_type) {

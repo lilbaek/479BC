@@ -60,7 +60,7 @@ static void draw_background_images(void)
     int image_offset_y = (s_height - BACKGROUND_HEIGHT) / 2;
 
     if (s_width > BACKGROUND_WIDTH || s_height > BACKGROUND_HEIGHT) {
-        image_draw_fullscreen_background(image_group(GROUP_EMPIRE_MAP));
+        image_draw_fullscreen_background(assets_get_image_id("screens", "mission"));
         image_draw(image_group(GROUP_SELECT_MISSION_BACKGROUND), image_offset_x, image_offset_y,
             COLOR_MASK_NONE, SCALE_NONE);
         int image_border = assets_get_image_id("UI", "Mission Selection Border");
