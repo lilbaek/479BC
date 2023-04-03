@@ -8,21 +8,7 @@
  */
 typedef enum {
     LANGUAGE_UNKNOWN,
-    // Official Sierra versions
     LANGUAGE_ENGLISH,
-    LANGUAGE_FRENCH,
-    LANGUAGE_GERMAN,
-    LANGUAGE_ITALIAN,
-    LANGUAGE_SPANISH,
-    // Translations done by other publishers
-    LANGUAGE_JAPANESE,
-    LANGUAGE_KOREAN,
-    LANGUAGE_POLISH,
-    LANGUAGE_PORTUGUESE,
-    LANGUAGE_RUSSIAN,
-    LANGUAGE_SWEDISH,
-    LANGUAGE_SIMPLIFIED_CHINESE,
-    LANGUAGE_TRADITIONAL_CHINESE,
     LANGUAGE_MAX_ITEMS
 } language_type;
 
@@ -50,10 +36,5 @@ int locale_translate_money_dn(void);
  */
 int locale_paragraph_indent(void);
 
-/**
- * Returns whether we should use localized filenames for the "Citizen.sav", etc autosaves
- * @return Boolean true if the filenames should be translated, false if we should use English
- */
-int locale_translate_rank_autosaves(void);
 
 #endif // CORE_LOCALE_H

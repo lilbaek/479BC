@@ -222,7 +222,6 @@ void building_destroy_by_enemy(int x, int y, int grid_offset)
     }
     figure_tower_sentry_reroute();
     map_tiles_update_area_walls(x, y, 3);
-    map_tiles_update_region_aqueducts(x - 3, y - 3, x + 3, y + 3);
     map_routing_update_land();
     map_routing_update_walls();
 }

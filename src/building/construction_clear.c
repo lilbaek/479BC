@@ -8,7 +8,6 @@
 #include "figuretype/migrant.h"
 #include "game/undo.h"
 #include "graphics/window.h"
-#include "map/aqueduct.h"
 #include "map/bridge.h"
 #include "map/building.h"
 #include "map/building_tiles.h"
@@ -76,8 +75,6 @@ static int clear_land_confirmed(int measure_only, int x_start, int y_start, int 
                     continue;
                 } else if (map_terrain_is(grid_offset, TERRAIN_WATER)) { // keep the "bridge is free" bug from C3
                     continue;
-                } else if (map_terrain_is(grid_offset, TERRAIN_AQUEDUCT)) {
-                    items_placed++;
                 } else if (map_terrain_is(grid_offset, TERRAIN_HIGHWAY)) {
                     int next_highways_removed = map_tiles_clear_highway(grid_offset, measure_only);
                     highways_removed += next_highways_removed;
@@ -144,10 +141,6 @@ static int clear_land_confirmed(int measure_only, int x_start, int y_start, int 
                     game_undo_add_building(space);
                     space->state = BUILDING_STATE_DELETED_BY_PLAYER;
                 }
-            } else if (map_terrain_is(grid_offset, TERRAIN_AQUEDUCT)) {
-                map_terrain_remove(grid_offset, TERRAIN_CLEARABLE & ~TERRAIN_HIGHWAY);
-                items_placed++;
-                map_aqueduct_remove(grid_offset);
             } else if (map_terrain_is(grid_offset, TERRAIN_WATER)) {
                 if (!measure_only && map_bridge_count_figures(grid_offset) > 0) {
                     city_warning_show(WARNING_PEOPLE_ON_BRIDGE, NEW_WARNING_SLOT);
@@ -189,7 +182,6 @@ static int clear_land_confirmed(int measure_only, int x_start, int y_start, int 
         map_tiles_update_area_highways(x_min - 1, y_min - 1, radius);
         map_tiles_update_all_plazas();
         map_tiles_update_area_walls(x_min, y_min, radius);
-        map_tiles_update_region_aqueducts(x_min - 3, y_min - 3, x_max + 3, y_max + 3);
     }
     if (!measure_only) {
         map_routing_update_land();

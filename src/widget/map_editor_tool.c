@@ -8,6 +8,9 @@
 #include "input/scroll.h"
 #include "map/terrain.h"
 #include "scenario/property.h"
+#include "map/tiles.h"
+#include "core/textures.h"
+#include "assets/assets.h"
 
 #define MAX_TILES 4
 
@@ -19,14 +22,14 @@ static float scale = SCALE_NONE;
 static void offset_to_view_offset(int dx, int dy, int *view_dx, int *view_dy)
 {
     // we're assuming map is always oriented north
-    *view_dx = (dx - dy) * 30;
-    *view_dy = (dx + dy) * 15;
+    *view_dx = (dx - dy) * HALF_TILE_WIDTH_PIXELS;
+    *view_dy = (dx + dy) * HALF_TILE_HEIGHT_PIXELS;
 }
 
 static void draw_flat_tile(int x, int y, color_t color_mask)
 {
     if (color_mask == COLOR_MASK_GREEN && scenario_property_climate() != CLIMATE_DESERT) {
-        image_draw(image_group(GROUP_TERRAIN_FLAT_TILE), x, y, ALPHA_MASK_SEMI_TRANSPARENT & color_mask, scale);
+        image_draw(assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_FLAT_TILE), x, y, ALPHA_MASK_SEMI_TRANSPARENT & color_mask, scale);
     } else {
         image_blend_footprint_color(x, y, color_mask, scale);
     }
@@ -62,7 +65,7 @@ static void draw_building(const map_tile *tile, int x_view, int y_view, building
     if (blocked) {
         draw_partially_blocked(x_view, y_view, num_tiles, blocked_tiles);
     } else if (editor_tool_is_in_use()) {
-        int image_id = image_group(GROUP_TERRAIN_OVERLAY);
+        int image_id = assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_OVERLAY);
         for (int i = 0; i < num_tiles; i++) {
             int x_offset = x_view + X_VIEW_OFFSETS[i];
             int y_offset = y_view + Y_VIEW_OFFSETS[i];
@@ -87,7 +90,7 @@ static void draw_road(const map_tile *tile, int x, int y)
     if (map_terrain_is(grid_offset, TERRAIN_NOT_CLEAR)) {
         blocked = 1;
     } else {
-        image_id = image_group(GROUP_TERRAIN_ROAD);
+        image_id = assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_ROAD);
         if (!map_terrain_has_adjacent_x_with_type(grid_offset, TERRAIN_ROAD) &&
             map_terrain_has_adjacent_y_with_type(grid_offset, TERRAIN_ROAD)) {
             image_id++;
@@ -112,18 +115,6 @@ static void draw_brush(const map_tile *tile, int x, int y)
 {
     view_tile vt = {x, y};
     editor_tool_foreach_brush_tile(draw_brush_tile, &vt);
-}
-
-static void draw_access_ramp(const map_tile *tile, int x, int y)
-{
-    int orientation;
-    if (editor_tool_can_place_access_ramp(tile, &orientation)) {
-        int image_id = image_group(GROUP_TERRAIN_ACCESS_RAMP) + orientation;
-        draw_building_image(image_id, x, y);
-    } else {
-        int blocked[4] = {1, 1, 1, 1};
-        draw_partially_blocked(x, y, 4, blocked);
-    }
 }
 
 static void draw_map_flag(int x, int y, int is_ok)
@@ -162,11 +153,6 @@ void map_editor_tool_draw(const map_tile *tile)
         case TOOL_HERD_POINT:
             draw_map_flag(x, y, editor_tool_can_place_flag(type, tile, 0));
             break;
-
-        case TOOL_ACCESS_RAMP:
-            draw_access_ramp(tile, x, y);
-            break;
-
         case TOOL_GRASS:
         case TOOL_MEADOW:
         case TOOL_ROCKS:

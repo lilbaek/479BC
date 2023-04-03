@@ -44,7 +44,7 @@ static int parse_decimal_as_percentage(const char *str)
     return percentage;
 }
 
-int platform_parse_arguments(int argc, char **argv, augustus_args *output_args)
+int platform_parse_arguments(int argc, char **argv, Tiberius_args *output_args)
 {
     int ok = 1;
 
@@ -105,7 +105,7 @@ int platform_parse_arguments(int argc, char **argv, augustus_args *output_args)
     }
 
     if (!ok) {
-        SDL_Log("Usage: augustus [ARGS] [DATA_DIR]");
+        SDL_Log("Usage: tiberius [ARGS] [DATA_DIR]");
         SDL_Log("ARGS may be:");
         SDL_Log("--display-scale NUMBER");
         SDL_Log("          Scales the display by a factor of NUMBER. Number can be between 0.5 and 5");
@@ -113,7 +113,7 @@ int platform_parse_arguments(int argc, char **argv, augustus_args *output_args)
         SDL_Log("          Scales the mouse cursor by a factor of NUMBER. Number can be 1, 1.5 or 2");
         SDL_Log("--windowed");
         SDL_Log("          Forces the game to start in windowed mode");
-        SDL_Log("The last argument, if present, is interpreted as data directory for the Caesar 3 installation");
+        SDL_Log("The last argument, if present, is interpreted as data directory");
     }
     return ok;
 }

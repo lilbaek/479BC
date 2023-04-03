@@ -261,15 +261,6 @@ void window_building_draw_reservoir(building_info_context *c)
     window_building_draw_description_at(c, BLOCK_SIZE * c->height_blocks - 173, 107, text_id);
 }
 
-void window_building_draw_aqueduct(building_info_context *c)
-{
-    c->help_id = 60;
-    window_building_play_sound(c, "wavs/aquaduct.wav");
-    outer_panel_draw(c->x_offset, c->y_offset, c->width_blocks, c->height_blocks);
-    lang_text_draw_centered(141, 0, c->x_offset, c->y_offset + 10, BLOCK_SIZE * c->width_blocks, FONT_LARGE_BLACK);
-    window_building_draw_description_at(c, BLOCK_SIZE * c->height_blocks - 144, 141, c->aqueduct_has_water ? 1 : 2);
-}
-
 void window_building_draw_fountain(building_info_context *c)
 {
     c->help_id = 61;

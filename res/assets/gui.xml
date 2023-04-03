@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE assetlist>
+<assetlist name="gui">
+    <image id="button_anticlockwise_rotation" src="button_anticlockwise_rotation" />
+    <image id="button_aqueduct" src="button_aqueduct" />
+    <image id="button_clockwise_rotation" src="button_clockwise_rotation" />
+    <image id="button_education" src="button_education" />
+    <image id="button_engineering" src="button_engineering" />
+    <image id="button_entertainment" src="button_entertainment" />
+    <image id="button_farm" src="button_farm" />
+    <image id="button_fountain" src="button_fountain" />
+    <image id="button_garden" src="button_garden" />
+    <image id="button_goverment" src="button_goverment" />
+    <image id="button_grid" src="button_grid" />
+    <image id="button_health" src="button_health" />
+    <image id="button_industrial" src="button_industrial" />
+    <image id="button_materials" src="button_materials" />
+    <image id="button_religion" src="button_religion" />
+    <image id="button_reservoir" src="button_reservoir" />
+    <image id="button_reset_rotation" src="button_reset_rotation" />
+    <image id="button_road" src="button_road" />
+    <image id="button_security" src="button_security" />
+    <image id="button_shovel" src="button_shovel" />
+    <image id="button_tent" src="button_tent" />
+    <image id="button_water" src="button_water" />
+    <image id="button_well" src="button_well" />
+    <image id="button_workshop" src="button_workshop" />
+    <image id="default" src="default" />
+    <image id="minimap_bar" src="minimap_bar" />
+</assetlist>

@@ -34,7 +34,7 @@ static const char *get_c3_path(void)
 const char *android_show_c3_path_dialog(int again)
 {
     jni_function_handler handler;
-    if (jni_get_method_handler(CLASS_AUGUSTUS_ACTIVITY, "showDirectorySelection", "(Z)V", &handler)) {
+    if (jni_get_method_handler(CLASS_Tiberius_ACTIVITY, "showDirectorySelection", "(Z)V", &handler)) {
         (*handler.env)->CallVoidMethod(handler.env, handler.activity, handler.method,
             again ? JNI_TRUE : JNI_FALSE);
     }
@@ -53,7 +53,7 @@ float android_get_screen_density(void)
 {
     jni_function_handler handler;
     float result = 1.0f;
-    if (jni_get_method_handler(CLASS_AUGUSTUS_ACTIVITY, "getScreenDensity", "()F", &handler)) {
+    if (jni_get_method_handler(CLASS_Tiberius_ACTIVITY, "getScreenDensity", "()F", &handler)) {
         result = (float) (*handler.env)->CallFloatMethod(handler.env, handler.activity, handler.method);
     }
     jni_destroy_function_handler(&handler);
@@ -65,7 +65,7 @@ int android_get_file_descriptor(const char *filename, const char *mode)
     int result = 0;
     jni_function_handler handler;
     if (!jni_get_static_method_handler(CLASS_FILE_MANAGER, "openFileDescriptor",
-        "(Lcom/github/Keriew/augustus/AugustusMainActivity;Ljava/lang/String;Ljava/lang/String;)I", &handler)) {
+        "(Lcom/github/Keriew/tiberius/TiberiusMainActivity;Ljava/lang/String;Ljava/lang/String;)I", &handler)) {
         jni_destroy_function_handler(&handler);
         return 0;
     }
@@ -108,7 +108,7 @@ int android_get_directory_contents(const char *dir, int type, const char *extens
     }
     jni_function_handler handler;
     if (!jni_get_static_method_handler(CLASS_FILE_MANAGER, "getDirectoryFileList",
-        "(Lcom/github/Keriew/augustus/AugustusMainActivity;Ljava/lang/String;ILjava/lang/String;)[Ljava/lang/String;",
+        "(Lcom/github/Keriew/tiberius/TiberiusMainActivity;Ljava/lang/String;ILjava/lang/String;)[Ljava/lang/String;",
         &handler)) {
         jni_destroy_function_handler(&handler);
         return LIST_ERROR;
@@ -141,7 +141,7 @@ int android_remove_file(const char *filename)
     int result = 0;
     jni_function_handler handler;
     if (!jni_get_static_method_handler(CLASS_FILE_MANAGER, "deleteFile",
-        "(Lcom/github/Keriew/augustus/AugustusMainActivity;Ljava/lang/String;)Z", &handler)) {
+        "(Lcom/github/Keriew/tiberius/TiberiusMainActivity;Ljava/lang/String;)Z", &handler)) {
         jni_destroy_function_handler(&handler);
         return 0;
     }
@@ -154,7 +154,7 @@ int android_remove_file(const char *filename)
     return result;
 }
 
-JNIEXPORT void JNICALL Java_com_github_Keriew_augustus_AugustusMainActivity_gotDirectory(JNIEnv *env, jobject thiz)
+JNIEXPORT void JNICALL Java_com_github_Keriew_Tiberius_TiberiusMainActivity_gotDirectory(JNIEnv *env, jobject thiz)
 {
     has_directory = 1;
 }

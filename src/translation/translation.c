@@ -14,8 +14,7 @@ static struct {
     int buf_index;
 } data;
 
-static void set_strings(const translation_string *strings, int num_strings, int is_default)
-{
+static void set_strings(const translation_string *strings, int num_strings, int is_default) {
     for (int i = 0; i < num_strings; i++) {
         const translation_string *string = &strings[i];
         if (data.strings[string->key]) {
@@ -31,8 +30,7 @@ static void set_strings(const translation_string *strings, int num_strings, int 
     }
 }
 
-void translation_load(language_type language)
-{
+void translation_load(language_type language) {
     const translation_string *strings = NULL;
     int num_strings = 0;
     const translation_string *default_strings = NULL;
@@ -43,53 +41,19 @@ void translation_load(language_type language)
         case LANGUAGE_ENGLISH:
             translation_english(&strings, &num_strings);
             break;
-        case LANGUAGE_FRENCH:
-            translation_french(&strings, &num_strings);
-            break;
-        case LANGUAGE_GERMAN:
-            translation_german(&strings, &num_strings);
-            break;
-        case LANGUAGE_ITALIAN:
-            translation_italian(&strings, &num_strings);
-            break;
-        case LANGUAGE_JAPANESE:
-            translation_japanese(&strings, &num_strings);
-            break;
-        case LANGUAGE_KOREAN:
-            translation_korean(&strings, &num_strings);
-            break;
-        case LANGUAGE_POLISH:
-            translation_polish(&strings, &num_strings);
-            break;
-        case LANGUAGE_PORTUGUESE:
-            translation_portuguese(&strings, &num_strings);
-            break;
-        case LANGUAGE_RUSSIAN:
-            translation_russian(&strings, &num_strings);
-            break;
-        case LANGUAGE_SPANISH:
-            translation_spanish(&strings, &num_strings);
-            break;
-        case LANGUAGE_SWEDISH:
-            translation_swedish(&strings, &num_strings);
-            break;
-        case LANGUAGE_SIMPLIFIED_CHINESE:
-            translation_simplified_chinese(&strings, &num_strings);
-            break;
-        case LANGUAGE_TRADITIONAL_CHINESE:
-            translation_traditional_chinese(&strings, &num_strings);
-            break;
         default:
             log_error("Invalid translation selected", 0, 0);
     }
-
     memset(data.strings, 0, sizeof(data.strings));
     data.buf_index = 0;
     set_strings(strings, num_strings, 0);
     set_strings(default_strings, num_default_strings, 1);
 }
 
-uint8_t *translation_for(translation_key key)
-{
+uint8_t *translation_for(translation_key key) {
     return data.strings[key];
+}
+
+char *gettext(char *string) {
+    return string;
 }

@@ -99,4 +99,6 @@ const uint8_t *lang_get_string(int group, int index);
  */
 const lang_message *lang_get_message(int id);
 
+char* get_building_translation(int building_type);
+
 #endif // CORE_LANG_H

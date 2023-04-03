@@ -1,0 +1,260 @@
+<?xml version="1.0"?>
+<!DOCTYPE assetlist>
+<assetlist name="basic">
+    <!-- Files related to flat_tile -->
+    <image id="flat_tile_01" src="flat_tile_01"/>
+    <image id="flat_tile" src="flat_tile_01">
+      <layer group="this" image="flat_tile_01" x="0" y="0"/>
+    </image>
+    <!-- Files related to overlay -->
+    <image id="overlay_01" src="overlay_01"/>
+    <image id="overlay_02" src="overlay_02"/>
+    <image id="overlay_03" src="overlay_03"/>
+    <image id="overlay_04" src="overlay_04"/>
+    <image id="overlay_05" src="overlay_05"/>
+    <image id="overlay_06" src="overlay_06"/>
+    <image id="overlay_07" src="overlay_07"/>
+    <image id="overlay_08" src="overlay_08"/>
+    <image id="overlay_09" src="overlay_09"/>
+    <image id="overlay_10" src="overlay_10"/>
+    <image id="overlay_11" src="overlay_11"/>
+    <image id="overlay_12" src="overlay_12"/>
+    <image id="overlay_13" src="overlay_13"/>
+    <image id="overlay_14" src="overlay_14"/>
+    <image id="overlay_15" src="overlay_15"/>
+    <image id="overlay_16" src="overlay_16"/>
+    <image id="overlay_17" src="overlay_17"/>
+    <image id="overlay_18" src="overlay_18"/>
+    <image id="overlay_19" src="overlay_19"/>
+    <image id="overlay_20" src="overlay_20"/>
+    <image id="overlay_21" src="overlay_21"/>
+    <image id="overlay_22" src="overlay_22"/>
+    <image id="overlay_23" src="overlay_23"/>
+    <image id="overlay_24" src="overlay_24"/>
+    <image id="overlay_25" src="overlay_25"/>
+    <image id="overlay_26" src="overlay_26"/>
+    <image id="overlay_27" src="overlay_27"/>
+    <image id="overlay_28" src="overlay_28"/>
+    <image id="overlay_29" src="overlay_29"/>
+    <image id="overlay_30" src="overlay_30"/>
+    <image id="overlay_31" src="overlay_31"/>
+    <image id="overlay_32" src="overlay_32"/>
+    <image id="overlay_33" src="overlay_33"/>
+    <image id="overlay_34" src="overlay_34"/>
+    <image id="overlay_35" src="overlay_35"/>
+    <image id="overlay_36" src="overlay_36"/>
+    <image id="overlay_37" src="overlay_37"/>
+    <image id="overlay_38" src="overlay_38"/>
+    <image id="overlay_39" src="overlay_39"/>
+    <image id="overlay_40" src="overlay_40"/>
+    <image id="overlay_41" src="overlay_41"/>
+    <image id="overlay_42" src="overlay_42"/>
+    <image id="overlay_43" src="overlay_43"/>
+    <image id="overlay" src="overlay_01">
+      <layer group="this" image="overlay_01" x="0" y="0"/>
+      <layer group="this" image="overlay_02" x="0" y="0"/>
+      <layer group="this" image="overlay_03" x="0" y="0"/>
+      <layer group="this" image="overlay_04" x="0" y="0"/>
+      <layer group="this" image="overlay_05" x="0" y="0"/>
+      <layer group="this" image="overlay_06" x="0" y="0"/>
+      <layer group="this" image="overlay_07" x="0" y="0"/>
+      <layer group="this" image="overlay_08" x="0" y="0"/>
+      <layer group="this" image="overlay_09" x="0" y="0"/>
+      <layer group="this" image="overlay_10" x="0" y="0"/>
+      <layer group="this" image="overlay_11" x="0" y="0"/>
+      <layer group="this" image="overlay_12" x="0" y="0"/>
+      <layer group="this" image="overlay_13" x="0" y="0"/>
+      <layer group="this" image="overlay_14" x="0" y="0"/>
+      <layer group="this" image="overlay_15" x="0" y="0"/>
+      <layer group="this" image="overlay_16" x="0" y="0"/>
+      <layer group="this" image="overlay_17" x="0" y="0"/>
+      <layer group="this" image="overlay_18" x="0" y="0"/>
+      <layer group="this" image="overlay_19" x="0" y="0"/>
+      <layer group="this" image="overlay_20" x="0" y="0"/>
+      <layer group="this" image="overlay_21" x="0" y="0"/>
+      <layer group="this" image="overlay_22" x="0" y="0"/>
+      <layer group="this" image="overlay_23" x="0" y="0"/>
+      <layer group="this" image="overlay_24" x="0" y="0"/>
+      <layer group="this" image="overlay_25" x="0" y="0"/>
+      <layer group="this" image="overlay_26" x="0" y="0"/>
+      <layer group="this" image="overlay_27" x="0" y="0"/>
+      <layer group="this" image="overlay_28" x="0" y="0"/>
+      <layer group="this" image="overlay_29" x="0" y="0"/>
+      <layer group="this" image="overlay_30" x="0" y="0"/>
+      <layer group="this" image="overlay_31" x="0" y="0"/>
+      <layer group="this" image="overlay_32" x="0" y="0"/>
+      <layer group="this" image="overlay_33" x="0" y="0"/>
+      <layer group="this" image="overlay_34" x="0" y="0"/>
+      <layer group="this" image="overlay_35" x="0" y="0"/>
+      <layer group="this" image="overlay_36" x="0" y="0"/>
+      <layer group="this" image="overlay_37" x="0" y="0"/>
+      <layer group="this" image="overlay_38" x="0" y="0"/>
+      <layer group="this" image="overlay_39" x="0" y="0"/>
+      <layer group="this" image="overlay_40" x="0" y="0"/>
+      <layer group="this" image="overlay_41" x="0" y="0"/>
+      <layer group="this" image="overlay_42" x="0" y="0"/>
+      <layer group="this" image="overlay_43" x="0" y="0"/>
+    </image>
+    <!-- Files related to plaza -->
+    <image id="plaza_01" width="116" height="60" isometric="true">
+      <layer src="plaza_01"/>
+    </image>
+    <image id="plaza_02" width="116" height="60" isometric="true">
+      <layer src="plaza_02"/>
+    </image>
+    <image id="plaza_03" width="116" height="60" isometric="true">
+      <layer src="plaza_03"/>
+    </image>
+    <image id="plaza_04" width="116" height="60" isometric="true">
+      <layer src="plaza_04"/>
+    </image>
+    <image id="plaza_05" width="116" height="60" isometric="true">
+      <layer src="plaza_05"/>
+    </image>
+    <image id="plaza_06" width="116" height="60" isometric="true">
+      <layer src="plaza_06"/>
+    </image>
+    <image id="plaza_07" width="240" height="124" isometric="true">
+      <layer src="plaza_07"/>
+    </image>
+    <image id="plaza_08" width="240" height="124" isometric="true">
+      <layer src="plaza_08"/>
+    </image>
+    <!-- Files related to road -->
+    <image id="road_01" src="road_01"/>
+    <image id="road_02" src="road_02"/>
+    <image id="road_03" src="road_03"/>
+    <image id="road_04" src="road_04"/>
+    <image id="road_05" src="road_05"/>
+    <image id="road_06" src="road_06"/>
+    <image id="road_07" src="road_07"/>
+    <image id="road_08" src="road_08"/>
+    <image id="road_09" src="road_09"/>
+    <image id="road_10" src="road_10"/>
+    <image id="road_11" src="road_11"/>
+    <image id="road_12" src="road_12"/>
+    <image id="road_13" src="road_13"/>
+    <image id="road_14" src="road_14"/>
+    <image id="road_15" src="road_15"/>
+    <image id="road_16" src="road_16"/>
+    <image id="road_17" src="road_17"/>
+    <image id="road_18" src="road_18"/>
+    <image id="road_19" src="road_19"/>
+    <image id="road_20" src="road_20"/>
+    <image id="road_21" src="road_21"/>
+    <image id="road_22" src="road_22"/>
+    <image id="road_23" src="road_23"/>
+    <image id="road_24" src="road_24"/>
+    <image id="road_25" src="road_25"/>
+    <image id="road_26" src="road_26"/>
+    <image id="road_27" src="road_27"/>
+    <image id="road_28" src="road_28"/>
+    <image id="road_29" src="road_29"/>
+    <image id="road_30" src="road_30"/>
+    <image id="road_31" src="road_31"/>
+    <image id="road_32" src="road_32"/>
+    <image id="road_33" src="road_33"/>
+    <image id="road_34" src="road_34"/>
+    <image id="road_35" src="road_35"/>
+    <image id="road_36" src="road_36"/>
+    <image id="road_37" src="road_37"/>
+    <image id="road_38" src="road_38"/>
+    <image id="road_39" src="road_39"/>
+    <image id="road_40" src="road_40"/>
+    <image id="road_41" src="road_41"/>
+    <image id="road_42" src="road_42"/>
+    <image id="road_43" src="road_43"/>
+    <image id="road_44" src="road_44"/>
+    <image id="road_45" src="road_45"/>
+    <image id="road_46" src="road_46"/>
+    <image id="road_47" src="road_47"/>
+    <image id="road_48" src="road_48"/>
+    <image id="road_49" src="road_49"/>
+    <image id="road_50" src="road_50"/>
+    <image id="road_51" src="road_51"/>
+    <image id="road_52" src="road_52"/>
+    <image id="road_53" src="road_53"/>
+    <image id="road_54" src="road_54"/>
+    <image id="road_55" src="road_55"/>
+    <image id="road_56" src="road_56"/>
+    <image id="road_57" src="road_57"/>
+    <image id="road_58" src="road_58"/>
+    <image id="road_59" src="road_59"/>
+    <image id="road_60" src="road_60"/>
+    <image id="road_61" src="road_61"/>
+    <image id="road_62" src="road_62"/>
+    <image id="road_63" src="road_63"/>
+    <image id="road_64" src="road_64"/>
+    <image id="road_65" src="road_65"/>
+    <image id="road_66" src="road_66"/>
+    <image id="road_67" src="road_67"/>
+    <image id="road" src="road_01">
+      <layer group="this" image="road_01" x="0" y="0"/>
+      <layer group="this" image="road_02" x="0" y="0"/>
+      <layer group="this" image="road_03" x="0" y="0"/>
+      <layer group="this" image="road_04" x="0" y="0"/>
+      <layer group="this" image="road_05" x="0" y="0"/>
+      <layer group="this" image="road_06" x="0" y="0"/>
+      <layer group="this" image="road_07" x="0" y="0"/>
+      <layer group="this" image="road_08" x="0" y="0"/>
+      <layer group="this" image="road_09" x="0" y="0"/>
+      <layer group="this" image="road_10" x="0" y="0"/>
+      <layer group="this" image="road_11" x="0" y="0"/>
+      <layer group="this" image="road_12" x="0" y="0"/>
+      <layer group="this" image="road_13" x="0" y="0"/>
+      <layer group="this" image="road_14" x="0" y="0"/>
+      <layer group="this" image="road_15" x="0" y="0"/>
+      <layer group="this" image="road_16" x="0" y="0"/>
+      <layer group="this" image="road_17" x="0" y="0"/>
+      <layer group="this" image="road_18" x="0" y="0"/>
+      <layer group="this" image="road_19" x="0" y="0"/>
+      <layer group="this" image="road_20" x="0" y="0"/>
+      <layer group="this" image="road_21" x="0" y="0"/>
+      <layer group="this" image="road_22" x="0" y="0"/>
+      <layer group="this" image="road_23" x="0" y="0"/>
+      <layer group="this" image="road_24" x="0" y="0"/>
+      <layer group="this" image="road_25" x="0" y="0"/>
+      <layer group="this" image="road_26" x="0" y="0"/>
+      <layer group="this" image="road_27" x="0" y="0"/>
+      <layer group="this" image="road_28" x="0" y="0"/>
+      <layer group="this" image="road_29" x="0" y="0"/>
+      <layer group="this" image="road_30" x="0" y="0"/>
+      <layer group="this" image="road_31" x="0" y="0"/>
+      <layer group="this" image="road_32" x="0" y="0"/>
+      <layer group="this" image="road_33" x="0" y="0"/>
+      <layer group="this" image="road_34" x="0" y="0"/>
+      <layer group="this" image="road_35" x="0" y="0"/>
+      <layer group="this" image="road_36" x="0" y="0"/>
+      <layer group="this" image="road_37" x="0" y="0"/>
+      <layer group="this" image="road_38" x="0" y="0"/>
+      <layer group="this" image="road_39" x="0" y="0"/>
+      <layer group="this" image="road_40" x="0" y="0"/>
+      <layer group="this" image="road_41" x="0" y="0"/>
+      <layer group="this" image="road_42" x="0" y="0"/>
+      <layer group="this" image="road_43" x="0" y="0"/>
+      <layer group="this" image="road_44" x="0" y="0"/>
+      <layer group="this" image="road_45" x="0" y="0"/>
+      <layer group="this" image="road_46" x="0" y="0"/>
+      <layer group="this" image="road_47" x="0" y="0"/>
+      <layer group="this" image="road_48" x="0" y="0"/>
+      <layer group="this" image="road_49" x="0" y="0"/>
+      <layer group="this" image="road_50" x="0" y="0"/>
+      <layer group="this" image="road_51" x="0" y="0"/>
+      <layer group="this" image="road_52" x="0" y="0"/>
+      <layer group="this" image="road_53" x="0" y="0"/>
+      <layer group="this" image="road_54" x="0" y="0"/>
+      <layer group="this" image="road_55" x="0" y="0"/>
+      <layer group="this" image="road_56" x="0" y="0"/>
+      <layer group="this" image="road_57" x="0" y="0"/>
+      <layer group="this" image="road_58" x="0" y="0"/>
+      <layer group="this" image="road_59" x="0" y="0"/>
+      <layer group="this" image="road_60" x="0" y="0"/>
+      <layer group="this" image="road_61" x="0" y="0"/>
+      <layer group="this" image="road_62" x="0" y="0"/>
+      <layer group="this" image="road_63" x="0" y="0"/>
+      <layer group="this" image="road_64" x="0" y="0"/>
+      <layer group="this" image="road_65" x="0" y="0"/>
+      <layer group="this" image="road_66" x="0" y="0"/>
+      <layer group="this" image="road_67" x="0" y="0"/>
+    </image>
+</assetlist>

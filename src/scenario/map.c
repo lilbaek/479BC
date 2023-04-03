@@ -6,8 +6,9 @@
 
 void scenario_map_init(void)
 {
+    int offset = scenario.map.grid_start;
     map_grid_init(scenario.map.width, scenario.map.height,
-                  scenario.map.grid_start, scenario.map.grid_border_size);
+                  offset, scenario.map.grid_border_size);
 }
 
 int scenario_map_size(void)

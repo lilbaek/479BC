@@ -23,7 +23,6 @@
 #include "graphics/text.h"
 #include "graphics/window.h"
 #include "input/input.h"
-#include "map/aqueduct.h"
 #include "map/building.h"
 #include "map/figure.h"
 #include "map/grid.h"
@@ -78,8 +77,6 @@ static int get_height_id(void)
 {
     if (context.type == BUILDING_INFO_TERRAIN) {
         switch (context.terrain_type) {
-            case TERRAIN_INFO_AQUEDUCT:
-                return 4;
             case TERRAIN_INFO_RUBBLE:
             case TERRAIN_INFO_WALL:
             case TERRAIN_INFO_GARDEN:
@@ -186,7 +183,6 @@ static int get_height_id(void)
                 return 6;
 
             case BUILDING_MESS_HALL:
-            case BUILDING_CITY_MINT:
                 return 7;
 
             case BUILDING_GRAND_TEMPLE_CERES:
@@ -251,8 +247,6 @@ static void init(int grid_offset)
     context.building_id = map_building_at(grid_offset);
     context.rubble_building_type = map_rubble_building_type(grid_offset);
     context.has_reservoir_pipes = map_terrain_is(grid_offset, TERRAIN_RESERVOIR_RANGE);
-    context.aqueduct_has_water = map_aqueduct_has_water_access_at(grid_offset);
-
     city_resource_determine_available();
     context.type = BUILDING_INFO_TERRAIN;
     context.figure.drawn = 0;
@@ -287,9 +281,7 @@ static void init(int grid_offset)
         context.terrain_type = TERRAIN_INFO_GARDEN;
     } else if ((map_terrain_get(grid_offset) & (TERRAIN_ROAD | TERRAIN_BUILDING)) == TERRAIN_ROAD) {
         context.terrain_type = TERRAIN_INFO_ROAD;
-    } else if (map_terrain_is(grid_offset, TERRAIN_AQUEDUCT)) {
-        context.terrain_type = TERRAIN_INFO_AQUEDUCT;
-    } else if (map_terrain_is(grid_offset, TERRAIN_RUBBLE)) {
+    }  else if (map_terrain_is(grid_offset, TERRAIN_RUBBLE)) {
         context.terrain_type = TERRAIN_INFO_RUBBLE;
     } else if (map_terrain_is(grid_offset, TERRAIN_WALL)) {
         context.terrain_type = TERRAIN_INFO_WALL;
@@ -796,8 +788,6 @@ static void draw_foreground(void)
             } else {
                 window_building_draw_garden_gate_foreground(&context);
             }
-        } else if (btype == BUILDING_CITY_MINT) {
-            window_building_draw_city_mint_foreground(&context);
         }
 
         if (building_monument_is_unfinished_monument(b)) {
@@ -893,8 +883,6 @@ static int handle_specific_building_info_mouse(const mouse *m)
             } else {
                 return window_building_handle_mouse_garden_gate(m, &context);
             }
-        } else if (btype == BUILDING_CITY_MINT) {
-            return window_building_handle_mouse_city_mint(m, &context);
         } else if (building_is_primary_product_producer(btype)) {
             return window_building_handle_mouse_primary_product_producer(m, &context);
         }

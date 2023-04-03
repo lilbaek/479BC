@@ -11,6 +11,8 @@
 
 #include "SDL.h"
 
+#define DRAW_FPS
+
 #ifdef DRAW_FPS
 static struct {
     int frame_count;

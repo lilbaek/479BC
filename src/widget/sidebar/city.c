@@ -33,8 +33,6 @@
 #include "window/mission_briefing.h"
 #include "window/overlay_menu.h"
 
-#define MINIMAP_Y_OFFSET 59
-
 static void button_overlay(int param1, int param2);
 static void button_collapse_expand(int param1, int param2);
 static void button_build(int submenu, int param2);
@@ -88,15 +86,6 @@ static image_button buttons_build_expanded[] = {
     {13, 421, 39, 26, IB_NORMAL, GROUP_SIDEBAR_BUTTONS, 48, button_undo, button_none, 0, 0, 1},
     {63, 421, 39, 26, IB_NORMAL, GROUP_MESSAGE_ICON, 18, button_messages, button_help, 0, MESSAGE_DIALOG_MESSAGES, 1},
     {113, 421, 39, 26, IB_BUILD, GROUP_MESSAGE_ICON, 22, button_go_to_problem, button_none, 0, 0, 1},
-};
-
-static image_button buttons_top_expanded[] = {
-    {7, 155, 71, 23, IB_NORMAL, GROUP_SIDEBAR_ADVISORS_EMPIRE, 0, button_advisors, button_none, 0, 0, 1},
-    {84, 155, 71, 23, IB_NORMAL, GROUP_SIDEBAR_ADVISORS_EMPIRE, 3, button_empire, button_help, 0, MESSAGE_DIALOG_EMPIRE_MAP, 1},
-    {7, 184, 33, 22, IB_NORMAL, 0, 0, button_toggle_grid, button_none, 0, 0, 1, "UI", "Toggle Grid Button" },
-    {46, 184, 33, 22, IB_NORMAL, GROUP_SIDEBAR_BRIEFING_ROTATE_BUTTONS, 3, button_rotate_north, button_none, 0, 0, 1},
-    {84, 184, 33, 22, IB_NORMAL, GROUP_SIDEBAR_BRIEFING_ROTATE_BUTTONS, 6, button_rotate, button_none, 0, 0, 1},
-    {123, 184, 33, 22, IB_NORMAL, GROUP_SIDEBAR_BRIEFING_ROTATE_BUTTONS, 9, button_rotate, button_none, 1, 0, 1},
 };
 
 static struct {
@@ -154,7 +143,6 @@ static void draw_buttons_expanded(int x_offset)
     buttons_build_expanded[12].enabled = game_can_undo();
     image_buttons_draw(x_offset, 24, buttons_overlays_collapse_sidebar, 2);
     image_buttons_draw(x_offset, 24, buttons_build_expanded, 15);
-    image_buttons_draw(x_offset, 24, buttons_top_expanded, 6);
 }
 
 static void draw_collapsed_background(void)
@@ -172,9 +160,6 @@ static void draw_expanded_background(int x_offset)
     draw_overlay_text(x_offset + 4);
     draw_number_of_messages(x_offset);
     image_draw(window_build_menu_image(), x_offset + 6, 239, COLOR_MASK_NONE, SCALE_NONE);
-    widget_minimap_update(0);
-    widget_minimap_draw_decorated(x_offset + 8, MINIMAP_Y_OFFSET, MINIMAP_WIDTH, MINIMAP_HEIGHT);
-
     draw_sidebar_remainder(x_offset, 0);
 }
 
@@ -214,7 +199,6 @@ void widget_sidebar_city_draw_foreground(void)
         int x_offset = sidebar_common_get_x_offset_expanded();
         draw_buttons_expanded(x_offset);
         draw_overlay_text(x_offset + 4);
-        widget_minimap_draw_decorated(x_offset + 8, MINIMAP_Y_OFFSET, MINIMAP_WIDTH, MINIMAP_HEIGHT);
         draw_number_of_messages(x_offset);
     }
     sidebar_extra_draw_foreground();
@@ -240,9 +224,6 @@ int widget_sidebar_city_handle_mouse(const mouse *m)
         }
     }
     else {
-        if (widget_minimap_handle_mouse(m)) {
-            return 1;
-        }
         int x_offset = sidebar_common_get_x_offset_expanded();
         handled |= image_buttons_handle_mouse(m, x_offset, 24, buttons_overlays_collapse_sidebar, 2, &button_id);
         if (button_id) {
@@ -251,10 +232,6 @@ int widget_sidebar_city_handle_mouse(const mouse *m)
         handled |= image_buttons_handle_mouse(m, x_offset, 24, buttons_build_expanded, 15, &button_id);
         if (button_id) {
             data.focus_button_for_tooltip = button_id + 19;
-        }
-        handled |= image_buttons_handle_mouse(m, x_offset, 24, buttons_top_expanded, 6, &button_id);
-        if (button_id) {
-            data.focus_button_for_tooltip = button_id + 39;
         }
         handled |= sidebar_extra_handle_mouse(m);
     }

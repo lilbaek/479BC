@@ -38,7 +38,6 @@
 #include "game/time.h"
 #include "game/tutorial.h"
 #include "game/undo.h"
-#include "map/aqueduct.h"
 #include "map/bookmark.h"
 #include "map/building.h"
 #include "map/desirability.h"
@@ -119,7 +118,6 @@ static void clear_scenario_data(void)
     map_image_clear();
     map_building_clear();
     map_terrain_clear();
-    map_aqueduct_clear();
     map_figure_clear();
     map_property_clear();
     map_sprite_clear();
@@ -139,10 +137,11 @@ static void initialize_scenario_data(const uint8_t *scenario_name)
     scenario_map_init();
 
     // initialize grids
-    map_tiles_update_all_elevation();
     map_tiles_update_all_water();
     map_tiles_update_all_earthquake();
     map_tiles_update_all_rocks();
+    map_tiles_update_all_trees();
+    map_tiles_update_all_shrubs();
     map_tiles_add_entry_exit_flags();
     map_tiles_update_all_empty_land();
     map_tiles_update_all_meadow();
@@ -150,7 +149,6 @@ static void initialize_scenario_data(const uint8_t *scenario_name)
     map_tiles_update_all_highways();
     map_tiles_update_all_plazas();
     map_tiles_update_all_walls();
-    map_tiles_update_all_aqueducts(0);
 
     map_natives_init();
 
@@ -238,7 +236,7 @@ static void check_hippodrome_compatibility(building *b)
     if (b->next_part_building_id && b->prev_part_building_id) {
         building *next = building_get(b->next_part_building_id);
         building *prev = building_get(b->prev_part_building_id);
-        // if orientation is different, it means that rotation was not available yet in augustus, so it should be set to 0
+        // if orientation is different, it means that rotation was not available yet in tiberius, so it should be set to 0
         if (b->subtype.orientation != next->subtype.orientation || b->subtype.orientation != prev->subtype.orientation) {
             prev->subtype.orientation = 0;
             b->subtype.orientation = 0;
@@ -422,13 +420,6 @@ void game_file_write_mission_saved_game(void)
         rank = 11;
     }
     const char *filename = MISSION_SAVED_GAMES[rank];
-    char localized_filename[FILE_NAME_MAX];
-    if (locale_translate_rank_autosaves()) {
-        encoding_to_utf8(lang_get_string(32, rank), localized_filename, FILE_NAME_MAX,
-            encoding_system_uses_decomposed());
-        strcat(localized_filename, ".svx");
-        filename = localized_filename;
-    }
     if (city_mission_should_save_start() && !file_exists(filename, NOT_LOCALIZED)) {
         game_file_io_write_saved_game(filename);
     }

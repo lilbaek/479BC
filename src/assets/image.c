@@ -13,6 +13,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 #define ASSET_ARRAY_SIZE 2000
 
@@ -558,8 +559,13 @@ int asset_image_load_all(color_t **main_images, int *main_image_widths)
     png_unload();
     image_packer_pack(&packer);
 
+    if(packer.result.last_image_height > 4096 || packer.result.last_image_width > 4096) {
+        assert(0 && "External image atlas too big. Split it into multiple atlases.");
+    }
+
     const image_atlas_data *atlas_data = graphics_renderer()->prepare_image_atlas(ATLAS_EXTRA_ASSET,
         packer.result.images_needed, packer.result.last_image_width, packer.result.last_image_height);
+
     if (!atlas_data) {
         log_error("Failed to create packed images atlas - out of memory", 0, 0);
         return 0;

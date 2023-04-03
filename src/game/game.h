@@ -6,6 +6,7 @@ int game_pre_init(void);
 int game_init(void);
 
 int game_init_editor(void);
+int game_create_random_scenario(int size, int seed);
 
 int game_reload_language(void);
 

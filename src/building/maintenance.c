@@ -337,12 +337,11 @@ void building_maintenance_check_rome_access(void)
             return;
         }
         for (int i = 0; i < 15; i++) {
-            map_routing_delete_first_wall_or_aqueduct(entry_point->x, entry_point->y);
-            map_routing_delete_first_wall_or_aqueduct(exit_point->x, exit_point->y);
+            map_routing_delete_first_wall(entry_point->x, entry_point->y);
+            map_routing_delete_first_wall(exit_point->x, exit_point->y);
             map_routing_calculate_distances(entry_point->x, entry_point->y);
 
             map_tiles_update_all_walls();
-            map_tiles_update_all_aqueducts(0);
             map_tiles_update_all_empty_land();
             map_tiles_update_all_meadow();
 

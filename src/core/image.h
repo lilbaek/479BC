@@ -4,6 +4,7 @@
 #include "core/encoding.h"
 #include "core/image_group.h"
 #include "graphics/color.h"
+#include "core/game_size.h"
 
 #define IMAGE_MAIN_ENTRIES 10000
 #define IMAGE_MAX_GROUPS 300
@@ -16,10 +17,6 @@
 
 #define IMAGE_ATLAS_BIT_OFFSET 28
 #define IMAGE_ATLAS_BIT_MASK 0x0fffffff
-
-#define FOOTPRINT_WIDTH 58
-#define FOOTPRINT_HEIGHT 30
-#define FOOTPRINT_HALF_HEIGHT 15
 
 /**
  * @file
@@ -58,7 +55,17 @@ typedef struct image {
         int x_offset;
         int y_offset;
     } atlas;
+    int bitmapId;
 } image;
+
+/**
+ * Image bitmapdata
+ */
+typedef struct bitmapdata {
+    char filename[116];
+    int first_index;
+    int last_index;
+} bitmapdata;
 
 /**
  * Image copy information

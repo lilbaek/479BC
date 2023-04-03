@@ -45,6 +45,7 @@
 #include "widget/city_building_ghost.h"
 #include "widget/city_figure.h"
 #include "widget/city_draw_highway.h"
+#include "core/textures.h"
 
 #define OFFSET(x,y) (x + GRID_SIZE * y)
 
@@ -83,12 +84,12 @@ static void init_draw_context(int selected_figure_id, pixel_coordinate *figure_c
     draw_context.advance_water_animation = 0;
     if (!selected_figure_id) {
         time_millis now = time_get_millis();
-        if (now - draw_context.last_water_animation_time > 60) {
+        if (now - draw_context.last_water_animation_time > 660) {
             draw_context.last_water_animation_time = now;
             draw_context.advance_water_animation = 1;
         }
     }
-    draw_context.image_id_water_first = image_group(GROUP_TERRAIN_WATER);
+    draw_context.image_id_water_first = assets_get_image_id(TEXTURE_TERRAIN_NAME, TEXTURE_WATER);
     draw_context.image_id_water_last = 5 + draw_context.image_id_water_first;
     draw_context.selected_figure_id = selected_figure_id;
     draw_context.selected_figure_coord = figure_coord;
@@ -128,14 +129,14 @@ static void draw_roamer_frequency(int x, int y, int grid_offset)
         static const color_t frequency_colors[] = {
             0x663377ff, 0x662266ee, 0x661155dd, 0x660044cc, 0x660033c4, 0x660022bb, 0x660011a4, 0x66000088
         };
-        image_draw(image_group(GROUP_TERRAIN_FLAT_TILE), x, y,
+        image_draw(assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_FLAT_TILE), x, y,
             frequency_colors[travel_frequency - 1], draw_context.scale);
     } else if (travel_frequency == FIGURE_ROAMER_PREVIEW_ENTRY_TILE) {
         image_blend_footprint_color(x, y, COLOR_MASK_RED, draw_context.scale);
     } else if (travel_frequency == FIGURE_ROAMER_PREVIEW_EXIT_TILE) {
         image_blend_footprint_color(x, y, COLOR_MASK_GREEN, draw_context.scale);
     } else if (travel_frequency == FIGURE_ROAMER_PREVIEW_ENTRY_EXIT_TILE) {
-        image_draw_isometric_footprint(image_group(GROUP_TERRAIN_FLAT_TILE),
+        image_draw_isometric_footprint(assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_FLAT_TILE),
             x, y, COLOR_MASK_FOOTPRINT_GHOST, draw_context.scale);
     }
 }
@@ -180,7 +181,7 @@ static void draw_footprint(int x, int y, int grid_offset)
     int image_id = map_image_at(grid_offset);
     if (map_property_is_constructing(grid_offset)) { //&&
         //  !building_is_connectable(building_construction_type())) {
-        image_id = image_group(GROUP_TERRAIN_OVERLAY);
+        image_id = assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_OVERLAY);
     }
     if (draw_context.advance_water_animation &&
         image_id >= draw_context.image_id_water_first &&
@@ -199,7 +200,7 @@ static void draw_footprint(int x, int y, int grid_offset)
     if (!building_id && config_get(CONFIG_UI_SHOW_GRID) && draw_context.scale <= 2.0f) {
         static int grid_id = 0;
         if (!grid_id) {
-            grid_id = assets_get_image_id("UI", "Grid_Full");
+            grid_id = assets_get_image_id("UI", GRID_IMAGE);
         }
         image_draw(grid_id, x, y, COLOR_GRID, draw_context.scale);
     }
@@ -517,28 +518,6 @@ static void draw_warehouse_ornaments(int x, int y, color_t color_mask)
     image_draw(image_group(GROUP_BUILDING_WAREHOUSE) + 17, x - 4, y - 42, color_mask, draw_context.scale);
 }
 
-static void draw_granary_stores(const image *img, const building *b, int x, int y, color_t color_mask)
-{
-    if (img->animation) {
-        image_draw(image_group(GROUP_BUILDING_GRANARY) + 1,
-            x + img->animation->sprite_offset_x,
-            y + 60 + img->animation->sprite_offset_y - img->height,
-            color_mask, draw_context.scale);
-    }
-    if (b->resources[RESOURCE_NONE] < FULL_GRANARY) {
-        image_draw(image_group(GROUP_BUILDING_GRANARY) + 2, x + 33, y - 60, color_mask, draw_context.scale);
-    }
-    if (b->resources[RESOURCE_NONE] < THREEQUARTERS_GRANARY) {
-        image_draw(image_group(GROUP_BUILDING_GRANARY) + 3, x + 56, y - 50, color_mask, draw_context.scale);
-    }
-    if (b->resources[RESOURCE_NONE] < HALF_GRANARY) {
-        image_draw(image_group(GROUP_BUILDING_GRANARY) + 4, x + 91, y - 50, color_mask, draw_context.scale);
-    }
-    if (b->resources[RESOURCE_NONE] < QUARTER_GRANARY) {
-        image_draw(image_group(GROUP_BUILDING_GRANARY) + 5, x + 117, y - 62, color_mask, draw_context.scale);
-    }
-}
-
 static void draw_ceres_module_crops(int x, int y, int image_offset, color_t color_mask)
 {
     int image_id = assets_get_image_id("Religion", "Ceres Module 1 Crop");
@@ -569,8 +548,6 @@ static void draw_animation(int x, int y, int grid_offset)
                 draw_warehouse_ornaments(x, y, color_mask);
                 draw_warehouse_flag(b, x, y, color_mask);
                 building_animation_advance_warehouse_flag(b, get_warehouse_flag_image_id(b));
-            } else if (b->type == BUILDING_GRANARY) {
-                draw_granary_stores(img, b, x, y, color_mask);
             } else if (b->type == BUILDING_BURNING_RUIN && b->has_plague) {
                 image_draw(image_group(GROUP_PLAGUE_SKULL), x + 18, y - 32, color_mask, draw_context.scale);
             }
@@ -636,19 +613,18 @@ static void draw_animation(int x, int y, int grid_offset)
             (orientation == DIR_4_BOTTOM && xy == EDGE_X0Y0) ||
             (orientation == DIR_6_LEFT && xy == EDGE_X1Y0)) {
             building *gate = building_get(map_building_at(grid_offset));
-            int image_id = image_group(GROUP_BUILDING_GATEHOUSE);
             int color_mask = draw_building_as_deleted(gate) ? COLOR_MASK_RED : 0;
             if (gate->subtype.orientation == 1) {
                 if (orientation == DIR_0_TOP || orientation == DIR_4_BOTTOM) {
-                    image_draw(image_id, x - 22, y - 80, color_mask, draw_context.scale);
+                    image_draw(get_building_image_id_prefix(TEXTURE_BUILDING_GATEHOUSE, 0), x - 22, y - 80, color_mask, draw_context.scale);
                 } else {
-                    image_draw(image_id + 1, x - 18, y - 81, color_mask, draw_context.scale);
+                    image_draw(get_building_image_id_prefix(TEXTURE_BUILDING_GATEHOUSE, 1), x - 18, y - 81, color_mask, draw_context.scale);
                 }
             } else if (gate->subtype.orientation == 2) {
                 if (orientation == DIR_0_TOP || orientation == DIR_4_BOTTOM) {
-                    image_draw(image_id + 1, x - 18, y - 81, color_mask, draw_context.scale);
+                    image_draw(get_building_image_id_prefix(TEXTURE_BUILDING_GATEHOUSE, 1), x - 18, y - 81, color_mask, draw_context.scale);
                 } else {
-                    image_draw(image_id, x - 22, y - 80, color_mask, draw_context.scale);
+                    image_draw(get_building_image_id_prefix(TEXTURE_BUILDING_GATEHOUSE, 0), x - 22, y - 80, color_mask, draw_context.scale);
                 }
             }
         }
@@ -770,7 +746,7 @@ void city_without_overlay_draw(int selected_figure_id, pixel_coordinate *figure_
     int should_mark_deleting = city_building_ghost_mark_deleting(tile);
     city_view_foreach_valid_map_tile(draw_footprint);
 #ifndef NDEBUG
-    //debug_draw_city();
+    debug_draw_city();
 #endif
     if (!should_mark_deleting) {
         city_view_foreach_valid_map_tile_row(

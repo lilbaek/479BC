@@ -26,4 +26,5 @@ void platform_renderer_resume(void);
 
 void platform_renderer_destroy(void);
 
+SDL_Texture *platform_renderer_get_texture(int texture_id);
 #endif // PLATFORM_RENDERER_H

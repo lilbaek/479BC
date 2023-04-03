@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!DOCTYPE assetlist>
+<assetlist name="screens">	
+	<image id="default" src="default"/>
+	<image id="mission" src="mission"/>
+</assetlist>

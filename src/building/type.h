@@ -9,6 +9,7 @@
  /**
   * Building types
   */
+// TODO: Building types
 typedef enum {
     BUILDING_NONE = 0,
     BUILDING_MENU_FARMS = 2,
@@ -17,7 +18,7 @@ typedef enum {
     BUILDING_ROAD = 5,
     BUILDING_WALL = 6,
     BUILDING_DRAGGABLE_RESERVOIR = 7,
-    BUILDING_AQUEDUCT = 8,
+    BUILDING_UNUSED = 8,
     BUILDING_CLEAR_LAND = 9,
     BUILDING_HOUSE_VACANT_LOT = 10,
     BUILDING_HOUSE_SMALL_TENT = 10,

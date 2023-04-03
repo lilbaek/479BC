@@ -32,6 +32,7 @@
 #include "window/editor/map.h"
 #include "widget/minimap.h"
 #include "window/plain_message_dialog.h"
+#include "assets/assets.h"
 
 #include <string.h>
 
@@ -236,7 +237,7 @@ static void draw_mission_info(int x_offset, int y_offset, int box_size)
 
 static void draw_background(void)
 {
-    window_draw_underlying_window();
+    image_draw_fullscreen_background(assets_get_image_id("mainmenu", "start-screen"));
     if (*data.selected_file) {
         if (data.type == FILE_TYPE_SAVED_GAME) {
             data.savegame_info_status = game_file_io_read_saved_game_info(data.selected_file, &data.info.save_game);

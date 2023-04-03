@@ -74,6 +74,12 @@ FILE *platform_file_manager_open_file(const char *filename, const char *mode);
  */
 FILE *platform_file_manager_open_asset(const char *asset, const char *mode);
 
+/**
+ * Returns path to asset
+ * @param asset name
+ * @return
+ */
+const char *platform_file_manager_asset_path(const char *asset);
 
 /**
  * Closes a file

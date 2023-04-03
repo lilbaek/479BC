@@ -34,7 +34,7 @@
 #define PACKED_ASSETS_DIR "packed_assets"
 #define CURSORS_DIR "Color_Cursors"
 #define BYTES_PER_PIXEL 4
-
+#define FONT_BUFFER_SIZE 4024
 #ifdef FORMAT_XML
 #define FORMAT_NEWLINE "\n"
 #define FORMAT_IDENT "    "
@@ -639,8 +639,17 @@ int main(int argc, char **argv)
 
 #endif
 
-    log_info("All done!", 0, 0);
+    log_info("All done with packing!", 0, 0);
 
     png_unload();
+
+#ifdef WIN32
+    log_info("Move to out dir", 0, 0);
+
+    system("rd /s /q \"C:\\git\\tiberius\\out\\build\\x64-Debug\\assets\"");
+    system("md C:\\git\\tiberius\\out\\build\\x64-Debug\\assets");
+    system("copy C:\\git\\tiberius\\res\\assets\\Font\\* C:\\git\\tiberius\\out\\build\\x64-Debug\\assets");
+    system("copy C:\\git\\tiberius\\res\\assets\\packed_assets\\* C:\\git\\tiberius\\out\\build\\x64-Debug\\assets");
+#endif
     return 0;
 }

@@ -5,7 +5,7 @@ Dominic Szablewski - https://phoboslab.org
 
 
 
-Please note: this library was edited for use with Augustus.
+Please note: this library was edited for use with tiberius.
 If you want to use this library, please refer to its original source at https://github.com/phoboslab/pl_mpeg
 
 

@@ -274,7 +274,7 @@ static void advance_route_tile(figure *f, int roaming_enabled)
         int type = building_get(map_building_at(target_grid_offset))->type;
         switch (type) {
             case BUILDING_WAREHOUSE:
-            case BUILDING_GRANARY:
+            // case BUILDING_GRANARY:
             case BUILDING_TRIUMPHAL_ARCH:
             case BUILDING_FORT_GROUND:
                 break; // OK to walk

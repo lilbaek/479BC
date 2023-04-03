@@ -17,6 +17,7 @@
 #include "scenario/scenario.h"
 #include "widget/input_box.h"
 #include "window/mission_selection.h"
+#include "assets/assets.h"
 
 #define PLAYER_NAME_LENGTH 32
 
@@ -42,7 +43,7 @@ static void init(void)
 
 static void draw_background(void)
 {
-    image_draw_fullscreen_background(image_group(GROUP_MAIN_MENU_BACKGROUND));
+    image_draw_fullscreen_background(assets_get_image_id("screens", "default"));
 }
 
 static void draw_foreground(void)

@@ -1,8 +1,8 @@
 #include "data_transfer.h"
 
-#include "building/roadblock.h"
 #include "building/storage.h"
 #include "city/warning.h"
+#include "roadblock.h"
 
 #include <string.h>
 
@@ -106,7 +106,6 @@ building_data_type building_data_transfer_data_type_from_building_type(building_
     if (building_type_is_roadblock(type)) {
         return DATA_TYPE_ROADBLOCK;
     }
-
     switch (type) {
         case BUILDING_DOCK:
             return DATA_TYPE_DOCK;

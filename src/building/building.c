@@ -317,7 +317,6 @@ void building_update_state(void)
     int land_recalc = 0;
     int wall_recalc = 0;
     int road_recalc = 0;
-    int aqueduct_recalc = 0;
     building *b;
     array_foreach(data.buildings, b) {
         if (b->state == BUILDING_STATE_CREATED) {
@@ -330,8 +329,6 @@ void building_update_state(void)
             if (b->type == BUILDING_TOWER || b->type == BUILDING_GATEHOUSE) {
                 wall_recalc = 1;
                 road_recalc = 1;
-            } else if (b->type == BUILDING_RESERVOIR) {
-                aqueduct_recalc = 1;
             } else if (b->type == BUILDING_GRANARY) {
                 road_recalc = 1;
             } else if ((b->type >= BUILDING_GRAND_TEMPLE_CERES && b->type <= BUILDING_GRAND_TEMPLE_VENUS) || b->type == BUILDING_PANTHEON || b->type == BUILDING_LIGHTHOUSE) {
@@ -361,9 +358,6 @@ void building_update_state(void)
     }
     if (wall_recalc) {
         map_tiles_update_all_walls();
-    }
-    if (aqueduct_recalc) {
-        map_tiles_update_all_aqueducts(0);
     }
     if (land_recalc) {
         map_routing_update_land();

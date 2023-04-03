@@ -287,7 +287,7 @@ int get_structures_on_native_land(int *dst_x, int *dst_y)
             map_grid_get_area(b->x, b->y, size, radius, &x_min, &y_min, &x_max, &y_max);
             for (int yy = y_min; yy <= y_max; yy++) {
                 for (int xx = x_min; xx <= x_max; xx++) {
-                    if (map_terrain_is(map_grid_offset(xx, yy), TERRAIN_AQUEDUCT | TERRAIN_WALL | TERRAIN_GARDEN)) {
+                    if (map_terrain_is(map_grid_offset(xx, yy), TERRAIN_WALL | TERRAIN_GARDEN)) {
                         int distance = calc_maximum_distance(meeting_x, meeting_y, xx, yy);
                         if (distance < min_distance) {
                             min_distance = distance;

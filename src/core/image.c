@@ -88,29 +88,29 @@ typedef enum {
 } multibyte_font_type;
 
 static const int FOOTPRINT_X_START_PER_HEIGHT[] = {
-    28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0,
-    0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28
+        28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0,
+        0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28
 };
 
 static const char MAIN_GRAPHICS_SG2[][NAME_SIZE] = {
-    "c3.sg2",
-    "c3_north.sg2",
-    "c3_south.sg2"
+        "c3.sg2",
+        "c3_north.sg2",
+        "c3_south.sg2"
 };
 static const char MAIN_GRAPHICS_555[][NAME_SIZE] = {
-    "c3.555",
-    "c3_north.555",
-    "c3_south.555"
+        "c3.555",
+        "c3_north.555",
+        "c3_south.555"
 };
 static const char EDITOR_GRAPHICS_SG2[][NAME_SIZE] = {
-    "c3map.sg2",
-    "c3map_north.sg2",
-    "c3map_south.sg2"
+        "c3map.sg2",
+        "c3map_north.sg2",
+        "c3map_south.sg2"
 };
 static const char EDITOR_GRAPHICS_555[][NAME_SIZE] = {
-    "c3map.555",
-    "c3map_north.555",
-    "c3map_south.555"
+        "c3map.555",
+        "c3map_north.555",
+        "c3map_south.555"
 };
 
 static const char CYRILLIC_FONTS_SG2[NAME_SIZE] = "C3_fonts.sg2";
@@ -122,97 +122,111 @@ static const char KOREAN_FONTS_555_V2[NAME_SIZE] = "korean-v2.555";
 static const char JAPANESE_FONTS_555[NAME_SIZE] = "japanese-v2.555";
 
 static const char ENEMY_GRAPHICS_SG2[][NAME_SIZE] = {
-    "goths.sg2",
-    "Etruscan.sg2",
-    "Etruscan.sg2",
-    "carthage.sg2",
-    "Greek.sg2",
-    "Greek.sg2",
-    "egyptians.sg2",
-    "Persians.sg2",
-    "Phoenician.sg2",
-    "celts.sg2",
-    "celts.sg2",
-    "celts.sg2",
-    "Gaul.sg2",
-    "Gaul.sg2",
-    "goths.sg2",
-    "goths.sg2",
-    "goths.sg2",
-    "Phoenician.sg2",
-    "North African.sg2",
-    "Phoenician.sg2",
+        "goths.sg2",
+        "Etruscan.sg2",
+        "Etruscan.sg2",
+        "carthage.sg2",
+        "Greek.sg2",
+        "Greek.sg2",
+        "egyptians.sg2",
+        "Persians.sg2",
+        "Phoenician.sg2",
+        "celts.sg2",
+        "celts.sg2",
+        "celts.sg2",
+        "Gaul.sg2",
+        "Gaul.sg2",
+        "goths.sg2",
+        "goths.sg2",
+        "goths.sg2",
+        "Phoenician.sg2",
+        "North African.sg2",
+        "Phoenician.sg2",
 };
 static const char ENEMY_GRAPHICS_555[][NAME_SIZE] = {
-    "goths.555",
-    "Etruscan.555",
-    "Etruscan.555",
-    "carthage.555",
-    "Greek.555",
-    "Greek.555",
-    "egyptians.555",
-    "Persians.555",
-    "Phoenician.555",
-    "celts.555",
-    "celts.555",
-    "celts.555",
-    "Gaul.555",
-    "Gaul.555",
-    "goths.555",
-    "goths.555",
-    "goths.555",
-    "Phoenician.555",
-    "North African.555",
-    "Phoenician.555",
+        "goths.555",
+        "Etruscan.555",
+        "Etruscan.555",
+        "carthage.555",
+        "Greek.555",
+        "Greek.555",
+        "egyptians.555",
+        "Persians.555",
+        "Phoenician.555",
+        "celts.555",
+        "celts.555",
+        "celts.555",
+        "Gaul.555",
+        "Gaul.555",
+        "goths.555",
+        "goths.555",
+        "goths.555",
+        "Phoenician.555",
+        "North African.555",
+        "Phoenician.555",
 };
 
 static multibyte_font_data multibyte_font_info[MULTIBYTE_FONT_MAX] = {
-    {
-        .name = "Traditional Chinese",
-        .file_v1 = CHINESE_FONTS_555,
-        .file_v2 = CHINESE_FONTS_555_V2,
-        .data_size = TRAD_CHINESE_FONT_DATA_SIZE,
-        .chars = IMAGE_FONT_MULTIBYTE_TRAD_CHINESE_MAX_CHARS,
-        .sizes = {
-            .v1 = { { 13, 11 }, { 17, 15 }, { 20, 18 } },
-            .v2 = { { 13, 12 }, { 16, 15 }, { 21, 20 } }
+        {
+                .name = "Traditional Chinese",
+                .file_v1 = CHINESE_FONTS_555,
+                .file_v2 = CHINESE_FONTS_555_V2,
+                .data_size = TRAD_CHINESE_FONT_DATA_SIZE,
+                .chars = IMAGE_FONT_MULTIBYTE_TRAD_CHINESE_MAX_CHARS,
+                .sizes = {
+                        .v1 = {{13, 11},
+                               {17, 15},
+                               {20, 18}},
+                        .v2 = {{13, 12},
+                               {16, 15},
+                               {21, 20}}
+                },
+                .letter_spacing = 1
         },
-        .letter_spacing = 1
-    },
-    {
-        .name = "Simplified Chinese",
-        .file_v1 = CHINESE_FONTS_555,
-        .file_v2 = CHINESE_FONTS_555_V2,
-        .data_size = TRAD_CHINESE_FONT_DATA_SIZE,
-        .chars = IMAGE_FONT_MULTIBYTE_SIMP_CHINESE_MAX_CHARS,
-        .sizes = {
-            .v1 = { { 13, 11 }, { 17, 15 }, { 20, 18 } },
-            .v2 = { { 13, 12 }, { 16, 15 }, { 21, 20 } }
+        {
+                .name = "Simplified Chinese",
+                .file_v1 = CHINESE_FONTS_555,
+                .file_v2 = CHINESE_FONTS_555_V2,
+                .data_size = TRAD_CHINESE_FONT_DATA_SIZE,
+                .chars = IMAGE_FONT_MULTIBYTE_SIMP_CHINESE_MAX_CHARS,
+                .sizes = {
+                        .v1 = {{13, 11},
+                               {17, 15},
+                               {20, 18}},
+                        .v2 = {{13, 12},
+                               {16, 15},
+                               {21, 20}}
+                },
+                .letter_spacing = 1
         },
-        .letter_spacing = 1
-    },
-    {
-        .name = "Korean",
-        .file_v1 = KOREAN_FONTS_555,
-        .file_v2 = KOREAN_FONTS_555_V2,
-        .data_size = KOREAN_FONT_DATA_SIZE,
-        .chars = IMAGE_FONT_MULTIBYTE_KOREAN_MAX_CHARS,
-        .sizes = {
-            .v1 = { { 12, 12 }, { 15, 15 }, { 20, 20 } },
-            .v2 = { { 12, 12 }, { 15, 15 }, { 20, 20 } },
+        {
+                .name = "Korean",
+                .file_v1 = KOREAN_FONTS_555,
+                .file_v2 = KOREAN_FONTS_555_V2,
+                .data_size = KOREAN_FONT_DATA_SIZE,
+                .chars = IMAGE_FONT_MULTIBYTE_KOREAN_MAX_CHARS,
+                .sizes = {
+                        .v1 = {{12, 12},
+                               {15, 15},
+                               {20, 20}},
+                        .v2 = {{12, 12},
+                               {15, 15},
+                               {20, 20}},
+                }
+        },
+        {
+                .name = "Japanese",
+                .file_v2 = JAPANESE_FONTS_555,
+                .data_size = JAPANESE_FONT_DATA_SIZE,
+                .chars = IMAGE_FONT_MULTIBYTE_JAPANESE_MAX_CHARS,
+                .half_width_chars = JAPANESE_HALF_WIDTH_CHARS,
+                .sizes = {
+                        .v2 = {{13, 12, 7},
+                               {16, 15, 9},
+                               {21, 20, 11}}
+                },
+                .letter_spacing = 1
         }
-    },
-    {
-        .name = "Japanese",
-        .file_v2 = JAPANESE_FONTS_555,
-        .data_size = JAPANESE_FONT_DATA_SIZE,
-        .chars = IMAGE_FONT_MULTIBYTE_JAPANESE_MAX_CHARS,
-        .half_width_chars = JAPANESE_HALF_WIDTH_CHARS,
-        .sizes = {
-            .v2 = { { 13, 12, 7 }, { 16, 15, 9 }, { 21, 20, 11 } }
-        },
-        .letter_spacing = 1
-    }
 };
 
 static const image DUMMY_IMAGE;
@@ -226,6 +240,7 @@ static struct {
     int font_base_offset;
 
     uint16_t group_image_ids[IMAGE_MAX_GROUPS];
+    bitmapdata bitmap_data[IMAGE_MAX_GROUPS];
     char bitmaps[100][200];
     image main[IMAGE_MAIN_ENTRIES];
     image enemy[ENEMY_ENTRIES];
@@ -239,19 +254,41 @@ static struct {
     image_packer packer;
     int max_image_width;
     int max_image_height;
+    uint32_t number_of_bitmap_records_in_file;
 } data;
 
-static void read_header(buffer *buf)
-{
-    buffer_skip(buf, 80); // header integers
+static void read_header(buffer *buf) {
+    buffer_skip(buf, 20); // header integers
+    data.number_of_bitmap_records_in_file = buffer_read_i32(buf);
+    buffer_skip(buf, 56); // header integers
     for (int i = 0; i < IMAGE_MAX_GROUPS; i++) {
-        data.group_image_ids[i] = buffer_read_u16(buf);
+        uint16_t u16 = buffer_read_u16(buf);
+        data.group_image_ids[i] = u16;
     }
     buffer_read_raw(buf, data.bitmaps, 20000);
 }
 
-static void read_index_entry(buffer *buf, image *img, image_draw_data *draw_data)
-{
+static void read_header2(buffer *buf) {
+    buffer_skip(buf, 20); // header integers
+    data.number_of_bitmap_records_in_file = buffer_read_i32(buf);
+    buffer_skip(buf, 56); // header integers
+    for (int i = 0; i < IMAGE_MAX_GROUPS; i++) {
+        uint16_t u16 = buffer_read_u16(buf);
+        data.group_image_ids[i] = u16;
+    }
+    for (int i = 0; i < data.number_of_bitmap_records_in_file; i++) {
+        char filename[FILE_NAME_MAX] = "";
+        buffer_read_raw(buf, filename, 116);
+        uint32_t width = buffer_read_i32(buf);
+        uint32_t height = buffer_read_i32(buf);
+        uint32_t numberOfImagesInBitmap = buffer_read_i32(buf);
+        data.bitmap_data[i].first_index = buffer_read_i32(buf);
+        data.bitmap_data[i].last_index = buffer_read_i32(buf);
+        buffer_skip(buf, 64); // unknown
+    }
+}
+
+static void read_index_entry(buffer *buf, image *img, image_draw_data *draw_data) {
     draw_data->offset = buffer_read_i32(buf);
     draw_data->data_length = buffer_read_i32(buf);
     draw_data->uncompressed_length = buffer_read_i32(buf);
@@ -273,7 +310,7 @@ static void read_index_entry(buffer *buf, image *img, image_draw_data *draw_data
             img->animation->sprite_offset_y = buffer_read_i16(buf);
             buffer_skip(buf, 10);
             img->animation->can_reverse = buffer_read_i8(buf);
-            buffer_skip(buf, 1); 
+            buffer_skip(buf, 1);
         }
     } else {
         buffer_skip(buf, 18);
@@ -294,7 +331,9 @@ static void read_index_entry(buffer *buf, image *img, image_draw_data *draw_data
         memset(img->top, 0, sizeof(image));
     }
     buffer_skip(buf, 2);
-    draw_data->bitmap_id = buffer_read_u8(buf);
+    uint8_t bitmapId = buffer_read_u8(buf);
+    draw_data->bitmap_id = bitmapId;
+    img->bitmapId = bitmapId;
     buffer_skip(buf, 1);
     if (img->animation) {
         img->animation->speed_id = buffer_read_u8(buf);
@@ -304,8 +343,7 @@ static void read_index_entry(buffer *buf, image *img, image_draw_data *draw_data
     buffer_skip(buf, 5);
 }
 
-static int prepare_images(buffer *buf, image *images, image_draw_data *draw_datas, int size, atlas_type image_type)
-{
+static int prepare_images(buffer *buf, image *images, image_draw_data *draw_datas, int size, atlas_type image_type) {
     for (int i = 0; i < size; i++) {
         image *img = &images[i];
         read_index_entry(buf, img, &draw_datas[i]);
@@ -329,13 +367,13 @@ static int prepare_images(buffer *buf, image *images, image_draw_data *draw_data
 }
 
 static void convert_compressed(buffer *buf, int width, int x_offset, int y_offset,
-    int buf_length, color_t *dst, int dst_width);
+                               int buf_length, color_t *dst, int dst_width);
+
 
 static int crop_and_pack_images(buffer *buf, image *images, image_draw_data *draw_datas,
-    int num_images, atlas_type type)
-{
+                                int num_images, atlas_type type) {
     if (image_packer_init(&data.packer, num_images + data.images_with_tops,
-            data.max_image_width, data.max_image_height) != IMAGE_PACKER_OK) {
+                          data.max_image_width, data.max_image_height) != IMAGE_PACKER_OK) {
         return 0;
     }
     data.packer.options.fail_policy = IMAGE_PACKER_NEW_IMAGE;
@@ -383,7 +421,8 @@ static int crop_and_pack_images(buffer *buf, image *images, image_draw_data *dra
                 memset(draw_data->buffer, 0, sizeof(color_t) * img->top->width * img->top->height);
                 buffer_set(buf, draw_data->offset + draw_data->uncompressed_length);
                 convert_compressed(buf, img->top->width, 0, 0,
-                    draw_data->data_length - draw_data->uncompressed_length, draw_data->buffer, img->top->width);
+                                   draw_data->data_length - draw_data->uncompressed_length, draw_data->buffer,
+                                   img->top->width);
                 image_crop(img->top, draw_data->buffer);
                 if (!img->top->height) {
                     free(img->top);
@@ -417,17 +456,15 @@ static int crop_and_pack_images(buffer *buf, image *images, image_draw_data *dra
     return 1;
 }
 
-static color_t to_32_bit(uint16_t c)
-{
+static color_t to_32_bit(uint16_t c) {
     return ALPHA_OPAQUE |
            ((c & 0x7c00) << 9) | ((c & 0x7000) << 4) |
-           ((c & 0x3e0) << 6)  | ((c & 0x380) << 1) |
-           ((c & 0x1f) << 3)   | ((c & 0x1c) >> 2);
+           ((c & 0x3e0) << 6) | ((c & 0x380) << 1) |
+           ((c & 0x1f) << 3) | ((c & 0x1c) >> 2);
 }
 
 static void convert_uncompressed(buffer *buf, int width, int height, int x_offset, int y_offset,
-    color_t *dst, int dst_width)
-{
+                                 color_t *dst, int dst_width) {
     for (int y = 0; y < height; y++) {
         color_t *pixel = &dst[(y_offset + y) * dst_width + x_offset];
         for (int x = 0; x < width; x++) {
@@ -437,18 +474,16 @@ static void convert_uncompressed(buffer *buf, int width, int height, int x_offse
     }
 }
 
-static void copy_compressed(const image *img, image_draw_data *draw_data, color_t *dst, int dst_width)
-{
+static void copy_compressed(const image *img, image_draw_data *draw_data, color_t *dst, int dst_width) {
     for (int y = 0; y < img->height; y++) {
         memcpy(&dst[(img->atlas.y_offset + y) * dst_width + img->atlas.x_offset],
-            &((color_t *) draw_data->buffer)[(y + img->y_offset) * img->original.width + img->x_offset],
-            img->width * sizeof(color_t));
+               &((color_t *) draw_data->buffer)[(y + img->y_offset) * img->original.width + img->x_offset],
+               img->width * sizeof(color_t));
     }
 }
 
 static void convert_compressed(buffer *buf, int width, int x_offset, int y_offset,
-    int buf_length, color_t *dst, int dst_width)
-{
+                               int buf_length, color_t *dst, int dst_width) {
     int y = 0;
     int x = 0;
     while (buf_length > 0) {
@@ -479,20 +514,19 @@ static void convert_compressed(buffer *buf, int width, int x_offset, int y_offse
 }
 
 static void convert_footprint_tile(buffer *buf, const image *img,
-    int x_offset, int y_offset, color_t *dst, int dst_width)
-{
+                                   int x_offset, int y_offset, color_t *dst, int dst_width) {
     for (int y = 0; y < FOOTPRINT_HEIGHT; y++) {
         int x_start = FOOTPRINT_X_START_PER_HEIGHT[y];
         int x_max = FOOTPRINT_WIDTH - x_start;
         for (int x = x_start; x < x_max; x++) {
             dst[(y + y_offset + img->atlas.y_offset) * dst_width + img->atlas.x_offset + x + x_offset] =
-                to_32_bit(buffer_read_u16(buf));
+                    to_32_bit(buffer_read_u16(buf));
         }
     }
 }
 
-static void convert_isometric_footprint(buffer *buf, const image *img, color_t *dst, int dst_width)
-{
+// TODO: Replace 30 with HALF_TILE_WIDTH_PIXELS??? (No, this is loaded from game only??)
+static void convert_isometric_footprint(buffer *buf, const image *img, color_t *dst, int dst_width) {
     int num_tiles = (img->width + 2) / (FOOTPRINT_WIDTH + 2);
     int x_start = (num_tiles - 1) * 30;
 
@@ -515,8 +549,7 @@ static void convert_isometric_footprint(buffer *buf, const image *img, color_t *
 }
 
 static void convert_images(image *images, image_draw_data *draw_datas, int size, buffer *buf,
-    const image_atlas_data *atlas_data)
-{
+                           const image_atlas_data *atlas_data) {
     for (int i = 0; i < size; i++) {
         image *img = &images[i];
         image_draw_data *draw_data = &draw_datas[i];
@@ -537,7 +570,7 @@ static void convert_images(image *images, image_draw_data *draw_datas, int size,
                 draw_data->buffer = 0;
             } else {
                 convert_compressed(buf, img->width, img->atlas.x_offset, img->atlas.y_offset,
-                    draw_data->data_length, dst, dst_width);
+                                   draw_data->data_length, dst, dst_width);
             }
         } else if (img->is_isometric) {
             convert_isometric_footprint(buf, img, dst, dst_width);
@@ -548,13 +581,12 @@ static void convert_images(image *images, image_draw_data *draw_datas, int size,
             }
         } else {
             convert_uncompressed(buf, img->width, img->height, img->atlas.x_offset, img->atlas.y_offset,
-                dst, dst_width);
+                                 dst, dst_width);
         }
     }
 }
 
-static void make_font_white(const image *img, const image_atlas_data *atlas_data)
-{
+static void make_font_white(const image *img, const image_atlas_data *atlas_data) {
     color_t *pixels = atlas_data->buffers[img->atlas.id & IMAGE_ATLAS_BIT_MASK];
     int width = atlas_data->image_widths[img->atlas.id & IMAGE_ATLAS_BIT_MASK];
     pixels += img->atlas.y_offset * width + img->atlas.x_offset;
@@ -568,45 +600,79 @@ static void make_font_white(const image *img, const image_atlas_data *atlas_data
     }
 }
 
-static void make_plain_fonts_white(const image *img_info, const image_atlas_data *atlas_data, int start_offset)
-{
+static void make_plain_fonts_white(const image *img_info, const image_atlas_data *atlas_data, int start_offset) {
     int limit = font_definition_for(FONT_NORMAL_BLACK)->image_offset -
-        font_definition_for(FONT_NORMAL_PLAIN)->image_offset;
+                font_definition_for(FONT_NORMAL_PLAIN)->image_offset;
     for (int i = 0; i < limit; i++) {
         make_font_white(&img_info[i + start_offset], atlas_data);
     }
     int start_font_offset = start_offset + font_definition_for(FONT_LARGE_PLAIN)->image_offset;
     limit = font_definition_for(FONT_LARGE_BLACK)->image_offset -
-        font_definition_for(FONT_LARGE_PLAIN)->image_offset;
+            font_definition_for(FONT_LARGE_PLAIN)->image_offset;
     for (int i = 0; i < limit; i++) {
         make_font_white(&img_info[i + start_font_offset], atlas_data);
     }
     start_font_offset = start_offset + font_definition_for(FONT_SMALL_PLAIN)->image_offset;
     limit = font_definition_for(FONT_NORMAL_GREEN)->image_offset -
-        font_definition_for(FONT_SMALL_PLAIN)->image_offset;
+            font_definition_for(FONT_SMALL_PLAIN)->image_offset;
     for (int i = 0; i < limit; i++) {
         make_font_white(&img_info[i + start_font_offset], atlas_data);
     }
 }
 
-static void free_draw_data(image_draw_data *draw_datas, int entries)
-{
+static void free_draw_data(image_draw_data *draw_datas, int entries) {
     for (int i = 0; i < entries; i++) {
         free(draw_datas[i].buffer);
     }
     free(draw_datas);
 }
 
-static void release_external_buffers(void)
-{
+static void release_external_buffers(void) {
     for (int i = 0; i < data.total_external_images; i++) {
         free(data.external_draw_data[i].buffer);
         data.external_draw_data[i].buffer = 0;
     }
 }
 
-int image_load_climate(int climate_id, int is_editor, int force_reload, int keep_atlas_buffers)
-{
+/*
+     printFileName(GROUP_BUILDING_HOUSE_TENT, 2);
+    printFileName(GROUP_BUILDING_HOUSE_SHACK, 2);
+    printFileName(GROUP_BUILDING_HOUSE_HOVEL, 2);
+    printFileName(GROUP_BUILDING_HOUSE_CASA, 2);
+    printFileName(GROUP_BUILDING_HOUSE_INSULA_1, 2);
+    printFileName(GROUP_BUILDING_HOUSE_INSULA_2, 2);
+    printFileName(GROUP_BUILDING_HOUSE_VILLA_1, 2);
+    printFileName(GROUP_BUILDING_HOUSE_VILLA_2, 2);
+    printFileName(GROUP_BUILDING_HOUSE_PALACE_1, 2);
+    printFileName(GROUP_BUILDING_HOUSE_PALACE_2, 2);
+    printFileName(GROUP_BUILDING_HOUSE_VACANT_LOT, 2);
+ */
+void printFileName(int group, int maxIndex) {
+    char filename[FILE_NAME_MAX] = "";
+    int id = image_group(group);
+    const image *pImage = image_get(id);
+    int firstIndex = data.bitmap_data[pImage->bitmapId].first_index;
+    char source[200];
+    int targetId = image_group(group) - firstIndex + 1;
+    strncpy(source, data.bitmaps[pImage->bitmapId], 200);
+    strcpy(&filename[0], source);
+    printf("%s \n", filename);
+    /*
+    for (int i = 0; i < maxIndex; ++i) {
+        const image *pImage2 = image_get(id + i);
+        printf("Index: %d \n", image_group(group) - firstIndex + 1 + i);
+        printf("Width: %d \n", pImage2->width);
+        printf("Height: %d \n", pImage2->height);
+        printf("X: %d \n", pImage2->x_offset);
+        printf("Y: %d \n", pImage2->y_offset);
+        if (pImage2->top) {
+            printf("Top x: %d \n", pImage2->top->x_offset);
+            printf("Top Y: %d \n", pImage2->top->y_offset);
+        }
+    }*/
+}
+
+int image_load_climate(int climate_id, int is_editor, int force_reload, int keep_atlas_buffers) {
     if (climate_id == data.current_climate && is_editor == data.is_editor && !force_reload &&
         graphics_renderer()->has_image_atlas(ATLAS_MAIN)) {
         return 1;
@@ -638,7 +704,12 @@ int image_load_climate(int climate_id, int is_editor, int force_reload, int keep
 
     buffer buf;
     buffer_init(&buf, tmp_data, HEADER_SIZE);
+    read_header2(&buf);
+
+    io_read_file_into_buffer(filename_idx, MAY_BE_LOCALIZED, tmp_data, MAIN_INDEX_SIZE);
+    buffer_init(&buf, tmp_data, HEADER_SIZE);
     read_header(&buf);
+
     buffer_init(&buf, &tmp_data[HEADER_SIZE], ENTRY_SIZE * IMAGE_MAIN_ENTRIES);
     if (!prepare_images(&buf, data.main, draw_data, IMAGE_MAIN_ENTRIES, ATLAS_MAIN)) {
         free(tmp_data);
@@ -667,7 +738,9 @@ int image_load_climate(int climate_id, int is_editor, int force_reload, int keep
     }
 
     const image_atlas_data *atlas_data = graphics_renderer()->prepare_image_atlas(ATLAS_MAIN,
-        data.packer.result.images_needed, data.packer.result.last_image_width, data.packer.result.last_image_height);
+                                                                                  data.packer.result.images_needed,
+                                                                                  data.packer.result.last_image_width,
+                                                                                  data.packer.result.last_image_height);
     if (!atlas_data) {
         image_packer_free(&data.packer);
         free(tmp_data);
@@ -698,21 +771,20 @@ int image_load_climate(int climate_id, int is_editor, int force_reload, int keep
 
     data.images_with_tops = 0;
 
+    printFileName(GROUP_BUILDING_TEMPLE_CERES, 2);
     return 1;
 }
 
-static void free_font_memory(void)
-{
+static void free_font_memory(void) {
     graphics_renderer()->free_image_atlas(ATLAS_FONT);
     free(data.font);
     data.font = 0;
     data.fonts_enabled = NO_EXTRA_FONT;
 }
 
-static int alloc_font_memory(int font_entries)
-{
+static int alloc_font_memory(int font_entries) {
     free_font_memory();
-    data.font = (image*) malloc(font_entries * sizeof(image));
+    data.font = (image *) malloc(font_entries * sizeof(image));
     if (!data.font) {
         return 0;
     }
@@ -720,8 +792,7 @@ static int alloc_font_memory(int font_entries)
     return 1;
 }
 
-static int load_cyrillic_fonts(void)
-{
+static int load_cyrillic_fonts(void) {
     uint8_t *tmp_data = malloc(CYRILLIC_FONT_DATA_SIZE * sizeof(uint8_t));
     image_draw_data *draw_data = malloc(CYRILLIC_FONT_ENTRIES * sizeof(image_draw_data));
     if (!tmp_data || !draw_data || !alloc_font_memory(CYRILLIC_FONT_ENTRIES)) {
@@ -732,7 +803,8 @@ static int load_cyrillic_fonts(void)
     memset(draw_data, 0, CYRILLIC_FONT_ENTRIES * sizeof(image_draw_data));
 
     if (CYRILLIC_FONT_INDEX_SIZE != io_read_file_part_into_buffer(CYRILLIC_FONTS_SG2, MAY_BE_LOCALIZED,
-        tmp_data, CYRILLIC_FONT_INDEX_SIZE, CYRILLIC_FONT_INDEX_OFFSET)) {
+                                                                  tmp_data, CYRILLIC_FONT_INDEX_SIZE,
+                                                                  CYRILLIC_FONT_INDEX_OFFSET)) {
         free_font_memory();
         free(tmp_data);
         free_draw_data(draw_data, CYRILLIC_FONT_ENTRIES);
@@ -764,7 +836,9 @@ static int load_cyrillic_fonts(void)
     }
 
     const image_atlas_data *atlas_data = graphics_renderer()->prepare_image_atlas(ATLAS_FONT,
-        data.packer.result.images_needed, data.packer.result.last_image_width, data.packer.result.last_image_height);
+                                                                                  data.packer.result.images_needed,
+                                                                                  data.packer.result.last_image_width,
+                                                                                  data.packer.result.last_image_height);
     if (!atlas_data) {
         image_packer_free(&data.packer);
         free_font_memory();
@@ -786,8 +860,7 @@ static int load_cyrillic_fonts(void)
 }
 
 static int parse_4bit_multibyte_font(buffer *input, color_t *pixels, multibyte_font_sizes *font_size,
-    int letter_spacing, int num_chars, int num_half_width, int offset)
-{
+                                     int letter_spacing, int num_chars, int num_half_width, int offset) {
     int pixel_offset = 0;
     for (int i = 0; i < num_chars; i++) {
         int width = i < num_half_width ? font_size->half_width : font_size->width;
@@ -849,8 +922,7 @@ static int parse_4bit_multibyte_font(buffer *input, color_t *pixels, multibyte_f
 }
 
 static int parse_1bit_multibyte_font(buffer *input, color_t *pixels, multibyte_font_sizes *font_size,
-    int letter_spacing, int num_chars, int num_half_width, int offset)
-{
+                                     int letter_spacing, int num_chars, int num_half_width, int offset) {
     int pixel_offset = 0;
     for (int i = 0; i < num_chars; i++) {
         int width = i < num_half_width ? font_size->half_width : font_size->width;
@@ -911,8 +983,7 @@ static int parse_1bit_multibyte_font(buffer *input, color_t *pixels, multibyte_f
     return pixel_offset;
 }
 
-static int load_multibyte_font(multibyte_font_type type)
-{
+static int load_multibyte_font(multibyte_font_type type) {
     multibyte_font_data *font_info = &multibyte_font_info[type];
 
     int entries = FONT_STYLES * font_info->chars;
@@ -935,7 +1006,7 @@ static int load_multibyte_font(multibyte_font_type type)
         if (!data_size) {
             free_font_memory();
             free(tmp_data);
-            log_error("Augustus requires extra files for the characters:", font_info->file_v2, 0);
+            log_error("tiberius requires extra files for the characters:", font_info->file_v2, 0);
             return 0;
         }
     }
@@ -958,7 +1029,7 @@ static int load_multibyte_font(multibyte_font_type type)
 
     multibyte_font_sizes *font_sizes;
     int (*parse_multibyte_font)(buffer *input, color_t *pixels, multibyte_font_sizes *font_size,
-        int letter_spacing, int num_chars, int num_half_width, int offset);
+                                int letter_spacing, int num_chars, int num_half_width, int offset);
     if (file_version == 2) {
         font_sizes = font_info->sizes.v2;
         parse_multibyte_font = parse_4bit_multibyte_font;
@@ -967,11 +1038,12 @@ static int load_multibyte_font(multibyte_font_type type)
         parse_multibyte_font = parse_1bit_multibyte_font;
     }
 
-    size_t font_data_size = sizeof(color_t) * (font_sizes[0].width * font_sizes[0].height + font_sizes[1].width * font_sizes[1].height +
-        font_sizes[2].width * font_sizes[2].height) * num_full_width;
+    size_t font_data_size =
+            sizeof(color_t) * (font_sizes[0].width * font_sizes[0].height + font_sizes[1].width * font_sizes[1].height +
+                               font_sizes[2].width * font_sizes[2].height) * num_full_width;
     font_data_size += sizeof(color_t) * (font_sizes[0].half_width * font_sizes[0].height +
-        font_sizes[1].half_width * font_sizes[1].height +
-        font_sizes[2].half_width * font_sizes[2].height) * num_half_width;
+                                         font_sizes[1].half_width * font_sizes[1].height +
+                                         font_sizes[2].half_width * font_sizes[2].height) * num_half_width;
 
     color_t *font_data = malloc(font_data_size);
     if (!font_data) {
@@ -985,12 +1057,14 @@ static int load_multibyte_font(multibyte_font_type type)
     color_t *font_offset = font_data;
     for (int i = 0; i < FONT_STYLES; i++) {
         font_offset += parse_multibyte_font(&input, font_offset, &font_sizes[i], font_info->letter_spacing,
-            num_chars, num_half_width, num_chars * i);
+                                            num_chars, num_half_width, num_chars * i);
     }
 
     image_packer_pack(&data.packer);
     const image_atlas_data *atlas_data = graphics_renderer()->prepare_image_atlas(ATLAS_FONT,
-        data.packer.result.images_needed, data.packer.result.last_image_width, data.packer.result.last_image_height);
+                                                                                  data.packer.result.images_needed,
+                                                                                  data.packer.result.last_image_width,
+                                                                                  data.packer.result.last_image_height);
     if (!atlas_data) {
         free(font_data);
         image_packer_free(&data.packer);
@@ -1015,7 +1089,8 @@ static int load_multibyte_font(multibyte_font_type type)
 
             for (int y = 0; y < img->height; y++) {
                 memcpy(&dst[(img->atlas.y_offset + y) * dst_width + img->atlas.x_offset],
-                    &letter[(img->y_offset + y) * img->original.width + img->x_offset], img->width * sizeof(color_t));
+                       &letter[(img->y_offset + y) * img->original.width + img->x_offset],
+                       img->width * sizeof(color_t));
             }
             letter += original_height * img->original.width;
         }
@@ -1033,8 +1108,7 @@ static int load_multibyte_font(multibyte_font_type type)
     return 1;
 }
 
-int image_load_fonts(encoding_type encoding)
-{
+int image_load_fonts(encoding_type encoding) {
     graphics_renderer()->get_max_image_size(&data.max_image_width, &data.max_image_height);
 
     if (encoding == ENCODING_CYRILLIC) {
@@ -1053,8 +1127,7 @@ int image_load_fonts(encoding_type encoding)
     }
 }
 
-int image_load_enemy(int enemy_id)
-{
+int image_load_enemy(int enemy_id) {
     if (enemy_id == data.current_enemy && graphics_renderer()->has_image_atlas(ATLAS_ENEMY)) {
         return 1;
     }
@@ -1076,7 +1149,7 @@ int image_load_enemy(int enemy_id)
     memset(draw_data, 0, ENEMY_ENTRIES * sizeof(image_draw_data));
 
     if (!tmp_data || ENEMY_INDEX_SIZE != io_read_file_part_into_buffer(
-        filename_idx, MAY_BE_LOCALIZED, tmp_data, ENEMY_INDEX_SIZE, ENEMY_INDEX_OFFSET)) {
+            filename_idx, MAY_BE_LOCALIZED, tmp_data, ENEMY_INDEX_SIZE, ENEMY_INDEX_OFFSET)) {
         free(tmp_data);
         free_draw_data(draw_data, ENEMY_ENTRIES);
         return 0;
@@ -1105,7 +1178,9 @@ int image_load_enemy(int enemy_id)
     }
 
     const image_atlas_data *atlas_data = graphics_renderer()->prepare_image_atlas(ATLAS_ENEMY,
-        data.packer.result.images_needed, data.packer.result.last_image_width, data.packer.result.last_image_height);
+                                                                                  data.packer.result.images_needed,
+                                                                                  data.packer.result.last_image_width,
+                                                                                  data.packer.result.last_image_height);
     if (!atlas_data) {
         free(tmp_data);
         free_draw_data(draw_data, ENEMY_ENTRIES);
@@ -1123,13 +1198,11 @@ int image_load_enemy(int enemy_id)
     return 1;
 }
 
-int image_is_external(const image *img)
-{
+int image_is_external(const image *img) {
     return (img->atlas.id >> IMAGE_ATLAS_BIT_OFFSET) == ATLAS_EXTERNAL;
 }
 
-int image_load_external_pixels(color_t *dst, const image *img, int row_width)
-{
+int image_load_external_pixels(color_t *dst, const image *img, int row_width) {
     image_draw_data *draw_data = &data.external_draw_data[img->atlas.id & IMAGE_ATLAS_BIT_MASK];
     char filename[FILE_NAME_MAX] = "555/";
     strcpy(&filename[4], data.bitmaps[draw_data->bitmap_id]);
@@ -1141,23 +1214,23 @@ int image_load_external_pixels(color_t *dst, const image *img, int row_width)
             draw_data->buffer = malloc(draw_data->data_length * sizeof(uint8_t));
             if (!draw_data->buffer) {
                 log_error("unable to load external image - out of memory",
-                    data.bitmaps[draw_data->bitmap_id], 0);
+                          data.bitmaps[draw_data->bitmap_id], 0);
                 return 0;
             }
         }
         int size = io_read_file_part_into_buffer(
-            &filename[4], MAY_BE_LOCALIZED, draw_data->buffer,
-            draw_data->data_length, draw_data->offset - 1
+                &filename[4], MAY_BE_LOCALIZED, draw_data->buffer,
+                draw_data->data_length, draw_data->offset - 1
         );
         if (!size) {
             // try in 555 dir
             size = io_read_file_part_into_buffer(
-                filename, MAY_BE_LOCALIZED, draw_data->buffer,
-                draw_data->data_length, draw_data->offset - 1
+                    filename, MAY_BE_LOCALIZED, draw_data->buffer,
+                    draw_data->data_length, draw_data->offset - 1
             );
             if (!size) {
                 log_error("unable to load external image",
-                    data.bitmaps[draw_data->bitmap_id], 0);
+                          data.bitmaps[draw_data->bitmap_id], 0);
                 free(draw_data->buffer);
                 return 0;
             }
@@ -1174,8 +1247,7 @@ int image_load_external_pixels(color_t *dst, const image *img, int row_width)
     return 1;
 }
 
-void image_load_external_data(const image *img)
-{
+void image_load_external_data(const image *img) {
     int external_image_id = img->atlas.id & IMAGE_ATLAS_BIT_MASK;
     if (data.external_image_id == external_image_id && graphics_renderer()->has_custom_image(CUSTOM_IMAGE_EXTERNAL)) {
         return;
@@ -1194,8 +1266,7 @@ void image_load_external_data(const image *img)
     graphics_renderer()->release_custom_image_buffer(CUSTOM_IMAGE_EXTERNAL);
 }
 
-int image_get_external_dimensions(const image *img, int *width, int *height)
-{
+int image_get_external_dimensions(const image *img, int *width, int *height) {
     if ((img->atlas.id >> IMAGE_ATLAS_BIT_OFFSET) != ATLAS_EXTERNAL) {
         return 0;
     }
@@ -1209,8 +1280,7 @@ int image_get_external_dimensions(const image *img, int *width, int *height)
     return 1;
 }
 
-void image_crop(image *img, const color_t *pixels)
-{
+void image_crop(image *img, const color_t *pixels) {
     if (!img->width || !img->height) {
         return;
     }
@@ -1296,13 +1366,11 @@ void image_crop(image *img, const color_t *pixels)
     img->height = y_last_opaque - y_first_opaque + 1;
 }
 
-int image_group(int group)
-{
+int image_group(int group) {
     return data.group_image_ids[group];
 }
 
-const image *image_get(int id)
-{
+const image *image_get(int id) {
     if (id >= 0 && id < IMAGE_MAIN_ENTRIES) {
         return &data.main[id];
     } else {
@@ -1310,8 +1378,7 @@ const image *image_get(int id)
     }
 }
 
-const image *image_letter(int letter_id)
-{
+const image *image_letter(int letter_id) {
     if (data.fonts_enabled == FULL_CHARSET_IN_FONT) {
         return &data.font[data.font_base_offset + letter_id];
     } else if (data.fonts_enabled == MULTIBYTE_IN_FONT && letter_id >= IMAGE_FONT_MULTIBYTE_OFFSET) {
@@ -1323,8 +1390,7 @@ const image *image_letter(int letter_id)
     }
 }
 
-const image *image_get_enemy(int id)
-{
+const image *image_get_enemy(int id) {
     if (id >= 0 && id < ENEMY_ENTRIES) {
         return &data.enemy[id];
     } else {
@@ -1332,8 +1398,7 @@ const image *image_get_enemy(int id)
     }
 }
 
-static void determine_max_width_and_height(const image_copy_info *copy, int *width, int *height)
-{
+static void determine_max_width_and_height(const image_copy_info *copy, int *width, int *height) {
     int max_src_width = copy->src.width - copy->src.x;
     int max_dst_width = copy->dst.width - copy->dst.x;
     *width = copy->rect.width > max_src_width ? max_src_width : copy->rect.width;
@@ -1348,23 +1413,21 @@ static void determine_max_width_and_height(const image_copy_info *copy, int *wid
     }
 }
 
-void image_copy(const image_copy_info *copy)
-{
+void image_copy(const image_copy_info *copy) {
     int width, height;
     determine_max_width_and_height(copy, &width, &height);
     if (width <= 0 || height <= 0) {
         return;
     }
     color_t *dst = &copy->dst.pixels[(copy->dst.y + copy->rect.y_offset) * copy->dst.width +
-        copy->dst.x + copy->rect.x_offset];
+                                     copy->dst.x + copy->rect.x_offset];
     const color_t *src = &copy->src.pixels[copy->src.y * copy->src.width + copy->src.x];
     for (int y = 0; y < height; y++) {
         memcpy(&dst[y * copy->dst.width], &src[y * copy->src.width], width * sizeof(color_t));
     }
 }
 
-void image_copy_isometric_footprint(const image_copy_info *copy)
-{
+void image_copy_isometric_footprint(const image_copy_info *copy) {
     int width, height;
     determine_max_width_and_height(copy, &width, &height);
     if (width <= 0 || height <= 0) {
@@ -1372,7 +1435,7 @@ void image_copy_isometric_footprint(const image_copy_info *copy)
     }
     int half_height = height / 2;
     color_t *dst = &copy->dst.pixels[(copy->dst.y + copy->rect.y_offset) * copy->dst.width +
-        copy->dst.x + copy->rect.x_offset];
+                                     copy->dst.x + copy->rect.x_offset];
     const color_t *src = &copy->src.pixels[copy->src.y * copy->src.width + copy->src.x];
 
     for (int y = 0; y < height; y++) {

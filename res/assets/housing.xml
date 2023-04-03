@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<!DOCTYPE assetlist>
+<assetlist name="housing">
+    <!-- Files related to casa -->
+    <image id="casa_01" width="116" height="72" isometric="true">
+      <layer src="casa_01"/>
+    </image>
+    <image id="casa_02" width="116" height="70" isometric="true">
+      <layer src="casa_02"/>
+    </image>
+    <image id="casa_03" width="116" height="74" isometric="true">
+      <layer src="casa_03"/>
+    </image>
+    <image id="casa_04" width="116" height="84" isometric="true">
+      <layer src="casa_04"/>
+    </image>
+    <image id="casa_05" width="236" height="136" isometric="true">
+      <layer src="casa_05"/>
+    </image>
+    <image id="casa_06" width="236" height="152" isometric="true">
+      <layer src="casa_06"/>
+    </image>
+    <!-- Files related to hovel -->
+    <image id="hovel_01" width="116" height="60" isometric="true">
+      <layer src="hovel_01"/>
+    </image>
+    <image id="hovel_02" width="116" height="60" isometric="true">
+      <layer src="hovel_02"/>
+    </image>
+    <image id="hovel_03" width="116" height="66" isometric="true">
+      <layer src="hovel_03"/>
+    </image>
+    <image id="hovel_04" width="116" height="68" isometric="true">
+      <layer src="hovel_04"/>
+    </image>
+    <image id="hovel_05" width="236" height="142" isometric="true">
+      <layer src="hovel_05"/>
+    </image>
+    <image id="hovel_06" width="236" height="142" isometric="true">
+      <layer src="hovel_06"/>
+    </image>
+    <!-- Files related to insula_1 -->
+    <image id="insula_1_01" width="116" height="98" isometric="true">
+      <layer src="insula_1_01"/>
+    </image>
+    <image id="insula_1_02" width="116" height="98" isometric="true">
+      <layer src="insula_1_02"/>
+    </image>
+    <image id="insula_1_03" width="116" height="116" isometric="true">
+      <layer src="insula_1_03"/>
+    </image>
+    <image id="insula_1_04" width="116" height="118" isometric="true">
+      <layer src="insula_1_04"/>
+    </image>
+    <image id="insula_1_05" width="236" height="194" isometric="true">
+      <layer src="insula_1_05"/>
+    </image>
+    <image id="insula_1_06" width="236" height="192" isometric="true">
+      <layer src="insula_1_06"/>
+    </image>
+    <!-- Files related to insula_2 -->
+    <image id="insula_2_01" width="236" height="198" isometric="true">
+      <layer src="insula_2_01"/>
+    </image>
+    <image id="insula_2_02" width="236" height="218" isometric="true">
+      <layer src="insula_2_02"/>
+    </image>
+    <image id="insula_2_03" width="236" height="222" isometric="true">
+      <layer src="insula_2_03"/>
+    </image>
+    <image id="insula_2_04" width="236" height="216" isometric="true">
+      <layer src="insula_2_04"/>
+    </image>
+    <!-- Files related to palace_1 -->
+    <image id="palace_1_01" width="356" height="212" isometric="true">
+      <layer src="palace_1_01"/>
+    </image>
+    <image id="palace_1_02" width="356" height="198" isometric="true">
+      <layer src="palace_1_02"/>
+    </image>
+    <image id="palace_1_03" width="476" height="298" isometric="true">
+      <layer src="palace_1_03"/>
+    </image>
+    <!-- Files related to palace_2 -->
+    <image id="palace_2_01" width="476" height="306" isometric="true">
+      <layer src="palace_2_01"/>
+    </image>
+    <!-- Files related to shack -->
+    <image id="shack_01" width="116" height="60" isometric="true">
+      <layer src="shack_01"/>
+    </image>
+    <image id="shack_02" width="116" height="60" isometric="true">
+      <layer src="shack_02"/>
+    </image>
+    <image id="shack_03" width="116" height="66" isometric="true">
+      <layer src="shack_03"/>
+    </image>
+    <image id="shack_04" width="116" height="68" isometric="true">
+      <layer src="shack_04"/>
+    </image>
+    <image id="shack_05" width="236" height="142" isometric="true">
+      <layer src="shack_05"/>
+    </image>
+    <image id="shack_06" width="236" height="142" isometric="true">
+      <layer src="shack_06"/>
+    </image>
+    <!-- Files related to tent -->
+    <image id="tent_01" width="116" height="60" isometric="true">
+      <layer src="tent_01"/>
+    </image>
+    <image id="tent_02" width="116" height="60" isometric="true">
+      <layer src="tent_02"/>
+    </image>
+    <image id="tent_03" width="116" height="66" isometric="true">
+      <layer src="tent_03"/>
+    </image>
+    <image id="tent_04" width="116" height="68" isometric="true">
+      <layer src="tent_04"/>
+    </image>
+    <image id="tent_05" width="236" height="124" isometric="true">
+      <layer src="tent_05"/>
+    </image>
+    <image id="tent_06" width="236" height="130" isometric="true">
+      <layer src="tent_06"/>
+    </image>
+    <!-- Files related to vacant -->
+    <image id="vacant_01" width="116" height="60" isometric="true">
+      <layer src="vacant_01"/>
+    </image>
+    <!-- Files related to villa_1 -->
+    <image id="villa_1_01" width="236" height="138" isometric="true">
+      <layer src="villa_1_01"/>
+    </image>
+    <image id="villa_1_02" width="236" height="142" isometric="true">
+      <layer src="villa_1_02"/>
+    </image>
+    <image id="villa_1_03" width="236" height="142" isometric="true">
+      <layer src="villa_1_03"/>
+    </image>
+    <image id="villa_1_04" width="236" height="154" isometric="true">
+      <layer src="villa_1_04"/>
+    </image>
+    <!-- Files related to villa_2 -->
+    <image id="villa_2_01" width="356" height="188" isometric="true">
+      <layer src="villa_2_01"/>
+    </image>
+    <image id="villa_2_02" width="356" height="182" isometric="true">
+      <layer src="villa_2_02"/>
+    </image>
+</assetlist>

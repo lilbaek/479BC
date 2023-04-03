@@ -1,20 +1,14 @@
 #include "view.h"
 
-#include "building/construction.h"
 #include "core/calc.h"
-#include "core/config.h"
+#include "core/game_size.h"
 #include "core/direction.h"
-#include "editor/editor.h"
 #include "graphics/menu.h"
 #include "graphics/renderer.h"
 #include "map/grid.h"
 #include "map/image.h"
 #include "widget/minimap.h"
 
-#define TILE_WIDTH_PIXELS 60
-#define TILE_HEIGHT_PIXELS 30
-#define HALF_TILE_WIDTH_PIXELS 30
-#define HALF_TILE_HEIGHT_PIXELS 15
 
 static const int X_DIRECTION_FOR_ORIENTATION[] = {1,  1, -1, -1};
 static const int Y_DIRECTION_FOR_ORIENTATION[] = {1, -1, -1,  1};
@@ -218,7 +212,7 @@ static void adjust_camera_position_for_pixels(void)
 void city_view_init(void)
 {
     calculate_lookup();
-    city_view_set_scale(100);
+    city_view_set_scale(180);
     widget_minimap_invalidate();
 }
 
@@ -247,7 +241,7 @@ int city_view_get_max_scale(void)
     int max_y_scale = calc_percentage(max_y_pixels, data.viewport.height_pixels);
     int max_scale = max_x_scale > max_y_scale ? max_x_scale : max_y_scale;
 
-    return max_scale < 100 ? 100 : max_scale;
+    return max_scale < 130 ? 130 : max_scale;
 }
 
 void city_view_get_camera(int *x, int *y)
@@ -449,7 +443,7 @@ static void set_viewport_without_sidebar(void)
 
 void city_view_set_scale(int scale)
 {
-    scale = calc_bound(scale, 50, city_view_get_max_scale());
+    scale = calc_bound(scale, 180, city_view_get_max_scale());
     data.scale = scale;
     if (data.sidebar_collapsed) {
         set_viewport_without_sidebar();

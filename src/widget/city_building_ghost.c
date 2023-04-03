@@ -35,7 +35,6 @@
 #include "map/image_context.h"
 #include "map/orientation.h"
 #include "map/property.h"
-#include "map/road_aqueduct.h"
 #include "map/terrain.h"
 #include "map/tiles.h"
 #include "map/water.h"
@@ -44,8 +43,10 @@
 #include "widget/city.h"
 #include "widget/city_bridge.h"
 #include "widget/city_water_ghost.h"
+#include "core/textures.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #define RESERVOIR_RANGE_MAX_TILES 900
 
@@ -53,8 +54,8 @@
 #define MAX_TILES (7 * 7)
 
 #define GRID_OFFSET(x, y) ((x) + GRID_SIZE * (y))
-#define X_VIEW_OFFSET(x, y) (((x) - (y)) * 30)
-#define Y_VIEW_OFFSET(x, y) (((x) + (y)) * 15)
+#define X_VIEW_OFFSET(x, y) (((x) - (y)) * HALF_TILE_WIDTH_PIXELS)
+#define Y_VIEW_OFFSET(x, y) (((x) + (y)) * HALF_TILE_HEIGHT_PIXELS)
 
 typedef struct {
     int x;
@@ -179,7 +180,7 @@ static void draw_building_tiles(int x, int y, int num_tiles, int *blocked_tiles)
         if (blocked_tiles[i]) {
             image_blend_footprint_color(x_offset, y_offset, COLOR_MASK_RED, data.scale);
         } else {
-            image_draw_isometric_footprint(image_group(GROUP_TERRAIN_FLAT_TILE),
+            image_draw_isometric_footprint(assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_FLAT_TILE),
                 x_offset, y_offset, COLOR_MASK_FOOTPRINT_GHOST, data.scale);
         }
     }
@@ -193,12 +194,12 @@ static void draw_building(int image_id, int x, int y, color_t color)
 
 void city_building_ghost_draw_well_range(int x, int y, int grid_offset)
 {
-    image_draw(image_group(GROUP_TERRAIN_FLAT_TILE), x, y, COLOR_MASK_DARK_BLUE, data.scale);
+    image_draw(assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_FLAT_TILE), x, y, COLOR_MASK_DARK_BLUE, data.scale);
 }
 
 void city_building_ghost_draw_fountain_range(int x, int y, int grid_offset)
 {
-    image_draw(image_group(GROUP_TERRAIN_FLAT_TILE), x, y, COLOR_MASK_BLUE, data.scale);
+    image_draw(assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_FLAT_TILE), x, y, COLOR_MASK_BLUE, data.scale);
 }
 
 static void image_draw_warehouse(int image_id, int x, int y, color_t color)
@@ -252,10 +253,9 @@ static void draw_regular_building(building_type type, int image_id, int x, int y
     } else if (type == BUILDING_WAREHOUSE) {
         image_draw_warehouse(image_id, x, y, color);
     } else if (type == BUILDING_GRANARY) {
-        image_draw_isometric_footprint(image_id, x, y, color, data.scale);
-        image_draw(image_id + 1, x - 32, y - 64, color, data.scale);
+        draw_building(assets_get_image_id(TEXTURE_BUILDING_NAME, TEXTURE_BUILDING_GRANARY), x - 50, y , color);
     } else if (type == BUILDING_HOUSE_VACANT_LOT) {
-        draw_building(image_group(GROUP_BUILDING_HOUSE_VACANT_LOT), x, y, color);
+        draw_building(assets_get_image_id(TEXTURE_HOUSING_NAME, TEXTURE_HOUSING_VACANT), x, y, color);
     } else if (type == BUILDING_TRIUMPHAL_ARCH) {
         draw_building(image_id, x, y, color);
         if (image_id == image_group(GROUP_BUILDING_TRIUMPHAL_ARCH)) {
@@ -272,7 +272,12 @@ static void draw_regular_building(building_type type, int image_id, int x, int y
 static int get_building_image_id(int map_x, int map_y, building_type type, const building_properties *props)
 {
     int image_id;
-    image_id = image_group(props->image_group) + props->image_offset;
+
+    if(props->asset_name != NULL) {
+        image_id = assets_get_image_id(props->asset_name, props->asset_image_id) + props->image_offset;
+    } else {
+        image_id = image_group(props->image_group) + props->image_offset;
+    }
 
     if (type == BUILDING_GATEHOUSE) {
         int orientation = map_orientation_for_gatehouse(map_x, map_y);
@@ -405,7 +410,7 @@ static void set_roamer_path(building_type type, int size, const map_tile *tile, 
     int grid_x = tile->x;
     int grid_y = tile->y;
     building_construction_offset_start_from_orientation(&grid_x, &grid_y, size);
-    
+
     if (!is_blocked) {
         figure_roamer_preview_create(type, grid_x, grid_y);
     } else {
@@ -463,6 +468,7 @@ static void draw_default(const map_tile *tile, int x_view, int y_view, building_
             blocked_tiles[i] = 0;
         }
     }
+    // TODO: Phase this out
     if (type >= BUILDING_ROADBLOCK || type == BUILDING_LIBRARY || type == BUILDING_SMALL_STATUE || type == BUILDING_MEDIUM_STATUE) {
         image_id = get_new_building_image_id(tile->x, tile->y, grid_offset, type, props);
         draw_regular_building(type, image_id, x_view, y_view, grid_offset, num_tiles, blocked_tiles);
@@ -475,17 +481,7 @@ static void draw_default(const map_tile *tile, int x_view, int y_view, building_
 
 static void draw_single_reservoir(int grid_offset, int x, int y, color_t color, int has_water, int draw_blocked)
 {
-    int image_id = image_group(GROUP_BUILDING_RESERVOIR);
-    draw_building(image_id, x, y, color);
-    if (has_water) {
-        const image *img = image_get(image_id);
-        if (img->animation) {
-            int x_water = x - FOOTPRINT_WIDTH + img->animation->sprite_offset_x - 2;
-            int top_height = img->top ? img->top->original.height : 0;
-            int y_water = y + img->animation->sprite_offset_y - top_height + FOOTPRINT_HALF_HEIGHT * 3;
-            image_draw(image_id + 1, x_water, y_water, color, data.scale);
-        }
-    }
+    draw_building(assets_get_image_id(TEXTURE_BUILDING_NAME, TEXTURE_BUILDING_RESERVOIR), x - 60, y, color);
     if (data.reservoir_range.blocked && draw_blocked) {
         for (int i = 0; i < 9; i++) {
             image_blend_footprint_color(x + view_offset_x(i), y + view_offset_y(i), COLOR_MASK_RED, data.scale);
@@ -503,7 +499,7 @@ static void draw_single_reservoir(int grid_offset, int x, int y, color_t color, 
 
             if (map_has_figure_at(tile_offset)) {
                 figure_animal_try_nudge_at(grid_offset, tile_offset, 3);
-            } 
+            }
         }
     }
 }
@@ -515,7 +511,7 @@ static void draw_first_reservoir_range(int x, int y, int grid_offset)
         data.reservoir_range.total++;
     }
     int color_mask = data.reservoir_range.blocked ? COLOR_MASK_GREY : COLOR_MASK_BLUE;
-    image_draw(image_group(GROUP_TERRAIN_FLAT_TILE), x, y, color_mask, data.scale);
+    image_draw(assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_FLAT_TILE), x, y, color_mask, data.scale);
 }
 
 static void draw_second_reservoir_range(int x, int y, int grid_offset)
@@ -526,7 +522,7 @@ static void draw_second_reservoir_range(int x, int y, int grid_offset)
         }
     }
     int color_mask = data.reservoir_range.blocked ? COLOR_MASK_GREY : COLOR_MASK_BLUE;
-    image_draw(image_group(GROUP_TERRAIN_FLAT_TILE), x, y, color_mask, data.scale);
+    image_draw(assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_FLAT_TILE), x, y, color_mask, data.scale);
 }
 
 static void draw_draggable_reservoir(const map_tile *tile, int x, int y)
@@ -617,7 +613,7 @@ static void draw_draggable_reservoir(const map_tile *tile, int x, int y)
         }
     }
     // mouse pointer = center tile of reservoir instead of north, correct here:
-    y -= 30;
+    y -= 60;
     if (config_get(CONFIG_UI_SHOW_WATER_STRUCTURE_RANGE) && (!building_construction_in_progress() || draw_later)) {
         if (draw_later) {
             city_view_foreach_tile_in_range(offset + RESERVOIR_GRID_OFFSETS[orientation_index], 3,
@@ -635,54 +631,6 @@ static void draw_draggable_reservoir(const map_tile *tile, int x, int y)
     }
 }
 
-static void draw_aqueduct(const map_tile *tile, int x, int y)
-{
-    int grid_offset = tile->grid_offset;
-    int blocked = city_finance_out_of_money();
-    if (!blocked) {
-        if (building_construction_in_progress()) {
-            if (!building_construction_cost()) {
-                blocked = 1;
-            }
-        } else {
-            if (map_terrain_is(grid_offset, TERRAIN_ROAD)) {
-                blocked = !map_is_straight_road_for_aqueduct(grid_offset);
-                if (map_property_is_plaza_or_earthquake(grid_offset)) {
-                    blocked = 1;
-                }
-                if (map_terrain_count_directly_adjacent_with_types(grid_offset, TERRAIN_ROAD | TERRAIN_AQUEDUCT)) {
-                    blocked = 1;
-                }
-            } else if (!map_can_place_aqueduct_on_highway(grid_offset, 0)) {
-                blocked = 1;
-            } else if (map_terrain_is(grid_offset, TERRAIN_NOT_CLEAR ^ TERRAIN_HIGHWAY)) {
-                blocked = 1;
-            }
-        }
-    }
-    int image_id = image_group(GROUP_BUILDING_AQUEDUCT);
-    const terrain_image *img = map_image_context_get_aqueduct(grid_offset, 1);
-    if (map_terrain_is(grid_offset, TERRAIN_ROAD)) {
-        int group_offset = img->group_offset;
-        if (!img->aqueduct_offset) {
-            if (map_terrain_is(grid_offset + map_grid_delta(0, -1), TERRAIN_ROAD)) {
-                group_offset = 3;
-            } else {
-                group_offset = 2;
-            }
-        }
-        if (map_tiles_is_paved_road(grid_offset)) {
-            image_id += group_offset + 13;
-        } else {
-            image_id += group_offset + 21;
-        }
-    } else {
-        image_id += img->group_offset + 15;
-    }
-    draw_building(image_id, x, y, blocked ? COLOR_MASK_BUILDING_GHOST_RED : COLOR_MASK_BUILDING_GHOST);
-    draw_building_tiles(x, y, 1, &blocked);
-}
-
 static void draw_fountain(const map_tile *tile, int x, int y)
 {
     color_t color_mask;
@@ -692,19 +640,12 @@ static void draw_fountain(const map_tile *tile, int x, int y)
     } else {
         color_mask = COLOR_MASK_BUILDING_GHOST;
     }
-    int image_id = image_group(building_properties_for_type(BUILDING_FOUNTAIN)->image_group);
+    int image_id = assets_get_image_id(TEXTURE_BUILDING_NAME, TEXTURE_BUILDING_FOUNTAIN);
     if (config_get(CONFIG_UI_SHOW_WATER_STRUCTURE_RANGE)) {
         city_water_ghost_draw_water_structure_ranges();
         city_view_foreach_tile_in_range(tile->grid_offset, 1, map_water_supply_fountain_radius(), city_building_ghost_draw_fountain_range);
     }
     draw_building(image_id, x, y, color_mask);
-    if (map_terrain_is(tile->grid_offset, TERRAIN_RESERVOIR_RANGE)) {
-        const image *img = image_get(image_id);
-        if (img->animation) {
-            image_draw(image_id + 1, x + img->animation->sprite_offset_x, y + img->animation->sprite_offset_y,
-                color_mask, data.scale);
-        }
-        }
     draw_building_tiles(x, y, 1, &blocked);
 }
 
@@ -718,7 +659,8 @@ static void draw_well(const map_tile *tile, int x, int y)
     } else {
         color_mask = COLOR_MASK_BUILDING_GHOST;
     }
-    int image_id = image_group(building_properties_for_type(BUILDING_WELL)->image_group);
+    const building_properties *ptr = building_properties_for_type(BUILDING_WELL);
+    int image_id = assets_get_image_id(ptr->asset_name, ptr->asset_image_id);
     if (config_get(CONFIG_UI_SHOW_WATER_STRUCTURE_RANGE)) {
         city_water_ghost_draw_water_structure_ranges();
         city_view_foreach_tile_in_range(tile->grid_offset, 1, map_water_supply_well_radius(), city_building_ghost_draw_well_range);
@@ -1048,7 +990,7 @@ static void draw_waterside_building(const map_tile *tile, int x, int y, building
                     image_blend_footprint_color(x + X_VIEW_OFFSET(dx, dy), y + Y_VIEW_OFFSET(dx, dy),
                         COLOR_MASK_RED, data.scale);
                 } else {
-                    image_draw_isometric_footprint(image_group(GROUP_TERRAIN_FLAT_TILE),
+                    image_draw_isometric_footprint(assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_FLAT_TILE),
                         x + X_VIEW_OFFSET(dx, dy), y + Y_VIEW_OFFSET(dx, dy), COLOR_MASK_FOOTPRINT_GHOST, data.scale);
                 }
             }
@@ -1071,17 +1013,10 @@ static void draw_road(const map_tile *tile, int x, int y)
     int grid_offset = tile->grid_offset;
     int blocked = 0;
     int image_id = 0;
-    if (map_terrain_is(grid_offset, TERRAIN_AQUEDUCT)) {
-        image_id = image_group(GROUP_BUILDING_AQUEDUCT);
-        if (map_can_place_road_under_aqueduct(grid_offset)) {
-            image_id += map_get_aqueduct_with_road_image(grid_offset);
-        } else {
-            blocked = 1;
-        }
-    } else if (map_terrain_is(grid_offset, TERRAIN_NOT_CLEAR)) {
+   if (map_terrain_is(grid_offset, TERRAIN_NOT_CLEAR)) {
         blocked = 1;
     } else {
-        image_id = image_group(GROUP_TERRAIN_ROAD);
+        image_id = assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_ROAD);
         if (!map_terrain_has_adjacent_x_with_type(grid_offset, TERRAIN_ROAD) &&
             map_terrain_has_adjacent_y_with_type(grid_offset, TERRAIN_ROAD)) {
             image_id++;
@@ -1099,7 +1034,7 @@ static void draw_road(const map_tile *tile, int x, int y)
 
 static void draw_market_range(int x, int y, int grid_offset)
 {
-    image_draw(image_group(GROUP_TERRAIN_FLAT_TILE), x, y, COLOR_MASK_GREY, data.scale);
+    image_draw(assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_FLAT_TILE), x, y, COLOR_MASK_GREY, data.scale);
 }
 
 static void draw_market(const map_tile *tile, int x, int y)
@@ -1120,7 +1055,8 @@ static void draw_market(const map_tile *tile, int x, int y)
     if (config_get(CONFIG_UI_SHOW_MARKET_RANGE)) {
         city_view_foreach_tile_in_range(tile->grid_offset, 2, MARKET_MAX_DISTANCE, draw_market_range);
     }
-    int image_id = image_group(building_properties_for_type(BUILDING_MARKET)->image_group);
+    const building_properties *ptr = building_properties_for_type(BUILDING_MARKET);
+    int image_id = assets_get_image_id(ptr->asset_name, ptr->asset_image_id);
     color_t color = blocked ? COLOR_MASK_BUILDING_GHOST_RED : COLOR_MASK_BUILDING_GHOST;
     draw_building(image_id, x, y, color);
     draw_building_tiles(x, y, num_tiles, blocked_tiles);
@@ -1142,8 +1078,8 @@ static void draw_highway(const map_tile *tile, int x, int y)
     for (int i = 0; i < num_tiles; i++) {
         int tile_offset = grid_offset + tile_grid_offset(orientation_index, i);
         int terrain = map_terrain_get(tile_offset);
-        int has_forbidden_terrain = terrain & TERRAIN_NOT_CLEAR & ~TERRAIN_HIGHWAY & ~TERRAIN_AQUEDUCT & ~TERRAIN_ROAD;
-        if (fully_blocked || has_forbidden_terrain || !map_can_place_highway_under_aqueduct(tile_offset, 0)) {
+        int has_forbidden_terrain = terrain & TERRAIN_NOT_CLEAR & ~TERRAIN_HIGHWAY & ~TERRAIN_ROAD;
+        if (fully_blocked || has_forbidden_terrain) {
             blocked_tiles[i] = 1;
         } else {
             blocked_tiles[i] = 0;
@@ -1156,7 +1092,7 @@ static void draw_highway(const map_tile *tile, int x, int y)
 
 static void draw_grand_temple_neptune_range(int x, int y, int grid_offset)
 {
-    image_draw(image_group(GROUP_TERRAIN_FLAT_TILE), x, y, COLOR_MASK_BLUE, data.scale);
+    image_draw(assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_FLAT_TILE), x, y, COLOR_MASK_BLUE, data.scale);
 }
 
 static void draw_grand_temple_neptune(const map_tile *tile, int x, int y)
@@ -1186,7 +1122,7 @@ int city_building_ghost_mark_deleting(const map_tile *tile)
         map_property_clear_constructing_and_deleted();
     }
     map_building_tiles_mark_deleting(tile->grid_offset);
-    if (map_terrain_is(tile->grid_offset, TERRAIN_HIGHWAY) && !map_terrain_is(tile->grid_offset, TERRAIN_AQUEDUCT)) {
+    if (map_terrain_is(tile->grid_offset, TERRAIN_HIGHWAY)) {
         map_tiles_clear_highway(tile->grid_offset, 1);
     }
     return 1;
@@ -1210,7 +1146,7 @@ static void draw_grid_tile(int x, int y, int grid_offset)
 {
     static int image_id = 0;
     if (!image_id) {
-        image_id = assets_get_image_id("UI", "Grid_Full");
+        image_id = assets_get_image_id("UI", GRID_IMAGE);
     }
     if (map_terrain_is(grid_offset, TERRAIN_BUILDING) || map_terrain_is(grid_offset, TERRAIN_ROCK) ||
         map_terrain_is(grid_offset, TERRAIN_ACCESS_RAMP) || map_terrain_is(grid_offset, TERRAIN_ELEVATION) ||
@@ -1315,9 +1251,6 @@ void city_building_ghost_draw(const map_tile *tile)
     switch (type) {
         case BUILDING_DRAGGABLE_RESERVOIR:
             draw_draggable_reservoir(tile, x, y);
-            break;
-        case BUILDING_AQUEDUCT:
-            draw_aqueduct(tile, x, y);
             break;
         case BUILDING_FOUNTAIN:
             draw_fountain(tile, x, y);

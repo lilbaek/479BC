@@ -3,23 +3,30 @@
 
 #include <stdint.h>
 
-#define MAX_COMMAND_SIZE 64
+void game_cheat_add_money(int money);
 
-void game_cheat_activate(void);
+void game_cheat_start_invasion(int type, int size, int invasion_point);
 
-int game_cheat_tooltip_enabled(void);
+void game_cheat_advance_year();
 
-void game_cheat_money(void);
+void game_cheat_cast_blessing(int god_id);
 
-void game_cheat_victory(void);
+void game_cheat_show_tooltip(int show);
 
-/**
- * Does nothing, just set breakpoint in implementation and call it with alt + b
- */
-void game_cheat_breakpoint(void);
+void game_cheat_kill_all();
 
-void game_cheat_console(void);
+void game_cheat_finish_monuments();
 
-void game_cheat_parse_command(uint8_t * command);
+void game_cheat_set_monument_phase(int phase);
 
+void game_cheat_unlock_all_buildings();
+
+void game_cheat_incite_riot();
+
+void game_cheat_activate();
+
+int game_cheat_tooltip_enabled();
+int game_cheat_is_cheating();
+
+void game_cheat_fill_markets();
 #endif // GAME_CHEATS_H

@@ -138,10 +138,10 @@ static const char *ASSET_DIRS[MAX_ASSET_DIRS] = {
 #elif !defined (_WIN32)
     "***RELATIVE_APPIMG_PATH***",
     "***RELATIVE_EXEC_PATH***",
-    "~/.local/share/augustus-game",
-    "/usr/share/augustus-game",
-    "/usr/local/share/augustus-game",
-    "/opt/augustus-game",
+    "~/.local/share/tiberius-game",
+    "/usr/share/tiberius-game",
+    "/usr/local/share/tiberius-game",
+    "/opt/tiberius-game",
 #endif
     CUSTOM_ASSETS_DIR
 };
@@ -202,7 +202,7 @@ static void set_assets_directory(void)
             if (!parent) {
                 continue;
             }
-            strncpy(parent, "/share/augustus-game", FILE_NAME_MAX - (parent - assets_directory) - 1);
+            strncpy(parent, "/share/tiberius-game", FILE_NAME_MAX - (parent - assets_directory) - 1);
 #endif
         } else if (strcmp(ASSET_DIRS[i], "***RELATIVE_EXEC_PATH***") == 0) {
 #if defined(_WIN32) || defined(__vita__) || defined(__SWITCH__) || defined(__APPLE__)
@@ -220,7 +220,7 @@ static void set_assets_directory(void)
             dirname(arg0_dir);
             size_t arg0_dir_length = strlen(arg0_dir);
             strncpy(assets_directory, arg0_dir, FILE_NAME_MAX);
-            strncpy(assets_directory + arg0_dir_length, "/../share/augustus-game",
+            strncpy(assets_directory + arg0_dir_length, "/../share/tiberius-game",
                     FILE_NAME_MAX - arg0_dir_length);
 #endif
         } else {
@@ -361,7 +361,7 @@ int platform_file_manager_compare_filename_prefix(const char *filename, const ch
 int platform_file_manager_set_base_path(const char *path)
 {
     if (!path) {
-        log_error("set_base_path: path was not set. Augustus will probably crash.", 0, 0);
+        log_error("set_base_path: path was not set. tiberius will probably crash.", 0, 0);
         return 0;
     }
 #ifdef __ANDROID__
@@ -438,6 +438,11 @@ FILE *platform_file_manager_open_asset(const char *asset, const char *mode)
     free(wmode);
 
     return fp;
+}
+
+const char *platform_file_manager_asset_path(const char *asset) {
+    set_assets_directory();
+    return dir_get_asset(assets_directory, asset);
 }
 
 int platform_file_manager_remove_file(const char *filename)

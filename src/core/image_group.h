@@ -1,6 +1,7 @@
 #ifndef GRAPHICS_IMAGE_GROUP_H
 #define GRAPHICS_IMAGE_GROUP_H
 
+// TODO: Image groups
 enum {
     GROUP_TERRAIN_BLACK = 1,
     GROUP_TERRAIN_SHRUB = 2,

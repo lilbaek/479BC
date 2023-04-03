@@ -1,4 +1,4 @@
-package com.github.Keriew.augustus;
+package com.github.Keriew.tiberius;
 
 import android.app.Activity;
 import android.database.Cursor;
@@ -42,7 +42,7 @@ public class FileManager {
                 DocumentsContract.Document.MIME_TYPE_DIR, Uri.EMPTY);
             return 1;
         } catch (Exception e) {
-            Log.e("augustus", "Error in setBaseUri: " + e);
+            Log.e("tiberius", "Error in setBaseUri: " + e);
             return 0;
         }
     }
@@ -94,7 +94,7 @@ public class FileManager {
         return currentDir;
     }
 
-    private static FileInfo getFileFromPath(AugustusMainActivity activity, String filePath) {
+    private static FileInfo getFileFromPath(TiberiusMainActivity activity, String filePath) {
         try {
             if (baseUri == Uri.EMPTY) {
                 return null;
@@ -106,13 +106,13 @@ public class FileManager {
             }
             return findFile(activity, dirInfo, filePart[filePart.length - 1]);
         } catch (Exception e) {
-            Log.e("augustus", "Error in getFileFromPath: " + e);
+            Log.e("tiberius", "Error in getFileFromPath: " + e);
             return null;
         }
     }
 
     @SuppressWarnings("unused")
-    public static String[] getDirectoryFileList(AugustusMainActivity activity, String dir, int type, String ext) {
+    public static String[] getDirectoryFileList(TiberiusMainActivity activity, String dir, int type, String ext) {
         ArrayList<String> fileList = new ArrayList<>();
 
         if (baseUri == Uri.EMPTY) {
@@ -146,7 +146,7 @@ public class FileManager {
         return fileList.toArray(result);
     }
 
-    public static boolean deleteFile(AugustusMainActivity activity, String filePath) {
+    public static boolean deleteFile(TiberiusMainActivity activity, String filePath) {
         try {
             FileInfo fileInfo = getFileFromPath(activity, filePath);
             if (fileInfo == null) {
@@ -158,13 +158,13 @@ public class FileManager {
             }
             return DocumentsContract.deleteDocument(activity.getContentResolver(), fileInfo.getUri());
         } catch (Exception e) {
-            Log.e("augustus", "Error in deleteFile: " + e);
+            Log.e("tiberius", "Error in deleteFile: " + e);
             return false;
         }
     }
 
     @SuppressWarnings("unused")
-    public static int openFileDescriptor(AugustusMainActivity activity, String filePath, String mode) {
+    public static int openFileDescriptor(TiberiusMainActivity activity, String filePath, String mode) {
         try {
             if (baseUri == Uri.EMPTY) {
                 return 0;
@@ -213,7 +213,7 @@ public class FileManager {
             ParcelFileDescriptor pfd = activity.getContentResolver().openFileDescriptor(fileUri, internalMode);
             return (pfd == null) ? 0 : pfd.detachFd();
         } catch (Exception e) {
-            Log.e("augustus", "Error in openFileDescriptor: " + e);
+            Log.e("tiberius", "Error in openFileDescriptor: " + e);
             return 0;
         }
     }

@@ -19,6 +19,7 @@
 #include "scenario/editor_map.h"
 #include "city/warning.h"
 #include "widget/minimap.h"
+#include "core/textures.h"
 
 #define TERRAIN_PAINT_MASK ~(TERRAIN_TREE | TERRAIN_ROCK | TERRAIN_WATER | TERRAIN_BUILDING |\
                             TERRAIN_SHRUB | TERRAIN_GARDEN | TERRAIN_ROAD | TERRAIN_MEADOW)
@@ -278,18 +279,6 @@ void editor_tool_update_use(const map_tile *tile)
             map_tiles_update_all_rocks();
             map_tiles_update_region_meadow(x_min, y_min, x_max, y_max);
             break;
-        case TOOL_RAISE_LAND:
-        case TOOL_LOWER_LAND:
-            map_image_context_reset_water();
-            map_image_context_reset_elevation();
-            map_tiles_update_all_elevation();
-            map_tiles_update_region_water(x_min, y_min, x_max, y_max);
-            map_tiles_update_region_trees(x_min, y_min, x_max, y_max);
-            map_tiles_update_region_shrub(x_min, y_min, x_max, y_max);
-            map_tiles_update_all_rocks();
-            map_tiles_update_region_empty_land(x_min, y_min, x_max, y_max);
-            map_tiles_update_region_meadow(x_min, y_min, x_max, y_max);
-            break;
         default:
             break;
     }
@@ -366,42 +355,6 @@ static void place_building(const map_tile *tile)
     }
 }
 
-static void update_terrain_after_elevation_changes(void)
-{
-    map_elevation_remove_cliffs();
-    map_image_context_reset_water();
-    map_image_context_reset_elevation();
-    map_tiles_update_all_elevation();
-    map_tiles_update_all_rocks();
-    map_tiles_update_all_empty_land();
-    map_tiles_update_all_meadow();
-    map_tiles_update_all_water();
-
-
-    scenario_editor_updated_terrain();
-}
-
-static void place_access_ramp(const map_tile *tile)
-{
-    int orientation = 0;
-    if (editor_tool_can_place_access_ramp(tile, &orientation)) {
-        int terrain_mask = ~(TERRAIN_ROCK | TERRAIN_WATER | TERRAIN_BUILDING | TERRAIN_GARDEN | TERRAIN_AQUEDUCT);
-        for (int dy = 0; dy < 2; dy++) {
-            for (int dx = 0; dx < 2; dx++) {
-                int grid_offset = tile->grid_offset + map_grid_delta(dx, dy);
-                map_terrain_set(grid_offset, map_terrain_get(grid_offset) & terrain_mask);
-            }
-        }
-        map_building_tiles_add(0, tile->x, tile->y, 2,
-            image_group(GROUP_TERRAIN_ACCESS_RAMP) + orientation, TERRAIN_ACCESS_RAMP);
-
-        update_terrain_after_elevation_changes();
-        scenario_editor_updated_terrain();
-    } else {
-        city_warning_show(WARNING_EDITOR_CANNOT_PLACE, NEW_WARNING_SLOT);
-    }
-}
-
 static void place_road(const map_tile *start_tile, const map_tile *end_tile)
 {
     if (building_construction_place_road(0, start_tile->x, start_tile->y, end_tile->x, end_tile->y)) {
@@ -447,13 +400,6 @@ void editor_tool_end_use(const map_tile *tile)
         case TOOL_NATIVE_FIELD:
         case TOOL_NATIVE_HUT:
             place_building(tile);
-            break;
-        case TOOL_RAISE_LAND:
-        case TOOL_LOWER_LAND:
-            update_terrain_after_elevation_changes();
-            break;
-        case TOOL_ACCESS_RAMP:
-            place_access_ramp(tile);
             break;
         case TOOL_ROAD:
             place_road(&data.start_tile, tile);

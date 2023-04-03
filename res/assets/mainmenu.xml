@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<!DOCTYPE assetlist>
+<assetlist name="mainmenu">
+	<image id="start-screen" src="start-screen"/>
+</assetlist>

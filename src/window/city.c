@@ -48,6 +48,7 @@
 #include "window/empire.h"
 #include "window/file_dialog.h"
 #include "window/message_list.h"
+#include "widget/bottombar/city.h"
 
 static int mothball_warning_id;
 
@@ -57,6 +58,7 @@ static void draw_background(void)
         widget_city_setup_routing_preview();
     }
     widget_sidebar_city_draw_background();
+    widget_bottom_bar_city_draw_background();
     widget_top_menu_draw(1);
 }
 
@@ -119,6 +121,7 @@ static void draw_foreground(void)
     widget_top_menu_draw(0);
     window_city_draw();
     widget_sidebar_city_draw_foreground();
+    widget_bottom_bar_city_draw_foreground();
     if (window_is(WINDOW_CITY) || window_is(WINDOW_CITY_MILITARY)) {
         draw_time_left();
         widget_city_draw_construction_buttons();
@@ -139,6 +142,7 @@ static void draw_foreground_military(void)
     if (config_get(CONFIG_UI_SHOW_MILITARY_SIDEBAR)) {
         widget_sidebar_military_draw_foreground();
     } else {
+        widget_bottom_bar_city_draw_foreground();
         widget_sidebar_city_draw_foreground();
     }
     draw_time_left();
@@ -249,9 +253,7 @@ static int get_building_type_from_grid_offset(int grid_offset)
             building *building = building_main(building_get(building_id));
             return building->type;
         }
-    } else if (terrain & TERRAIN_AQUEDUCT) {
-        return BUILDING_AQUEDUCT;
-    } else if (terrain & TERRAIN_GARDEN) {
+    }  else if (terrain & TERRAIN_GARDEN) {
         return BUILDING_GARDENS;
     } else if (terrain & TERRAIN_ROAD) {
         if (map_property_is_plaza_or_earthquake(grid_offset)) {
@@ -277,7 +279,6 @@ static void show_overlay_from_grid_offset(int grid_offset)
         case BUILDING_HIGHWAY:
             overlay = OVERLAY_ROADS;
             break;
-        case BUILDING_AQUEDUCT:
         case BUILDING_RESERVOIR:
         case BUILDING_FOUNTAIN:
         case BUILDING_WELL:

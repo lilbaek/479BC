@@ -61,7 +61,8 @@ static void create_fishing_point(int x, int y)
 
 void figure_create_fishing_points(void)
 {
-    scenario_map_foreach_fishing_point(create_fishing_point);
+    // TODO
+    //scenario_map_foreach_fishing_point(create_fishing_point);
 }
 
 static void create_herd(int x, int y)
@@ -103,6 +104,7 @@ void figure_create_herds(void)
 
 void figure_seagulls_action(figure *f)
 {
+    return; // TODO
     f->terrain_usage = TERRAIN_USAGE_ANY;
     f->is_ghost = 0;
     f->use_cross_country = 1;

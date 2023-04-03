@@ -53,7 +53,6 @@ void map_orientation_change(int counter_clockwise)
     game_undo_disable();
     determine_leftmost_tile();
 
-    map_tiles_update_all_elevation();
     map_tiles_update_all_water();
     map_tiles_update_all_earthquake();
     map_tiles_update_all_rocks();
@@ -68,7 +67,6 @@ void map_orientation_change(int counter_clockwise)
     map_tiles_update_all_highways();
     map_tiles_update_all_plazas();
     map_tiles_update_all_walls();
-    map_tiles_update_all_aqueducts(0);
     building_connectable_update_connections();
 
 

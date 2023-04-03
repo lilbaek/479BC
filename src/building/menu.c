@@ -12,8 +12,8 @@
 static const building_type MENU_BUILDING_TYPE[BUILD_MENU_MAX][BUILD_MENU_ITEM_MAX] = {
     {BUILDING_HOUSE_VACANT_LOT, 0},
     {BUILDING_CLEAR_LAND, 0},
-    {BUILDING_ROAD, BUILDING_HIGHWAY, 0},
-    {BUILDING_DRAGGABLE_RESERVOIR, BUILDING_AQUEDUCT, BUILDING_FOUNTAIN, BUILDING_WELL, 0},
+    {BUILDING_ROAD, 0},
+    {BUILDING_DRAGGABLE_RESERVOIR, BUILDING_FOUNTAIN, BUILDING_WELL, 0},
     {BUILDING_BARBER, BUILDING_BATHHOUSE, BUILDING_DOCTOR, BUILDING_HOSPITAL, 0},
     {BUILDING_MENU_SMALL_TEMPLES, BUILDING_MENU_LARGE_TEMPLES, BUILDING_MENU_GRAND_TEMPLES, BUILDING_LARARIUM, BUILDING_ORACLE, BUILDING_SMALL_MAUSOLEUM, BUILDING_LARGE_MAUSOLEUM, BUILDING_NYMPHAEUM, 0},
     {BUILDING_SCHOOL, BUILDING_ACADEMY, BUILDING_LIBRARY, BUILDING_MISSION_POST, 0},
@@ -90,7 +90,9 @@ static int can_get_required_resource(building_type type)
                 empire_can_import_resource_potentially(RESOURCE_TIMBER)) &&
                 building_monument_has_required_resources_to_build(type);
         case BUILDING_CITY_MINT:
-            return (is_building_type_allowed(BUILDING_SENATE) ||
+            return (empire_can_produce_resource_potentially(RESOURCE_GOLD) ||
+                empire_can_import_resource_potentially(RESOURCE_GOLD)) &&
+                (is_building_type_allowed(BUILDING_SENATE) ||
                 is_building_type_allowed(BUILDING_SENATE_UPGRADED)) &&
                 building_monument_has_required_resources_to_build(type);
         default:
@@ -144,7 +146,6 @@ static void enable_normal(int *enabled, building_type type)
     enable_if_allowed(enabled, type, BUILDING_ROAD);
     enable_if_allowed(enabled, type, BUILDING_HIGHWAY);
     enable_if_allowed(enabled, type, BUILDING_DRAGGABLE_RESERVOIR);
-    enable_if_allowed(enabled, type, BUILDING_AQUEDUCT);
     enable_if_allowed(enabled, type, BUILDING_FOUNTAIN);
     enable_if_allowed(enabled, type, BUILDING_WELL);
     enable_if_allowed(enabled, type, BUILDING_BARBER);
@@ -294,7 +295,6 @@ static void enable_tutorial2_up_to_250(int *enabled, building_type type)
 {
     enable_tutorial2_start(enabled, type);
     enable_if_allowed(enabled, type, BUILDING_DRAGGABLE_RESERVOIR);
-    enable_if_allowed(enabled, type, BUILDING_AQUEDUCT);
     enable_if_allowed(enabled, type, BUILDING_FOUNTAIN);
 }
 

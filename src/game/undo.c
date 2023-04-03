@@ -17,7 +17,6 @@
 #include "figure/roamer_preview.h"
 #include "game/resource.h"
 #include "graphics/window.h"
-#include "map/aqueduct.h"
 #include "map/building.h"
 #include "map/building_tiles.h"
 #include "map/grid.h"
@@ -132,7 +131,6 @@ int game_undo_start_build(building_type type)
 
     map_image_backup();
     map_terrain_backup();
-    map_aqueduct_backup();
     map_property_backup();
     map_sprite_backup();
 
@@ -170,7 +168,6 @@ static void restore_map_images(void)
 void game_undo_restore_map(int include_properties)
 {
     map_terrain_restore();
-    map_aqueduct_restore();
     if (include_properties) {
         map_property_restore();
     }
@@ -242,15 +239,13 @@ void game_undo_perform(void)
             }
         }
         map_terrain_restore();
-        map_aqueduct_restore();
         map_sprite_restore();
         map_image_restore();
         map_property_restore();
         map_property_clear_constructing_and_deleted();
-    } else if (data.type == BUILDING_AQUEDUCT || data.type == BUILDING_ROAD ||
+    } else if (data.type == BUILDING_ROAD ||
         data.type == BUILDING_WALL || data.type == BUILDING_HIGHWAY) {
         map_terrain_restore();
-        map_aqueduct_restore();
         restore_map_images();
     } else if (data.type == BUILDING_LOW_BRIDGE || data.type == BUILDING_SHIP_BRIDGE) {
         map_terrain_restore();
@@ -258,13 +253,11 @@ void game_undo_perform(void)
         restore_map_images();
     } else if (data.type == BUILDING_PLAZA || data.type == BUILDING_GARDENS) {
         map_terrain_restore();
-        map_aqueduct_restore();
         map_property_restore();
         restore_map_images();
     } else if (data.num_buildings) {
         if (data.type == BUILDING_DRAGGABLE_RESERVOIR) {
             map_terrain_restore();
-            map_aqueduct_restore();
             restore_map_images();
         }
         for (int i = 0; i < data.num_buildings; i++) {
@@ -294,7 +287,6 @@ void game_undo_reduce_time_available(void)
     data.timeout_ticks--;
     switch (data.type) {
         case BUILDING_CLEAR_LAND:
-        case BUILDING_AQUEDUCT:
         case BUILDING_ROAD:
         case BUILDING_HIGHWAY:
         case BUILDING_WALL:

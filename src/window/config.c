@@ -29,6 +29,7 @@
 #include "window/plain_message_dialog.h"
 #include "window/select_list.h"
 #include "translation/translation.h"
+#include "assets/assets.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -784,7 +785,7 @@ static void draw_background(void)
     update_widgets();
 
     if (data.show_background_image) {
-        image_draw_fullscreen_background(image_group(GROUP_INTERMEZZO_BACKGROUND) + 5);
+        image_draw_fullscreen_background(assets_get_image_id("mainmenu", "start-screen"));
     } else {
         window_draw_underlying_window();
     }
