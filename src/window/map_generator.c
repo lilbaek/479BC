@@ -29,7 +29,7 @@ void init() {
     data.map_size[3] = gettext("Large map");
     data.map_size[4] = gettext("Huge map");
     data.map_size[5] = gettext("Enormous map");
-    data.current_map = 2;
+    data.current_map = 4;
     data.init = 1;
 }
 
