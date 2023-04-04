@@ -28,11 +28,12 @@ FILE *file_open(const char *filename, const char *mode);
 
 /**
  * Wrapper for fopen converting filename to path in asset directory
+ * @param folder Asset folder to use
  * @param filename Asset filename
  * @param mode Mode to open the asset file (e.g. "wb").
  * @return FILE
  */
-FILE *file_open_asset(const char *asset, const char *mode);
+FILE *file_open_asset_folder(const char *folder, const char *asset, const char *mode);
 
 /**
  * Wrapper to fclose

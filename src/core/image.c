@@ -8,6 +8,7 @@
 #include "core/log.h"
 #include "graphics/font.h"
 #include "graphics/renderer.h"
+#include "assets/gui_assets.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -744,6 +745,7 @@ int image_load_climate(int climate_id, int is_editor, int force_reload, int keep
     make_plain_fonts_white(data.main, atlas_data, image_group(GROUP_FONT));
     if (!keep_atlas_buffers) {
         assets_init(data.is_editor != is_editor, atlas_data->buffers, atlas_data->image_widths);
+        gui_assets_init();
     }
     graphics_renderer()->create_image_atlas(atlas_data, !keep_atlas_buffers);
     image_packer_free(&data.packer);
