@@ -859,7 +859,7 @@ static void button_show_resource_window(int param1, int param2)
     window_resource_settings_show(data.focus_resource);
 }
 
-static void confirmed_open_trade(int accepted, int checked)
+static void confirmed_open_trade(int accepted)
 {
     if (accepted) {
         empire_city_open_trade(data.selected_city);
@@ -870,7 +870,7 @@ static void confirmed_open_trade(int accepted, int checked)
 
 static void button_open_trade(int param1, int param2)
 {
-    window_popup_dialog_show(POPUP_DIALOG_OPEN_TRADE, confirmed_open_trade, 2);
+    window_popup_dialog_show_ex(gettext("Open trade route"), gettext("Pay to open this trade route?"), confirmed_open_trade, 2);
 }
 
 void window_empire_show(void)

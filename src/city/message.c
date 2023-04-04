@@ -108,17 +108,6 @@ static int new_message_id(void)
     return -1;
 }
 
-static int has_video(int text_id)
-{
-    const lang_message *msg = lang_get_message(text_id);
-    if (!msg->video.text) {
-        return 0;
-    }
-    char video_file[FILE_NAME_MAX];
-    encoding_to_utf8(msg->video.text, video_file, FILE_NAME_MAX, 0);
-    return file_exists(video_file, MAY_BE_LOCALIZED);
-}
-
 static void enqueue_message(int sequence)
 {
     for (int i = 0; i < MAX_QUEUE; i++) {
@@ -158,9 +147,7 @@ static void show_message_popup(int message_id)
     data.consecutive_message_delay = 5;
     msg->is_read = 1;
     int text_id = city_message_get_text_id(msg->message_type);
-    if (!has_video(text_id)) {
-        play_sound(text_id);
-    }
+    play_sound(text_id);
     window_message_dialog_show_city_message(text_id,
         msg->year, msg->month, msg->param1, msg->param2,
         city_message_get_advisor(msg->message_type), 1);

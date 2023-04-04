@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE assetlist>
+<assetlist name="decoration">
+    <!-- Files related to sign -->
+    <image id="sign_01" src="sign_01"/>
+    <image id="sign_02" src="sign_02"/>
+    <image id="sign_03" src="sign_03"/>
+    <image id="sign_04" src="sign_04"/>
+    <image id="sign_05" src="sign_05"/>
+    <image id="sign_06" src="sign_06"/>
+    <image id="sign_07" src="sign_07"/>
+    <image id="sign_08" src="sign_08"/>
+    <image id="sign" src="sign_01">
+      <layer group="this" image="sign_01" x="0" y="0"/>
+      <layer group="this" image="sign_02" x="0" y="0"/>
+      <layer group="this" image="sign_03" x="0" y="0"/>
+      <layer group="this" image="sign_04" x="0" y="0"/>
+      <layer group="this" image="sign_05" x="0" y="0"/>
+      <layer group="this" image="sign_06" x="0" y="0"/>
+      <layer group="this" image="sign_07" x="0" y="0"/>
+      <layer group="this" image="sign_08" x="0" y="0"/>
+    </image>
+</assetlist>

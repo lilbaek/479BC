@@ -23,7 +23,6 @@
 #include "graphics/image.h"
 #include "graphics/panel.h"
 #include "graphics/text.h"
-#include "graphics/video.h"
 #include "graphics/window.h"
 #include "input/scroll.h"
 #include "input/zoom.h"
@@ -677,7 +676,6 @@ void widget_city_handle_input(const mouse *m, const hotkeys *h)
             building_construction_cancel();
             window_request_refresh();
         } else {
-            video_stop();
             window_city_pause_menu_show();
         }
     }

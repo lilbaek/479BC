@@ -256,7 +256,7 @@ static int get_building_type_from_grid_offset(int grid_offset)
     }  else if (terrain & TERRAIN_GARDEN) {
         return BUILDING_GARDENS;
     } else if (terrain & TERRAIN_ROAD) {
-        if (map_property_is_plaza_or_earthquake(grid_offset)) {
+        if (map_property_is_plaza(grid_offset)) {
             return BUILDING_PLAZA;
         }
         return BUILDING_ROAD;

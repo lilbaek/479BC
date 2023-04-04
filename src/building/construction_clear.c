@@ -154,7 +154,7 @@ static int clear_land_confirmed(int measure_only, int x_start, int y_start, int 
                 items_placed += next_highways_removed;
             } else if (map_terrain_is(grid_offset, TERRAIN_NOT_CLEAR)) {
                 if (map_terrain_is(grid_offset, TERRAIN_ROAD)) {
-                    map_property_clear_plaza_or_earthquake(grid_offset);
+                    map_property_clear_plaza(grid_offset);
                 }
                 map_terrain_remove(grid_offset, TERRAIN_CLEARABLE);
                 items_placed++;
@@ -194,7 +194,7 @@ static int clear_land_confirmed(int measure_only, int x_start, int y_start, int 
     return items_placed;
 }
 
-static void confirm_delete_fort(int accepted, int checked)
+static void confirm_delete_fort(int accepted)
 {
     if (accepted == 1) {
         confirm.fort_confirmed = 1;
@@ -204,7 +204,7 @@ static void confirm_delete_fort(int accepted, int checked)
     clear_land_confirmed(0, confirm.x_start, confirm.y_start, confirm.x_end, confirm.y_end);
 }
 
-static void confirm_delete_bridge(int accepted, int checked)
+static void confirm_delete_bridge(int accepted)
 {
     if (accepted == 1) {
         confirm.bridge_confirmed = 1;
@@ -214,7 +214,7 @@ static void confirm_delete_bridge(int accepted, int checked)
     clear_land_confirmed(0, confirm.x_start, confirm.y_start, confirm.x_end, confirm.y_end);
 }
 
-static void confirm_delete_monument(int accepted, int checked)
+static void confirm_delete_monument(int accepted)
 {
     if (accepted == 1) {
         confirm.monument_confirmed = 1;
@@ -266,13 +266,13 @@ int building_construction_clear_land(int measure_only, int x_start, int y_start,
     confirm.x_end = x_end;
     confirm.y_end = y_end;
     if (ask_confirm_fort) {
-        window_popup_dialog_show(POPUP_DIALOG_DELETE_FORT, confirm_delete_fort, 2);
+        window_popup_dialog_show_confirmation(gettext("Confirm"), gettext("Are you sure you wish to demolish this fort?"), confirm_delete_fort);
         return -1;
     } else if (ask_confirm_monument) {
-        window_popup_dialog_show_confirmation(translation_for(TR_CONFIRM_DELETE_MONUMENT), 0, 0, confirm_delete_monument);
+        window_popup_dialog_show_confirmation(gettext("Confirm"), gettext("Are you sure you wish to demolish this monument?"),confirm_delete_monument);
         return -1;
     } else if (ask_confirm_bridge) {
-        window_popup_dialog_show(POPUP_DIALOG_DELETE_BRIDGE, confirm_delete_bridge, 2);
+        window_popup_dialog_show_confirmation(gettext("Confirm"), gettext("Are you sure you wish to demolish this bridge?"), confirm_delete_bridge);
         return -1;
     } else {
         return clear_land_confirmed(measure_only, x_start, y_start, x_end, y_end);

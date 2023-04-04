@@ -187,8 +187,6 @@ void scenario_save_state(buffer *buf)
     buffer_write_i32(buf, scenario.win_criteria.population.goal);
 
     // map points
-    buffer_write_i16(buf, scenario.earthquake_point.x);
-    buffer_write_i16(buf, scenario.earthquake_point.y);
     buffer_write_i16(buf, scenario.entry_point.x);
     buffer_write_i16(buf, scenario.entry_point.y);
     buffer_write_i16(buf, scenario.exit_point.x);
@@ -420,8 +418,6 @@ void scenario_load_state(buffer *buf, int version)
     scenario.win_criteria.population.goal = buffer_read_i32(buf);
 
     // map points
-    scenario.earthquake_point.x = buffer_read_i16(buf);
-    scenario.earthquake_point.y = buffer_read_i16(buf);
     scenario.entry_point.x = buffer_read_i16(buf);
     scenario.entry_point.y = buffer_read_i16(buf);
     scenario.exit_point.x = buffer_read_i16(buf);
@@ -593,20 +589,6 @@ void scenario_settings_init_mission(void)
     scenario.settings.starting_favor = difficulty_starting_favor();
     scenario.settings.starting_personal_savings =
         setting_personal_savings_for_mission(scenario.settings.campaign_rank);
-}
-
-void scenario_fix_patch_trade(int mission_id) {
-    // Damascus, allow import of marble and marble buildings
-    if (mission_id == 15) {
-        empire_city_force_sell(1, RESOURCE_MARBLE);
-        trade_route_set(1, RESOURCE_MARBLE, 25);        
-        scenario.allowed_buildings[ALLOWED_BUILDING_LARGE_TEMPLES] = 1;
-        scenario.allowed_buildings[ALLOWED_BUILDING_ORACLE] = 1;
-    // Caesarea, allow import of clay (for monuments)
-    } else if (mission_id == 14) {
-        empire_city_force_sell(3, RESOURCE_CLAY);
-        trade_route_set(3, RESOURCE_CLAY, 15);
-    }
 }
 
 void scenario_unlock_all_buildings(void) {

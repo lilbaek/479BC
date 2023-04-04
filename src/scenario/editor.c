@@ -73,7 +73,6 @@ void scenario_editor_create(int map_size)
     scenario.earthquake.severity = 0;
     scenario.earthquake.year = 0;
 
-    init_point(&scenario.earthquake_point);
     init_point(&scenario.entry_point);
     init_point(&scenario.exit_point);
     init_point(&scenario.river_entry_point);

@@ -73,23 +73,6 @@
 
 #include <string.h>
 
-static const char MISSION_PACK_FILE[] = "mission1.pak";
-
-static const char MISSION_SAVED_GAMES[][32] = {
-    "Citizen.sav",
-    "Clerk.sav",
-    "Engineer.sav",
-    "Architect.sav",
-    "Quaestor.sav",
-    "Procurator.sav",
-    "Aedile.sav",
-    "Praetor.sav",
-    "Consul.sav",
-    "Proconsul.sav",
-    "Caesar.sav",
-    "Caesar2.sav"
-};
-
 static void clear_scenario_data(void)
 {
     // clear data
@@ -137,11 +120,10 @@ static void initialize_scenario_data(const uint8_t *scenario_name)
 
     // initialize grids
     map_tiles_update_all_water();
-    map_tiles_update_all_earthquake();
     map_tiles_update_all_rocks();
     map_tiles_update_all_trees();
     map_tiles_update_all_shrubs();
-    map_tiles_add_entry_exit_flags();
+    map_tiles_add_entry_exit_sign();
     map_tiles_update_all_empty_land();
     map_tiles_update_all_meadow();
     map_tiles_update_all_roads();
@@ -225,31 +207,6 @@ static int load_custom_scenario(const uint8_t *scenario_name, const char *scenar
     return 1;
 }
 
-/**
- * search for hippodrome buildings, all three pieces should have the same subtype.orientation
- */
-static void check_hippodrome_compatibility(building *b)
-{
-// if we got the middle part of the hippodrome
-    if (b->next_part_building_id && b->prev_part_building_id) {
-        building *next = building_get(b->next_part_building_id);
-        building *prev = building_get(b->prev_part_building_id);
-        // if orientation is different, it means that rotation was not available yet in tiberius, so it should be set to 0
-        if (b->subtype.orientation != next->subtype.orientation || b->subtype.orientation != prev->subtype.orientation) {
-            prev->subtype.orientation = 0;
-            b->subtype.orientation = 0;
-            next->subtype.orientation = 0;
-        }
-    }
-}
-
-static void check_backward_compatibility(void)
-{
-    for (building *b = building_first_of_type(BUILDING_HIPPODROME); b; b = b->next_of_type) {
-        check_hippodrome_compatibility(b);
-    }
-}
-
 static void initialize_saved_game(void)
 {
     load_empire_data(scenario_is_custom(), scenario_empire_id());
@@ -291,39 +248,6 @@ static void initialize_saved_game(void)
     game_state_unpause();
 }
 
-static int get_campaign_mission_offset(int mission_id)
-{
-    uint8_t offset_data[4];
-    buffer buf;
-    buffer_init(&buf, offset_data, 4);
-    if (!io_read_file_part_into_buffer(MISSION_PACK_FILE, NOT_LOCALIZED, offset_data, 4, 4 * mission_id)) {
-        return 0;
-    }
-    return buffer_read_i32(&buf);
-}
-
-static int load_campaign_mission(int mission_id)
-{
-    int offset = get_campaign_mission_offset(mission_id);
-    if (offset <= 0) {
-        return 0;
-    }
-    if (!game_file_io_read_saved_game(MISSION_PACK_FILE, offset)) {
-        return 0;
-    }
-
-    if (mission_id == 0) {
-        scenario_set_player_name(setting_player_name());
-    } else {
-        scenario_restore_campaign_player_name();
-    }
-    initialize_saved_game();
-    scenario_fix_patch_trade(mission_id);
-
-    city_data_init_campaign_mission();
-    return 1;
-}
-
 static int start_scenario(const uint8_t *scenario_name, const char *scenario_file)
 {
     int mission = scenario_campaign_mission();
@@ -335,9 +259,7 @@ static int start_scenario(const uint8_t *scenario_name, const char *scenario_fil
         }
         scenario_set_player_name(setting_player_name());
     } else {
-        if (!load_campaign_mission(mission)) {
-            return 0;
-        }
+        return 0;
     }
     scenario_set_campaign_mission(mission);
     scenario_set_campaign_rank(rank);
@@ -391,7 +313,6 @@ int game_file_load_saved_game(const char *filename)
     if (result != 1) {
         return result;
     }
-    check_backward_compatibility();
     initialize_saved_game();
     building_storage_reset_building_ids();
 
@@ -407,18 +328,4 @@ int game_file_write_saved_game(const char *filename)
 int game_file_delete_saved_game(const char *filename)
 {
     return game_file_io_delete_saved_game(filename);
-}
-
-void game_file_write_mission_saved_game(void)
-{
-    int rank = scenario_campaign_rank();
-    if (rank < 0) {
-        rank = 0;
-    } else if (rank > 11) {
-        rank = 11;
-    }
-    const char *filename = MISSION_SAVED_GAMES[rank];
-    if (city_mission_should_save_start() && !file_exists(filename, NOT_LOCALIZED)) {
-        game_file_io_write_saved_game(filename);
-    }
 }

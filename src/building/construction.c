@@ -254,11 +254,11 @@ static int place_plaza(int x_start, int y_start, int x_end, int y_end) {
             int grid_offset = map_grid_offset(x, y);
             if (map_terrain_is(grid_offset, TERRAIN_ROAD) &&
                 !map_terrain_is(grid_offset, TERRAIN_WATER | TERRAIN_BUILDING)) {
-                if (!map_property_is_plaza_or_earthquake(grid_offset)) {
+                if (!map_property_is_plaza(grid_offset)) {
                     items_placed++;
                 }
                 map_image_set(grid_offset, 0);
-                map_property_mark_plaza_or_earthquake(grid_offset);
+                map_property_mark_plaza(grid_offset);
                 map_property_set_multi_tile_size(grid_offset, 1);
                 map_property_mark_draw_tile(grid_offset);
             }

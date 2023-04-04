@@ -634,19 +634,6 @@ static void release_external_buffers(void) {
     }
 }
 
-/*
-     printFileName(GROUP_BUILDING_HOUSE_TENT, 2);
-    printFileName(GROUP_BUILDING_HOUSE_SHACK, 2);
-    printFileName(GROUP_BUILDING_HOUSE_HOVEL, 2);
-    printFileName(GROUP_BUILDING_HOUSE_CASA, 2);
-    printFileName(GROUP_BUILDING_HOUSE_INSULA_1, 2);
-    printFileName(GROUP_BUILDING_HOUSE_INSULA_2, 2);
-    printFileName(GROUP_BUILDING_HOUSE_VILLA_1, 2);
-    printFileName(GROUP_BUILDING_HOUSE_VILLA_2, 2);
-    printFileName(GROUP_BUILDING_HOUSE_PALACE_1, 2);
-    printFileName(GROUP_BUILDING_HOUSE_PALACE_2, 2);
-    printFileName(GROUP_BUILDING_HOUSE_VACANT_LOT, 2);
- */
 void printFileName(int group, int maxIndex) {
     char filename[FILE_NAME_MAX] = "";
     int id = image_group(group);
@@ -771,7 +758,7 @@ int image_load_climate(int climate_id, int is_editor, int force_reload, int keep
 
     data.images_with_tops = 0;
 
-    printFileName(GROUP_BUILDING_TEMPLE_CERES, 2);
+//    printFileName(GROUP_TERRAIN_ENTRY_EXIT_FLAGS, 2);
     return 1;
 }
 

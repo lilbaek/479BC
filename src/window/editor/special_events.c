@@ -159,14 +159,12 @@ static void handle_input(const mouse *m, const hotkeys *h)
 
 static void button_earthquake_severity(int param1, int param2)
 {
-    scenario_editor_earthquake_cycle_severity();
-    window_request_refresh();
+
 }
 
 static void button_earthquake_year(int param1, int param2)
 {
-    window_numeric_input_show(screen_dialog_offset_x() + 190, screen_dialog_offset_y() + 100,
-                              3, 999, scenario_editor_earthquake_set_year);
+    
 }
 
 static void button_gladiator_toggle(int param1, int param2)

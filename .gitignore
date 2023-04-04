@@ -35,6 +35,7 @@ ext/mpg123*
 /res/assets/gui
 /res/assets/packed_assets
 /res/assets/religionex
+/res/assets/decoration
 
 # Android
 *.iml

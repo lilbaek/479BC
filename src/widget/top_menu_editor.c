@@ -209,7 +209,7 @@ static void menu_file_save_map(int param)
     window_file_dialog_show(FILE_TYPE_SCENARIO, FILE_DIALOG_SAVE);
 }
 
-static void menu_file_confirm_exit_to_menu(int accepted, int checked)
+static void menu_file_confirm_exit_to_menu(int accepted)
 {
     if (accepted) {
         game_exit_editor();
@@ -225,11 +225,11 @@ static void menu_file_exit_to_menu(int param)
     if (scenario_is_saved()) {
         game_exit_editor();
     } else {
-        window_popup_dialog_show(POPUP_DIALOG_EDITOR_QUIT_WITHOUT_SAVING, menu_file_confirm_exit_to_menu, 1);
+        window_popup_dialog_show_confirmation(gettext("Quit"), gettext("Quit without saving?"), menu_file_confirm_exit_to_menu);
     }
 }
 
-static void menu_file_confirm_exit_game(int accepted, int checked)
+static void menu_file_confirm_exit_game(int accepted)
 {
     if (accepted) {
         system_exit();
@@ -241,7 +241,7 @@ static void menu_file_confirm_exit_game(int accepted, int checked)
 static void menu_file_exit_game(int param)
 {
     clear_state();
-    window_popup_dialog_show(POPUP_DIALOG_QUIT, menu_file_confirm_exit_game, 1);
+    window_popup_dialog_show_confirmation(gettext("Quit"), gettext("Are you sure you want to quit?"), menu_file_confirm_exit_game);
 }
 
 static void menu_options_general(int param)

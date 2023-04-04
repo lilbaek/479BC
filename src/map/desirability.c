@@ -133,7 +133,7 @@ static void update_terrain(void)
     for (int y = 0; y < map_data.height; y++, grid_offset += map_data.border_size) {
         for (int x = 0; x < map_data.width; x++, grid_offset++) {
             int terrain = map_terrain_get(grid_offset);
-            if (map_property_is_plaza_or_earthquake(grid_offset)) {
+            if (map_property_is_plaza(grid_offset)) {
                 int type;
                 if (terrain & TERRAIN_ROAD) {
                     type = BUILDING_PLAZA;
@@ -142,7 +142,7 @@ static void update_terrain(void)
                     type = BUILDING_HOUSE_VACANT_LOT;
                 } else {
                     // invalid plaza/earthquake flag
-                    map_property_clear_plaza_or_earthquake(grid_offset);
+                    map_property_clear_plaza(grid_offset);
                     continue;
                 }
                 const model_building *model = model_get_building(type);

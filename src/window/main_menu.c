@@ -1,10 +1,7 @@
-#include <stdio.h>
 #include "main_menu.h"
-
 #include "assets/assets.h"
 #include "core/calc.h"
 #include "core/string.h"
-#include "editor/editor.h"
 #include "game/game.h"
 #include "game/system.h"
 #include "graphics/generic_button.h"
@@ -15,10 +12,8 @@
 #include "graphics/screen.h"
 #include "graphics/window.h"
 #include "sound/music.h"
-#include "window/cck_selection.h"
 #include "window/config.h"
 #include "window/file_dialog.h"
-#include "window/new_career.h"
 #include "window/plain_message_dialog.h"
 #include "window/popup_dialog.h"
 #include "window/nuklear.h"
@@ -50,18 +45,16 @@ static void draw_background(void) {
     draw_version_string();
 }
 
-static void confirm_exit(int accepted, int checked) {
+static void confirm_exit(int accepted) {
     if (accepted) {
         system_exit();
     }
 }
 
 static void draw_foreground(void) {
-    // widget_bottom_bar_city_draw_foreground();
-
     struct nk_context *ctx = ui_context();
     ui_font_large_bold();
-    if (nk_begin(ctx, "main_menu", nk_recti(screen_dialog_offset_x() + 192, screen_dialog_offset_y() + 70, 260, 303),
+    if (nk_begin(ctx, "main_menu", nk_recti(screen_dialog_offset_x() + 192, screen_dialog_offset_y() + 70, 260, 258),
                  NK_WINDOW_BORDER | NK_WINDOW_NO_SCROLLBAR)) {
         nk_layout_row_begin(ctx, NK_STATIC, 45, 1);
         {
@@ -75,17 +68,9 @@ static void draw_foreground(void) {
                 window_file_dialog_show(FILE_TYPE_SAVED_GAME, FILE_DIALOG_LOAD);
             }
             nk_layout_row_push(ctx, width);
-            if (nk_button_label(ctx, gettext("Play scenario"))) {
-                window_cck_selection_show();
-            }
-            nk_layout_row_push(ctx, width);
             if (nk_button_label(ctx, gettext("Map editor"))) {
-                if (!editor_is_present() || !game_init_editor()) {
-                    window_plain_message_dialog_show(
-                            TR_NO_EDITOR_TITLE, TR_NO_EDITOR_MESSAGE, 1);
-                } else {
-                    sound_music_play_editor();
-                }
+                game_init_editor();
+                sound_music_play_editor();
             }
             nk_layout_row_push(ctx, width);
             if (nk_button_label(ctx, gettext("Options"))) {
@@ -93,7 +78,7 @@ static void draw_foreground(void) {
             }
             nk_layout_row_push(ctx, width);
             if (nk_button_label(ctx, gettext("Exit"))) {
-                window_popup_dialog_show(POPUP_DIALOG_QUIT, confirm_exit, 1);
+                window_popup_dialog_show_ex(gettext("Quit"), gettext("Are you sure you want to quit?"), confirm_exit, 1);
             }
         }
         nk_layout_row_end(ctx);
