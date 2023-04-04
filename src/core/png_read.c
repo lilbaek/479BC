@@ -35,7 +35,7 @@ static void unload_png(void)
     }
 }
 
-int png_load(const char *path)
+int png_load(const char *folder, const char *path)
 {
     if (strcmp(path, data.last_png.path) == 0) {
         return 1;
@@ -44,7 +44,7 @@ int png_load(const char *path)
     data.last_png.width = 0;
     data.last_png.height = 0;
     png_byte header[8];
-    data.fp = file_open_asset(path, "rb");
+    data.fp = file_open_asset_folder(folder, path, "rb");
     if (!data.fp) {
         log_error("Unable to open png file", path, 0);
         return 0;
@@ -81,11 +81,11 @@ int png_load(const char *path)
     return 1;
 }
 
-int png_get_image_size(const char *path, int *width, int *height)
+int png_get_image_size(const char *folder, const char *path, int *width, int *height)
 {
     *width = 0;
     *height = 0;
-    if (!png_load(path)) {
+    if (!png_load(folder, path)) {
         return 0;
     }
     *width = !data.last_png.width ? png_get_image_width(data.png_ptr, data.info_ptr) : data.last_png.width;
@@ -173,14 +173,14 @@ static void set_pixels(color_t *pixels,
     }
 }
 
-int png_read(const char *path, color_t *pixels,
+int png_read(const char *folder, const char *path, color_t *pixels,
     int src_x, int src_y, int width, int height, int dst_x, int dst_y, int dst_row_width, int rotate)
 {
-    if (!png_load(path)) {
+    if (!png_load(folder, path)) {
         return 0;
     }
     if (!data.last_png.width && !data.last_png.height) {
-        png_get_image_size(path, &data.last_png.width, &data.last_png.height);
+        png_get_image_size(folder, path, &data.last_png.width, &data.last_png.height);
         if (!load_image()) {
             return 0;
         }

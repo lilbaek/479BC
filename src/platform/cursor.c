@@ -11,6 +11,7 @@
 #include "platform/vita/vita.h"
 
 #include "SDL.h"
+#include "assets/assets.h"
 
 #include <string.h>
 
@@ -38,7 +39,7 @@ static const cursor *get_valid_cursor(const cursor *c)
     const cursor *current = c;
     for (int i = 0; i < CURSOR_TYPE_MAX; i++, current++) {
         if (current->type == CURSOR_TYPE_PNG &&
-            (!config_get(CONFIG_SCREEN_COLOR_CURSORS) || !png_load(current->data))) {
+            (!config_get(CONFIG_SCREEN_COLOR_CURSORS) || !png_load(ASSETS_DIR_NAME, current->data))) {
             continue;
         }
         return current;
@@ -58,7 +59,7 @@ static SDL_Surface *generate_cursor_surface(const cursor *c)
     color_t *pixels = cursor_surface->pixels;
     SDL_memset(pixels, 0, sizeof(color_t) * size * size);
     if (c->type == CURSOR_TYPE_PNG) {
-        if (!png_read(c->data, pixels, c->offset_x, c->offset_y,
+        if (!png_read(ASSETS_DIR_NAME, c->data, pixels, c->offset_x, c->offset_y,
                 c->width, c->height, 0, 0, size, c->rotated)) {
             SDL_FreeSurface(cursor_surface);
         }

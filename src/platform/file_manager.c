@@ -12,6 +12,8 @@
 
 #ifndef BUILDING_ASSET_PACKER
 #include "SDL.h"
+#include "assets/gui_assets.h"
+
 #else
 #define SDL_VERSION_ATLEAST(x, y, z) 0
 #endif
@@ -251,6 +253,17 @@ static void set_assets_directory(void)
 #endif
 }
 
+void substring(char s[], char sub[], int p, int l) {
+    int c = 0;
+
+    while (c < l) {
+        sub[c] = s[p+c];
+        c++;
+    }
+    sub[c] = '\0';
+}
+
+
 int platform_file_manager_list_directory_contents(
     const char *dir, int type, const char *extension, int (*callback)(const char *))
 {
@@ -265,7 +278,12 @@ int platform_file_manager_list_directory_contents(
     } else if (strcmp(dir, ASSETS_DIRECTORY) == 0) {
         set_assets_directory();
         current_dir = set_dir_name(assets_directory);
-    } else {
+    } else if (strcmp(dir, GUI_ASSETS_DIRECTORY) == 0) {
+        char gui_assets_dir[FILE_NAME_MAX];
+        substring(assets_directory, gui_assets_dir, 0, strlen(assets_directory) - 6);
+        strcat(gui_assets_dir, "gui");
+        current_dir = set_dir_name(gui_assets_dir);
+    }  else {
         current_dir = set_dir_name(dir);
     }
 #ifdef __ANDROID__
@@ -410,6 +428,31 @@ int platform_file_manager_remove_file(const char *filename)
 FILE *platform_file_manager_open_file(const char *filename, const char *mode)
 {
     wchar_t *wfile = utf8_to_wchar(filename);
+    wchar_t *wmode = utf8_to_wchar(mode);
+
+    FILE *fp = _wfopen(wfile, wmode);
+
+    free(wfile);
+    free(wmode);
+
+    return fp;
+}
+
+FILE *platform_file_manager_open_asset_folder(const char *folder, const char *asset, const char *mode)
+{
+    set_assets_directory();
+
+    char gui_assets_dir[FILE_NAME_MAX];
+    substring(assets_directory, gui_assets_dir, 0, strlen(assets_directory) - 6);
+    strcat(gui_assets_dir, folder);
+
+    const char *cased_asset_path = dir_get_asset(gui_assets_dir, asset);
+
+    if (!cased_asset_path) {
+        return 0;
+    }
+
+    wchar_t *wfile = utf8_to_wchar(cased_asset_path);
     wchar_t *wmode = utf8_to_wchar(mode);
 
     FILE *fp = _wfopen(wfile, wmode);
