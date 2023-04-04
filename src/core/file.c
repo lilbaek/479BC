@@ -12,9 +12,9 @@ FILE *file_open(const char *filename, const char *mode)
     return platform_file_manager_open_file(filename, mode);
 }
 
-FILE *file_open_asset(const char *asset, const char *mode)
+FILE *file_open_asset_folder(const char *folder, const char *asset, const char *mode)
 {
-    return platform_file_manager_open_asset(asset, mode);
+    return platform_file_manager_open_asset_folder(folder, asset, mode);
 }
 
 int file_close(FILE *stream)

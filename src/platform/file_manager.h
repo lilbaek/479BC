@@ -67,14 +67,6 @@ int platform_file_manager_compare_filename_prefix(const char *filename, const ch
 FILE *platform_file_manager_open_file(const char *filename, const char *mode);
 
 /**
- * Opens an asset file
- * @param filename The asset file to open
- * @param mode The mode to open the asset file - refer to fopen()
- * @return A pointer to a FILE structure on success, NULL otherwise
- */
-FILE *platform_file_manager_open_asset(const char *asset, const char *mode);
-
-/**
  * Returns path to asset
  * @param asset name
  * @return
@@ -103,4 +95,12 @@ int platform_file_manager_remove_file(const char *filename);
  */
 int platform_file_manager_create_directory(const char *name);
 
+/**
+ * Opens an asset file
+ * @param folder The asset folder to open
+ * @param filename The asset file to open
+ * @param mode The mode to open the asset file - refer to fopen()
+ * @return A pointer to a FILE structure on success, NULL otherwise
+ */
+FILE *platform_file_manager_open_asset_folder(const char *folder, const char *asset, const char *mode);
 #endif // PLATFORM_FILE_MANAGER_H

@@ -1,6 +1,7 @@
 #include "graphics/image.h"
 #include "platform/renderer.h"
 #include "graphics/renderer.h"
+#include "assets/gui_assets.h"
 
 #define PRIMARY_MENU_DEFAULT 0
 #define PRIMARY_MENU_RELIGION 1
@@ -25,15 +26,15 @@ static struct {
 nk_bool render_nk_button_image(struct nk_context *ctx, const char *name) {
     struct nk_style_button button;
     button = ctx->style.button;
-    const image *img = image_get_image_from_id(assets_get_image_id("gui", name));
+    const image *img = gui_assets_get_image_id(name);
     struct nk_rect rect = nk_widget_bounds(ctx);
     ctx->style.button.border = 1;
     ctx->style.button.rounding = 1;
     ctx->style.button.padding = nk_vec2(0, 0);
     ctx->style.button.image_padding = nk_vec2((rect.w - img->width) / 2, (rect.h - img->height) / 2);
 
-    const int width = graphics_renderer()->get_extra_atlas_height();
-    const int height = graphics_renderer()->get_extra_atlas_width();
+    const int width = gui_assets_get_atlas_width();
+    const int height = gui_assets_get_atlas_height();
     nk_bool res = nk_button_image(ctx, nk_subimage_ptr(platform_renderer_get_texture(img->atlas.id), width, height,
                                                        nk_recti(img->atlas.x_offset, img->atlas.y_offset,
                                                                   img->width, img->height)));

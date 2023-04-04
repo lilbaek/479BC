@@ -88,10 +88,6 @@ static struct {
     SDL_Texture **texture_lists[ATLAS_MAX];
     image_atlas_data atlas_data[ATLAS_MAX];
     struct {
-        int atlas_width;
-        int atlas_height;
-    } extra_atlas_size;
-    struct {
         SDL_Texture *texture;
         color_t *buffer;
         image img;
@@ -360,10 +356,6 @@ static int create_texture_atlas(const image_atlas_data *atlas_data, int delete_b
     }
 #else
     data.texture_lists[atlas_data->type] = malloc(sizeof(SDL_Texture *) * atlas_data->num_images);
-    if(atlas_data->type == ATLAS_EXTRA_ASSET) {
-        data.extra_atlas_size.atlas_height = *atlas_data->image_heights;
-        data.extra_atlas_size.atlas_width = *atlas_data->image_widths;
-    }
     SDL_Texture **list = data.texture_lists[atlas_data->type];
     if (!list) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Unable to create texture lists for atlas %d - out of memory",
@@ -414,16 +406,6 @@ static const image_atlas_data *get_texture_atlas(atlas_type type)
         return 0;
     }
     return &data.atlas_data[type];
-}
-
-static int get_extra_atlas_height()
-{
-    return data.extra_atlas_size.atlas_height;
-}
-
-static int get_extra_atlas_width()
-{
-    return data.extra_atlas_size.atlas_width;
 }
 
 static void free_all_textures(void)
@@ -1054,8 +1036,6 @@ static void create_renderer_interface(void)
     data.renderer_interface.prepare_image_atlas = prepare_texture_atlas;
     data.renderer_interface.create_image_atlas = create_texture_atlas;
     data.renderer_interface.get_image_atlas = get_texture_atlas;
-    data.renderer_interface.get_extra_atlas_height = get_extra_atlas_height;
-    data.renderer_interface.get_extra_atlas_width = get_extra_atlas_width;
     data.renderer_interface.has_image_atlas = has_texture_atlas;
     data.renderer_interface.free_image_atlas = free_texture_atlas_and_data;
     data.renderer_interface.load_unpacked_image = load_unpacked_image;

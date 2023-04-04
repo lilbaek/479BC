@@ -7,14 +7,15 @@
 #include "core/log.h"
 #include "core/png_read.h"
 #include "core/string.h"
+#include "assets.h"
 
 #include <stdlib.h>
 #include <string.h>
 
 static color_t DUMMY_LAYER_DATA = COLOR_BLACK;
 
-static void load_dummy_layer(layer *l)
-{
+
+static void load_dummy_layer(layer *l) {
     l->data = &DUMMY_LAYER_DATA;
     l->width = 1;
     l->height = 1;
@@ -22,8 +23,8 @@ static void load_dummy_layer(layer *l)
 }
 
 #ifndef BUILDING_ASSET_PACKER
-static void convert_layer_to_grayscale(color_t *pixels, int width, int height)
-{
+
+static void convert_layer_to_grayscale(color_t *pixels, int width, int height) {
     for (int y = 0; y < height; y++) {
         color_t *color = &pixels[y * width];
         for (int x = 0; x < width; x++) {
@@ -32,21 +33,20 @@ static void convert_layer_to_grayscale(color_t *pixels, int width, int height)
             color_t b = (*color & COLOR_CHANNEL_BLUE) >> COLOR_BITSHIFT_BLUE;
             color_t gray = (color_t) (r * 0.299f + g * 0.587f + b * 0.114f);
             *color = (*color & COLOR_CHANNEL_ALPHA) | (gray << COLOR_BITSHIFT_RED) |
-                (gray << COLOR_BITSHIFT_GREEN) | (gray << COLOR_BITSHIFT_BLUE);
+                     (gray << COLOR_BITSHIFT_GREEN) | (gray << COLOR_BITSHIFT_BLUE);
             color++;
         }
     }
 }
 
-static void load_layer_from_another_image(layer *l, color_t **main_data, int *main_image_widths)
-{
+static void load_layer_from_another_image(layer *l, color_t **main_data, int *main_image_widths) {
     const image *img = image_get(l->calculated_image_id);
     if (!img) {
         log_error("Problem loading layer from image id", 0, l->calculated_image_id);
         load_dummy_layer(l);
         return;
     }
-    
+
     asset_image *asset_img = 0;
 
     atlas_type type = img->atlas.id >> IMAGE_ATLAS_BIT_OFFSET;
@@ -110,26 +110,26 @@ static void load_layer_from_another_image(layer *l, color_t **main_data, int *ma
         // No difference in image data - keep using the original image
         if (!img->is_isometric || ((l->part & PART_FOOTPRINT) && !img->top)) {
             image_copy_info copy = {
-                .src = { 0, img->atlas.y_offset, asset_img_width, asset_img_height, asset_img->data },
-                .dst = { 0, 0, l->width, l->height, data },
-                .rect = { 0, 0, img->width, img->height }
+                    .src = {0, img->atlas.y_offset, asset_img_width, asset_img_height, asset_img->data},
+                    .dst = {0, 0, l->width, l->height, data},
+                    .rect = {0, 0, img->width, img->height}
             };
             image_copy(&copy);
         } else {
             int tiles = (img->width + 2) / (FOOTPRINT_WIDTH + 2);
             if ((l->part & PART_TOP) && img->top) {
                 image_copy_info copy = {
-                    .src = { 0, 0, asset_img_width, asset_img_height, asset_img->data },
-                    .dst = { 0, 0, l->width, l->height, data },
-                    .rect = { 0, 0, img->top->width, img->top->height }
+                        .src = {0, 0, asset_img_width, asset_img_height, asset_img->data},
+                        .dst = {0, 0, l->width, l->height, data},
+                        .rect = {0, 0, img->top->width, img->top->height}
                 };
                 image_copy(&copy);
             }
             if (l->part & PART_FOOTPRINT) {
                 image_copy_info copy = {
-                    .src = { 0, img->atlas.y_offset, asset_img_width, asset_img_height, asset_img->data },
-                    .dst = { 0, l->height - tiles * FOOTPRINT_HEIGHT, l->width, l->height, data },
-                    .rect = { 0, 0, img->width, img->height }
+                        .src = {0, img->atlas.y_offset, asset_img_width, asset_img_height, asset_img->data},
+                        .dst = {0, l->height - tiles * FOOTPRINT_HEIGHT, l->width, l->height, data},
+                        .rect = {0, 0, img->width, img->height}
                 };
                 image_copy_isometric_footprint(&copy);
             }
@@ -153,11 +153,11 @@ static void load_layer_from_another_image(layer *l, color_t **main_data, int *ma
             int src_y_offset = l->y_offset < 0 ? -l->y_offset : 0;
             int rect_x_offset = l->x_offset > 0 ? l->x_offset : 0;
             int rect_y_offset = l->y_offset > 0 ? l->y_offset : 0;
-            
+
             image_copy_info copy = {
-                .src = { src_x_offset, src_y_offset, width, height, data },
-                .dst = { 0, 0, l->width, l->height, new_data },
-                .rect = { rect_x_offset, rect_y_offset, l->width, l->height }
+                    .src = {src_x_offset, src_y_offset, width, height, data},
+                    .dst = {0, 0, l->width, l->height, new_data},
+                    .rect = {rect_x_offset, rect_y_offset, l->width, l->height}
             };
             image_copy(&copy);
             free(data);
@@ -175,9 +175,9 @@ static void load_layer_from_another_image(layer *l, color_t **main_data, int *ma
         // No difference in image data - keep using the original image
         if (!img->is_isometric || ((l->part & PART_FOOTPRINT) && !img->top)) {
             image_copy_info copy = {
-                .src = { img->atlas.x_offset, img->atlas.y_offset, atlas_width, atlas_width, atlas_pixels },
-                .dst = { 0, 0, l->width, l->height, data },
-                .rect = { img->x_offset, img->y_offset, img->width, img->height }
+                    .src = {img->atlas.x_offset, img->atlas.y_offset, atlas_width, atlas_width, atlas_pixels},
+                    .dst = {0, 0, l->width, l->height, data},
+                    .rect = {img->x_offset, img->y_offset, img->width, img->height}
             };
             image_copy(&copy);
         } else {
@@ -186,17 +186,17 @@ static void load_layer_from_another_image(layer *l, color_t **main_data, int *ma
                 int top_width = main_image_widths[img->top->atlas.id & IMAGE_ATLAS_BIT_MASK];
                 const color_t *top_pixels = main_data[img->top->atlas.id & IMAGE_ATLAS_BIT_MASK];
                 image_copy_info copy = {
-                    .src = { img->top->atlas.x_offset, img->top->atlas.y_offset, top_width, top_width, top_pixels },
-                    .dst = { 0, 0, l->width, l->height, data },
-                    .rect = { img->top->x_offset, img->top->y_offset, img->top->width, img->top->height }
+                        .src = {img->top->atlas.x_offset, img->top->atlas.y_offset, top_width, top_width, top_pixels},
+                        .dst = {0, 0, l->width, l->height, data},
+                        .rect = {img->top->x_offset, img->top->y_offset, img->top->width, img->top->height}
                 };
                 image_copy(&copy);
             }
             if (l->part & PART_FOOTPRINT) {
                 image_copy_info copy = {
-                    .src = { img->atlas.x_offset, img->atlas.y_offset, atlas_width, atlas_width, atlas_pixels},
-                    .dst = { 0, l->height - tiles * FOOTPRINT_HEIGHT, l->width, l->height, data },
-                    .rect = { img->x_offset, img->y_offset, img->width, img->height }
+                        .src = {img->atlas.x_offset, img->atlas.y_offset, atlas_width, atlas_width, atlas_pixels},
+                        .dst = {0, l->height - tiles * FOOTPRINT_HEIGHT, l->width, l->height, data},
+                        .rect = {img->x_offset, img->y_offset, img->width, img->height}
                 };
                 image_copy_isometric_footprint(&copy);
             }
@@ -210,16 +210,20 @@ static void load_layer_from_another_image(layer *l, color_t **main_data, int *ma
 
     l->data = data;
 }
+
 #endif
 
-void layer_load(layer *l, color_t **main_data, int *main_image_widths)
-{
+void layer_load(layer *l, color_t **main_data, int *main_image_widths) {
 #ifndef BUILDING_ASSET_PACKER
     if (l->calculated_image_id) {
         load_layer_from_another_image(l, main_data, main_image_widths);
         return;
     }
 #endif
+    layer_load_asset(ASSETS_DIR_NAME, l);
+}
+
+void layer_load_asset(const char *folder, layer *l) {
     if (!l->asset_image_path) {
         log_error("No layer source", l->asset_image_path, 0);
         load_dummy_layer(l);
@@ -234,7 +238,8 @@ void layer_load(layer *l, color_t **main_data, int *main_image_widths)
         return;
     }
     memset(data, 0, size);
-    if (!png_read(l->asset_image_path, data, l->src_x, l->src_y, l->width, l->height, 0, 0, l->width, 0)) {
+    if (!png_read(folder, l->asset_image_path, data, l->src_x, l->src_y, l->width, l->height, 0, 0, l->width,
+                  0)) {
         free(data);
         log_error("Problem loading layer from file", l->asset_image_path, 0);
         load_dummy_layer(l);
@@ -249,15 +254,14 @@ void layer_load(layer *l, color_t **main_data, int *main_image_widths)
     l->data = data;
 }
 
-void layer_unload(layer *l)
-{
+void layer_unload(layer *l) {
     free(l->asset_image_path);
 #ifdef BUILDING_ASSET_PACKER
     free(l->original_image_group);
     free(l->original_image_id);
 #endif
     if (!l->calculated_image_id && l->data != &DUMMY_LAYER_DATA) {
-        free((color_t *)l->data); // Freeing a const pointer. Ugly but necessary
+        free((color_t *) l->data); // Freeing a const pointer. Ugly but necessary
     }
     if (l->prev) {
         free(l);
@@ -266,8 +270,7 @@ void layer_unload(layer *l)
     }
 }
 
-const color_t *layer_get_color_for_image_position(const layer *l, int x, int y)
-{
+const color_t *layer_get_color_for_image_position(const layer *l, int x, int y) {
     x -= l->x_offset;
     y -= l->y_offset;
 
@@ -294,8 +297,7 @@ const color_t *layer_get_color_for_image_position(const layer *l, int x, int y)
 }
 
 int layer_add_from_image_path(layer *l, const char *path,
-    int src_x, int src_y, int offset_x, int offset_y, int width, int height)
-{
+                              int src_x, int src_y, int offset_x, int offset_y, int width, int height) {
     l->src_x = src_x;
     l->src_y = src_y;
     l->width = width;
@@ -309,7 +311,7 @@ int layer_add_from_image_path(layer *l, const char *path,
     }
 #ifndef BUILDING_ASSET_PACKER
     if (!l->width || !l->height) {
-        if (!png_get_image_size(l->asset_image_path, &width, &height)) {
+        if (!png_get_image_size(ASSETS_DIR_NAME, l->asset_image_path, &width, &height)) {
             log_info("Unable to load image", path, 0);
             layer_unload(l);
             return 0;
@@ -344,8 +346,8 @@ static char *copy_attribute(const char *attribute)
 #endif
 
 #ifndef BUILDING_ASSET_PACKER
-static int determine_layer_height(const image *img, layer_isometric_part part)
-{
+
+static int determine_layer_height(const image *img, layer_isometric_part part) {
     if (!img->is_isometric) {
         return img->height + img->y_offset;
     }
@@ -360,10 +362,10 @@ static int determine_layer_height(const image *img, layer_isometric_part part)
             return 0;
     }
 }
+
 #endif
 
-int layer_add_from_image_id(layer *l, const char *group_id, const char *image_id, int offset_x, int offset_y)
-{
+int layer_add_from_image_id(layer *l, const char *group_id, const char *image_id, int offset_x, int offset_y) {
     l->src_x = 0;
     l->src_y = 0;
     l->width = 0;

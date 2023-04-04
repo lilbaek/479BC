@@ -485,6 +485,7 @@ set(ASSETS_FILES
         ${PROJECT_SOURCE_DIR}/src/assets/layer.c
         ${PROJECT_SOURCE_DIR}/src/assets/assets.c
         ${PROJECT_SOURCE_DIR}/src/assets/xml.c
+        ${PROJECT_SOURCE_DIR}/src/assets/gui_assets.c
         )
 set(SCENARIO_FILES
         ${PROJECT_SOURCE_DIR}/src/scenario/building.c
