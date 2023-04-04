@@ -84,39 +84,8 @@ nk_sdl_device_upload_atlas(const void *image, int width, int height) {
     dev->font_tex = g_SDLFontTexture;
 }
 
-#define MAX_DRAW_IMAGES 300 // max images - increase if required
-typedef struct {
-  int image_id;
-  int x;
-  int y;
-} image_draw_data;
-image_draw_data images[MAX_DRAW_IMAGES];
-
 NK_API void
 nk_sdl_render(enum nk_anti_aliasing AA) {
-
-    // Handle images using our standard drawing context
-    /*
-    const struct nk_command *cmd;
-    for (int i = 0; i < MAX_DRAW_IMAGES; ++i) {
-        images[i].image_id = -1;
-    }
-    int counter = 0;
-    nk_foreach(cmd, &sdl.ctx) {
-        switch (cmd->type) {
-            case NK_COMMAND_IMAGE: {
-                const struct nk_command_image *i = (const struct nk_command_image *) cmd;
-                images[counter].image_id = i->img.handle.id;
-                images[counter].x = i->x;
-                images[counter].y = i->y;
-                counter++;
-            }
-                break;
-            default:
-                break;
-        }
-    }*/
-
     /* setup global state */
     struct nk_sdl_device *dev = &sdl.ogl;
 
@@ -223,14 +192,6 @@ nk_sdl_render(enum nk_anti_aliasing AA) {
         nk_buffer_free(&vbuf);
         nk_buffer_free(&ebuf);
     }
-
-    /*
-    for (int i = 0; i < MAX_DRAW_IMAGES; ++i) {
-        if (images[i].image_id == -1) {
-            break;
-        }
-        image_draw(images[i].image_id, images[i].x, images[i].y, COLOR_WHITE, SCALE_NONE);
-    }*/
 }
 
 static void
@@ -440,7 +401,6 @@ void nk_sdl_shutdown(void) {
     nk_font_atlas_clear(&sdl.atlas);
     nk_free(&sdl.ctx);
     SDL_DestroyTexture(dev->font_tex);
-    /* glDeleteTextures(1, &dev->font_tex); */
     nk_buffer_free(&dev->cmds);
     memset(&sdl, 0, sizeof(sdl));
 }
