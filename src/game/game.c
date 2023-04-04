@@ -91,18 +91,6 @@ int game_pre_init(void)
     return 1;
 }
 
-static int is_unpatched(void)
-{
-    const uint8_t *delete_game = lang_get_string(1, 6);
-    const uint8_t *option_menu = lang_get_string(2, 0);
-    const uint8_t *difficulty_option = lang_get_string(2, 6);
-    const uint8_t *help_menu = lang_get_string(3, 0);
-    // Without patch, the difficulty option string does not exist and
-    // getting it "falls through" to the next text group, or, for some
-    // languages (pt_BR): delete game falls through to option menu
-    return difficulty_option == help_menu || delete_game == option_menu;
-}
-
 int game_init(void)
 {
     if (!image_load_climate(CLIMATE_CENTRAL, 0, 1, 0)) {
@@ -113,21 +101,14 @@ int game_init(void)
         errlog("unable to load enemy graphics");
         return 0;
     }
-    int missing_fonts = 0;
     if (!image_load_fonts(encoding_get())) {
         errlog("unable to load font graphics");
         if (encoding_get() == ENCODING_KOREAN || encoding_get() == ENCODING_JAPANESE) {
-            missing_fonts = 1;
+            return 1;
         } else {
             return 0;
         }
     }
-
-    if (!model_load()) {
-        errlog("unable to load c3_model.txt");
-        return 0;
-    }
-
     init_Tiberius_building_properties();
     load_custom_messages();
     sound_system_init();

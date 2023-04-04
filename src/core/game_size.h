@@ -1,6 +1,3 @@
-// TODO: Define more constants
-
-
 #define FOOTPRINT_WIDTH 116
 #define FOOTPRINT_HEIGHT 60
 #define FOOTPRINT_HALF_HEIGHT 30
@@ -11,15 +8,3 @@
 #define HALF_TILE_HEIGHT_PIXELS 30
 
 #define GRID_IMAGE "Grid_Full_Large"
-/*
-#define FOOTPRINT_WIDTH 58
-#define FOOTPRINT_HEIGHT 30
-#define FOOTPRINT_HALF_HEIGHT 15
-
-#define TILE_WIDTH_PIXELS 60
-#define TILE_HEIGHT_PIXELS 30
-#define HALF_TILE_WIDTH_PIXELS 30
-#define HALF_TILE_HEIGHT_PIXELS 15
-
-#define GRID_IMAGE "Grid_Full"
-*/
