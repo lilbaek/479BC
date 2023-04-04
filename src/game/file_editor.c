@@ -121,7 +121,6 @@ static void prepare_map_for_editing(void)
     noise_fill_map( 543354323 - rand() % 2000);
 
     map_tiles_update_all_water();
-    map_tiles_update_all_earthquake();
     map_tiles_update_all_rocks();
     map_tiles_update_all_empty_land();
     map_tiles_update_all_meadow();

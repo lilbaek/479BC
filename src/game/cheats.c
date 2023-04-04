@@ -17,6 +17,8 @@
 #include "scenario/scenario.h"
 #include "translation/translation.h"
 
+// TODO - Cheats
+
 static struct {
     int is_cheating;
     int tooltip_enabled;

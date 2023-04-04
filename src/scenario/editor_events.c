@@ -12,15 +12,6 @@ int scenario_editor_earthquake_year(void)
     return scenario.earthquake.year;
 }
 
-void scenario_editor_earthquake_cycle_severity(void)
-{
-    scenario.earthquake.severity++;
-    if (scenario.earthquake.severity > EARTHQUAKE_LARGE) {
-        scenario.earthquake.severity = EARTHQUAKE_NONE;
-    }
-    scenario.is_saved = 0;
-}
-
 void scenario_editor_earthquake_set_year(int year)
 {
     scenario.earthquake.year = year;

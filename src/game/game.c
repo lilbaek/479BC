@@ -21,7 +21,6 @@
 #include "game/state.h"
 #include "game/tick.h"
 #include "graphics/font.h"
-#include "graphics/video.h"
 #include "graphics/window.h"
 #include "scenario/property.h"
 #include "scenario/scenario.h"
@@ -56,6 +55,11 @@
 #include "empire/object.h"
 #include "figuretype/editor.h"
 #include "noise/mapgenerator.h"
+#include "empire/city.h"
+#include "map/image.h"
+#include "city/emperor.h"
+#include "scenario/editor.h"
+#include "city/data_private.h"
 
 static void errlog(const char *msg)
 {
@@ -169,6 +173,7 @@ int game_create_random_scenario(int size, int seed)
     game_file_editor_clear_data();
     game_file_editor_create_random_scenario(size);
 
+    scenario_set_custom(2);
     scenario_set_name("Custom");
     scenario_map_init();
 
@@ -177,7 +182,6 @@ int game_create_random_scenario(int size, int seed)
     empire_object_init_cities(empire_id);
 
     figure_init_scenario();
-    figure_create_editor_flags();
     figure_create_flotsam();
 
     map_routing_update_all(); // Need routing to create roads in generator
@@ -186,12 +190,11 @@ int game_create_random_scenario(int size, int seed)
 
     // initialize grids
     map_tiles_update_all_water();
-    map_tiles_update_all_earthquake();
     map_tiles_update_all_rocks();
     map_tiles_update_all_trees();
     map_tiles_update_all_shrubs();
-    map_tiles_add_entry_exit_flags();
     map_tiles_update_all_empty_land();
+    map_tiles_add_entry_exit_sign();
     map_tiles_update_all_meadow();
     map_tiles_update_all_roads();
     map_tiles_update_all_highways();
@@ -231,11 +234,15 @@ int game_create_random_scenario(int size, int seed)
     scenario_request_init();
     scenario_demand_change_init();
     scenario_price_change_init();
-    building_menu_update();
+    empire_unlock_all_resources();
+    scenario_unlock_all_buildings();
+
     image_load_climate(scenario_property_climate(), 0, 0, 0);
     image_load_enemy(scenario_property_enemy());
 
     city_data_init_scenario();
+    city_data.ratings.favor = 50; // TODO: Configurable
+    map_image_update_all();
 
     city_view_set_camera(76, 152);
     setting_set_default_game_speed();
@@ -264,8 +271,6 @@ void game_run(void)
     int num_ticks = game_speed_get_elapsed_ticks();
     for (int i = 0; i < num_ticks; i++) {
         game_tick_run();
-        game_file_write_mission_saved_game();
-
         if (window_is_invalid()) {
             break;
         }
@@ -274,14 +279,13 @@ void game_run(void)
 
 void game_draw(void)
 {
-    window_draw(1); // TODO: - not always true
+    window_draw(0);
     ui_render();
     sound_city_play();
 }
 
 void game_exit(void)
 {
-    video_shutdown();
     settings_save();
     config_save();
     sound_system_shutdown();

@@ -54,11 +54,10 @@ void map_orientation_change(int counter_clockwise)
     determine_leftmost_tile();
 
     map_tiles_update_all_water();
-    map_tiles_update_all_earthquake();
     map_tiles_update_all_rocks();
     map_tiles_update_all_gardens();
 
-    map_tiles_add_entry_exit_flags();
+    map_tiles_add_entry_exit_sign();
 
     map_tiles_update_all_empty_land();
     map_tiles_update_all_meadow();

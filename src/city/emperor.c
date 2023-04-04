@@ -161,7 +161,7 @@ static void process_caesar_invasion(void)
 void city_emperor_update(void)
 {
     update_debt_state();
-    process_caesar_invasion();
+    // process_caesar_invasion(); - // TODO: Consider this
 }
 
 void city_emperor_init_selected_gift(void)

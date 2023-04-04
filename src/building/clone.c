@@ -99,7 +99,7 @@ building_type building_clone_type_from_grid_offset(int grid_offset)
                 return BUILDING_SHIP_BRIDGE;
             }
             return BUILDING_LOW_BRIDGE;
-        } else if (map_property_is_plaza_or_earthquake(grid_offset)) {
+        } else if (map_property_is_plaza(grid_offset)) {
             return BUILDING_PLAZA;
         }
         return BUILDING_ROAD;

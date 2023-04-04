@@ -22,9 +22,6 @@ void scenario_editor_clear_invasion_points(void);
 map_point scenario_editor_invasion_point(int id);
 void scenario_editor_set_invasion_point(int id, int x, int y);
 
-map_point scenario_editor_earthquake_point(void);
-void scenario_editor_set_earthquake_point(int x, int y);
-
 void scenario_editor_updated_terrain(void);
 
 #endif // SCENARIO_EDITOR_MAP_H

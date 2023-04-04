@@ -14,7 +14,6 @@
 #include "graphics/panel.h"
 #include "graphics/rich_text.h"
 #include "graphics/text.h"
-#include "graphics/video.h"
 #include "graphics/window.h"
 #include "input/input.h"
 #include "input/scroll.h"
@@ -25,8 +24,6 @@
 #include "window/city.h"
 
 #define MAX_HISTORY 200
-
-static void draw_foreground_video(void);
 
 static void button_back(int param1, int param2);
 static void button_close(int param1, int param2);
@@ -86,8 +83,6 @@ static struct {
 
     int text_id;
     void (*background_callback)(void);
-    int show_video;
-
     int x;
     int y;
     int x_text;
@@ -129,17 +124,6 @@ static void init(int text_id, void (*background_callback)(void))
     rich_text_reset(0);
     data.text_id = text_id;
     data.background_callback = background_callback;
-    const lang_message *msg = lang_get_message(text_id);
-    if (player_message.use_popup != 1) {
-        data.show_video = 0;
-    } else if (msg->video.text && video_start((char *) msg->video.text)) {
-        data.show_video = 1;
-    } else {
-        data.show_video = 0;
-    }
-    if (data.show_video) {
-        video_init(1);
-    }
 }
 
 static int resource_image(int resource)
@@ -358,82 +342,6 @@ static void draw_background_normal(void)
     }
 }
 
-static void draw_background_video(void)
-{
-    const lang_message *msg = lang_get_message(data.text_id);
-    data.x = 32;
-    data.y = 28;
-
-    int small_font = 0;
-    int lines_available = 4;
-    if (msg->type == TYPE_MESSAGE && msg->message_type == MESSAGE_TYPE_IMPERIAL) {
-        lines_available = 3;
-    }
-    rich_text_set_fonts(FONT_NORMAL_WHITE, FONT_NORMAL_RED, 5);
-    rich_text_clear_links();
-    int lines_required = rich_text_draw(msg->content.text, 0, 0, 384, lines_available, 1);
-    if (lines_required > lines_available) {
-        small_font = 1;
-        rich_text_set_fonts(FONT_SMALL_PLAIN, FONT_SMALL_PLAIN, 7);
-        lines_required = rich_text_draw(msg->content.text, 0, 0, 384, lines_available, 1);
-    }
-
-    outer_panel_draw(data.x, data.y, 26, 28);
-    graphics_draw_rect(data.x + 7, data.y + 7, 402, 294, COLOR_BLACK);
-
-    int y_base = data.y + 308;
-    int inner_height_blocks = 6;
-    if (lines_required > lines_available) {
-        // create space to cram an extra line into the dialog
-        y_base = y_base - 8;
-        inner_height_blocks += 1;
-    }
-    inner_panel_draw(data.x + 8, y_base, 25, inner_height_blocks);
-    text_draw_centered(msg->title.text,
-        data.x + 8, data.y + 414, 400, FONT_NORMAL_BLACK, 0);
-
-    int width = lang_text_draw(25, player_message.month, data.x + 16, y_base + 4, FONT_NORMAL_WHITE);
-    width += lang_text_draw_year(player_message.year, data.x + 18 + width, y_base + 4, FONT_NORMAL_WHITE);
-
-    if (msg->type == TYPE_MESSAGE && msg->message_type == MESSAGE_TYPE_DISASTER &&
-        data.text_id == MESSAGE_DIALOG_THEFT) {
-        lang_text_draw_amount(8, 0, player_message.param1, data.x + 90 + width, y_base + 4, FONT_NORMAL_WHITE);
-    } else {
-        width += lang_text_draw(63, 5, data.x + 70 + width, y_base + 4, FONT_NORMAL_WHITE);
-        text_draw(scenario_player_name(), data.x + 70 + width, y_base + 4, FONT_NORMAL_WHITE, 0);
-    }
-
-    data.text_height_blocks = msg->height_blocks - 1 - (32 + data.y_text - data.y) / BLOCK_SIZE;
-    data.text_width_blocks = msg->width_blocks - 4;
-    if (small_font) {
-        // Draw in black and then white to create shadow effect
-        rich_text_draw_colored(msg->content.text,
-            data.x + 16 + 1, y_base + 24 + 1, 384, data.text_height_blocks - 1, COLOR_BLACK);
-        rich_text_draw_colored(msg->content.text,
-            data.x + 16, y_base + 24, 384, data.text_height_blocks - 1, COLOR_WHITE);
-    } else {
-        rich_text_draw(msg->content.text, data.x + 16, y_base + 24, 384, data.text_height_blocks - 1, 0);
-    }
-
-    if (msg->type == TYPE_MESSAGE && msg->message_type == MESSAGE_TYPE_IMPERIAL) {
-        int y_text = data.y + 384;
-        if (lines_required > lines_available) {
-            y_text += 8;
-        }
-        const scenario_request *request = scenario_request_get(player_message.param1);
-        text_draw_number(request->amount, '@', " ", data.x + 8, y_text, FONT_NORMAL_WHITE, 0);
-        image_draw(resource_get_data(request->resource)->image.icon,
-            data.x + 70, y_text - 5, COLOR_MASK_NONE, SCALE_NONE);
-        text_draw(resource_get_data(request->resource)->text, data.x + 100, y_text, FONT_NORMAL_WHITE, COLOR_MASK_NONE);
-        if (request->state == REQUEST_STATE_NORMAL || request->state == REQUEST_STATE_OVERDUE) {
-            width = lang_text_draw_amount(8, 4, request->months_to_comply, data.x + 200, y_text, FONT_NORMAL_WHITE);
-            lang_text_draw(12, 2, data.x + 200 + width, y_text, FONT_NORMAL_WHITE);
-        }
-    }
-
-    draw_foreground_video();
-}
-
 static void draw_background(void)
 {
     if (data.background_callback) {
@@ -442,11 +350,7 @@ static void draw_background(void)
         window_draw_underlying_window();
     }
     graphics_in_dialog();
-    if (data.show_video) {
-        draw_background_video();
-    } else {
-        draw_background_normal();
-    }
+    draw_background_normal();
     graphics_reset_dialog();
 }
 
@@ -499,44 +403,11 @@ static void draw_foreground_normal(void)
     rich_text_draw_scrollbar();
 }
 
-static void draw_foreground_video(void)
-{
-    video_draw(data.x + 8, data.y + 8);
-    image_buttons_draw(data.x + 16, data.y + 408, get_advisor_button(), 1);
-    image_buttons_draw(data.x + 372, data.y + 410, &image_button_close, 1);
-    const lang_message *msg = lang_get_message(data.text_id);
-    if (is_event_message(msg)) {
-        image_buttons_draw(data.x + 48, data.y + 407, &image_button_go_to_problem, 1);
-    }
-}
-
 static void draw_foreground(void)
 {
     graphics_in_dialog();
-    if (data.show_video) {
-        draw_foreground_video();
-    } else {
-        draw_foreground_normal();
-    }
+    draw_foreground_normal();
     graphics_reset_dialog();
-}
-
-static int handle_input_video(const mouse *m_dialog, const lang_message *msg)
-{
-    if (image_buttons_handle_mouse(m_dialog, data.x + 16, data.y + 408, get_advisor_button(), 1, 0)) {
-        return 1;
-    }
-    if (image_buttons_handle_mouse(m_dialog, data.x + 372, data.y + 410, &image_button_close, 1, 0)) {
-        return 1;
-    }
-    if (is_event_message(msg)) {
-        if (image_buttons_handle_mouse(m_dialog, data.x + 48, data.y + 407,
-            &image_button_go_to_problem, 1,
-            &data.focus_button_id)) {
-            return 1;
-        }
-    }
-    return 0;
 }
 
 static int handle_input_normal(const mouse *m_dialog, const lang_message *msg)
@@ -587,17 +458,10 @@ static void handle_input(const mouse *m, const hotkeys *h)
     data.focus_button_id = 0;
     const mouse *m_dialog = mouse_in_dialog(m);
     const lang_message *msg = lang_get_message(data.text_id);
-    int handled;
-    if (data.show_video) {
-        handled = handle_input_video(m_dialog, msg);
-    } else {
-        handled = handle_input_normal(m_dialog, msg);
-    }
+    int handled = handle_input_normal(m_dialog, msg);
     if (!handled && input_go_back_requested(m, h)) {
         button_close(0, 0);
     }
-
-
 }
 
 static void button_back(int param1, int param2)
@@ -612,10 +476,6 @@ static void button_back(int param1, int param2)
 
 static void cleanup(void)
 {
-    if (data.show_video) {
-        video_stop();
-        data.show_video = 0;
-    }
     player_message.message_advisor = 0;
 }
 

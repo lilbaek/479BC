@@ -239,6 +239,9 @@ static int center_in_city(int element_width_pixels)
     return x + margin;
 }
 
+/*
+ * Used to determine what data to show in popup for the terrain
+ */
 static void init(int grid_offset)
 {
     context.can_play_sound = 1;
@@ -256,12 +259,12 @@ static void init(int grid_offset)
         } else {
             context.terrain_type = TERRAIN_INFO_EMPTY;
         }
-    } else if (map_property_is_plaza_or_earthquake(grid_offset)) {
+    } else if (map_property_is_plaza(grid_offset)) {
         if (map_terrain_is(grid_offset, TERRAIN_ROAD)) {
             context.terrain_type = TERRAIN_INFO_PLAZA;
         }
         if (map_terrain_is(grid_offset, TERRAIN_ROCK)) {
-            context.terrain_type = TERRAIN_INFO_EARTHQUAKE;
+            context.terrain_type = TERRAIN_INFO_UNUSED;
         }
     } else if (map_terrain_is(grid_offset, TERRAIN_TREE)) {
         context.terrain_type = TERRAIN_INFO_TREE;

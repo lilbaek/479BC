@@ -114,18 +114,6 @@ void scenario_editor_set_invasion_point(int id, int x, int y)
     scenario.is_saved = 0;
 }
 
-map_point scenario_editor_earthquake_point(void)
-{
-    return scenario.earthquake_point;
-}
-
-void scenario_editor_set_earthquake_point(int x, int y)
-{
-    scenario.earthquake_point.x = x;
-    scenario.earthquake_point.y = y;
-    scenario.is_saved = 0;
-}
-
 void scenario_editor_updated_terrain(void)
 {
     scenario.is_saved = 0;

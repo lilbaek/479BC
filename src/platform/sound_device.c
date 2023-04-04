@@ -147,10 +147,12 @@ static Mix_Chunk *load_chunk(const char *filename)
 
 static int load_channel(sound_channel *channel)
 {
+    return 0; // TODO: add sound again
+    /*
     if (!channel->chunk && channel->filename) {
         channel->chunk = load_chunk(channel->filename);
     }
-    return channel->chunk ? 1 : 0;
+    return channel->chunk ? 1 : 0;*/
 }
 
 void sound_device_init_channels(int num_channels, char filenames[][CHANNEL_FILENAME_MAX])

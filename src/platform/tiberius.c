@@ -29,7 +29,6 @@
 #include "platform/renderer.h"
 #include "platform/screen.h"
 #include "platform/touch.h"
-#include "window/asset_previewer.h"
 
 #include "tinyfiledialogs/tinyfiledialogs.h"
 
@@ -152,7 +151,6 @@ static void run_and_draw(void) {
     time_set_millis(SDL_GetTicks());
 
     game_run();
-    ui_prepare();
     game_draw();
 
     platform_renderer_render();
@@ -565,7 +563,7 @@ static void setup(const Tiberius_args *args) {
 
     time_set_millis(SDL_GetTicks());
 
-    int result = args->launch_asset_previewer ? window_asset_previewer_show() : game_init();
+    int result = game_init();
 
     if (!result) {
         SDL_Log("Exiting: game init failed");

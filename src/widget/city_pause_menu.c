@@ -76,7 +76,7 @@ static void handle_input(const mouse *m, const hotkeys *h)
     }
 }
 
-static void replay_map_confirmed(int confirmed, int checked)
+static void replay_map_confirmed(int confirmed)
 {
     if (confirmed) {
         if (scenario_is_custom()) {
@@ -89,7 +89,7 @@ static void replay_map_confirmed(int confirmed, int checked)
     }
 }
 
-static void main_menu_confirmed(int confirmed, int checked)
+static void main_menu_confirmed(int confirmed)
 {
     if (confirmed) {
         building_construction_clear_type();
@@ -99,7 +99,7 @@ static void main_menu_confirmed(int confirmed, int checked)
     }
 }
 
-static void confirm_exit(int accepted, int checked)
+static void confirm_exit(int accepted)
 {
     if (accepted) {
         system_exit();
@@ -111,7 +111,7 @@ static void button_click(int type, int param2)
     if (type == 1) {
         window_go_back();
     } else if (type == 2) {
-        window_popup_dialog_show_confirmation(lang_get_string(1, 2), 0, 0, replay_map_confirmed);
+        window_popup_dialog_show_confirmation(gettext("Delete me"), "", replay_map_confirmed);
     } else if (type == 3) {
         window_file_dialog_show(FILE_TYPE_SAVED_GAME, FILE_DIALOG_LOAD);
     } else if (type == 4) {
@@ -119,9 +119,9 @@ static void button_click(int type, int param2)
     } else if (type == 5) {
         window_file_dialog_show(FILE_TYPE_SAVED_GAME, FILE_DIALOG_DELETE);
     } else if (type == 6) {
-        window_popup_dialog_show_confirmation(translation_for(TR_BUTTON_BACK_TO_MAIN_MENU), 0, 0, main_menu_confirmed);
+        window_popup_dialog_show_confirmation(gettext("Exit to main menu"), "", main_menu_confirmed);
     } else if (type == 7) {
-        window_popup_dialog_show(POPUP_DIALOG_QUIT, confirm_exit, 1);
+        window_popup_dialog_show_ex(gettext("Quit"), gettext("Are you sure you want to quit?"), confirm_exit, 1);
     }
 }
 

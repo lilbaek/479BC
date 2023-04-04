@@ -727,10 +727,10 @@ static void button_toggle_play_paused(int param1, int param2)
 }
 
 
-static void confirm_nothing(int accepted, int checked)
+static void confirm_nothing(int accepted)
 {}
 
-static void confirm_send_troops(int accepted, int checked)
+static void confirm_send_troops(int accepted)
 {
     if (accepted) {
         formation_legions_dispatch_to_distant_battle();
@@ -738,8 +738,9 @@ static void confirm_send_troops(int accepted, int checked)
     }
 }
 
-static void confirm_send_goods(int accepted, int checked)
+static void confirm_send_goods(int accepted)
 {
+    int checked = 0; // TODO: Get from dialog
     if (accepted) {
         scenario_request_dispatch(data.selected_request_id);
         if (!checked && city_resource_is_stockpiled(data.selected_resource)) {
@@ -765,13 +766,13 @@ static void button_handle_request(int index, int param2)
         city_military_clear_empire_service_legions();
         switch (status) {
             case CITY_REQUEST_STATUS_NO_LEGIONS_AVAILABLE:
-                window_popup_dialog_show(POPUP_DIALOG_NO_LEGIONS_AVAILABLE, confirm_nothing, 0);
+                window_popup_dialog_show_ex(gettext("Imperial request"), gettext("You do not have any troops to send"), confirm_nothing, 0);
                 break;
             case CITY_REQUEST_STATUS_NO_LEGIONS_SELECTED:
-                window_popup_dialog_show(POPUP_DIALOG_NO_LEGIONS_SELECTED, confirm_nothing, 0);
+                window_popup_dialog_show_ex(gettext("Imperial request"), gettext("No legions selected for dispatch"), confirm_nothing, 0);
                 break;
             case CITY_REQUEST_STATUS_CONFIRM_SEND_LEGIONS:
-                window_popup_dialog_show(POPUP_DIALOG_SEND_TROOPS, confirm_send_troops, 2);
+                window_popup_dialog_show_ex(gettext("Imperial request"), gettext("Dispatch troops?"), confirm_send_troops, 2);
                 break;
             case CITY_REQUEST_STATUS_NOT_ENOUGH_RESOURCES:
                 city_resource_toggle_stockpiled(r->resource);
@@ -782,16 +783,12 @@ static void button_handle_request(int index, int param2)
                     ~CITY_REQUEST_STATUS_RESOURCES_FROM_GRANARY;
                 if (status & CITY_REQUEST_STATUS_RESOURCES_FROM_GRANARY) {
                     window_popup_dialog_show_confirmation(
-                        translation_for(TR_ADVISOR_DISPATCHING_FOOD_FROM_GRANARIES_TITLE),
-                        translation_for(TR_ADVISOR_DISPATCHING_FOOD_FROM_GRANARIES_TEXT),
-                        city_resource_is_stockpiled(r->resource) ? translation_for(TR_ADVISOR_KEEP_STOCKPILING) : 0,
-                        confirm_send_goods);
+                            gettext("Imperial request"), gettext("Dispatch food from granaries?"),
+                            confirm_send_goods);
                 } else {
                     window_popup_dialog_show_confirmation(
-                        lang_get_string(5, POPUP_DIALOG_SEND_GOODS),
-                        lang_get_string(5, POPUP_DIALOG_SEND_GOODS + 1),
-                        city_resource_is_stockpiled(r->resource) ? translation_for(TR_ADVISOR_KEEP_STOCKPILING) : 0,
-                        confirm_send_goods);
+                            gettext("Imperial request"), gettext("Dispatch goods?"),
+                            confirm_send_goods);
                 }
                 break;
         }

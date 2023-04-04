@@ -94,7 +94,7 @@ static void draw_foreground(void) {
 
 static void handle_input(const mouse *m, const hotkeys *h) {
     if (h->escape_pressed) {
-        hotkey_handle_escape();
+        window_go_back();
     }
 }
 

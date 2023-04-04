@@ -120,15 +120,6 @@ static void draw_status(void)
             lang_text_draw(44, 63, text_offset, 254, FONT_NORMAL_RED);
         }
     }
-
-    if (scenario_editor_earthquake_severity() > 0) {
-        map_point earthquake = scenario_editor_earthquake_point();
-        if (earthquake.x == -1 || earthquake.y == -1) {
-            lang_text_draw(44, 57, text_offset, 269, FONT_NORMAL_RED);
-        } else {
-            lang_text_draw(44, 58, text_offset, 269, FONT_NORMAL_GREEN);
-        }
-    }
 }
 
 void widget_sidebar_editor_draw_background(void)

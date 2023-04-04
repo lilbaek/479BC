@@ -67,8 +67,8 @@ if (CMAKE_COMPILER_IS_GNUCC)
     endif ()
 endif ()
 
-set(PROJECT_VERSION_MAJOR 3)
-set(PROJECT_VERSION_MINOR 2)
+set(PROJECT_VERSION_MAJOR 0)
+set(PROJECT_VERSION_MINOR 1)
 set(PROJECT_VERSION_PATCH 0)
 set(IS_RELEASE_VERSION FALSE)
 
@@ -280,7 +280,6 @@ set(CORE_FILES
         ${PROJECT_SOURCE_DIR}/src/core/random.c
         ${PROJECT_SOURCE_DIR}/src/core/smacker.c
         ${PROJECT_SOURCE_DIR}/src/core/speed.c
-        ${PROJECT_SOURCE_DIR}/src/core/sds.c
         ${PROJECT_SOURCE_DIR}/src/core/sdsalloc.h
         ${PROJECT_SOURCE_DIR}/src/core/string.c
         ${PROJECT_SOURCE_DIR}/src/core/time.c
@@ -524,7 +523,6 @@ set(GRAPHICS_FILES
         ${PROJECT_SOURCE_DIR}/src/graphics/scrollbar.c
         ${PROJECT_SOURCE_DIR}/src/graphics/text.c
         ${PROJECT_SOURCE_DIR}/src/graphics/tooltip.c
-        ${PROJECT_SOURCE_DIR}/src/graphics/video.c
         ${PROJECT_SOURCE_DIR}/src/graphics/warning.c
         ${PROJECT_SOURCE_DIR}/src/graphics/window.c
         )
@@ -580,7 +578,6 @@ set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/advisor/ratings.c
         ${PROJECT_SOURCE_DIR}/src/window/advisor/religion.c
         ${PROJECT_SOURCE_DIR}/src/window/advisor/trade.c
-        ${PROJECT_SOURCE_DIR}/src/window/asset_previewer.c
         ${PROJECT_SOURCE_DIR}/src/window/build_menu.c
         ${PROJECT_SOURCE_DIR}/src/window/building_info.c
         ${PROJECT_SOURCE_DIR}/src/window/building/common.c
@@ -622,7 +619,6 @@ set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/hotkey_config.c
         ${PROJECT_SOURCE_DIR}/src/window/hotkey_editor.c
         ${PROJECT_SOURCE_DIR}/src/window/intermezzo.c
-        ${PROJECT_SOURCE_DIR}/src/window/intro_video.c
         ${PROJECT_SOURCE_DIR}/src/window/labor_priority.c
         ${PROJECT_SOURCE_DIR}/src/window/main_menu.c
         ${PROJECT_SOURCE_DIR}/src/window/message_dialog.c
@@ -631,7 +627,6 @@ set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/mission_briefing.c
         ${PROJECT_SOURCE_DIR}/src/window/mission_end.c
         ${PROJECT_SOURCE_DIR}/src/window/mission_selection.c
-        ${PROJECT_SOURCE_DIR}/src/window/new_career.c
         ${PROJECT_SOURCE_DIR}/src/window/numeric_input.c
         ${PROJECT_SOURCE_DIR}/src/window/option_popup.c
         ${PROJECT_SOURCE_DIR}/src/window/overlay_menu.c
@@ -644,7 +639,6 @@ set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/trade_opened.c
         ${PROJECT_SOURCE_DIR}/src/window/trade_prices.c
         ${PROJECT_SOURCE_DIR}/src/window/victory_dialog.c
-        ${PROJECT_SOURCE_DIR}/src/window/victory_video.c
         ${PROJECT_SOURCE_DIR}/src/window/ui_window.c
         ${PROJECT_SOURCE_DIR}/src/window/cheat.c
         ${PROJECT_SOURCE_DIR}/src/window/map_generator.c

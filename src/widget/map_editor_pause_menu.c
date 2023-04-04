@@ -25,7 +25,7 @@
 
 #define MAX_BUTTONS 6
 
-static void menu_file_confirm_exit(int accepted, int checked)
+static void menu_file_confirm_exit(int accepted)
 {
     if (accepted) {
         game_exit_editor();
@@ -85,13 +85,13 @@ static void handle_input(const mouse *m, const hotkeys *h)
     }
 }
 
-static void main_menu_confirmed(int confirmed, int checked)
+static void main_menu_confirmed(int confirmed)
 {
     if (confirmed) {
         if (scenario_is_saved()) {
             game_exit_editor();
         } else {
-            window_popup_dialog_show(POPUP_DIALOG_EDITOR_QUIT_WITHOUT_SAVING, menu_file_confirm_exit, 1);
+            window_popup_dialog_show_confirmation(gettext("Quit"), gettext("Quit without saving?"), menu_file_confirm_exit);
         }
     }
 }
@@ -109,7 +109,7 @@ static void button_click(int type, int param2)
     } else if (type == 5) {
         window_editor_attributes_show();
     } else if (type == 6) {
-        window_popup_dialog_show_confirmation(translation_for(TR_BUTTON_BACK_TO_MAIN_MENU), 0, 0, main_menu_confirmed);
+        window_popup_dialog_show_confirmation(gettext("Exit to main menu"), "", main_menu_confirmed);
     }
 }
 

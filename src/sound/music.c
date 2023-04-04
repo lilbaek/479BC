@@ -24,28 +24,9 @@ static struct {
     int next_check;
 } data = {TRACK_NONE, 0};
 
-static const char tracks[][32] = {
-    "",
-    "wavs/ROME1.WAV",
-    "wavs/ROME2.WAV",
-    "wavs/ROME3.WAV",
-    "wavs/ROME4.WAV",
-    "wavs/ROME5.WAV",
-    "wavs/Combat_Short.wav",
-    "wavs/Combat_Long.wav",
-    "wavs/setup.wav"
-};
-
 static const char mp3_tracks[][32] = {
     "",
-    "mp3/ROME1.mp3",
-    "mp3/ROME2.mp3",
-    "mp3/ROME3.mp3",
-    "mp3/ROME4.mp3",
-    "mp3/ROME5.mp3",
-    "mp3/Combat_Short.mp3",
-    "mp3/Combat_Long.mp3",
-    "mp3/setup.mp3"
+    "music/1.mp3",
 };
 
 void sound_music_set_volume(int percentage)
@@ -59,13 +40,13 @@ static void play_track(int track)
     if (track <= TRACK_NONE || track >= TRACK_MAX) {
         return;
     }
-    const char *mp3_track = dir_get_file(mp3_tracks[track], NOT_LOCALIZED);
+    return; // TODO add music
+    /*
+    const char *mp3_track = platform_file_manager_asset_path(mp3_tracks[track]);
 
     int volume = setting_sound(SOUND_MUSIC)->volume;
-    if (!mp3_track || !sound_device_play_music(mp3_track, volume)) {
-        sound_device_play_music(dir_get_file(tracks[track], NOT_LOCALIZED), volume);
-    }
-    data.current_track = track;
+    sound_device_play_music(mp3_track, volume);
+    data.current_track = track;*/
 }
 
 void sound_music_play_intro(void)

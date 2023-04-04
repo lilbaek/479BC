@@ -108,12 +108,12 @@ static void parse_message(buffer *buf) {
         m->subtitle.x = buffer_read_i16(buf);
         m->subtitle.y = buffer_read_i16(buf);
         buffer_skip(buf, 4);
-        m->video.x = buffer_read_i16(buf);
-        m->video.y = buffer_read_i16(buf);
+        buffer_read_i16(buf);
+        buffer_read_i16(buf);
         buffer_skip(buf, 14);
         m->urgent = buffer_read_i32(buf);
 
-        m->video.text = get_message_text(buffer_read_i32(buf));
+        get_message_text(buffer_read_i32(buf));
         buffer_skip(buf, 4);
         m->title.text = get_message_text(buffer_read_i32(buf));
         m->subtitle.text = get_message_text(buffer_read_i32(buf));
@@ -157,7 +157,6 @@ void load_custom_messages(void) {
     lang_message *m = &data.message_entries[i];
     set_message_parameters(m, TR_CITY_MESSAGE_TITLE_MESS_HALL_NEEDS_FOOD, TR_CITY_MESSAGE_TEXT_MESS_HALL_NEEDS_FOOD, 1,
                            MESSAGE_TYPE_GENERAL);
-    m->video.text = (uint8_t *) "smk/god_mars.smk";
     i += 1;
 
     // soldiers starving, no mess hall
@@ -240,13 +239,11 @@ void load_custom_messages(void) {
     m = &data.message_entries[i];
     set_message_parameters(m, TR_CITY_MESSAGE_TITLE_COLOSSEUM_WORKING, TR_CITY_MESSAGE_TEXT_COLOSSEUM_WORKING, 1,
                            MESSAGE_TYPE_GENERAL);
-    m->video.text = (uint8_t *) "smk/1ST_GLAD.smk";
     i += 1;
 
     m = &data.message_entries[i];
     set_message_parameters(m, TR_CITY_MESSAGE_TITLE_HIPPODROME_WORKING, TR_CITY_MESSAGE_TEXT_HIPPODROME_WORKING, 1,
                            MESSAGE_TYPE_GENERAL);
-    m->video.text = (uint8_t *) "smk/1st_Chariot.smk";
     i += 1;
 
     for (int j = 0; j < 12; ++j) {
@@ -275,7 +272,6 @@ void load_custom_messages(void) {
     m = &data.message_entries[i];
     set_message_parameters(m, TR_CITY_MESSAGE_TITLE_EMPERORS_WRATH, TR_CITY_MESSAGE_TEXT_EMPERORS_WRATH, 1,
                            MESSAGE_TYPE_GENERAL);
-    m->video.text = (uint8_t *) "smk/Emp_send_army.smk";
     m->urgent = 1;
     i += 1;
 

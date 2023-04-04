@@ -222,7 +222,6 @@ extern struct scenario_t {
     map_point exit_point;
     map_point river_entry_point;
     map_point river_exit_point;
-    map_point earthquake_point;
     map_point herd_points[MAX_HERD_POINTS];
     map_point fishing_points[MAX_FISH_POINTS];
     map_point invasion_points[MAX_INVASION_POINTS];

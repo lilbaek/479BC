@@ -616,15 +616,15 @@ static void draw_animation(int x, int y, int grid_offset)
             int color_mask = draw_building_as_deleted(gate) ? COLOR_MASK_RED : 0;
             if (gate->subtype.orientation == 1) {
                 if (orientation == DIR_0_TOP || orientation == DIR_4_BOTTOM) {
-                    image_draw(get_building_image_id_prefix(TEXTURE_BUILDING_GATEHOUSE, 0), x - 22, y - 80, color_mask, draw_context.scale);
+                    image_draw(assets_get_image_id(TEXTURE_BUILDING_NAME, TEXTURE_BUILDING_GATEHOUSE), x - 22, y - 80, color_mask, draw_context.scale);
                 } else {
-                    image_draw(get_building_image_id_prefix(TEXTURE_BUILDING_GATEHOUSE, 1), x - 18, y - 81, color_mask, draw_context.scale);
+                    image_draw(assets_get_image_id(TEXTURE_BUILDING_NAME, TEXTURE_BUILDING_GATEHOUSE) + 1, x - 18, y - 81, color_mask, draw_context.scale);
                 }
             } else if (gate->subtype.orientation == 2) {
                 if (orientation == DIR_0_TOP || orientation == DIR_4_BOTTOM) {
-                    image_draw(get_building_image_id_prefix(TEXTURE_BUILDING_GATEHOUSE, 1), x - 18, y - 81, color_mask, draw_context.scale);
+                    image_draw(assets_get_image_id(TEXTURE_BUILDING_NAME, TEXTURE_BUILDING_GATEHOUSE) + 1, x - 18, y - 81, color_mask, draw_context.scale);
                 } else {
-                    image_draw(get_building_image_id_prefix(TEXTURE_BUILDING_GATEHOUSE, 0), x - 22, y - 80, color_mask, draw_context.scale);
+                    image_draw(assets_get_image_id(TEXTURE_BUILDING_NAME, TEXTURE_BUILDING_GATEHOUSE), x - 22, y - 80, color_mask, draw_context.scale);
                 }
             }
         }

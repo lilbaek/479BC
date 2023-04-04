@@ -23,7 +23,6 @@
 #include "window/intermezzo.h"
 #include "window/main_menu.h"
 #include "window/mission_selection.h"
-#include "window/victory_video.h"
 
 static void button_fired(int param1, int param2);
 
@@ -193,15 +192,6 @@ void window_mission_end_show_won(void)
     if (scenario_is_tutorial_1() || scenario_is_tutorial_2()) {
         // tutorials: immediately go to next mission
         show_intermezzo();
-    } else if (!scenario_is_custom() && scenario_campaign_rank() >= 10) {
-        // Won campaign
-        window_victory_video_show("smk/win_game.smk", 400, 292, show_intermezzo);
-    } else {
-        if (setting_victory_video()) {
-            window_victory_video_show("smk/victory_balcony.smk", 400, 292, show_intermezzo);
-        } else {
-            window_victory_video_show("smk/victory_senate.smk", 400, 292, show_intermezzo);
-        }
     }
 }
 

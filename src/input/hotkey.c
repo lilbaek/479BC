@@ -6,11 +6,11 @@
 #include "game/state.h"
 #include "game/system.h"
 #include "graphics/screenshot.h"
-#include "graphics/video.h"
 #include "graphics/window.h"
 #include "input/scroll.h"
 #include "window/hotkey_editor.h"
 #include "window/popup_dialog.h"
+#include "translation/translation.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -587,7 +587,7 @@ int hotkey_shift_pressed(void)
     return data.shift_pressed;
 }
 
-static void confirm_exit(int accepted, int checked)
+static void confirm_exit(int accepted)
 {
     if (accepted) {
         system_exit();
@@ -596,8 +596,7 @@ static void confirm_exit(int accepted, int checked)
 
 void hotkey_handle_escape(void)
 {
-    video_stop();
-    window_popup_dialog_show(POPUP_DIALOG_QUIT, confirm_exit, 1);
+    window_popup_dialog_show_ex(gettext("Quit"), gettext("Are you sure you want to quit?"), confirm_exit, 1);
 }
 
 void hotkey_handle_global_keys(void)
@@ -607,8 +606,6 @@ void hotkey_handle_global_keys(void)
     }
     if (data.global_hotkey_state.resize_to) {
         switch (data.global_hotkey_state.resize_to) {
-            case 640: system_resize(640, 480); break;
-            case 800: system_resize(800, 600); break;
             case 1024: system_resize(1024, 768); break;
         }
     }

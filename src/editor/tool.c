@@ -287,20 +287,6 @@ void editor_tool_update_use(const map_tile *tile)
     widget_minimap_invalidate();
 }
 
-static void place_earthquake_flag(const map_tile *tile)
-{
-    int warning = 0;
-    if (editor_tool_can_place_flag(data.type, tile, &warning)) {
-        if (scenario_editor_earthquake_severity()) {
-            scenario_editor_set_earthquake_point(tile->x, tile->y);
-        } else {
-            city_warning_show(WARNING_EDITOR_NO_EARTHQUAKE_SCHEDULED, NEW_WARNING_SLOT);
-        }
-    } else {
-        city_warning_show(warning, NEW_WARNING_SLOT);
-    }
-}
-
 static void place_flag(const map_tile *tile, void (*update)(int x, int y))
 {
     int warning = 0;
@@ -372,9 +358,6 @@ void editor_tool_end_use(const map_tile *tile)
         return;
     }
     switch (data.type) {
-        case TOOL_EARTHQUAKE_POINT:
-            place_earthquake_flag(tile);
-            break;
         case TOOL_ENTRY_POINT:
             place_flag(tile, scenario_editor_set_entry_point);
             break;

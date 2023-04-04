@@ -18,7 +18,6 @@
 #include "map/random.h"
 #include "map/terrain.h"
 #include "scenario/map.h"
-#include "core/sds.h"
 #include "core/textures.h"
 
 #define OFFSET(x, y) (x + GRID_SIZE * y)
@@ -96,7 +95,7 @@ static int is_all_terrain_in_area(int x, int y, int size, int terrain) {
 
 static int is_updatable_rock(int grid_offset) {
     return map_terrain_is(grid_offset, TERRAIN_ROCK) &&
-           !map_property_is_plaza_or_earthquake(grid_offset) &&
+           !map_property_is_plaza(grid_offset) &&
            !map_terrain_is(grid_offset, TERRAIN_ELEVATION | TERRAIN_ACCESS_RAMP);
 }
 
@@ -108,23 +107,18 @@ static void clear_rock_image(int x, int y, int grid_offset) {
     }
 }
 
-static sds rock_image(int image_id) {
-    assert(image_id <= 14);
-    return get_image_name(TEXTURE_ROCK_PREFIX, image_id);
-}
-
 static void set_rock_image(int x, int y, int grid_offset) {
     if (is_updatable_rock(grid_offset)) {
         if (!map_image_at(grid_offset)) {
             if (is_all_terrain_in_area(x, y, 3, TERRAIN_ROCK)) {
                 int image_id = 12 + (map_random_get(grid_offset) & 1);
-                map_building_tiles_add(0, x, y, 3, get_terrain_image_id(rock_image(image_id)), TERRAIN_ROCK);
+                map_building_tiles_add(0, x, y, 3, assets_get_image_id(TEXTURE_TERRAIN_NAME, TEXTURE_ROCK) + image_id, TERRAIN_ROCK);
             } else if (is_all_terrain_in_area(x, y, 2, TERRAIN_ROCK)) {
                 int image_id = 8 + (map_random_get(grid_offset) & 3);
-                map_building_tiles_add(0, x, y, 2, get_terrain_image_id(rock_image(image_id)), TERRAIN_ROCK);
+                map_building_tiles_add(0, x, y, 2, assets_get_image_id(TEXTURE_TERRAIN_NAME, TEXTURE_ROCK) + image_id, TERRAIN_ROCK);
             } else {
                 int image_id = (map_random_get(grid_offset) & 7);
-                map_image_set(grid_offset, get_terrain_image_id(rock_image(image_id)));
+                map_image_set(grid_offset, assets_get_image_id(TEXTURE_TERRAIN_NAME, TEXTURE_ROCK) + image_id);
             }
         }
     }
@@ -151,7 +145,8 @@ static void update_tree_image(int x, int y, int grid_offset) {
             //map_image_set(grid_offset, image_id + 8);
         }
         assert(imageIndex <= 32);
-        map_image_set(grid_offset, get_terrain_image_id(get_image_name(TEXTURE_TREE_PREFIX, imageIndex)));
+        int image_id = assets_get_image_id(TEXTURE_TERRAIN_NAME, TEXTURE_TREE);
+        map_image_set(grid_offset, image_id + imageIndex);
         map_property_set_multi_tile_size(grid_offset, 1);
         map_property_mark_draw_tile(grid_offset);
     }
@@ -173,7 +168,7 @@ static void set_shrub_image(int x, int y, int grid_offset) {
         !map_terrain_is(grid_offset, TERRAIN_ELEVATION | TERRAIN_ACCESS_RAMP)) {
         int imageIndex = (map_random_get(grid_offset) & 7);
         assert(imageIndex <= 8);
-        map_image_set(grid_offset, get_terrain_image_id_prefix(TEXTURE_SHRUB_PREFIX, imageIndex));
+        map_image_set(grid_offset, assets_get_image_id(TEXTURE_TERRAIN_NAME, TEXTURE_SHRUB) + imageIndex);
         map_property_set_multi_tile_size(grid_offset, 1);
         map_property_mark_draw_tile(grid_offset);
     }
@@ -255,16 +250,16 @@ static void set_garden_image(int x, int y, int grid_offset) {
 
 static void remove_plaza_below_building(int x, int y, int grid_offset) {
     if (map_terrain_is(grid_offset, TERRAIN_ROAD) &&
-        map_property_is_plaza_or_earthquake(grid_offset)) {
+            map_property_is_plaza(grid_offset)) {
         if (map_terrain_is(grid_offset, TERRAIN_BUILDING)) {
-            map_property_clear_plaza_or_earthquake(grid_offset);
+            map_property_clear_plaza(grid_offset);
         }
     }
 }
 
 static void clear_plaza_image(int x, int y, int grid_offset) {
     if (map_terrain_is(grid_offset, TERRAIN_ROAD) &&
-        map_property_is_plaza_or_earthquake(grid_offset)) {
+            map_property_is_plaza(grid_offset)) {
         map_image_set(grid_offset, 0);
         map_property_set_multi_tile_size(grid_offset, 1);
         map_property_mark_draw_tile(grid_offset);
@@ -273,7 +268,7 @@ static void clear_plaza_image(int x, int y, int grid_offset) {
 
 static int is_tile_plaza(int grid_offset) {
     if (map_terrain_is(grid_offset, TERRAIN_ROAD) &&
-        map_property_is_plaza_or_earthquake(grid_offset) &&
+            map_property_is_plaza(grid_offset) &&
         !map_terrain_is(grid_offset, TERRAIN_WATER | TERRAIN_BUILDING) &&
         !map_image_at(grid_offset)) {
         return 1;
@@ -290,7 +285,7 @@ static int is_two_tile_square_plaza(int grid_offset) {
 
 static void set_plaza_image(int x, int y, int grid_offset) {
     if (map_terrain_is(grid_offset, TERRAIN_ROAD) &&
-        map_property_is_plaza_or_earthquake(grid_offset) &&
+            map_property_is_plaza(grid_offset) &&
         !map_image_at(grid_offset)) {
         if (is_two_tile_square_plaza(grid_offset)) {
             int image_id = assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_PLAZA);
@@ -594,7 +589,8 @@ static void set_wall_gatehouse_image_manually(int grid_offset) {
         }
     }
     if (image_offset) {
-        map_image_set(grid_offset, get_building_image_id_prefix(TEXTURE_BUILDING_WALL, image_offset));
+
+        map_image_set(grid_offset, assets_get_image_id(TEXTURE_BUILDING_NAME, TEXTURE_BUILDING_WALL) + image_offset);
     }
 }
 
@@ -605,14 +601,14 @@ static void set_wall_image(int x, int y, int grid_offset) {
     }
     const terrain_image *img = map_image_context_get_wall(grid_offset);
     map_image_set(grid_offset,
-                  get_building_image_id_prefix(TEXTURE_BUILDING_WALL, img->group_offset + img->item_offset));
+                  assets_get_image_id(TEXTURE_BUILDING_NAME, TEXTURE_BUILDING_WALL) + img->group_offset + img->item_offset);
     map_property_set_multi_tile_size(grid_offset, 1);
     map_property_mark_draw_tile(grid_offset);
     if (map_terrain_count_directly_adjacent_with_type(grid_offset, TERRAIN_GATEHOUSE) > 0) {
         img = map_image_context_get_wall_gatehouse(grid_offset);
         if (img->is_valid) {
             map_image_set(grid_offset,
-                          get_building_image_id_prefix(TEXTURE_BUILDING_WALL, img->group_offset + img->item_offset));
+                          assets_get_image_id(TEXTURE_BUILDING_NAME, TEXTURE_BUILDING_WALL) + img->group_offset + img->item_offset);
         } else {
             set_wall_gatehouse_image_manually(grid_offset);
         }
@@ -661,7 +657,7 @@ static void set_road_image(int x, int y, int grid_offset) {
         map_terrain_is(grid_offset, TERRAIN_WATER | TERRAIN_BUILDING)) {
         return;
     }
-    if (map_property_is_plaza_or_earthquake(grid_offset)) {
+    if (map_property_is_plaza(grid_offset)) {
         return;
     }
     if (map_tiles_is_paved_road(grid_offset)) {
@@ -851,7 +847,7 @@ static void set_meadow_image(int x, int y, int grid_offset) {
         } else if (map_terrain_has_only_meadow_in_ring(x, y, 1)) {
             imageIndex += random + 4;
         }
-        map_image_set(grid_offset, get_terrain_image_id_prefix(TEXTURE_MEADOW_PREFIX, imageIndex));
+        map_image_set(grid_offset, assets_get_image_id(TEXTURE_TERRAIN_NAME, TEXTURE_MEADOW) + imageIndex);
         map_property_set_multi_tile_size(grid_offset, 1);
         map_property_mark_draw_tile(grid_offset);
     }
@@ -898,42 +894,6 @@ void map_tiles_update_region_water(int x_min, int y_min, int x_max, int y_max) {
 void map_tiles_set_water(int x, int y) {
     map_terrain_add(map_grid_offset(x, y), TERRAIN_WATER);
     foreach_region_tile(x - 1, y - 1, x + 1, y + 1, set_water_image);
-}
-
-static void set_earthquake_image(int x, int y, int grid_offset) {
-    if (map_terrain_is(grid_offset, TERRAIN_ROCK) && map_property_is_plaza_or_earthquake(grid_offset)) {
-        const terrain_image *img = map_image_context_get_earthquake(grid_offset);
-        if (img->is_valid) {
-            map_image_set(grid_offset,
-                          assets_get_image_id(TEXTURE_TERRAIN_NAME, TEXTURE_EARTHQUAKE) + img->group_offset +
-                          img->item_offset);
-        } else {
-            map_image_set(grid_offset, assets_get_image_id(TEXTURE_TERRAIN_NAME, TEXTURE_EARTHQUAKE));
-        }
-        map_property_set_multi_tile_size(grid_offset, 1);
-        map_property_mark_draw_tile(grid_offset);
-    }
-}
-
-static void update_earthquake_tile(int x, int y, int grid_offset) {
-    if (map_terrain_is(grid_offset, TERRAIN_ROCK) && map_property_is_plaza_or_earthquake(grid_offset)) {
-        map_terrain_add(grid_offset, TERRAIN_ROCK);
-        map_property_mark_plaza_or_earthquake(grid_offset);
-        foreach_region_tile(x - 1, y - 1, x + 1, y + 1, set_earthquake_image);
-    }
-}
-
-void map_tiles_update_all_earthquake(void) {
-    foreach_map_tile(update_earthquake_tile);
-}
-
-void map_tiles_set_earthquake(int x, int y) {
-    int grid_offset = map_grid_offset(x, y);
-    // earthquake: terrain = rock && bitfields = plaza
-    map_terrain_add(grid_offset, TERRAIN_ROCK);
-    map_property_mark_plaza_or_earthquake(grid_offset);
-
-    foreach_region_tile(x - 1, y - 1, x + 1, y + 1, set_earthquake_image);
 }
 
 static void set_rubble_image(int x, int y, int grid_offset) {
@@ -1022,7 +982,7 @@ static int get_access_ramp_image_offset(int x, int y) {
     return image_offset;
 }
 
-void map_tiles_add_entry_exit_flags(void) {
+void map_tiles_add_entry_exit_sign(void) {
     int entry_orientation;
     map_point entry_point = scenario_map_entry();
     if (entry_point.x == 0) {
@@ -1062,7 +1022,7 @@ void map_tiles_add_entry_exit_flags(void) {
         map_terrain_remove(grid_offset_flag, TERRAIN_MEADOW);
         map_terrain_add(grid_offset_flag, TERRAIN_ROCK);
         int orientation = (city_view_orientation() + entry_orientation) % 8;
-        map_image_set(grid_offset_flag, image_group(GROUP_TERRAIN_ENTRY_EXIT_FLAGS) + orientation / 2); // TODO
+        map_image_set(grid_offset_flag, assets_get_image_id(TEXTURE_DECORATION_NAME, TEXTURE_DECORATION_SIGN) + orientation / 2);
     }
     if (exit_orientation >= 0) {
         int grid_offset = map_grid_offset(exit_point.x, exit_point.y);
@@ -1077,7 +1037,7 @@ void map_tiles_add_entry_exit_flags(void) {
         map_terrain_remove(grid_offset_flag, TERRAIN_MEADOW);
         map_terrain_add(grid_offset_flag, TERRAIN_ROCK);
         int orientation = (city_view_orientation() + exit_orientation) % 8;
-        map_image_set(grid_offset_flag, image_group(GROUP_TERRAIN_ENTRY_EXIT_FLAGS) + 4 + orientation / 2); // TODO
+        map_image_set(grid_offset_flag, assets_get_image_id(TEXTURE_DECORATION_NAME, TEXTURE_DECORATION_SIGN) + 4 + orientation / 2);
     }
 }
 
@@ -1096,13 +1056,12 @@ void map_tiles_update_all(void) {
     map_tiles_remove_entry_exit_flags();
 
     map_tiles_update_all_water();
-    map_tiles_update_all_earthquake();
     map_tiles_update_all_rocks();
     map_tiles_update_all_trees();
     map_tiles_update_all_shrubs();
     map_tiles_update_all_gardens();
 
-    map_tiles_add_entry_exit_flags();
+    map_tiles_add_entry_exit_sign();
 
     map_tiles_update_all_empty_land();
     map_tiles_update_all_meadow();
