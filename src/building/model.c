@@ -1,3 +1,4 @@
+#include <assert.h>
 #include "building/model.h"
 
 #include "city/resource.h"
@@ -468,6 +469,7 @@ const model_building *model_get_building(building_type type)
     if (type == BUILDING_LARGE_POND || type == BUILDING_HORSE_STATUE) {
         return &MODEL_LARGE_STATUE;
     }
+    assert("Invalid building" && 0);
     return &MODEL_NONE;
 }
 
@@ -515,6 +517,7 @@ const model_house *model_get_house(house_level level)
         case HOUSE_LUXURY_PALACE:
             return &MODEL_LUXURY_PALACE;
     }
+    assert("Invalid house level" && 0);
     return &MODEL_HOUSE_NONE;
 }
 
