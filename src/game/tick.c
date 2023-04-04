@@ -50,7 +50,6 @@
 #include "map/water_supply.h"
 #include "scenario/demand_change.h"
 #include "scenario/distant_battle.h"
-#include "scenario/earthquake.h"
 #include "scenario/emperor_change.h"
 #include "scenario/empire.h"
 #include "scenario/gladiator_revolt.h"
@@ -199,7 +198,6 @@ void game_tick_run(void)
     game_undo_reduce_time_available();
     advance_tick();
     figure_action_handle();
-    scenario_earthquake_process();
     scenario_gladiator_revolt_process();
     scenario_emperor_change_process();
     city_victory_check();

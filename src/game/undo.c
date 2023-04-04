@@ -25,7 +25,6 @@
 #include "map/routing_terrain.h"
 #include "map/sprite.h"
 #include "map/terrain.h"
-#include "scenario/earthquake.h"
 
 #include <string.h>
 
@@ -278,7 +277,7 @@ void game_undo_reduce_time_available(void)
     if (!game_can_undo()) {
         return;
     }
-    if (data.timeout_ticks <= 0 || scenario_earthquake_is_in_progress()) {
+    if (data.timeout_ticks <= 0) {
         data.available = 0;
         clear_buildings();
         window_invalidate();

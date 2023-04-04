@@ -45,7 +45,6 @@
 #include "map/terrain.h"
 #include "map/tiles.h"
 #include "scenario/criteria.h"
-#include "scenario/earthquake.h"
 #include "scenario/emperor_change.h"
 #include "scenario/empire.h"
 #include "scenario/gladiator_revolt.h"
@@ -630,7 +629,6 @@ static void savegame_load_from_state(savegame_state *state, savegame_version ver
     city_culture_load_state(state->culture_coverage);
 
     scenario_criteria_load_state(state->max_game_year);
-    scenario_earthquake_load_state(state->earthquake);
     city_message_load_state(state->messages, state->message_extra,
         state->message_counts, state->message_delays,
         state->population_messages);
@@ -725,7 +723,6 @@ static void savegame_save_to_state(savegame_state *state)
     scenario_save_state(state->scenario);
 
     scenario_criteria_save_state(state->max_game_year);
-    scenario_earthquake_save_state(state->earthquake);
     city_message_save_state(state->messages, state->message_extra,
         state->message_counts, state->message_delays,
         state->population_messages);

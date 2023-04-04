@@ -31,7 +31,6 @@
 #include "window/editor/map.h"
 #include "window/main_menu.h"
 #include "window/ui_window.h"
-#include "window/map_generator.h"
 #include "scenario/map.h"
 #include "map/tiles.h"
 #include "map/natives.h"
@@ -41,7 +40,6 @@
 #include "map/routing_terrain.h"
 #include "city/map.h"
 #include "time.h"
-#include "scenario/earthquake.h"
 #include "scenario/gladiator_revolt.h"
 #include "scenario/emperor_change.h"
 #include "scenario/criteria.h"
@@ -222,7 +220,6 @@ int game_create_random_scenario(int size, int seed)
     game_time_init(scenario_property_start_year());
 
     // set up events
-    scenario_earthquake_init();
     scenario_gladiator_revolt_init();
     scenario_emperor_change_init();
     scenario_criteria_init_max_year();
@@ -240,6 +237,7 @@ int game_create_random_scenario(int size, int seed)
 
     city_data_init_scenario();
 
+    city_view_set_camera(76, 152);
     setting_set_default_game_speed();
     game_state_unpause();
 

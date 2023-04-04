@@ -59,7 +59,6 @@
 #include "scenario/criteria.h"
 #include "scenario/demand_change.h"
 #include "scenario/distant_battle.h"
-#include "scenario/earthquake.h"
 #include "scenario/emperor_change.h"
 #include "scenario/empire.h"
 #include "scenario/gladiator_revolt.h"
@@ -172,7 +171,6 @@ static void initialize_scenario_data(const uint8_t *scenario_name)
     game_time_init(scenario_property_start_year());
 
     // set up events
-    scenario_earthquake_init();
     scenario_gladiator_revolt_init();
     scenario_emperor_change_init();
     scenario_criteria_init_max_year();

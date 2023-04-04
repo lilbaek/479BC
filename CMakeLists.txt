@@ -492,7 +492,6 @@ set(SCENARIO_FILES
         ${PROJECT_SOURCE_DIR}/src/scenario/criteria.c
         ${PROJECT_SOURCE_DIR}/src/scenario/demand_change.c
         ${PROJECT_SOURCE_DIR}/src/scenario/distant_battle.c
-        ${PROJECT_SOURCE_DIR}/src/scenario/earthquake.c
         ${PROJECT_SOURCE_DIR}/src/scenario/editor.c
         ${PROJECT_SOURCE_DIR}/src/scenario/editor_events.c
         ${PROJECT_SOURCE_DIR}/src/scenario/editor_map.c
