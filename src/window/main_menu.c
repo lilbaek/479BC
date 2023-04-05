@@ -13,12 +13,13 @@
 #include "graphics/window.h"
 #include "sound/music.h"
 #include "window/config.h"
-#include "window/file_dialog.h"
+
 #include "window/plain_message_dialog.h"
 #include "window/popup_dialog.h"
 #include "window/nuklear.h"
 #include "window/ui_window.h"
 #include "map_generator.h"
+#include "save_load_dialog.h"
 
 static struct {
     int focus_button_id;
@@ -65,7 +66,7 @@ static void draw_foreground(void) {
             }
             nk_layout_row_push(ctx, width);
             if (nk_button_label(ctx, gettext("Load saved game"))) {
-                window_file_dialog_show(FILE_TYPE_SAVED_GAME, FILE_DIALOG_LOAD);
+                window_save_load_dialog_show(0);
             }
             nk_layout_row_push(ctx, width);
             if (nk_button_label(ctx, gettext("Map editor"))) {
@@ -92,7 +93,7 @@ static void handle_input(const mouse *m, const hotkeys *h) {
         hotkey_handle_escape();
     }
     if (h->load_file) {
-        window_file_dialog_show(FILE_TYPE_SAVED_GAME, FILE_DIALOG_LOAD);
+        window_save_load_dialog_show(0);
     }
 }
 

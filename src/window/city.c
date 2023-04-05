@@ -46,9 +46,10 @@
 #include "window/advisors.h"
 #include "window/building_info.h"
 #include "window/empire.h"
-#include "window/file_dialog.h"
+
 #include "window/message_list.h"
 #include "widget/bottombar/city.h"
+#include "save_load_dialog.h"
 
 static int mothball_warning_id;
 
@@ -582,10 +583,10 @@ static void handle_hotkeys(const hotkeys *h)
         map_bookmark_save(h->set_bookmark - 1);
     }
     if (h->load_file) {
-        window_file_dialog_show(FILE_TYPE_SAVED_GAME, FILE_DIALOG_LOAD);
+        window_save_load_dialog_show(0);
     }
     if (h->save_file) {
-        window_file_dialog_show(FILE_TYPE_SAVED_GAME, FILE_DIALOG_SAVE);
+        window_save_load_dialog_show(1);
     }
     if (h->rotate_building) {
         building_rotation_rotate_forward();

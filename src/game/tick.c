@@ -113,10 +113,10 @@ static void advance_month(void)
     city_gods_update_blessings();
     tutorial_on_month_tick();
     if (setting_monthly_autosave()) {
-        game_file_write_saved_game("autosave.svx");
+        game_file_write_saved_game("autosave.fvx");
     }
     if (new_year && config_get(CONFIG_GP_CH_YEARLY_AUTOSAVE)) {
-        game_file_write_saved_game("autosave-year.svx");
+        game_file_write_saved_game("autosave-year.fvx");
     }
 }
 

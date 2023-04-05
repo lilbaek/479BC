@@ -17,8 +17,11 @@ enum {
     LIST_MATCH = 2
 };
 
+FILE *platform_file_manager_open_save_file(const char *filename, const char *mode);
+FILE *platform_file_manager_open_settings_file(const char *filename, const char *mode);
+
 /**
- * Sets the base path for Julius
+ * Sets the base path
  * @param path The path to be set as the base
  * @return true if the base path was correctly set, false otherwise
  */
@@ -87,6 +90,8 @@ int platform_file_manager_close_file(FILE *stream);
  * @return 1 if removal was successful, 0 otherwise
  */
 int platform_file_manager_remove_file(const char *filename);
+
+int platform_file_manager_remove_settings_file(const char *filename);
 
 /**
  * Creates a directory

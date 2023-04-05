@@ -26,6 +26,10 @@
  */
 FILE *file_open(const char *filename, const char *mode);
 
+FILE *file_open_save_folder(const char *filename, const char *mode);
+
+FILE *file_open_settings_folder(const char *filename, const char *mode);
+
 /**
  * Wrapper for fopen converting filename to path in asset directory
  * @param folder Asset folder to use
@@ -86,4 +90,5 @@ int file_exists(const char *filename, int localizable);
  */
 int file_remove(const char *filename);
 
+int file_remove_settings(const char *filename);
 #endif // CORE_FILE_H

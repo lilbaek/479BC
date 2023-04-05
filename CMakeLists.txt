@@ -613,7 +613,7 @@ set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/config.c
         ${PROJECT_SOURCE_DIR}/src/window/donate_to_city.c
         ${PROJECT_SOURCE_DIR}/src/window/empire.c
-        ${PROJECT_SOURCE_DIR}/src/window/file_dialog.c
+        ${PROJECT_SOURCE_DIR}/src/window/save_load_dialog.c
         ${PROJECT_SOURCE_DIR}/src/window/gift_to_emperor.c
         ${PROJECT_SOURCE_DIR}/src/window/hold_games.c
         ${PROJECT_SOURCE_DIR}/src/window/hold_festival.c
