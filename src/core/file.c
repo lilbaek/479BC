@@ -17,6 +17,11 @@ FILE *file_open_save_folder(const char *filename, const char *mode)
     return platform_file_manager_open_save_file(filename, mode);
 }
 
+FILE *file_open_settings_folder(const char *filename, const char *mode)
+{
+    return platform_file_manager_open_settings_file(filename, mode);
+}
+
 FILE *file_open_asset_folder(const char *folder, const char *asset, const char *mode)
 {
     return platform_file_manager_open_asset_folder(folder, asset, mode);
@@ -97,4 +102,9 @@ int file_exists(const char *filename, int localizable)
 int file_remove(const char *filename)
 {
     return platform_file_manager_remove_file(filename);
+}
+
+int file_remove_settings(const char *filename)
+{
+    return platform_file_manager_remove_settings_file(filename);
 }
