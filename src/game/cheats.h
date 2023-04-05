@@ -28,5 +28,5 @@ void game_cheat_activate();
 int game_cheat_tooltip_enabled();
 int game_cheat_is_cheating();
 
-void game_cheat_fill_markets();
+void game_cheat_add_granary();
 #endif // GAME_CHEATS_H
