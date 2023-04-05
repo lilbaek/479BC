@@ -26,6 +26,8 @@
  */
 FILE *file_open(const char *filename, const char *mode);
 
+FILE *file_open_save_folder(const char *filename, const char *mode);
+
 /**
  * Wrapper for fopen converting filename to path in asset directory
  * @param folder Asset folder to use

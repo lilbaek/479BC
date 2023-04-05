@@ -19,6 +19,7 @@
 #include "window/nuklear.h"
 #include "window/ui_window.h"
 #include "map_generator.h"
+#include "load_dialog.h"
 
 static struct {
     int focus_button_id;
@@ -66,6 +67,7 @@ static void draw_foreground(void) {
             nk_layout_row_push(ctx, width);
             if (nk_button_label(ctx, gettext("Load saved game"))) {
                 window_file_dialog_show(FILE_TYPE_SAVED_GAME, FILE_DIALOG_LOAD);
+                window_load_dialog_show();
             }
             nk_layout_row_push(ctx, width);
             if (nk_button_label(ctx, gettext("Map editor"))) {

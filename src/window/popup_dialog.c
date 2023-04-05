@@ -52,11 +52,10 @@ static int init(const char *custom_title, const char *custom_text, void (*close_
 }
 
 static void draw_background(void) {
-
+    window_draw_underlying_window();
 }
 
 static void draw_foreground(void) {
-    window_draw_underlying_window();
     struct nk_context *ctx = ui_context();
     if (nk_begin(ctx, "popup_dialog", nk_recti(screen_dialog_offset_x() + 80, screen_dialog_offset_y() + 80, 480, 180),
                  NK_WINDOW_BORDER | NK_WINDOW_NO_SCROLLBAR)) {
@@ -74,15 +73,27 @@ static void draw_foreground(void) {
             nk_layout_row_push(ctx, 0.1);
             nk_spacer(ctx);
             nk_layout_row_push(ctx, 0.3);
-            if (nk_button_label(ctx, (char *) lang_get_string(CUSTOM_TRANSLATION, TR_BUTTON_OK))) {
-                button_ok(0, 0);
+            if (data.has_buttons >= 1) {
+                if (nk_button_label(ctx, (char *) lang_get_string(CUSTOM_TRANSLATION, TR_BUTTON_CANCEL))) {
+                    button_cancel(0, 0);
+                }
+            } else {
+                nk_spacer(ctx);
             }
             nk_layout_row_push(ctx, 0.2);
             nk_spacer(ctx);
             nk_layout_row_push(ctx, 0.3);
-            if (nk_button_label(ctx, (char *) lang_get_string(CUSTOM_TRANSLATION, TR_BUTTON_CANCEL))) {
-                button_cancel(0, 0);
+            struct nk_style_button button;
+            button = ctx->style.button;
+            ctx->style.button.normal.data.color = nk_rgb(156, 39, 176);
+            ctx->style.button.hover.data.color = nk_rgb(164, 56, 182);
+            ctx->style.button.text_normal = nk_rgb(255, 255, 255);
+            ctx->style.button.text_hover = nk_rgb(255, 255, 255);
+            ctx->style.button.text_active = nk_rgb(255, 255, 255);
+            if (nk_button_label(ctx, (char *) lang_get_string(CUSTOM_TRANSLATION, TR_BUTTON_OK))) {
+                button_ok(0, 0);
             }
+            ctx->style.button = button;
             nk_layout_row_push(ctx, 0.1);
             nk_layout_row_end(ctx);
         }

@@ -107,7 +107,7 @@ static const int MISSION_ID_TO_CITY_ID[] = {
 static input_box file_name_input = { 16, 40, 38, 2, FONT_NORMAL_WHITE, 0, data.typed_name, FILE_NAME_MAX };
 
 static file_type_data saved_game_data = { "sav" };
-static file_type_data saved_game_data_expanded = { "svx" };
+static file_type_data saved_game_data_expanded = { "fvx" };
 static file_type_data scenario_data = { "map" };
 static file_type_data scenario_data_expanded = { "mapx" };
 static file_type_data empire_data = { "xml" };
@@ -404,7 +404,7 @@ static void button_ok_cancel(int is_ok, int param2)
     }
     strncat(filename, chosen_filename, sizeof(filename) - strlen(filename) - 1);
 
-    if (data.dialog_type != FILE_DIALOG_SAVE && !file_exists(filename, NOT_LOCALIZED)) {
+    if (data.dialog_type != FILE_DIALOG_SAVE && NULL == file_open_save_folder(filename, "rb")) {
         data.message_not_exist_start_time = time_get_millis();
         return;
     }

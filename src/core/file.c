@@ -12,6 +12,11 @@ FILE *file_open(const char *filename, const char *mode)
     return platform_file_manager_open_file(filename, mode);
 }
 
+FILE *file_open_save_folder(const char *filename, const char *mode)
+{
+    return platform_file_manager_open_save_file(filename, mode);
+}
+
 FILE *file_open_asset_folder(const char *folder, const char *asset, const char *mode)
 {
     return platform_file_manager_open_asset_folder(folder, asset, mode);

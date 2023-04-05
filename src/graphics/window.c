@@ -9,6 +9,7 @@
 #include "input/scroll.h"
 #include "input/touch.h"
 #include "window/city.h"
+#include "window/ui_window.h"
 
 #define MAX_QUEUE 5
 
@@ -77,6 +78,9 @@ void window_show(const window_type *window) {
     if (!data.current_window->draw_foreground) {
         data.current_window->draw_foreground = noop;
     }
+    if (!data.current_window->draw_top) {
+        data.current_window->draw_top = noop;
+    }
     if (!data.current_window->handle_input) {
         data.current_window->handle_input = noop_input;
     }
@@ -117,6 +121,8 @@ void window_draw(int force) {
         data.refresh_immediate = 0;
     }
     w->draw_foreground();
+    ui_render();
+    w->draw_top();
 
     const mouse *m = mouse_get();
     const hotkeys *h = hotkey_state();

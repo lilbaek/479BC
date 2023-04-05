@@ -280,7 +280,6 @@ void game_run(void)
 void game_draw(void)
 {
     window_draw(0);
-    ui_render();
     sound_city_play();
 }
 

@@ -166,7 +166,7 @@ void ui_teardown() {
 
 void ui_render() {
     nk_style_set_font(ui_data_struct.ctx, &ui_data_struct.proggy_clean->handle);
-    // overview(ui_data_struct.ctx);
+    overview(ui_data_struct.ctx);
     window_cheat_render();
     nk_sdl_render(NK_ANTI_ALIASING_ON);
 }
