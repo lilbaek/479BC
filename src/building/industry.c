@@ -464,8 +464,10 @@ int building_get_workshop_for_raw_material(int x, int y, int resource, int road_
             !b->has_road_access || b->distance_from_entry <= 0 || b->road_network_id != road_network_id) {
             continue;
         }
-        if (type == BUILDING_CITY_MINT && b->output_resource_id == RESOURCE_GOLD) {
-            continue;
+        if (type == BUILDING_CITY_MINT) {
+            if (b->data.monument.phase != MONUMENT_FINISHED || b->output_resource_id == RESOURCE_GOLD) {
+                continue;
+            }
         }
         int dist = 10 * b->loads_stored +
                    calc_maximum_distance(b->x, b->y, x, y);
