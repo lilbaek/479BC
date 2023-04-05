@@ -17,8 +17,10 @@ enum {
     LIST_MATCH = 2
 };
 
+FILE *platform_file_manager_open_save_file(const char *filename, const char *mode);
+
 /**
- * Sets the base path for Julius
+ * Sets the base path
  * @param path The path to be set as the base
  * @return true if the base path was correctly set, false otherwise
  */
