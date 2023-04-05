@@ -15,11 +15,12 @@
 #include "input/input.h"
 #include "scenario/property.h"
 #include "translation/translation.h"
-#include "window/file_dialog.h"
+
 #include "window/popup_dialog.h"
 #include "window/city.h"
 #include "window/main_menu.h"
 #include "window/mission_briefing.h"
+#include "window/save_load_dialog.h"
 
 static void button_click(int type, int param2);
 
@@ -69,10 +70,10 @@ static void handle_input(const mouse *m, const hotkeys *h)
         window_go_back();
     }
     if (h->load_file) {
-        window_file_dialog_show(FILE_TYPE_SAVED_GAME, FILE_DIALOG_LOAD);
+        window_save_load_dialog_show(0);
     }
     if (h->save_file) {
-        window_file_dialog_show(FILE_TYPE_SAVED_GAME, FILE_DIALOG_SAVE);
+        window_save_load_dialog_show(1);
     }
 }
 
@@ -113,11 +114,11 @@ static void button_click(int type, int param2)
     } else if (type == 2) {
         window_popup_dialog_show_confirmation(gettext("Delete me"), "", replay_map_confirmed);
     } else if (type == 3) {
-        window_file_dialog_show(FILE_TYPE_SAVED_GAME, FILE_DIALOG_LOAD);
+        window_save_load_dialog_show(0);
     } else if (type == 4) {
-        window_file_dialog_show(FILE_TYPE_SAVED_GAME, FILE_DIALOG_SAVE);
+        window_save_load_dialog_show(1);
     } else if (type == 5) {
-        window_file_dialog_show(FILE_TYPE_SAVED_GAME, FILE_DIALOG_DELETE);
+
     } else if (type == 6) {
         window_popup_dialog_show_confirmation(gettext("Exit to main menu"), "", main_menu_confirmed);
     } else if (type == 7) {

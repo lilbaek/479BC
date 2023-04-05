@@ -1,4 +1,4 @@
-#include "load_dialog.h"
+#include "save_load_dialog.h"
 #include <stdio.h>
 #include <string.h>
 #include "graphics/window.h"
@@ -13,7 +13,6 @@
 #include "platform/file_manager.h"
 #include "game/save_version.h"
 #include "game/file_io.h"
-#include "file_dialog.h"
 #include "core/string.h"
 #include "widget/minimap.h"
 #include "game/file.h"
@@ -24,13 +23,13 @@ typedef struct {
 } file_type_data;
 
 static struct {
-    time_millis message_not_exist_start_time;
-    file_type type;
+    int selected_file_index;
+    int save_dialog;
     int minimap_x;
     int minimap_y;
     const dir_listing *file_list;
     file_type_data *file_data;
-    uint8_t typed_name[FILE_NAME_MAX];
+    char typed_name[FILE_NAME_MAX];
     char selected_file[FILE_NAME_MAX];
     union {
         saved_game_info save_game;
@@ -49,7 +48,8 @@ static int find_first_file_with_prefix(const char *prefix) {
     int right = load_dialog_data.file_list->num_files;
     while (left < right) {
         int middle = (left + right) / 2;
-        if (platform_file_manager_compare_filename_prefix(load_dialog_data.file_list->files[middle], prefix, len) >= 0) {
+        if (platform_file_manager_compare_filename_prefix(load_dialog_data.file_list->files[middle], prefix, len) >=
+            0) {
             right = middle;
         } else {
             left = middle + 1;
@@ -62,10 +62,11 @@ static int find_first_file_with_prefix(const char *prefix) {
     }
 }
 
-void init_load_dialog() {
+void init_dialog(int save_dialog) {
     load_dialog_data.file_data = &saved_game_data_expanded;
-    load_dialog_data.typed_name[0] = 0;
     load_dialog_data.file_list = dir_find_files_with_extension(".", saved_game_data_expanded.extension);
+    load_dialog_data.save_dialog = save_dialog;
+    load_dialog_data.selected_file_index = -1;
 }
 
 static void draw_background(void) {
@@ -74,6 +75,39 @@ static void draw_background(void) {
 
 static void nothing(int _) {
 
+}
+
+static char *get_chosen_filename(void) {
+    // Check if we should work with the selected file
+    uint8_t selected_name[FILE_NAME_MAX];
+    encoding_from_utf8(load_dialog_data.selected_file, selected_name, FILE_NAME_MAX);
+
+    if (string_equals(selected_name, load_dialog_data.typed_name)) {
+        // User has not modified the string after selecting it: use filename
+        return load_dialog_data.selected_file;
+    }
+
+    // We should use the typed name, which needs to be converted to UTF-8...
+    static char typed_file[FILE_NAME_MAX];
+    encoding_to_utf8(load_dialog_data.typed_name, typed_file, FILE_NAME_MAX, encoding_system_uses_decomposed());
+    return typed_file;
+}
+
+static void save_map() {
+    char filename[FILE_NAME_MAX];
+    char *chosen_filename = get_chosen_filename();
+    memset(filename, 0, sizeof(filename));
+    strncat(filename, chosen_filename, sizeof(filename) - strlen(filename) - 1);
+    if (!file_has_extension(filename, saved_game_data_expanded.extension)) {
+        file_append_extension(filename, saved_game_data_expanded.extension);
+    }
+    if (!game_file_write_saved_game(filename)) {
+        window_popup_dialog_show_ex(gettext("Unable to save game"),
+                                    "", nothing, 0);
+        return;
+    }
+    strncpy(load_dialog_data.selected_file, filename, FILE_NAME_MAX - 1);
+    window_city_show();
 }
 
 static void load_map() {
@@ -101,18 +135,23 @@ static void load_map() {
     }
 }
 
+
 static void create_selectable(struct nk_context *ctx) {
     char file[FILE_NAME_MAX];
-    static int selected = -1;
-    nk_layout_row_static(ctx, 18, 230, 1);
+    if (load_dialog_data.save_dialog) {
+        nk_layout_row_static(ctx, 18, 210, 1);
+    } else {
+        nk_layout_row_static(ctx, 18, 230, 1);
+    }
     for (int i = 0; i < load_dialog_data.file_list->num_files; ++i) {
         encoding_from_utf8(load_dialog_data.file_list->files[i], file, FILE_NAME_MAX);
-        nk_bool is_selected = (i == selected);
+        nk_bool is_selected = (i == load_dialog_data.selected_file_index);
         if (nk_selectable_label(ctx, file, NK_TEXT_ALIGN_LEFT, &is_selected)) {
-            selected = (selected == i) ? -1 : i;
+            load_dialog_data.selected_file_index = (load_dialog_data.selected_file_index == i) ? -1 : i;
             strncpy(load_dialog_data.selected_file, load_dialog_data.file_list->files[i], FILE_NAME_MAX - 1);
+            strncpy(load_dialog_data.typed_name, load_dialog_data.file_list->files[i], FILE_NAME_MAX - 1);
             load_dialog_data.savegame_info_status = game_file_io_read_saved_game_info(load_dialog_data.selected_file,
-                                                                          &load_dialog_data.info.save_game);
+                                                                                      &load_dialog_data.info.save_game);
         }
     }
 }
@@ -154,8 +193,14 @@ static void create_buttons(struct nk_context *ctx) {
     ctx->style.button.text_normal = nk_rgb(255, 255, 255);
     ctx->style.button.text_hover = nk_rgb(255, 255, 255);
     ctx->style.button.text_active = nk_rgb(255, 255, 255);
-    if (nk_button_label(ctx, gettext("Load"))) {
-        load_map();
+    if (load_dialog_data.save_dialog) {
+        if (nk_button_label(ctx, gettext("Save"))) {
+            save_map();
+        }
+    } else {
+        if (nk_button_label(ctx, gettext("Load"))) {
+            load_map();
+        }
     }
     ctx->style.button = button;
 }
@@ -164,12 +209,25 @@ static void draw_foreground(void) {
     struct nk_context *ctx = ui_context();
     int w = 677;
     int h = 500;
-    if (nk_begin(ctx, gettext("Load save"),
-                 nk_recti((screen_width() / 2) - w / 2, (screen_height() / 2) - h / 2, w, h),
-                 NK_WINDOW_BORDER | NK_WINDOW_NO_SCROLLBAR | NK_WINDOW_TITLE)) {
+    char *title = gettext("Load save");
+    if (load_dialog_data.save_dialog) {
+        title = gettext("Save game");
+    }
+    if (nk_begin_titled(ctx, "file_dialog", title,
+                        nk_recti((screen_width() / 2) - w / 2, (screen_height() / 2) - h / 2, w, h),
+                        NK_WINDOW_BORDER | NK_WINDOW_NO_SCROLLBAR | NK_WINDOW_TITLE)) {
         nk_layout_space_begin(ctx, NK_STATIC, h - 40, 3);
         nk_layout_space_push(ctx, nk_rect(0, 0, 250, h - 40));
         if (nk_group_begin(ctx, "Group_left", NK_WINDOW_BORDER)) {
+            if (load_dialog_data.save_dialog) {
+                nk_layout_row_begin(ctx, NK_DYNAMIC, 30, 3);
+                nk_layout_row_push(ctx, 0.3f);
+                nk_label(ctx, gettext("Save as:"), NK_TEXT_LEFT);
+                nk_layout_row_push(ctx, 0.7f);
+                nk_edit_string_zero_terminated(ctx, NK_EDIT_FIELD, load_dialog_data.typed_name, FILE_NAME_MAX,
+                                               nk_filter_default);
+                nk_layout_row_end(ctx);
+            }
             create_selectable(ctx);
             nk_group_end(ctx);
         }
@@ -207,8 +265,8 @@ static void handle_input(const mouse *m, const hotkeys *h) {
 
 static void (*get_tooltip)(tooltip_context *c);
 
-void window_load_dialog_show() {
-    init_load_dialog();
+void window_save_load_dialog_show(int save_dialog) {
+    init_dialog(save_dialog);
     window_type window = {
             WINDOW_LOAD_DIALOG,
             draw_background,

@@ -15,7 +15,7 @@
 #include "scenario/scenario.h"
 #include "translation/translation.h"
 #include "window/config.h"
-#include "window/file_dialog.h"
+
 #include "window/hotkey_config.h"
 #include "window/message_dialog.h"
 #include "window/popup_dialog.h"
@@ -199,14 +199,14 @@ static void menu_file_load_map(int param)
 {
     clear_state();
     window_editor_map_show();
-    window_file_dialog_show(FILE_TYPE_SCENARIO, FILE_DIALOG_LOAD);
+
 }
 
 static void menu_file_save_map(int param)
 {
     clear_state();
     window_editor_map_show();
-    window_file_dialog_show(FILE_TYPE_SCENARIO, FILE_DIALOG_SAVE);
+
 }
 
 static void menu_file_confirm_exit_to_menu(int accepted)
@@ -314,5 +314,5 @@ static void menu_empire_custom(int param)
 {
     clear_state();
     window_go_back();
-    window_file_dialog_show(FILE_TYPE_EMPIRE, FILE_DIALOG_LOAD);
+
 }
