@@ -21,11 +21,6 @@
 #include "map_generator.h"
 #include "save_load_dialog.h"
 
-static struct {
-    int focus_button_id;
-    int logo_image_id;
-} data;
-
 static void draw_version_string(void) {
     uint8_t version_string[100] = "tiberius v";
     int version_prefix_length = string_length(version_string);
@@ -55,34 +50,42 @@ static void confirm_exit(int accepted) {
 static void draw_foreground(void) {
     struct nk_context *ctx = ui_context();
     ui_font_large_bold();
-    if (nk_begin(ctx, "main_menu", nk_recti(screen_dialog_offset_x() + 192, screen_dialog_offset_y() + 70, 260, 258),
+    int h = 260;
+    int w = 270;
+    if (nk_begin(ctx, "main_menu", nk_recti((screen_width() / 2) - w / 2, (screen_height() / 2) - h / 2, w, h),
                  NK_WINDOW_BORDER | NK_WINDOW_NO_SCROLLBAR)) {
-        nk_layout_row_begin(ctx, NK_STATIC, 45, 1);
-        {
-            float width = 247;
-            nk_layout_row_push(ctx, width);
-            if (nk_button_label(ctx, gettext("New game"))) {
-                window_map_generator_show();
+        nk_layout_space_begin(ctx, NK_STATIC, h , 3);
+        nk_layout_space_push(ctx, nk_rect(0, 0, w - 13, h - 10));
+        if (nk_group_begin(ctx, "Group_left", NK_WINDOW_BORDER | NK_WINDOW_NO_SCROLLBAR)) {
+            nk_layout_row_begin(ctx, NK_STATIC, 45, 1);
+            {
+                float width = 249;
+                nk_layout_row_push(ctx, width);
+                if (nk_button_label(ctx, gettext("New game"))) {
+                    window_map_generator_show();
+                }
+                nk_layout_row_push(ctx, width);
+                if (nk_button_label(ctx, gettext("Load saved game"))) {
+                    window_save_load_dialog_show(0);
+                }
+                nk_layout_row_push(ctx, width);
+                if (nk_button_label(ctx, gettext("Map editor"))) {
+                    game_init_editor();
+                    sound_music_play_editor();
+                }
+                nk_layout_row_push(ctx, width);
+                if (nk_button_label(ctx, gettext("Options"))) {
+                    window_config_show(CONFIG_FIRST_PAGE, 1);
+                }
+                nk_layout_row_push(ctx, width);
+                if (nk_button_label(ctx, gettext("Exit"))) {
+                    window_popup_dialog_show_ex(gettext("Quit"), gettext("Are you sure you want to quit?"),
+                                                confirm_exit, 1);
+                }
             }
-            nk_layout_row_push(ctx, width);
-            if (nk_button_label(ctx, gettext("Load saved game"))) {
-                window_save_load_dialog_show(0);
-            }
-            nk_layout_row_push(ctx, width);
-            if (nk_button_label(ctx, gettext("Map editor"))) {
-                game_init_editor();
-                sound_music_play_editor();
-            }
-            nk_layout_row_push(ctx, width);
-            if (nk_button_label(ctx, gettext("Options"))) {
-                window_config_show(CONFIG_FIRST_PAGE, 1);
-            }
-            nk_layout_row_push(ctx, width);
-            if (nk_button_label(ctx, gettext("Exit"))) {
-                window_popup_dialog_show_ex(gettext("Quit"), gettext("Are you sure you want to quit?"), confirm_exit, 1);
-            }
+            nk_layout_row_end(ctx);
+            nk_group_end(ctx);
         }
-        nk_layout_row_end(ctx);
     }
     nk_end(ctx);
     ui_font_standard();
