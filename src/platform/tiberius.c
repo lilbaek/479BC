@@ -418,7 +418,7 @@ static const char *ask_for_data_dir(int again) {
         };
         const SDL_MessageBoxData messageboxdata = {
             SDL_MESSAGEBOX_WARNING, NULL, "Wrong folder selected",
-            "The selected folder is not a proper Caesar 3 folder.\n\n"
+            "The selected folder is not a proper folder.\n\n"
             "Please select a path directly from either the internal storage "
             "or the SD card, otherwise the path may not be recognised.\n\n"
             "Press OK to select another folder or Cancel to exit.",
@@ -434,15 +434,15 @@ static const char *ask_for_data_dir(int again) {
 #else
     if (again) {
         int result = tinyfd_messageBox("Wrong folder selected",
-                                       "tiberius requires the original files from Caesar 3 to run.\n\n"
-                                       "The selected folder is not a proper Caesar 3 folder.\n\n"
+                                       "tiberius requires the original files from todo to run.\n\n"
+                                       "The selected folder is not a proper todo folder.\n\n"
                                        "Press OK to select another folder or Cancel to exit.",
                                        "okcancel", "warning", 1);
         if (!result) {
             return NULL;
         }
     }
-    return tinyfd_selectFolderDialog("Please select your Caesar 3 folder");
+    return tinyfd_selectFolderDialog("Please select your todo folder");
 #endif
 }
 
@@ -507,15 +507,15 @@ static int pre_init(const char *custom_data_dir) {
 #elif defined(__vita__)
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
         "Error",
-        "tiberius requires the original files from Caesar 3 to run.\n\n"
+        "tiberius requires the original files from todo to run.\n\n"
         "Please add the files to:\n\n"
         VITA_PATH_PREFIX,
         NULL);
 #else
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
-        "tiberius requires the original files from Caesar 3 to run.",
+        "tiberius requires the original files from todo to run.",
         "Move the tiberius executable to the directory containing an existing "
-        "Caesar 3 installation, or run:\ntiberius path-to-c3-directory",
+        "todo installation, or run:\ntiberius path-to-c3-directory",
         NULL);
 #endif
     return 0;
