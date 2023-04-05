@@ -27,8 +27,8 @@ void window_cheat_render() {
             game_cheat_show_tooltip(0);
         }
         nk_layout_row_dynamic(ctx, 30, 1);
-        if (nk_button_label(ctx, "Fill market & granary")) {
-            game_cheat_fill_markets();
+        if (nk_button_label(ctx, "Add to granary")) {
+            game_cheat_add_granary();
         }
     }
     nk_end(ctx);
