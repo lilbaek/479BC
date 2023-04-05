@@ -129,9 +129,8 @@ void settings_load(void)
     load_settings(&buf);
 
     if (data.window_width + data.window_height < 500) {
-        // most likely migration from Caesar 3
-        data.window_width = 800;
-        data.window_height = 600;
+        data.window_width = 1200;
+        data.window_height = 800;
     }
     if (data.last_advisor <= ADVISOR_NONE || data.last_advisor > ADVISOR_CHIEF) {
         data.last_advisor = ADVISOR_LABOR;

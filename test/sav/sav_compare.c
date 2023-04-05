@@ -372,7 +372,6 @@ static int both_between(unsigned int value1, unsigned int value2, unsigned int r
 static int is_exception_cityinfo(int global_offset, int part_offset)
 {
     if (part_offset == 35160) {
-        // Bug fixed compared to C3: caesar invasion and barbarian invasion
         // influence on peace rating are switched
         if (file1_data[global_offset] == 7 && file2_data[global_offset] == 8) {
             return 1;
@@ -397,13 +396,13 @@ static int is_exception_image_grid(int global_offset, int part_offset)
         return 1;
     }
     // Exception for roads next to an access ramp: in julius the dirt roads and paved roads lead
-    // into the access ramp, while in Caesar 3 they do not. Therefore we do not check roads that
+    // into the access ramp, while they do not in game. Therefore we do not check roads that
     // are adjacent to an access ramp (terrain type 1024).
     if (both_between(v1, v2, 591, 657) && has_adjacent_terrain_type(part_offset, 1024)) {
         return 1;
     }
     // Exception for roads next to a granary: in julius the dirt roads and paved roads lead
-    // into the granary, while in Caesar 3 they do not. Therefore we do not check roads that
+    // into the granary, while in game they do not. Therefore we do not check roads that
     // are adjacent to a granary (building type 71).
     if (both_between(v1, v2, 591, 657) && has_adjacent_building_type(part_offset, 71)) {
         return 1;
@@ -425,7 +424,7 @@ static int is_exception_buildings(int global_offset, int part_offset)
 static int is_exception_building_grid(int global_offset, int part_offset)
 {
     int grid_offset = part_offset / 2;
-    // Exception for earthquake tiles: Caesar 3 does not clear the building ID when
+    // Exception for earthquake tiles: game does not clear the building ID when
     // a building gets destroyed by an earthquake, resulting in visual artifacts;
     // Julius does clear the building ID from the grid.
     // Earthquake tile is defined as:
