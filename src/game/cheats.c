@@ -101,21 +101,18 @@ void game_cheat_incite_riot() {
     city_sentiment_change_happiness(50);
 }
 
-void game_cheat_fill_markets() {
-    for (building *b = building_first_of_type(BUILDING_MARKET); b; b = b->next_of_type) {
-        for (resource_type r = RESOURCE_MIN_NON_FOOD; r < RESOURCE_MAX_NON_FOOD; r++) {
-            if (!resource_is_inventory(r)) {
-                continue;
+void game_cheat_add_granary() {
+    for (int i = 0; i < 8; ++i) {
+        for (building *b = building_first_of_type(BUILDING_GRANARY); b; b = b->next_of_type) {
+            for (resource_type r = RESOURCE_MIN_FOOD; r < RESOURCE_MAX_FOOD; r++) {
+                if (!resource_is_inventory(r)) {
+                    continue;
+                }
+                if (b->resources[RESOURCE_NONE] >= RESOURCE_ONE_LOAD) {
+                    b->resources[r] += RESOURCE_ONE_LOAD;
+                    b->resources[RESOURCE_NONE] -= RESOURCE_ONE_LOAD;
+                }
             }
-            b->resources[r] = 100;
-        }
-    }
-    for (building *b = building_first_of_type(BUILDING_GRANARY); b; b = b->next_of_type) {
-        for (resource_type r = RESOURCE_MIN_FOOD; r < RESOURCE_MAX_FOOD; r++) {
-            if (!resource_is_inventory(r)) {
-                continue;
-            }
-            b->resources[r] = 300;
         }
     }
 }
