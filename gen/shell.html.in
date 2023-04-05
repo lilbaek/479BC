@@ -692,7 +692,7 @@
           var hasData = false;
           Module.setStatus('Checking for downloadable saves...');
           Object.keys(FS.lookupPath(C3Dir).node.contents).forEach(element => {
-            if (element.endsWith('.sav') || element.endsWith('.fvx') || element.endsWith('.map')) {
+            if (element.endsWith('.fvx')) {
               var array = FS.readFile(C3Dir + '/' + element);
               zip.file(element, array);
               hasData = true;
