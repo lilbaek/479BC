@@ -220,7 +220,7 @@ static void xml_end_image_element(void)
     image *img = &data.current_image->img;
     if (img->is_isometric) {
         if (((img->width + 2) % (FOOTPRINT_WIDTH + 2)) != 0) {
-            log_info("Isometric image has invalid width", data.current_image->id, img->width);
+            //log_info("Isometric image has invalid width", data.current_image->id, img->width);
         }
     }
     if (!img->width || !img->height) {

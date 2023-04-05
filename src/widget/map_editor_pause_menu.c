@@ -17,7 +17,7 @@
 #include "widget/top_menu_editor.h"
 #include "window/editor/attributes.h"
 #include "window/editor/map.h"
-#include "window/file_dialog.h"
+
 #include "window/popup_dialog.h"
 #include "window/city.h"
 #include "window/main_menu.h"
@@ -78,10 +78,10 @@ static void handle_input(const mouse *m, const hotkeys *h)
         window_go_back();
     }
     if (h->load_file) {
-        window_file_dialog_show(FILE_TYPE_SAVED_GAME, FILE_DIALOG_LOAD);
+
     }
     if (h->save_file) {
-        window_file_dialog_show(FILE_TYPE_SAVED_GAME, FILE_DIALOG_SAVE);
+
     }
 }
 
@@ -103,9 +103,9 @@ static void button_click(int type, int param2)
     } else if (type == 2) {
         menu_file_new_map(1);
     } else if (type == 3) {
-        window_file_dialog_show(FILE_TYPE_SCENARIO, FILE_DIALOG_LOAD);
+
     } else if (type == 4) {
-        window_file_dialog_show(FILE_TYPE_SCENARIO, FILE_DIALOG_SAVE);
+
     } else if (type == 5) {
         window_editor_attributes_show();
     } else if (type == 6) {

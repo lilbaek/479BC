@@ -79,8 +79,6 @@ static encoding_type update_encoding(void)
 int game_pre_init(void)
 {
     settings_load();
-    config_load();
-    hotkey_config_load();
     scenario_settings_init();
     game_state_unpause();
 
@@ -280,7 +278,6 @@ void game_run(void)
 void game_draw(void)
 {
     window_draw(0);
-    ui_render();
     sound_city_play();
 }
 

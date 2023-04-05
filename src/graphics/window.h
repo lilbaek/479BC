@@ -9,6 +9,7 @@ typedef enum {
     WINDOW_LOGO,
     WINDOW_MAIN_MENU,
     WINDOW_MAP_GENERATOR,
+    WINDOW_LOAD_DIALOG,
     WINDOW_CONFIG,
     WINDOW_HOTKEY_CONFIG,
     WINDOW_HOTKEY_EDITOR,
@@ -90,6 +91,7 @@ typedef struct {
     void (*draw_foreground)(void);
     void (*handle_input)(const mouse *m, const hotkeys *h);
     void (*get_tooltip)(tooltip_context *c);
+    void (*draw_top)(void);
 } window_type;
 
 /**

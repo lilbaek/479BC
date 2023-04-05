@@ -3,8 +3,8 @@
 Type=Application
 Version=1.0
 Exec=tiberius
-Icon=com.github.keriew.tiberius
+Icon=com.github.opentiberius.tiberius
 Name=tiberius
-GenericName=Roman city management game
-Comment=Open Source re-implementation of Caesar 3.
+GenericName=Classic isometric city builder game
+Comment=Classic isometric city builder game
 Categories=Game;Simulation;

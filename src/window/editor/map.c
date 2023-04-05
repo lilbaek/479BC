@@ -15,7 +15,7 @@
 #include "widget/map_editor.h"
 #include "widget/top_menu_editor.h"
 #include "widget/sidebar/editor.h"
-#include "window/file_dialog.h"
+
 #include "window/popup_dialog.h"
 #include "window/editor/attributes.h"
 
@@ -49,12 +49,7 @@ static void draw_foreground(void)
 
 static void handle_hotkeys(const hotkeys *h)
 {
-    if (h->load_file) {
-        window_file_dialog_show(FILE_TYPE_SCENARIO, FILE_DIALOG_LOAD);
-    }
-    if (h->save_file) {
-        window_file_dialog_show(FILE_TYPE_SCENARIO, FILE_DIALOG_SAVE);
-    }
+
 }
 
 static void handle_input(const mouse *m, const hotkeys *h)
