@@ -264,7 +264,7 @@ void widget_bottom_bar_city_draw_foreground(void) {
     render_bottom_bar(ctx);
     render_minimap_bar(ctx);
     render_sub_menu(ctx);
-    ui_font_standard();
+    ui_font_change(FONT_TYPE_STANDARD);
     widget_minimap_draw_decorated(0, (screen_height() - MINIMAP_HEIGHT) - 35, MINIMAP_WIDTH, MINIMAP_HEIGHT);
 }
 

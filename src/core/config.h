@@ -1,8 +1,6 @@
 #ifndef CORE_CONFIG_H
 #define CORE_CONFIG_H
 
-#define CONFIG_STRING_VALUE_MAX 64
-
 typedef enum {
     CONFIG_GENERAL_ENABLE_AUDIO,
     CONFIG_GENERAL_MASTER_VOLUME,
@@ -57,13 +55,11 @@ typedef enum {
     CONFIG_GP_CH_ROAMERS_DONT_SKIP_CORNERS,
     CONFIG_GP_CH_YEARLY_AUTOSAVE,
     CONFIG_GP_CH_AUTO_KILL_ANIMALS,
+    CONFIG_SCREEN_FULLSCREEN,
+    CONFIG_SCREEN_WIDTH,
+    CONFIG_SCREEN_HEIGHT,
     CONFIG_MAX_ENTRIES
 } config_key;
-
-typedef enum {
-    CONFIG_STRING_UI_LANGUAGE_DIR,
-    CONFIG_STRING_MAX_ENTRIES
-} config_string_key;
 
 /**
  * Get an integer config value
@@ -80,32 +76,11 @@ int config_get(config_key key);
 void config_set(config_key key, int value);
 
 /**
- * Get a string config value
- * @param key String key
- * @return Config value, is always non-NULL but may be an empty string
- */
-const char *config_get_string(config_string_key key);
-
-/**
- * Set a string config value
- * @param key String key
- * @param value Value to set
- */
-void config_set_string(config_string_key key, const char *value);
-
-/**
  * Set a default config value
  * @param key Integer key
  * @return Default config value
  */
 int config_get_default_value(config_key key);
-
-/**
- * Get a string default config value
- * @param key String key
- * @return Default config value, is always non-NULL but may be an empty string
- */
-const char *config_get_default_string_value(config_string_key key);
 
 /**
  * Load config from file

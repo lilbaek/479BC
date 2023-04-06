@@ -123,31 +123,6 @@ void ui_window_setup(SDL_Window *win, SDL_Renderer *renderer) {
     }
 }
 
-void ui_font_standard() {
-    nk_style_set_font(ui_data_struct.ctx, &ui_data_struct.proggy_clean->handle);
-}
-
-void ui_font_icons() {
-    nk_style_set_font(ui_data_struct.ctx, &ui_data_struct.roboto_icons->handle);
-}
-
-void ui_font_large() {
-    nk_style_set_font(ui_data_struct.ctx, &ui_data_struct.roboto_regular_large->handle);
-}
-
-void ui_font_large_bold() {
-    nk_style_set_font(ui_data_struct.ctx, &ui_data_struct.roboto_bold_large->handle);
-}
-
-void ui_font_extra_large() {
-    nk_style_set_font(ui_data_struct.ctx, &ui_data_struct.roboto_regular_xlarge->handle);
-}
-
-void ui_font_extra_large_bold() {
-    nk_style_set_font(ui_data_struct.ctx, &ui_data_struct.roboto_bold_xlarge->handle);
-}
-
-
 void ui_input_begin() {
     nk_input_begin(ui_data_struct.ctx);
 }
@@ -166,9 +141,32 @@ void ui_teardown() {
 
 void ui_render() {
     nk_style_set_font(ui_data_struct.ctx, &ui_data_struct.proggy_clean->handle);
-    // overview(ui_data_struct.ctx);
+    overview(ui_data_struct.ctx);
     window_cheat_render();
     nk_sdl_render(NK_ANTI_ALIASING_ON);
+}
+
+void ui_font_change(font_type type) {
+    switch (type) {
+        case FONT_TYPE_ICONS:
+            nk_style_set_font(ui_data_struct.ctx, &ui_data_struct.roboto_icons->handle);
+            break;
+        case FONT_TYPE_STANDARD:
+            nk_style_set_font(ui_data_struct.ctx, &ui_data_struct.proggy_clean->handle);
+            break;
+        case FONT_TYPE_LARGE:
+            nk_style_set_font(ui_data_struct.ctx, &ui_data_struct.roboto_regular_large->handle);
+            break;
+        case FONT_TYPE_LARGE_BOLD:
+            nk_style_set_font(ui_data_struct.ctx, &ui_data_struct.roboto_bold_large->handle);
+            break;
+        case FONT_TYPE_EXTRA_LARGE:
+            nk_style_set_font(ui_data_struct.ctx, &ui_data_struct.roboto_regular_xlarge->handle);
+            break;
+        case FONT_TYPE_EXTRA_LARGE_BOLD:
+            nk_style_set_font(ui_data_struct.ctx, &ui_data_struct.roboto_bold_xlarge->handle);
+            break;
+    }
 }
 
 struct nk_context *ui_context(void) {
