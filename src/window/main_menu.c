@@ -49,7 +49,7 @@ static void confirm_exit(int accepted) {
 
 static void draw_foreground(void) {
     struct nk_context *ctx = ui_context();
-    ui_font_large_bold();
+    ui_font_change(FONT_TYPE_LARGE_BOLD);;
     int h = 260;
     int w = 270;
     if (nk_begin(ctx, "main_menu", nk_recti((screen_width() / 2) - w / 2, (screen_height() / 2) - h / 2, w, h),
@@ -88,7 +88,7 @@ static void draw_foreground(void) {
         }
     }
     nk_end(ctx);
-    ui_font_standard();
+    ui_font_change(FONT_TYPE_STANDARD);
 }
 
 static void handle_input(const mouse *m, const hotkeys *h) {

@@ -111,14 +111,15 @@ int platform_screen_create(const char *title, int display_scale_percentage)
     set_scale_percentage(display_scale_percentage, 0, 0);
 
     int width, height;
-    int fullscreen = system_is_fullscreen_only() ? 1 : setting_fullscreen();
+    int fullscreen = system_is_fullscreen_only() ? 1 : config_get(CONFIG_SCREEN_FULLSCREEN);
     if (fullscreen) {
         SDL_DisplayMode mode;
         SDL_GetDesktopDisplayMode(0, &mode);
         width = mode.w;
         height = mode.h;
     } else {
-        setting_window(&width, &height);
+        width = config_get(CONFIG_SCREEN_WIDTH);
+        height = config_get(CONFIG_SCREEN_HEIGHT);
         width = scale_logical_to_pixels(width);
         height = scale_logical_to_pixels(height);
     }
@@ -194,7 +195,7 @@ int platform_screen_resize(int pixel_width, int pixel_height, int save)
     int logical_height = scale_pixels_to_logical(pixel_height);
 
     if (save) {
-        setting_set_display(setting_fullscreen(), logical_width, logical_height);
+        setting_set_display(config_get(CONFIG_SCREEN_FULLSCREEN), logical_width, logical_height);
     }
 
     if (platform_renderer_create_render_texture(logical_width, logical_height)) {
@@ -223,7 +224,7 @@ int system_get_max_display_scale(void)
 
 void platform_screen_move(int x, int y)
 {
-    if (!setting_fullscreen()) {
+    if (!config_get(CONFIG_SCREEN_FULLSCREEN)) {
         window_pos.x = x;
         window_pos.y = y;
         window_pos.centered = 0;
@@ -257,7 +258,8 @@ void platform_screen_set_windowed(void)
         return;
     }
     int logical_width, logical_height;
-    setting_window(&logical_width, &logical_height);
+    logical_width = config_get(CONFIG_SCREEN_WIDTH);
+    logical_height = config_get(CONFIG_SCREEN_HEIGHT);
     int pixel_width = scale_logical_to_pixels(logical_width);
     int pixel_height = scale_logical_to_pixels(logical_height);
     int display = SDL_GetWindowDisplayIndex(SDL.window);
@@ -281,7 +283,7 @@ void platform_screen_set_window_size(int logical_width, int logical_height)
     int pixel_width = scale_logical_to_pixels(logical_width);
     int pixel_height = scale_logical_to_pixels(logical_height);
     int display = SDL_GetWindowDisplayIndex(SDL.window);
-    if (setting_fullscreen()) {
+    if (config_get(CONFIG_SCREEN_FULLSCREEN)) {
         SDL_SetWindowFullscreen(SDL.window, 0);
     } else {
         SDL_GetWindowPosition(SDL.window, &window_pos.x, &window_pos.y);
@@ -314,7 +316,7 @@ void platform_screen_recreate_texture(void)
     // On Windows, if ctrl + alt + del is pressed during fullscreen, the rendering context may be lost for a few frames
     // after restoring the window, preventing the texture from being recreated. This forces an attempt to recreate the
     // texture every frame to bypass that issue.
-    if (setting_fullscreen() && platform_renderer_lost_render_texture()) {
+    if (config_get(CONFIG_SCREEN_FULLSCREEN) && platform_renderer_lost_render_texture()) {
         SDL_DisplayMode mode;
         SDL_GetWindowDisplayMode(SDL.window, &mode);
         screen_set_resolution(scale_pixels_to_logical(mode.w), scale_pixels_to_logical(mode.h));

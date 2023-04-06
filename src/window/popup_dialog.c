@@ -60,16 +60,16 @@ static void draw_foreground(void) {
     if (nk_begin(ctx, "popup_dialog", nk_recti(screen_dialog_offset_x() + 80, screen_dialog_offset_y() + 80, 480, 180),
                  NK_WINDOW_BORDER | NK_WINDOW_NO_SCROLLBAR)) {
         nk_layout_row_dynamic(ctx, 60, 1);
-        ui_font_extra_large_bold();
+        ui_font_change(FONT_TYPE_EXTRA_LARGE_BOLD);
         nk_label(ctx, (char *) data.custom_title, NK_TEXT_CENTERED);
-        ui_font_standard();
+        ui_font_change(FONT_TYPE_STANDARD);
         nk_layout_row_dynamic(ctx, 20, 1);
         nk_label(ctx, (char *) data.custom_text, NK_TEXT_CENTERED);
         nk_layout_row_dynamic(ctx, 20, 2);
-        ui_font_extra_large_bold();
+        ui_font_change(FONT_TYPE_EXTRA_LARGE_BOLD);
         nk_layout_row_begin(ctx, NK_DYNAMIC, 40, 3);
         {
-            ui_font_large_bold();
+            ui_font_change(FONT_TYPE_LARGE_BOLD);
             nk_layout_row_push(ctx, 0.1);
             nk_spacer(ctx);
             nk_layout_row_push(ctx, 0.3);
@@ -99,7 +99,7 @@ static void draw_foreground(void) {
         }
     }
     nk_end(ctx);
-    ui_font_standard();
+    ui_font_change(FONT_TYPE_STANDARD);
 }
 
 static void handle_input(const mouse *m, const hotkeys *h) {

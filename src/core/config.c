@@ -65,14 +65,12 @@ static const char *ini_keys[] = {
     "gameplay_change_romers_dont_skip_corners",
     "gameplay_change_yearly_autosave",
     "gameplay_change_auto_kill_animals",
-};
-
-static const char *ini_string_keys[] = {
-    "ui_language_dir"
+    "config_screen_fullscreen",
+    "config_screen_width",
+    "config_screen_height"
 };
 
 static int values[CONFIG_MAX_ENTRIES];
-static char string_values[CONFIG_STRING_MAX_ENTRIES][CONFIG_STRING_VALUE_MAX];
 
 static int default_values[CONFIG_MAX_ENTRIES] = {
     [CONFIG_GENERAL_ENABLE_AUDIO] = 1,
@@ -86,10 +84,11 @@ static int default_values[CONFIG_MAX_ENTRIES] = {
     [CONFIG_UI_HIGHLIGHT_LEGIONS] = 1,
     [CONFIG_SCREEN_DISPLAY_SCALE] = 100,
     [CONFIG_SCREEN_CURSOR_SCALE] = 100,
-    [CONFIG_GP_CH_MAX_GRAND_TEMPLES] = 2
+    [CONFIG_GP_CH_MAX_GRAND_TEMPLES] = 2,
+    [CONFIG_SCREEN_FULLSCREEN] = 0,
+    [CONFIG_SCREEN_WIDTH] = 1024,
+    [CONFIG_SCREEN_HEIGHT] = 768,
 };
-
-static const char default_string_values[CONFIG_STRING_MAX_ENTRIES][CONFIG_STRING_VALUE_MAX];
 
 int config_get(config_key key)
 {
@@ -101,28 +100,9 @@ void config_set(config_key key, int value)
     values[key] = value;
 }
 
-const char *config_get_string(config_string_key key)
-{
-    return string_values[key];
-}
-
-void config_set_string(config_string_key key, const char *value)
-{
-    if (!value) {
-        string_values[key][0] = 0;
-    } else {
-        strncpy(string_values[key], value, CONFIG_STRING_VALUE_MAX - 1);
-    }
-}
-
 int config_get_default_value(config_key key)
 {
     return default_values[key];
-}
-
-const char *config_get_default_string_value(config_string_key key)
-{
-    return default_string_values[key];
 }
 
 static void set_defaults(void)
@@ -130,8 +110,6 @@ static void set_defaults(void)
     for (int i = 0; i < CONFIG_MAX_ENTRIES; ++i) {
         values[i] = default_values[i];
     }
-    strncpy(string_values[CONFIG_STRING_UI_LANGUAGE_DIR],
-        default_string_values[CONFIG_STRING_UI_LANGUAGE_DIR], CONFIG_STRING_VALUE_MAX);
 }
 
 void config_load(void)
@@ -160,15 +138,6 @@ void config_load(void)
                     break;
                 }
             }
-            for (int i = 0; i < CONFIG_STRING_MAX_ENTRIES; i++) {
-                if (strcmp(ini_string_keys[i], line) == 0) {
-                    const char *value = &equals[1];
-                    log_info("Config key", ini_string_keys[i], 0);
-                    log_info("Config value", value, 0);
-                    strncpy(string_values[i], value, CONFIG_STRING_VALUE_MAX - 1);
-                    break;
-                }
-            }
         }
     }
     file_close(fp);
@@ -183,9 +152,6 @@ void config_save(void)
     }
     for (int i = 0; i < CONFIG_MAX_ENTRIES; i++) {
         fprintf(fp, "%s=%d\n", ini_keys[i], values[i]);
-    }
-    for (int i = 0; i < CONFIG_STRING_MAX_ENTRIES; i++) {
-        fprintf(fp, "%s=%s\n", ini_string_keys[i], string_values[i]);
     }
     file_close(fp);
 }

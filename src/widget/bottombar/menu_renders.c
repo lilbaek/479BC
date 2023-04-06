@@ -63,10 +63,10 @@ void create_tooltip(struct nk_context *ctx, int building_type) {
     if (nk_widget_is_hovered(ctx)) {
         nk_tooltip_begin_bottom(ctx, 200, 80);
         nk_layout_row_dynamic(ctx, 20, 1);
-        ui_font_large_bold();
+        ui_font_change(FONT_TYPE_LARGE_BOLD);;
         nk_label(ctx, get_building_translation(building_type), NK_TEXT_LEFT);
         nk_layout_row_dynamic(ctx, 20, 1);
-        ui_font_standard();
+        ui_font_change(FONT_TYPE_STANDARD);
         int type = building_type;
         if (type == BUILDING_DRAGGABLE_RESERVOIR) {
             type = BUILDING_RESERVOIR;
@@ -438,7 +438,7 @@ void create_tooltip_submenu(struct nk_context *ctx, int submenu) {
     if (nk_widget_is_hovered(ctx)) {
         nk_tooltip_begin_bottom(ctx, 200, 60);
         nk_layout_row_dynamic(ctx, 20, 1);
-        ui_font_large_bold();
+        ui_font_change(FONT_TYPE_LARGE_BOLD);;
         char *text;
         switch (submenu) {
             case BUILD_MENU_WATER:
@@ -507,7 +507,7 @@ void create_tooltip_submenu(struct nk_context *ctx, int submenu) {
         }
         nk_label(ctx, text, NK_TEXT_LEFT);
         nk_tooltip_end(ctx);
-        ui_font_standard();
+        ui_font_change(FONT_TYPE_STANDARD);
     }
 }
 

@@ -187,11 +187,11 @@ static void draw_foreground(void) {
     if (load_dialog_data.save_dialog) {
         title = gettext("Save game");
     }
-    ui_font_large_bold();
+    ui_font_change(FONT_TYPE_LARGE_BOLD);;
     if (nk_begin_titled(ctx, "file_dialog", title,
                         nk_recti((screen_width() / 2) - w / 2, (screen_height() / 2) - h / 2, w, h),
                         NK_WINDOW_BORDER | NK_WINDOW_NO_SCROLLBAR | NK_WINDOW_TITLE)) {
-        ui_font_standard();
+        ui_font_change(FONT_TYPE_STANDARD);
         nk_layout_space_begin(ctx, NK_STATIC, h - 40, 3);
         nk_layout_space_push(ctx, nk_rect(0, 0, 250, h - 105));
         if (nk_group_begin(ctx, "Group_left", NK_WINDOW_BORDER)) {
@@ -214,7 +214,7 @@ static void draw_foreground(void) {
             }
             nk_group_end(ctx);
         }
-        ui_font_large_bold();
+        ui_font_change(FONT_TYPE_LARGE_BOLD);;
         nk_layout_space_push(ctx, nk_rect(0, h - 95, 665, 65));
         if (nk_group_begin(ctx, "group_bottom_left", NK_WINDOW_NO_SCROLLBAR)) {
             nk_layout_row_begin(ctx, NK_DYNAMIC, 40, 3);
@@ -233,7 +233,7 @@ static void draw_foreground(void) {
         }
     }
     nk_end(ctx);
-    ui_font_standard();
+    ui_font_change(FONT_TYPE_STANDARD);
 }
 
 static void draw_top(void) {
