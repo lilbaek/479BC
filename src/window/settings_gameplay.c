@@ -1,3 +1,10 @@
+#define NK_INCLUDE_FIXED_TYPES
+#define NK_INCLUDE_STANDARD_IO
+#define NK_INCLUDE_STANDARD_VARARGS
+#define NK_INCLUDE_DEFAULT_ALLOCATOR
+#define NK_INCLUDE_VERTEX_BUFFER_OUTPUT
+#define NK_INCLUDE_FONT_BAKING
+#define NK_INCLUDE_DEFAULT_FONT
 
 #include <string.h>
 #include "settings_gameplay.h"
@@ -23,12 +30,15 @@ static struct {
     struct {
         int original_value;
         int new_value;
+        int changed;
     } config_values[CONFIG_MAX_ENTRIES];
 } settings;
 
 static void save_changes();
 
 static void handle_fullscreen_change(int fullscreen);
+
+void find_current_resolution();
 
 static const resolution resolutions[] = {
         {1024, 768},
@@ -82,6 +92,15 @@ static void create_row(struct nk_context *ctx) {
     nk_layout_row_push(ctx, 0.99f);
 }
 
+static void create_row_label(struct nk_context *ctx, char* label) {
+    nk_layout_row_begin(ctx, NK_DYNAMIC, 30, 3);
+    nk_layout_row_push(ctx, 0.01f);
+    nk_spacer(ctx);
+    nk_layout_row_push(ctx, 0.3f);
+    nk_label(ctx, label, NK_TEXT_LEFT);
+    nk_layout_row_push(ctx, 0.69f);
+}
+
 static void create_resolution_combo(struct nk_context *ctx) {
     struct nk_rect rect = nk_widget_bounds(ctx);
     int previous = settings.current_resolution_index;
@@ -115,12 +134,32 @@ static void draw_foreground(void) {
             create_row(ctx);
             nk_label(ctx, gettext("Graphics"), NK_TEXT_LEFT);
             ui_font_change(FONT_TYPE_STANDARD);
-            create_row(ctx);
-            int *active = &settings.config_values[CONFIG_SCREEN_FULLSCREEN].new_value;
-            nk_checkbox_label(ctx, gettext("Full screen"), active);
-            create_row(ctx);
-            create_resolution_combo(ctx);
-
+            {
+                create_row(ctx);
+                nk_checkbox_label(ctx, gettext("Full screen"), &settings.config_values[CONFIG_SCREEN_FULLSCREEN].new_value);
+            }
+            {
+                create_row_label(ctx, gettext("Resolution"));
+                create_resolution_combo(ctx);
+            }
+            {
+                nk_layout_row_begin(ctx, NK_DYNAMIC, 30, 3);
+                nk_layout_row_push(ctx, 0.01f);
+                nk_spacer(ctx);
+                nk_layout_row_push(ctx, 0.5f);
+                nk_labelf(ctx, NK_TEXT_LEFT, gettext("Display scale: %u") , (int)settings.config_values[CONFIG_SCREEN_DISPLAY_SCALE].new_value);
+                nk_layout_row_push(ctx, 0.49f);
+                nk_slider_int(ctx, 50, &settings.config_values[CONFIG_SCREEN_DISPLAY_SCALE].new_value, 180, 5);
+            }
+            {
+                nk_layout_row_begin(ctx, NK_DYNAMIC, 30, 3);
+                nk_layout_row_push(ctx, 0.01f);
+                nk_spacer(ctx);
+                nk_layout_row_push(ctx, 0.5f);
+                nk_labelf(ctx, NK_TEXT_LEFT, gettext("Cursor scale: %u") , (int)settings.config_values[CONFIG_SCREEN_CURSOR_SCALE].new_value);
+                nk_layout_row_push(ctx, 0.49f);
+                nk_slider_int(ctx, 100, &settings.config_values[CONFIG_SCREEN_CURSOR_SCALE].new_value, 200, 50);
+            }
             nk_group_end(ctx);
         }
         nk_layout_space_push(ctx, nk_rect(335, 0, 328, h - 105));
@@ -166,33 +205,33 @@ void settings_gameplay_init() {
         settings.config_values[i].original_value = config_get(i);
         settings.config_values[i].new_value = config_get(i);
     }
-    int width = screen_width();
-    int height = screen_height();
-    for (int i = 0; i < sizeof(resolutions) / sizeof(resolution); i++) {
-        if (resolutions[i].width == width && resolutions[i].height == height) {
-            settings.current_resolution_index = i;
-            break;
-        }
-    }
+    find_current_resolution();
 }
 
 static void save_changes() {
-    int change_screen = 0;
     for (int i = 0; i < CONFIG_MAX_ENTRIES; ++i) {
         if (settings.config_values[i].original_value == settings.config_values[i].new_value)
             continue;
-
+        settings.config_values[i].changed = 1;
         config_set(i, settings.config_values[i].new_value);
         settings.config_values[i].original_value = settings.config_values[i].new_value;
-        switch (i) {
-            case CONFIG_SCREEN_FULLSCREEN:
-            case CONFIG_SCREEN_WIDTH:
-                change_screen = 1;
-                break;
-        }
     }
-    if (change_screen) {
-        handle_fullscreen_change(settings.config_values[CONFIG_SCREEN_FULLSCREEN].new_value);
+    for (int i = 0; i < CONFIG_MAX_ENTRIES; ++i) {
+        if (settings.config_values[i].changed) {
+            settings.config_values[i].changed = 0;
+            switch (i) {
+                case CONFIG_SCREEN_FULLSCREEN:
+                case CONFIG_SCREEN_WIDTH:
+                    handle_fullscreen_change(config_get(CONFIG_SCREEN_FULLSCREEN));
+                    break;
+                case CONFIG_SCREEN_CURSOR_SCALE:
+                    system_init_cursors(config_get(CONFIG_SCREEN_CURSOR_SCALE));
+                    break;
+                case CONFIG_SCREEN_DISPLAY_SCALE:
+                    system_scale_display(config_get(CONFIG_SCREEN_DISPLAY_SCALE));
+                    break;
+            }
+        }
     }
     config_save();
     window_go_back();
@@ -228,4 +267,29 @@ void window_settings_gameplay_show() {
             handle_input
     };
     window_show(&window);
+}
+
+void find_current_resolution() {
+    settings.current_resolution_index = -1;
+    int width = screen_width();
+    int height = screen_height();
+    for (int i = 0; i < sizeof(resolutions) / sizeof(resolution); i++) {
+        if (resolutions[i].width == width && resolutions[i].height == height) {
+            settings.current_resolution_index = i;
+            break;
+        }
+    }
+    if(settings.current_resolution_index == -1) {
+        width = settings.config_values[CONFIG_SCREEN_WIDTH].original_value;
+        height = settings.config_values[CONFIG_SCREEN_HEIGHT].original_value;
+        for (int i = 0; i < sizeof(resolutions) / sizeof(resolution); i++) {
+            if (resolutions[i].width == width && resolutions[i].height == height) {
+                settings.current_resolution_index = i;
+                break;
+            }
+        }
+    }
+    if(settings.current_resolution_index == -1) {
+        settings.current_resolution_index = 0;
+    }
 }

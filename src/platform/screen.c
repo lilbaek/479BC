@@ -272,7 +272,6 @@ void platform_screen_set_windowed(void)
     if (SDL_GetWindowGrab(SDL.window) == SDL_TRUE) {
         SDL_SetWindowGrab(SDL.window, SDL_FALSE);
     }
-    setting_set_display(0, pixel_width, pixel_height);
 }
 
 void platform_screen_set_window_size(int logical_width, int logical_height)
@@ -299,7 +298,6 @@ void platform_screen_set_window_size(int logical_width, int logical_height)
     if (SDL_GetWindowGrab(SDL.window) == SDL_TRUE) {
         SDL_SetWindowGrab(SDL.window, SDL_FALSE);
     }
-    setting_set_display(0, pixel_width, pixel_height);
 }
 
 void platform_screen_center_window(void)
