@@ -1,3 +1,11 @@
+#define NK_INCLUDE_FIXED_TYPES
+#define NK_INCLUDE_STANDARD_IO
+#define NK_INCLUDE_STANDARD_VARARGS
+#define NK_INCLUDE_DEFAULT_ALLOCATOR
+#define NK_INCLUDE_VERTEX_BUFFER_OUTPUT
+#define NK_INCLUDE_FONT_BAKING
+#define NK_INCLUDE_DEFAULT_FONT
+
 #include "save_load_dialog.h"
 #include <stdio.h>
 #include <string.h>
@@ -38,29 +46,6 @@ static struct {
 } load_dialog_data;
 
 static file_type_data saved_game_data_expanded = {"fvx"};
-
-static int find_first_file_with_prefix(const char *prefix) {
-    int len = (int) strlen(prefix);
-    if (len == 0) {
-        return -1;
-    }
-    int left = 0;
-    int right = load_dialog_data.file_list->num_files;
-    while (left < right) {
-        int middle = (left + right) / 2;
-        if (platform_file_manager_compare_filename_prefix(load_dialog_data.file_list->files[middle], prefix, len) >=
-            0) {
-            right = middle;
-        } else {
-            left = middle + 1;
-        }
-    }
-    if (platform_file_manager_compare_filename_prefix(load_dialog_data.file_list->files[left], prefix, len) == 0) {
-        return left;
-    } else {
-        return -1;
-    }
-}
 
 void init_dialog(int save_dialog) {
     load_dialog_data.file_data = &saved_game_data_expanded;
@@ -182,10 +167,7 @@ static void create_map_info(struct nk_context *ctx) {
     }
 }
 
-static void create_buttons(struct nk_context *ctx) {
-    if (nk_button_label(ctx, gettext("Cancel"))) {
-        window_go_back();
-    }
+static void create_ok_button(struct nk_context *ctx) {
     struct nk_style_button button;
     button = ctx->style.button;
     ctx->style.button.normal.data.color = nk_rgb(156, 39, 176);
@@ -213,11 +195,13 @@ static void draw_foreground(void) {
     if (load_dialog_data.save_dialog) {
         title = gettext("Save game");
     }
+    ui_font_change(FONT_TYPE_LARGE_BOLD);;
     if (nk_begin_titled(ctx, "file_dialog", title,
                         nk_recti((screen_width() / 2) - w / 2, (screen_height() / 2) - h / 2, w, h),
                         NK_WINDOW_BORDER | NK_WINDOW_NO_SCROLLBAR | NK_WINDOW_TITLE)) {
+        ui_font_change(FONT_TYPE_STANDARD);
         nk_layout_space_begin(ctx, NK_STATIC, h - 40, 3);
-        nk_layout_space_push(ctx, nk_rect(0, 0, 250, h - 40));
+        nk_layout_space_push(ctx, nk_rect(0, 0, 250, h - 105));
         if (nk_group_begin(ctx, "Group_left", NK_WINDOW_BORDER)) {
             if (load_dialog_data.save_dialog) {
                 nk_layout_row_begin(ctx, NK_DYNAMIC, 30, 3);
@@ -231,24 +215,33 @@ static void draw_foreground(void) {
             create_selectable(ctx);
             nk_group_end(ctx);
         }
-        nk_layout_space_push(ctx, nk_rect(260, 0, 405, h - 100));
+        nk_layout_space_push(ctx, nk_rect(260, 0, 405, h - 105));
         if (nk_group_begin(ctx, "Group_Right", NK_WINDOW_BORDER)) {
             if (load_dialog_data.savegame_info_status == SAVEGAME_STATUS_OK) {
                 create_map_info(ctx);
             }
             nk_group_end(ctx);
         }
-        nk_layout_space_push(ctx, nk_rect(455, h - 90, 405, 65));
-        if (nk_group_begin(ctx, "Group_Bottom", NK_WINDOW_NO_SCROLLBAR)) {
-            nk_layout_row_static(ctx, 40, 100, 2);
+        ui_font_change(FONT_TYPE_LARGE_BOLD);;
+        nk_layout_space_push(ctx, nk_rect(0, h - 95, 665, 65));
+        if (nk_group_begin(ctx, "group_bottom_left", NK_WINDOW_NO_SCROLLBAR)) {
+            nk_layout_row_begin(ctx, NK_DYNAMIC, 40, 3);
             {
-                create_buttons(ctx);
+                nk_layout_row_push(ctx, 0.2f);
+                if (nk_button_label(ctx, gettext("Back"))) {
+                    window_go_back();
+                }
+                nk_layout_row_push(ctx, 0.6f);
+                nk_spacer(ctx);
+                nk_layout_row_push(ctx, 0.2f);
+                create_ok_button(ctx);
+                nk_layout_row_end(ctx);
             }
             nk_group_end(ctx);
         }
     }
     nk_end(ctx);
-    ui_font_standard();
+    ui_font_change(FONT_TYPE_STANDARD);
 }
 
 static void draw_top(void) {

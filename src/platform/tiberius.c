@@ -537,7 +537,7 @@ static void setup(const Tiberius_args *args) {
         exit_with_status(1);
     }
 
-    if (args->force_windowed && setting_fullscreen()) {
+    if (args->force_windowed && config_get(CONFIG_SCREEN_FULLSCREEN)) {
         int w, h;
         setting_window(&w, &h);
         setting_set_display(0, w, h);

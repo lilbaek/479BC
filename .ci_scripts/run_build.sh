@@ -10,8 +10,7 @@ case "$BUILD_TARGET" in
 	docker exec switchdev /bin/bash -c "cd build && make -j4"
 	;;
 "mac")
-	cp -r res/maps ./build	
-	cp -r res/manual ./build
+	cp -r res/maps ./build
 	cd build
 	make -j4
 	make install
@@ -25,8 +24,7 @@ case "$BUILD_TARGET" in
 	fi
 	;;
 "appimage")
-	cp -r res/maps ./build	
-	cp -r res/manual ./build	
+	cp -r res/maps ./build
 	cd build
 	make -j4
 	make DESTDIR=AppDir install
@@ -46,8 +44,7 @@ case "$BUILD_TARGET" in
 	else
 		cp -r res/assets ./build
 	fi
-	cp -r res/maps ./build	
-	cp -r res/manual ./build	
+	cp -r res/maps ./build
 	cd build && make -j4
 	if [[ "$GITHUB_REF" =~ ^refs/tags/v ]]
 	then

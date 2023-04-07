@@ -176,7 +176,7 @@ const dir_listing *dir_append_files_with_extension(const char *extension)
 const char *dir_get_file(const char *filepath, int localizable)
 {
     if (localizable != NOT_LOCALIZED) {
-        const char *custom_dir = config_get_string(CONFIG_STRING_UI_LANGUAGE_DIR);
+        const char *custom_dir = ""; // TODO - cleanup
         if (*custom_dir) {
             const char *path = get_case_corrected_file(custom_dir, filepath);
             if (path) {

@@ -1,3 +1,4 @@
+
 // NOTE: Has been modified to not add NK_COMMAND_IMAGE to nk_convert as we want to draw images using existing atlas logic
 /*
 /// # Nuklear
@@ -24438,7 +24439,9 @@ if (background->type == NK_STYLE_ITEM_COLOR) {
 nk_fill_rect(out, *selector, 0, style->border_color);
 nk_fill_rect(out, nk_shrink_rect(*selector, style->border), 0, background->data.color);
 } else nk_draw_image(out, *selector, &background->data.image, nk_white);
-if (active) {
+
+// TODO - TIBERIUS - MODIFIED CHECKBOX TO ACUTALLY LOOK LIKE IT IS CHECKED
+if (!active) {
 if (cursor->type == NK_STYLE_ITEM_IMAGE)
 nk_draw_image(out, *cursors, &cursor->data.image, nk_white);
 else nk_fill_rect(out, *cursors, 0, cursor->data.color);

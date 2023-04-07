@@ -11,6 +11,7 @@
 #include "platform/vita/vita.h"
 
 #ifndef BUILDING_ASSET_PACKER
+
 #include "SDL.h"
 #include "assets/gui_assets.h"
 
@@ -163,6 +164,7 @@ static const char *USER_DIR[MAX_ASSET_DIRS] = {
 #elif defined (__APPLE__)
         "***SDL_PREF_PATH***",
 #elif !defined (_WIN32)
+        "***SDL_PREF_PATH***",
         "***RELATIVE_APPIMG_PATH***",
     "***RELATIVE_EXEC_PATH***",
     "~/.local/share/tiberius-game",
@@ -765,18 +767,40 @@ int platform_file_manager_remove_file(const char *filename)
 }
 
 #elif defined(__EMSCRIPTEN__)
-
 FILE *platform_file_manager_open_file(const char *filename, const char *mode)
 {
     writing_to_file = strchr(mode, 'w') != 0;
     return fopen(filename, mode);
 }
 
+FILE *platform_file_manager_open_save_file(const char *filename, const char *mode)
+{
+    set_save_directory();
+
+    char file[FILE_NAME_MAX];
+    strncpy(file, save_directory, FILE_NAME_MAX - 6);
+    strcat(file, filename);
+
+    writing_to_file = strchr(mode, 'w') != 0;
+    return fopen(file, mode);
+}
+
+FILE *platform_file_manager_open_settings_file(const char *filename, const char *mode)
+{
+    set_settings_directory();
+
+    char file[FILE_NAME_MAX];
+    strncpy(file, settings_directory, FILE_NAME_MAX - 6);
+    strcat(file, filename);
+
+    return fopen(file, mode);
+}
+
 int platform_file_manager_remove_file(const char *filename)
 {
     if (remove(filename) == 0) {
         EM_ASM(
-            Module.syncFS();
+                Module.syncFS();
         );
         return 1;
     }
@@ -790,7 +814,67 @@ FILE *platform_file_manager_open_asset(const char *asset, const char *mode)
     return fopen(cased_asset_path, mode);
 }
 
+const char *platform_file_manager_asset_path(const char *asset) {
+    set_assets_directory();
+    return dir_get_asset(assets_directory, asset);
+}
+
+FILE *platform_file_manager_open_asset_folder(const char *folder, const char *filename, const char *mode)
+{
+    set_assets_directory();
+
+    char folder_path[FILE_NAME_MAX];
+    substring(assets_directory, folder_path, 0, strlen(assets_directory) - 6);
+    strcat(folder_path, folder);
+
+    const char *cased_asset_path = dir_get_asset(folder_path, filename);
+    return fopen(cased_asset_path, mode);
+}
+
+int platform_file_manager_remove_settings_file(const char *filename)
+{
+    set_settings_directory();
+    char file[FILE_NAME_MAX];
+    strncpy(file, settings_directory, FILE_NAME_MAX - 6);
+    strcat(file, filename);
+
+    if (remove(filename) == 0) {
+        EM_ASM(
+                Module.syncFS();
+        );
+        return 1;
+    }
+    return 0;
+}
+
 #else
+
+FILE *platform_file_manager_open_save_file(const char *filename, const char *mode)
+{
+    set_save_directory();
+
+    char file[FILE_NAME_MAX];
+    strncpy(file, save_directory, FILE_NAME_MAX - 6);
+    strcat(file, filename);
+
+    return fopen(file, mode);
+}
+
+FILE *platform_file_manager_open_settings_file(const char *filename, const char *mode)
+{
+    set_settings_directory();
+
+    char file[FILE_NAME_MAX];
+    strncpy(file, settings_directory, FILE_NAME_MAX - 6);
+    strcat(file, filename);
+
+    return fopen(file, mode);
+}
+
+const char *platform_file_manager_asset_path(const char *asset) {
+    set_assets_directory();
+    return dir_get_asset(assets_directory, asset);
+}
 
 FILE *platform_file_manager_open_file(const char *filename, const char *mode)
 {
@@ -813,6 +897,29 @@ int platform_file_manager_remove_file(const char *filename)
 #endif
     return remove(filename) == 0;
 }
+
+int platform_file_manager_remove_settings_file(const char *filename)
+{
+    set_settings_directory();
+    char file[FILE_NAME_MAX];
+    strncpy(file, settings_directory, FILE_NAME_MAX - 6);
+    strcat(file, filename);
+
+    return remove(filename) == 0;
+}
+
+FILE *platform_file_manager_open_asset_folder(const char *folder, const char *filename, const char *mode)
+{
+    set_assets_directory();
+
+    char folder_path[FILE_NAME_MAX];
+    substring(assets_directory, folder_path, 0, strlen(assets_directory) - 6);
+    strcat(folder_path, folder);
+
+    const char *cased_asset_path = dir_get_asset(folder_path, filename);
+    return fopen(cased_asset_path, mode);
+}
+
 
 FILE *platform_file_manager_open_asset(const char *asset, const char *mode)
 {

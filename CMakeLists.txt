@@ -609,8 +609,8 @@ set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/editor/starting_conditions.c
         ${PROJECT_SOURCE_DIR}/src/window/editor/win_criteria.c
         ${PROJECT_SOURCE_DIR}/src/window/cck_selection.c
-        ${PROJECT_SOURCE_DIR}/src/window/city.c
         ${PROJECT_SOURCE_DIR}/src/window/config.c
+        ${PROJECT_SOURCE_DIR}/src/window/city.c
         ${PROJECT_SOURCE_DIR}/src/window/donate_to_city.c
         ${PROJECT_SOURCE_DIR}/src/window/empire.c
         ${PROJECT_SOURCE_DIR}/src/window/save_load_dialog.c
@@ -644,6 +644,8 @@ set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/cheat.c
         ${PROJECT_SOURCE_DIR}/src/window/map_generator.c
         ${PROJECT_SOURCE_DIR}/src/window/icons.h
+        ${PROJECT_SOURCE_DIR}/src/window/settings.c
+        ${PROJECT_SOURCE_DIR}/src/window/settings_gameplay.c
         )
 set(EDITOR_FILES
         ${PROJECT_SOURCE_DIR}/src/editor/editor.c

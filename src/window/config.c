@@ -317,16 +317,6 @@ static struct {
         int new_value;
         int (*change_action)(config_key key);
     } config_values[CONFIG_MAX_ALL];
-    struct {
-        char original_value[CONFIG_STRING_VALUE_MAX];
-        char new_value[CONFIG_STRING_VALUE_MAX];
-        int (*change_action)(config_string_key key);
-    } config_string_values[CONFIG_STRING_MAX_ENTRIES];
-    uint8_t language_options_data[MAX_LANGUAGE_DIRS][CONFIG_STRING_VALUE_MAX];
-    const uint8_t *language_options[MAX_LANGUAGE_DIRS];
-    char language_options_utf8[MAX_LANGUAGE_DIRS][CONFIG_STRING_VALUE_MAX];
-    int num_language_options;
-    int selected_language_option;
     int active_numerical_range;
     int show_background_image;
     int has_changes;
@@ -335,10 +325,6 @@ static struct {
 } data;
 
 static int config_change_basic(config_key key);
-static int config_change_string_basic(config_string_key key);
-
-static int config_change_string_language(config_string_key key);
-
 static int config_change_game_speed(config_key key);
 static int config_change_fullscreen(config_key key);
 static int config_change_display_resolution(config_key key);
@@ -363,8 +349,6 @@ static int config_enable_gods_effects(config_key key);
 
 static inline void set_custom_config_changes(void)
 {
-    data.config_string_values[CONFIG_STRING_UI_LANGUAGE_DIR].change_action = config_change_string_language;
-
     data.config_values[CONFIG_ORIGINAL_FULLSCREEN].change_action = config_change_fullscreen;
     data.config_values[CONFIG_ORIGINAL_WINDOWED_RESOLUTION].change_action = config_change_display_resolution;
     data.config_values[CONFIG_SCREEN_DISPLAY_SCALE].change_action = config_change_display_scale;
@@ -456,9 +440,6 @@ static void init_config_values(void)
     for (int i = 0; i < CONFIG_MAX_ALL; ++i) {
         data.config_values[i].change_action = config_change_basic;
     }
-    for (int i = 0; i < CONFIG_STRING_MAX_ENTRIES; ++i) {
-        data.config_string_values[i].change_action = config_change_string_basic;
-    }
     set_custom_config_changes();
     set_range_values();
 }
@@ -523,31 +504,10 @@ static void init(int page, int show_background_image)
         data.config_values[i].original_value = config_get(i);
         data.config_values[i].new_value = config_get(i);
     }
-    for (int i = 0; i < CONFIG_STRING_MAX_ENTRIES; i++) {
-        const char *value = config_get_string(i);
-        strncpy(data.config_string_values[i].original_value, value, CONFIG_STRING_VALUE_MAX - 1);
-        strncpy(data.config_string_values[i].new_value, value, CONFIG_STRING_VALUE_MAX - 1);
-    }
     fetch_original_config_values();
 
     data.show_background_image = show_background_image;
-    string_copy(translation_for(TR_CONFIG_LANGUAGE_DEFAULT), data.language_options_data[0], CONFIG_STRING_VALUE_MAX);
-    data.language_options[0] = data.language_options_data[0];
-    data.num_language_options = 1;
     const dir_listing *subdirs = dir_find_all_subdirectories();
-    const char *original_value = data.config_string_values[CONFIG_STRING_UI_LANGUAGE_DIR].original_value;
-    for (int i = 0; i < subdirs->num_files; i++) {
-        if (data.num_language_options < MAX_LANGUAGE_DIRS && lang_dir_is_valid(subdirs->files[i])) {
-            int opt_id = data.num_language_options;
-            strncpy(data.language_options_utf8[opt_id], subdirs->files[i], CONFIG_STRING_VALUE_MAX - 1);
-            encoding_from_utf8(subdirs->files[i], data.language_options_data[opt_id], CONFIG_STRING_VALUE_MAX);
-            data.language_options[opt_id] = data.language_options_data[opt_id];
-            if (strcmp(original_value, subdirs->files[i]) == 0) {
-                data.selected_language_option = opt_id;
-            }
-            data.num_language_options++;
-        }
-    }
 
     enable_all_widgets();
     if (system_is_fullscreen_only()) {
@@ -609,7 +569,7 @@ static uint8_t *percentage_string(uint8_t *string, int percentage)
 
 static const uint8_t *display_text_language(void)
 {
-    return data.language_options[data.selected_language_option];
+    return "Stuff";
 }
 
 static const uint8_t *display_text_game_speed(void)
@@ -758,21 +718,11 @@ static inline int config_changed(config_key key)
     return data.config_values[key].original_value != data.config_values[key].new_value;
 }
 
-static inline int config_string_changed(config_string_key key)
-{
-    return strcmp(data.config_string_values[key].original_value, data.config_string_values[key].new_value) != 0;
-}
-
 static inline void update_widgets(void)
 {
     update_scale();
     calculate_available_resolutions_and_fullscreen();
     data.has_changes = 0;
-    for (int i = 0; i < CONFIG_STRING_MAX_ENTRIES && !data.has_changes; i++) {
-        if (config_string_changed(i)) {
-            data.has_changes = 1;
-        }
-    }
     for (int i = 0; i < CONFIG_MAX_ALL && !data.has_changes; i++) {
         if (config_changed(i)) {
             data.has_changes = 1;
@@ -1018,10 +968,7 @@ static void toggle_switch(int key)
 
 static void set_language(int index)
 {
-    const char *dir = index == 0 ? "" : data.language_options_utf8[index];
-    strncpy(data.config_string_values[CONFIG_STRING_UI_LANGUAGE_DIR].new_value, dir, CONFIG_STRING_VALUE_MAX - 1);
 
-    data.selected_language_option = index;
 }
 
 static void button_hotkeys(int param1, int param2)
@@ -1031,22 +978,13 @@ static void button_hotkeys(int param1, int param2)
 
 static void button_language_select(int height, int param2)
 {
-    const generic_button *btn = &select_buttons[SELECT_LANGUAGE];
-    window_select_list_show_text(
-        screen_dialog_offset_x() + btn->x,
-        screen_dialog_offset_y() + height + btn->height,
-        data.language_options, data.num_language_options, set_language
-    );
+
 }
 
 static void button_reset_defaults(int param1, int param2)
 {
     for (int i = 0; i < CONFIG_MAX_ENTRIES; ++i) {
         data.config_values[i].new_value = config_get_default_value(i);
-    }
-    for (int i = 0; i < CONFIG_STRING_MAX_ENTRIES; ++i) {
-        strncpy(data.config_string_values[i].new_value,
-            config_get_default_string_value(i), CONFIG_STRING_VALUE_MAX - 1);
     }
     set_language(0);
     window_invalidate();
@@ -1057,11 +995,6 @@ static void cancel_values(void)
 {
     for (int i = 0; i < CONFIG_MAX_ALL; i++) {
         data.config_values[i].new_value = data.config_values[i].original_value;
-    }
-    for (int i = 0; i < CONFIG_STRING_MAX_ENTRIES; i++) {
-        // memcpy required to fix warning on Switch build
-        memcpy(data.config_string_values[i].new_value,
-            data.config_string_values[i].original_value, CONFIG_STRING_VALUE_MAX - 1);
     }
 }
 
@@ -1290,29 +1223,6 @@ static int config_enable_gods_effects(config_key key)
     return 1;
 }
 
-static int config_change_string_basic(config_string_key key)
-{
-    config_set_string(key, data.config_string_values[key].new_value);
-    strncpy(data.config_string_values[key].original_value,
-        data.config_string_values[key].new_value, CONFIG_STRING_VALUE_MAX - 1);
-    return 1;
-}
-
-static int config_change_string_language(config_string_key key)
-{
-    config_set_string(CONFIG_STRING_UI_LANGUAGE_DIR, data.config_string_values[key].new_value);
-    if (!game_reload_language()) {
-        config_set_string(CONFIG_STRING_UI_LANGUAGE_DIR, data.config_string_values[key].original_value);
-        game_reload_language();
-        window_plain_message_dialog_show(TR_INVALID_LANGUAGE_TITLE, TR_INVALID_LANGUAGE_MESSAGE, 1);
-        return 0;
-    }
-    strncpy(data.config_string_values[key].original_value,
-        data.config_string_values[key].new_value, CONFIG_STRING_VALUE_MAX - 1);
-    string_copy(translation_for(TR_CONFIG_LANGUAGE_DEFAULT), data.language_options_data[0], CONFIG_STRING_VALUE_MAX);
-    return 1;
-}
-
 static int apply_changed_configs(void)
 {
     if (!data.has_changes) {
@@ -1321,13 +1231,6 @@ static int apply_changed_configs(void)
     for (int i = 0; i < CONFIG_MAX_ALL; ++i) {
         if (config_changed(i)) {
             if (!data.config_values[i].change_action(i)) {
-                return 0;
-            }
-        }
-    }
-    for (int i = 0; i < CONFIG_STRING_MAX_ENTRIES; ++i) {
-        if (config_string_changed(i)) {
-            if (!data.config_string_values[i].change_action(i)) {
                 return 0;
             }
         }
