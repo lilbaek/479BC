@@ -130,10 +130,12 @@ static void draw_foreground(void) {
         nk_layout_space_begin(ctx, NK_STATIC, h - 40, 3);
         nk_layout_space_push(ctx, nk_rect(0, 0, 330, h - 105));
         if (nk_group_begin(ctx, "group_left", NK_WINDOW_BORDER)) {
-            ui_font_change(FONT_TYPE_LARGE_BOLD);;
-            create_row(ctx);
-            nk_label(ctx, gettext("Graphics"), NK_TEXT_LEFT);
-            ui_font_change(FONT_TYPE_STANDARD);
+            {
+                ui_font_change(FONT_TYPE_LARGE_BOLD);;
+                create_row(ctx);
+                nk_label(ctx, gettext("Graphics"), NK_TEXT_LEFT);
+                ui_font_change(FONT_TYPE_STANDARD);
+            }
             {
                 create_row(ctx);
                 nk_checkbox_label(ctx, gettext("Full screen"), &settings.config_values[CONFIG_SCREEN_FULLSCREEN].new_value);
@@ -164,13 +166,15 @@ static void draw_foreground(void) {
         }
         nk_layout_space_push(ctx, nk_rect(335, 0, 328, h - 105));
         if (nk_group_begin(ctx, "group_right", NK_WINDOW_BORDER)) {
-            ui_font_change(FONT_TYPE_LARGE_BOLD);;
-            create_row(ctx);
-            nk_label(ctx, gettext("Sound"), NK_TEXT_LEFT);
-            ui_font_change(FONT_TYPE_STANDARD);
+            {
+                ui_font_change(FONT_TYPE_LARGE_BOLD);;
+                create_row(ctx);
+                nk_label(ctx, gettext("Sound"), NK_TEXT_LEFT);
+                ui_font_change(FONT_TYPE_STANDARD);
+            }
             nk_group_end(ctx);
         }
-        ui_font_change(FONT_TYPE_LARGE_BOLD);;
+        ui_font_change(FONT_TYPE_LARGE_BOLD);
         nk_layout_space_push(ctx, nk_rect(0, h - 95, 665, 65));
         if (nk_group_begin(ctx, "group_bottom_left", NK_WINDOW_NO_SCROLLBAR)) {
             nk_layout_row_begin(ctx, NK_DYNAMIC, 40, 3);
@@ -209,6 +213,7 @@ void settings_gameplay_init() {
 }
 
 static void save_changes() {
+    // Save changes first
     for (int i = 0; i < CONFIG_MAX_ENTRIES; ++i) {
         if (settings.config_values[i].original_value == settings.config_values[i].new_value)
             continue;
@@ -216,6 +221,7 @@ static void save_changes() {
         config_set(i, settings.config_values[i].new_value);
         settings.config_values[i].original_value = settings.config_values[i].new_value;
     }
+    // React to changes that requires immediate action
     for (int i = 0; i < CONFIG_MAX_ENTRIES; ++i) {
         if (settings.config_values[i].changed) {
             settings.config_values[i].changed = 0;
