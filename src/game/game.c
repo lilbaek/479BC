@@ -116,7 +116,7 @@ int game_init(void)
     game_state_init();
     resource_init();
     window_main_menu_show(1);
-    window_settings_menu_show();
+    //window_settings_menu_show();
     return 1;
 }
 
