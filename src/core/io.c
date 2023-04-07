@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #include "core/file.h"
+#include "SDL_log.h"
 
 int io_read_file_into_buffer_asset(const char *filepath, void *buffer, int max_size)
 {
@@ -23,12 +24,15 @@ int io_read_file_into_buffer_asset(const char *filepath, void *buffer, int max_s
 
 int io_read_file_into_buffer(const char *filepath, int localizable, void *buffer, int max_size)
 {
+    SDL_Log("Loading file: %s", filepath);
     const char *cased_file = dir_get_file(filepath, localizable);
     if (!cased_file) {
+        SDL_Log("Could not find file file: %s", filepath);
         return 0;
     }
     FILE *fp = file_open(cased_file, "rb");
     if (!fp) {
+        SDL_Log("Could not open file: %s", filepath);
         return 0;
     }
     fseek(fp, 0, SEEK_END);

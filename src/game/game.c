@@ -79,11 +79,15 @@ static encoding_type update_encoding(void)
 
 int game_pre_init(void)
 {
+    SDL_Log("Running game_pre_init");
     settings_load();
+    SDL_Log("Running settings_load");
     scenario_settings_init();
+    SDL_Log("Running scenario_settings_init");
     game_state_unpause();
-
+    SDL_Log("Running game_state_unpause");
     if (!lang_load(0)) {
+        SDL_Log("c3.eng' or 'c3_mm.eng' files not found or too large.");
         errlog("'c3.eng' or 'c3_mm.eng' files not found or too large.");
         return 0;
     }
