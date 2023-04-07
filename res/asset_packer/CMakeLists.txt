@@ -13,61 +13,61 @@ project(${SHORT_NAME} C)
 set(MAIN_DIR "${PROJECT_SOURCE_DIR}/../..")
 
 set(EXPAT_FILES
-    ${MAIN_DIR}/ext/expat/xmlparse.c
-    ${MAIN_DIR}/ext/expat/xmlrole.c
-    ${MAIN_DIR}/ext/expat/xmltok.c
-)
+        ${MAIN_DIR}/ext/expat/xmlparse.c
+        ${MAIN_DIR}/ext/expat/xmlrole.c
+        ${MAIN_DIR}/ext/expat/xmltok.c
+        )
 
 set(PNG_FILES
-    ${MAIN_DIR}/ext/png/png.c
-    ${MAIN_DIR}/ext/png/pngerror.c
-    ${MAIN_DIR}/ext/png/pngget.c
-    ${MAIN_DIR}/ext/png/pngmem.c
-    ${MAIN_DIR}/ext/png/pngpread.c
-    ${MAIN_DIR}/ext/png/pngread.c
-    ${MAIN_DIR}/ext/png/pngrio.c
-    ${MAIN_DIR}/ext/png/pngrtran.c
-    ${MAIN_DIR}/ext/png/pngrutil.c
-    ${MAIN_DIR}/ext/png/pngset.c
-    ${MAIN_DIR}/ext/png/pngtrans.c
-    ${MAIN_DIR}/ext/png/pngwio.c
-    ${MAIN_DIR}/ext/png/pngwrite.c
-    ${MAIN_DIR}/ext/png/pngwtran.c
-    ${MAIN_DIR}/ext/png/pngwutil.c
-)
+        ${MAIN_DIR}/ext/png/png.c
+        ${MAIN_DIR}/ext/png/pngerror.c
+        ${MAIN_DIR}/ext/png/pngget.c
+        ${MAIN_DIR}/ext/png/pngmem.c
+        ${MAIN_DIR}/ext/png/pngpread.c
+        ${MAIN_DIR}/ext/png/pngread.c
+        ${MAIN_DIR}/ext/png/pngrio.c
+        ${MAIN_DIR}/ext/png/pngrtran.c
+        ${MAIN_DIR}/ext/png/pngrutil.c
+        ${MAIN_DIR}/ext/png/pngset.c
+        ${MAIN_DIR}/ext/png/pngtrans.c
+        ${MAIN_DIR}/ext/png/pngwio.c
+        ${MAIN_DIR}/ext/png/pngwrite.c
+        ${MAIN_DIR}/ext/png/pngwtran.c
+        ${MAIN_DIR}/ext/png/pngwutil.c
+        )
 
 set(ZLIB_FILES
-    ${MAIN_DIR}/ext/zlib/adler32.c
-    ${MAIN_DIR}/ext/zlib/crc32.c
-    ${MAIN_DIR}/ext/zlib/deflate.c
-    ${MAIN_DIR}/ext/zlib/inffast.c
-    ${MAIN_DIR}/ext/zlib/inflate.c
-    ${MAIN_DIR}/ext/zlib/inftrees.c
-    ${MAIN_DIR}/ext/zlib/trees.c
-    ${MAIN_DIR}/ext/zlib/zutil.c
-)
+        ${MAIN_DIR}/ext/zlib/adler32.c
+        ${MAIN_DIR}/ext/zlib/crc32.c
+        ${MAIN_DIR}/ext/zlib/deflate.c
+        ${MAIN_DIR}/ext/zlib/inffast.c
+        ${MAIN_DIR}/ext/zlib/inflate.c
+        ${MAIN_DIR}/ext/zlib/inftrees.c
+        ${MAIN_DIR}/ext/zlib/trees.c
+        ${MAIN_DIR}/ext/zlib/zutil.c
+        )
 
 set(CORE_FILES
-    ${MAIN_DIR}/src/core/array.c
-    ${MAIN_DIR}/src/core/calc.c
-    ${MAIN_DIR}/src/core/dir.c
-    ${MAIN_DIR}/src/core/file.c
-    ${MAIN_DIR}/src/core/image_packer.c
-    ${MAIN_DIR}/src/core/png_read.c
-    ${MAIN_DIR}/src/core/string.c
-    ${MAIN_DIR}/src/core/xml_parser.c
-)
+        ${MAIN_DIR}/src/core/array.c
+        ${MAIN_DIR}/src/core/calc.c
+        ${MAIN_DIR}/src/core/dir.c
+        ${MAIN_DIR}/src/core/file.c
+        ${MAIN_DIR}/src/core/image_packer.c
+        ${MAIN_DIR}/src/core/png_read.c
+        ${MAIN_DIR}/src/core/string.c
+        ${MAIN_DIR}/src/core/xml_parser.c
+        )
 
 set(ASSETS_FILES
-    ${MAIN_DIR}/src/assets/xml.c
-    ${MAIN_DIR}/src/assets/group.c
-    ${MAIN_DIR}/src/assets/image.c
-    ${MAIN_DIR}/src/assets/layer.c
-)
+        ${MAIN_DIR}/src/assets/xml.c
+        ${MAIN_DIR}/src/assets/group.c
+        ${MAIN_DIR}/src/assets/image.c
+        ${MAIN_DIR}/src/assets/layer.c
+        )
 
 set(PLATFORM_FILES
-    ${MAIN_DIR}/src/platform/file_manager.c
-)
+        ${MAIN_DIR}/src/platform/file_manager.c
+        )
 
 add_compile_definitions(BUILDING_ASSET_PACKER)
 
@@ -88,11 +88,11 @@ if(MSVC)
 endif()
 
 add_executable(${SHORT_NAME}
-    ${PROJECT_SOURCE_DIR}/src/asset_packer.c
-    ${ASSETS_FILES}
-    ${CORE_FILES}
-    ${PLATFORM_FILES}
-)
+        ${PROJECT_SOURCE_DIR}/src/asset_packer.c
+        ${ASSETS_FILES}
+        ${CORE_FILES}
+        ${PLATFORM_FILES}
+        )
 
 if(SYSTEM_LIBS)
     find_package(ZLIB)

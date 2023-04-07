@@ -13,10 +13,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: Linux AppImage
-            os: ubuntu-18.04
-            BUILD_TARGET: appimage
-            DEPLOY: appimage
           - name: Linux x64
             os: ubuntu-22.04
             cache-key: linux-x64
