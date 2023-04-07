@@ -1,3 +1,11 @@
+#define NK_INCLUDE_FIXED_TYPES
+#define NK_INCLUDE_STANDARD_IO
+#define NK_INCLUDE_STANDARD_VARARGS
+#define NK_INCLUDE_DEFAULT_ALLOCATOR
+#define NK_INCLUDE_VERTEX_BUFFER_OUTPUT
+#define NK_INCLUDE_FONT_BAKING
+#define NK_INCLUDE_DEFAULT_FONT
+
 #include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
@@ -53,7 +61,7 @@ static void add_header_row(struct nk_context *ctx, char *seed, int *seed_len) {
     nk_layout_row_push(ctx, 0.2f);
     nk_edit_string(ctx, NK_EDIT_SIMPLE, seed, seed_len, 10, nk_filter_decimal);
     nk_layout_row_push(ctx, 0.1f);
-    ui_font_icons();
+    ui_font_change(FONT_TYPE_ICONS);
     if (nk_button_label(ctx, ICON_FA_RANDOM)) {
         int number = 543354323 - (rand() % 2000);
         sprintf(seed, "%d", number);
@@ -89,7 +97,7 @@ static void draw_foreground(void) {
         }
     }
     nk_end(ctx);
-    ui_font_standard();
+    ui_font_change(FONT_TYPE_STANDARD);
 }
 
 static void handle_input(const mouse *m, const hotkeys *h) {

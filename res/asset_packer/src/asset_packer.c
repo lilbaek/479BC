@@ -1,6 +1,7 @@
 #include "log.h"
 
 #include "assets/assets.h"
+#include "assets/gui_assets.h"
 #include "assets/group.h"
 #include "assets/image.h"
 #include "assets/layer.h"
@@ -34,7 +35,7 @@
 #define PACKED_ASSETS_DIR "packed_assets"
 #define CURSORS_DIR "Color_Cursors"
 #define BYTES_PER_PIXEL 4
-#define FONT_BUFFER_SIZE 4024
+
 #ifdef FORMAT_XML
 #define FORMAT_NEWLINE "\n"
 #define FORMAT_IDENT "    "
@@ -236,7 +237,7 @@ static void populate_asset_rects(image_packer *packer)
     {
         int width, height;
         asset->rect = &packer->rects[asset->id];
-        if (!png_get_image_size(asset->path, &width, &height)) {
+        if (!png_get_image_size("assets", asset->path, &width, &height)) {
             continue;
         }
         if (!width || !height) {
@@ -247,7 +248,7 @@ static void populate_asset_rects(image_packer *packer)
             log_error("Out of memory.", 0, 0);
             continue;
         }
-        if (!png_read(asset->path, asset->pixels, 0, 0, width, height, 0, 0, width, 0)) {
+        if (!png_read("assets", asset->path, asset->pixels, 0, 0, width, height, 0, 0, width, 0)) {
             free(asset->pixels);
             asset->pixels = 0;
             continue;
@@ -269,7 +270,7 @@ static void copy_to_final_image(const color_t *pixels, const image_packer_rect *
         for (unsigned int y = 0; y < rect->input.height; y++) {
             const color_t *src_pixel = &pixels[y * rect->input.width];
             color_t *dst_pixel = &final_image_pixels[(rect->output.y + rect->input.width - 1) *
-                final_image_width + y + rect->output.x];
+                                                     final_image_width + y + rect->output.x];
             for (unsigned int x = 0; x < rect->input.width; x++) {
                 *dst_pixel = *src_pixel++;
                 dst_pixel -= final_image_width;
@@ -317,7 +318,7 @@ static void save_final_image(const char *path, unsigned int width, unsigned int 
         return;
     }
     png_set_IHDR(png_ptr, info_ptr, width, height, 8, PNG_COLOR_TYPE_RGBA,
-        PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+                 PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
     png_write_info(png_ptr, info_ptr);
 
     uint8_t *row_pixels = malloc(width * BYTES_PER_PIXEL);
@@ -428,9 +429,9 @@ static void pack_group(int group_id)
     memset(final_image_pixels, 0, sizeof(color_t) * final_image_width * final_image_height);
 
     create_final_image(&packer);
-  
+
     printf("Info: %d Images packed. Texture size: %dx%d.\n", packed_assets.size,
-        packer.result.last_image_width, packer.result.last_image_height);
+           packer.result.last_image_width, packer.result.last_image_height);
 
     log_info("Creating xml file...", 0, 0);
 
@@ -501,11 +502,11 @@ static void pack_cursors(void)
     static const char *cursor_names[] = { "Arrow", "Shovel", "Sword" };
     static const char *cursor_sizes[] = { "150", "200" };
 
-    #define NUM_CURSOR_NAMES (sizeof(cursor_names) / sizeof(cursor_names[0]))
-    #define NUM_CURSOR_SIZES (sizeof(cursor_sizes) / sizeof(cursor_sizes[0]) + 1)
+#define NUM_CURSOR_NAMES (sizeof(cursor_names) / sizeof(cursor_names[0]))
+#define NUM_CURSOR_SIZES (sizeof(cursor_sizes) / sizeof(cursor_sizes[0]) + 1)
 
     static layer cursors[NUM_CURSOR_NAMES * NUM_CURSOR_SIZES];
-    
+
     image_packer packer;
     image_packer_init(&packer, NUM_CURSOR_NAMES * NUM_CURSOR_SIZES, CURSOR_IMAGE_SIZE, CURSOR_IMAGE_SIZE);
 
@@ -513,7 +514,7 @@ static void pack_cursors(void)
     packer.options.reduce_image_size = 1;
     packer.options.sort_by = IMAGE_PACKER_SORT_BY_AREA;
 
-    for (int i = 0; i < NUM_CURSOR_NAMES; i++) {    
+    for (int i = 0; i < NUM_CURSOR_NAMES; i++) {
         for (int j = 0; j < NUM_CURSOR_SIZES; j++) {
             int index = i * NUM_CURSOR_SIZES + j;
             layer *cursor = &cursors[index];
@@ -526,11 +527,11 @@ static void pack_cursors(void)
             }
             if (j > 0) {
                 snprintf(cursor->asset_image_path, FILE_NAME_MAX, "%s/%s_%s.png", CURSORS_DIR,
-                    cursor_names[i], cursor_sizes[j - 1]);
+                         cursor_names[i], cursor_sizes[j - 1]);
             } else {
                 snprintf(cursor->asset_image_path, FILE_NAME_MAX, "%s/%s.png", CURSORS_DIR, cursor_names[i]);
             }
-            if (!png_get_image_size(cursor->asset_image_path, &cursor->width, &cursor->height)) {
+            if (!png_get_image_size("assets", cursor->asset_image_path, &cursor->width, &cursor->height)) {
                 image_packer_free(&packer);
                 return;
             }
@@ -540,8 +541,8 @@ static void pack_cursors(void)
                 image_packer_free(&packer);
                 return;
             }
-            png_read(cursor->asset_image_path, data, 0, 0,
-                cursor->width, cursor->height, 0, 0, cursor->width, 0);
+            png_read("assets", cursor->asset_image_path, data, 0, 0,
+                     cursor->width, cursor->height, 0, 0, cursor->width, 0);
             packer.rects[index].input.width = cursor->width;
             packer.rects[index].input.height = cursor->height;
             cursor->data = data;
@@ -569,8 +570,8 @@ static void pack_cursors(void)
         pack_layer(&packer, cursor);
         copy_to_final_image(cursor->data, &packer.rects[i]);
         printf("%-16s  %3d     %3d        %3d         %3d\n",
-            cursor->asset_image_path + strlen(CURSORS_DIR) + 1,
-            packer.rects[i].output.x, packer.rects[i].output.y, cursor->width, cursor->height);
+               cursor->asset_image_path + strlen(CURSORS_DIR) + 1,
+               packer.rects[i].output.x, packer.rects[i].output.y, cursor->width, cursor->height);
     }
 
     snprintf(current_file, FILE_NAME_MAX, "%s/%s.png", PACKED_ASSETS_DIR, CURSORS_DIR);
@@ -599,9 +600,9 @@ int main(int argc, char **argv)
             log_error("No assets found on", argv[1], 0);
         }
         log_error("Please add a valid assets folder to this directory.\n"
-            "Alternatively, you can run as:\n\n"
-            "asset_packer.exe [WORK_DIRECTORY]\n\n"
-            "where WORK_DIRECTORY is the directory where the assets folder is in.", 0, 0);
+                  "Alternatively, you can run as:\n\n"
+                  "asset_packer.exe [WORK_DIRECTORY]\n\n"
+                  "where WORK_DIRECTORY is the directory where the assets folder is in.", 0, 0);
         return 1;
     }
 
@@ -639,7 +640,7 @@ int main(int argc, char **argv)
 
 #endif
 
-    log_info("All done with packing!", 0, 0);
+    log_info("All done!", 0, 0);
 
     png_unload();
 

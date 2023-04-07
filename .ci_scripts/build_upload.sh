@@ -91,6 +91,3 @@ then
   echo "No upload token found - skipping upload"
   exit
 fi
-
-curl -u "$UPLOAD_TOKEN" -T deploy/$DEPLOY_FILE https://tiberius.josecadete.net/upload/$REPO/$PACKAGE/$VERSION/$DEPLOY_FILE
-echo "Uploaded. URL: https://tiberius.josecadete.net/$REPO.html"

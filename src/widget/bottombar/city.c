@@ -1,3 +1,11 @@
+#define NK_INCLUDE_FIXED_TYPES
+#define NK_INCLUDE_STANDARD_IO
+#define NK_INCLUDE_STANDARD_VARARGS
+#define NK_INCLUDE_DEFAULT_ALLOCATOR
+#define NK_INCLUDE_VERTEX_BUFFER_OUTPUT
+#define NK_INCLUDE_FONT_BAKING
+#define NK_INCLUDE_DEFAULT_FONT
+
 #include <stdio.h>
 #include "city.h"
 #include "window/ui_window.h"
@@ -264,7 +272,7 @@ void widget_bottom_bar_city_draw_foreground(void) {
     render_bottom_bar(ctx);
     render_minimap_bar(ctx);
     render_sub_menu(ctx);
-    ui_font_standard();
+    ui_font_change(FONT_TYPE_STANDARD);
     widget_minimap_draw_decorated(0, (screen_height() - MINIMAP_HEIGHT) - 35, MINIMAP_WIDTH, MINIMAP_HEIGHT);
 }
 

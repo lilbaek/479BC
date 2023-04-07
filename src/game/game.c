@@ -60,6 +60,7 @@
 #include "city/emperor.h"
 #include "scenario/editor.h"
 #include "city/data_private.h"
+#include "window/settings.h"
 
 static void errlog(const char *msg)
 {
@@ -114,8 +115,8 @@ int game_init(void)
     sound_system_init();
     game_state_init();
     resource_init();
-    //window_map_generator_show(); // TODO remove this
     window_main_menu_show(1);
+    //window_settings_menu_show();
     return 1;
 }
 
