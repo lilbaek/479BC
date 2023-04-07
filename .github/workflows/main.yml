@@ -51,7 +51,6 @@ jobs:
           ./.ci_scripts/install_dependencies.sh
       - name: Build and test
         run: |
-          ./.ci_scripts/pack_assets.sh
           ./.ci_scripts/run_cmake.sh
           ./.ci_scripts/run_build.sh
       - name: Upload development artifacts
