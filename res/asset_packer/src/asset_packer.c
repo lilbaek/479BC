@@ -1,6 +1,7 @@
 #include "log.h"
 
 #include "assets/assets.h"
+#include "assets/gui_assets.h"
 #include "assets/group.h"
 #include "assets/image.h"
 #include "assets/layer.h"
