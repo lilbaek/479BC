@@ -46,12 +46,12 @@ jobs:
           path: deps
           key: ${{ matrix.cache-key }}-${{ env.SDL_VERSION }}-${{ env.SDL_MIXER_VERSION }}-${{ env.MPG123_VERSION }}
       - name: Set up environment
-        run: |
-          ./.ci_scripts/pack_assets.sh
+        run: |          
           ./.ci_scripts/setup_environment.sh
           ./.ci_scripts/install_dependencies.sh
       - name: Build and test
         run: |
+          ./.ci_scripts/pack_assets.sh
           ./.ci_scripts/run_cmake.sh
           ./.ci_scripts/run_build.sh
       - name: Upload development artifacts
