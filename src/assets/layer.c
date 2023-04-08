@@ -8,6 +8,7 @@
 #include "core/png_read.h"
 #include "core/string.h"
 #include "assets.h"
+#include "platform/file_manager.h"
 
 #include <stdlib.h>
 #include <string.h>

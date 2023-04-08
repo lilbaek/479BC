@@ -49,7 +49,7 @@ static file_type_data saved_game_data_expanded = {"fvx"};
 
 void init_dialog(int save_dialog) {
     load_dialog_data.file_data = &saved_game_data_expanded;
-    load_dialog_data.file_list = dir_find_files_with_extension(".", saved_game_data_expanded.extension);
+    load_dialog_data.file_list = dir_find_files_with_extension(SAVE_DIRECTORY, saved_game_data_expanded.extension);
     load_dialog_data.save_dialog = save_dialog;
     load_dialog_data.selected_file_index = -1;
 }

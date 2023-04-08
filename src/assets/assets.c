@@ -7,6 +7,7 @@
 #include "core/log.h"
 #include "graphics/renderer.h"
 #include "core/textures.h"
+#include "platform/file_manager.h"
 
 #include <stdlib.h>
 #include <string.h>

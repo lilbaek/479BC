@@ -9,6 +9,7 @@
 #include "core/file.h"
 #include "core/image_packer.h"
 #include "core/png_read.h"
+#include "platform/file_manager.h"
 
 #define GUI_ASSET_ARRAY_SIZE 500
 #define XML_BUFFER_SIZE 1024

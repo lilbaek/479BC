@@ -3,9 +3,6 @@
 
 #include "image.h"
 
-#define GUI_ASSETS_DIR_NAME "gui"
-#define GUI_ASSETS_DIRECTORY "***" GUI_ASSETS_DIR_NAME "***"
-
 void gui_assets_init();
 const image *gui_assets_get_image_id(const char *image_name);
 
