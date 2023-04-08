@@ -3,15 +3,6 @@
 
 #include <stdio.h>
 
-#define ASSETS_DIR_NAME "assets"
-#define ASSETS_DIRECTORY "***" ASSETS_DIR_NAME "***"
-
-#define GUI_ASSETS_DIR_NAME "gui"
-#define GUI_ASSETS_DIRECTORY "***" GUI_ASSETS_DIR_NAME "***"
-
-#define SAVE_DIR_NAME "saves"
-#define SAVE_DIRECTORY "***" SAVE_DIR_NAME "***"
-
 enum {
     TYPE_NONE = 0,
     TYPE_DIR = 1,
@@ -26,11 +17,8 @@ enum {
     LIST_MATCH = 2
 };
 
-FILE *platform_file_manager_open_save_file(const char *filename, const char *mode);
-FILE *platform_file_manager_open_settings_file(const char *filename, const char *mode);
-
 /**
- * Sets the base path
+ * Sets the base path for
  * @param path The path to be set as the base
  * @return true if the base path was correctly set, false otherwise
  */
@@ -45,7 +33,7 @@ int platform_file_manager_set_base_path(const char *path);
  * @return LIST_ERROR if error, LIST_MATCH if there was a match in the callback, LIST_NO_MATCH if no match was set
  */
 int platform_file_manager_list_directory_contents(
-    const char *dir, int type, const char *extension, int (*callback)(const char *));
+        const char *dir, int type, const char *extension, int (*callback)(const char *));
 
 /**
  * Indicates whether the file name casing should be checked
@@ -79,11 +67,13 @@ int platform_file_manager_compare_filename_prefix(const char *filename, const ch
 FILE *platform_file_manager_open_file(const char *filename, const char *mode);
 
 /**
- * Returns path to asset
- * @param asset name
- * @return
+ * Opens an asset file
+ * @param filename The asset file to open
+ * @param mode The mode to open the asset file - refer to fopen()
+ * @return A pointer to a FILE structure on success, NULL otherwise
  */
-const char *platform_file_manager_asset_path(const char *asset);
+FILE *platform_file_manager_open_asset(const char *asset, const char *mode);
+
 
 /**
  * Closes a file
@@ -100,8 +90,6 @@ int platform_file_manager_close_file(FILE *stream);
  */
 int platform_file_manager_remove_file(const char *filename);
 
-int platform_file_manager_remove_settings_file(const char *filename);
-
 /**
  * Creates a directory
  * @param path The full path to the new directory
@@ -110,11 +98,9 @@ int platform_file_manager_remove_settings_file(const char *filename);
 int platform_file_manager_create_directory(const char *name);
 
 /**
- * Opens an asset file
- * @param folder The asset folder to open
- * @param filename The asset file to open
- * @param mode The mode to open the asset file - refer to fopen()
- * @return A pointer to a FILE structure on success, NULL otherwise
+ * Returns path to asset
+ * @param asset name
+ * @return
  */
-FILE *platform_file_manager_open_asset_folder(const char *folder, const char *asset, const char *mode);
+const char *platform_file_manager_asset_path(const char *asset);
 #endif // PLATFORM_FILE_MANAGER_H
