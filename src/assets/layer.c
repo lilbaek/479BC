@@ -312,7 +312,7 @@ int layer_add_from_image_path(layer *l, const char *path,
     }
 #ifndef BUILDING_ASSET_PACKER
     if (!l->width || !l->height) {
-        if (!png_get_image_size(ASSETS_DIR_NAME, l->asset_image_path, &width, &height)) {
+        if (!png_get_image_size(l->asset_image_path, &width, &height)) {
             log_info("Unable to load image", path, 0);
             layer_unload(l);
             return 0;
