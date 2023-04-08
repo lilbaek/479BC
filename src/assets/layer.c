@@ -221,10 +221,10 @@ void layer_load(layer *l, color_t **main_data, int *main_image_widths) {
         return;
     }
 #endif
-    layer_load_asset(ASSETS_DIR_NAME, l);
+    layer_load_asset(l);
 }
 
-void layer_load_asset(const char *folder, layer *l) {
+void layer_load_asset(layer *l) {
     if (!l->asset_image_path) {
         log_error("No layer source", l->asset_image_path, 0);
         load_dummy_layer(l);
@@ -239,7 +239,7 @@ void layer_load_asset(const char *folder, layer *l) {
         return;
     }
     memset(data, 0, size);
-    if (!png_read(folder, l->asset_image_path, data, l->src_x, l->src_y, l->width, l->height, 0, 0, l->width,
+    if (!png_read( l->asset_image_path, data, l->src_x, l->src_y, l->width, l->height, 0, 0, l->width,
                   0)) {
         free(data);
         log_error("Problem loading layer from file", l->asset_image_path, 0);

@@ -10,12 +10,8 @@
 #include "platform/platform.h"
 #include "platform/vita/vita.h"
 
-
 #ifndef BUILDING_ASSET_PACKER
-
 #include "SDL.h"
-#include "assets/gui_assets.h"
-
 #else
 #define SDL_VERSION_ATLEAST(x, y, z) 0
 #endif
@@ -127,32 +123,7 @@ static const char *assets_directory = ASSETS_DIRECTORY;
 
 static const char *ASSET_DIRS[MAX_ASSET_DIRS] = {
 #ifdef _WIN32
-    "***SDL_BASE_PATH***",
-#endif
-#ifdef __EMSCRIPTEN__
-    "",
-#endif
-    ".",
-#ifdef __vita__
-    "app0:",
-#elif defined (__SWITCH__)
-    "romfs:",
-#elif defined (__APPLE__)
-    "***SDL_BASE_PATH***",
-#elif !defined (_WIN32)
-    "***RELATIVE_APPIMG_PATH***",
-    "***RELATIVE_EXEC_PATH***",
-    "~/.local/share/tiberius-game",
-    "/usr/share/tiberius-game",
-    "/usr/local/share/tiberius-game",
-    "/opt/tiberius-game",
-#endif
-    CUSTOM_ASSETS_DIR
-};
-
-static const char *USER_DIR[MAX_ASSET_DIRS] = {
-#ifdef _WIN32
-        "***SDL_PREF_PATH***",
+        "***SDL_BASE_PATH***",
 #endif
 #ifdef __EMSCRIPTEN__
         "",
@@ -163,22 +134,19 @@ static const char *USER_DIR[MAX_ASSET_DIRS] = {
 #elif defined (__SWITCH__)
         "romfs:",
 #elif defined (__APPLE__)
-        "***SDL_PREF_PATH***",
+        "***SDL_BASE_PATH***",
 #elif !defined (_WIN32)
-        "***SDL_PREF_PATH***",
         "***RELATIVE_APPIMG_PATH***",
     "***RELATIVE_EXEC_PATH***",
-    "~/.local/share/tiberius-game",
-    "/usr/share/tiberius-game",
-    "/usr/local/share/tiberius-game",
-    "/opt/tiberius-game",
+    "~/.local/share/augustus-game",
+    "/usr/share/augustus-game",
+    "/usr/local/share/augustus-game",
+    "/opt/augustus-game",
 #endif
         CUSTOM_ASSETS_DIR
 };
 
 static char assets_directory[FILE_NAME_MAX];
-static char save_directory[FILE_NAME_MAX];
-static char settings_directory[FILE_NAME_MAX];
 
 static int write_base_path_to(char *dest)
 {
@@ -197,175 +165,7 @@ static int write_base_path_to(char *dest)
     return 0;
 #endif
 }
-
-static int write_user_file_path_to(char *folder, char *dest)
-{
-#if !defined(BUILDING_ASSET_PACKER) && SDL_VERSION_ATLEAST(2, 0, 1)
-    if (!platform_sdl_version_at_least(2, 0, 1)) {
-        return 0;
-    }
-    char *base_path = SDL_GetPrefPath("tiberius", folder);
-    if (!base_path) {
-        return 0;
-    }
-    strncpy(dest, base_path, FILE_NAME_MAX - 1);
-    SDL_free(base_path);
-    return 1;
-#else
-    return 0;
 #endif
-}
-#endif
-
-static void set_settings_directory(void) {
-#ifndef __ANDROID__
-    if (*settings_directory) {
-        return;
-    }
-    // Find assets directory from list
-    for (int i = 0; i < MAX_ASSET_DIRS && USER_DIR[i]; ++i) {
-        // Special case - home directory
-        if (*USER_DIR[i] == '~') {
-            const char *home_dir = getenv("HOME");
-            if (!home_dir) {
-                continue;
-            }
-            size_t home_dir_length = strlen(home_dir);
-            strncpy(settings_directory, home_dir, FILE_NAME_MAX);
-            strncpy(settings_directory + home_dir_length, &USER_DIR[i][1], FILE_NAME_MAX - home_dir_length);
-            // Special case - SDL base path
-        } else if (strcmp(USER_DIR[i], "***SDL_PREF_PATH***") == 0) {
-            if (!write_user_file_path_to("settings", settings_directory)) {
-                continue;
-            }
-            // Special case - Path relative to executable location (AppImage)
-        } else if (strcmp(USER_DIR[i], "***RELATIVE_APPIMG_PATH***") == 0) {
-#if defined(_WIN32) || defined(__vita__) || defined(__SWITCH__) || defined(__APPLE__)
-            log_error("***RELATIVE_APPIMG_PATH*** is not available on your platform.", 0, 0);
-            continue;
-#else
-            if (!write_base_path_to(settings_directory)) {
-                continue;
-            }
-            char *parent = strstr(settings_directory, "/bin");
-            if (!parent) {
-                continue;
-            }
-            strncpy(parent, "/share/tiberius-game", FILE_NAME_MAX - (parent - settings_directory) - 1);
-#endif
-        } else if (strcmp(USER_DIR[i], "***RELATIVE_EXEC_PATH***") == 0) {
-#if defined(_WIN32) || defined(__vita__) || defined(__SWITCH__) || defined(__APPLE__)
-            log_error("***RELATIVE_EXEC_PATH*** is not available on your platform.", 0, 0);
-            continue;
-#else
-            char arg0_dir[FILE_NAME_MAX];
-            if (readlink("/proc/self/exe" /* Linux */, arg0_dir, FILE_NAME_MAX) == -1) {
-                if (readlink("/proc/curproc/file" /* FreeBSD */, arg0_dir, FILE_NAME_MAX) == -1) {
-                    if (readlink("/proc/self/path/a.out" /* Solaris */, arg0_dir, FILE_NAME_MAX) == -1) {
-                        continue;
-                    }
-                }
-            }
-            dirname(arg0_dir);
-            size_t arg0_dir_length = strlen(arg0_dir);
-            strncpy(settings_directory, arg0_dir, FILE_NAME_MAX);
-            strncpy(settings_directory + arg0_dir_length, "/../share/tiberius-game",
-                    FILE_NAME_MAX - arg0_dir_length);
-#endif
-        } else {
-            strncpy(settings_directory, USER_DIR[i], FILE_NAME_MAX - 1);
-        }
-        size_t offset = strlen(settings_directory);
-        settings_directory[offset++] = '/';
-        log_info("Trying asset path at", settings_directory, 0);
-        dir_name result = set_dir_name(settings_directory);
-        fs_dir_type *dir = fs_dir_open(result);
-        if (dir) {
-            fs_dir_close(dir);
-            log_info("settings path detected at", settings_directory, 0);
-            free_dir_name(result);
-            return;
-        }
-        free_dir_name(result);
-    }
-    strncpy(settings_directory, ".", FILE_NAME_MAX - 1);
-#endif
-}
-
-static void set_save_directory(void) {
-#ifndef __ANDROID__
-    if (*save_directory) {
-        return;
-    }
-    // Find assets directory from list
-    for (int i = 0; i < MAX_ASSET_DIRS && USER_DIR[i]; ++i) {
-        // Special case - home directory
-        if (*USER_DIR[i] == '~') {
-            const char *home_dir = getenv("HOME");
-            if (!home_dir) {
-                continue;
-            }
-            size_t home_dir_length = strlen(home_dir);
-            strncpy(save_directory, home_dir, FILE_NAME_MAX);
-            strncpy(save_directory + home_dir_length, &USER_DIR[i][1], FILE_NAME_MAX - home_dir_length);
-            // Special case - SDL base path
-        } else if (strcmp(USER_DIR[i], "***SDL_PREF_PATH***") == 0) {
-            if (!write_user_file_path_to("saves", save_directory)) {
-                continue;
-            }
-            // Special case - Path relative to executable location (AppImage)
-        } else if (strcmp(USER_DIR[i], "***RELATIVE_APPIMG_PATH***") == 0) {
-#if defined(_WIN32) || defined(__vita__) || defined(__SWITCH__) || defined(__APPLE__)
-            log_error("***RELATIVE_APPIMG_PATH*** is not available on your platform.", 0, 0);
-            continue;
-#else
-            if (!write_base_path_to(save_directory)) {
-                continue;
-            }
-            char *parent = strstr(save_directory, "/bin");
-            if (!parent) {
-                continue;
-            }
-            strncpy(parent, "/share/tiberius-game", FILE_NAME_MAX - (parent - save_directory) - 1);
-#endif
-        } else if (strcmp(USER_DIR[i], "***RELATIVE_EXEC_PATH***") == 0) {
-#if defined(_WIN32) || defined(__vita__) || defined(__SWITCH__) || defined(__APPLE__)
-            log_error("***RELATIVE_EXEC_PATH*** is not available on your platform.", 0, 0);
-            continue;
-#else
-            char arg0_dir[FILE_NAME_MAX];
-            if (readlink("/proc/self/exe" /* Linux */, arg0_dir, FILE_NAME_MAX) == -1) {
-                if (readlink("/proc/curproc/file" /* FreeBSD */, arg0_dir, FILE_NAME_MAX) == -1) {
-                    if (readlink("/proc/self/path/a.out" /* Solaris */, arg0_dir, FILE_NAME_MAX) == -1) {
-                        continue;
-                    }
-                }
-            }
-            dirname(arg0_dir);
-            size_t arg0_dir_length = strlen(arg0_dir);
-            strncpy(save_directory, arg0_dir, FILE_NAME_MAX);
-            strncpy(save_directory + arg0_dir_length, "/../share/tiberius-game",
-                    FILE_NAME_MAX - arg0_dir_length);
-#endif
-        } else {
-            strncpy(save_directory, USER_DIR[i], FILE_NAME_MAX - 1);
-        }
-        size_t offset = strlen(save_directory);
-        save_directory[offset++] = '/';
-        log_info("Trying asset path at", save_directory, 0);
-        dir_name result = set_dir_name(save_directory);
-        fs_dir_type *dir = fs_dir_open(result);
-        if (dir) {
-            fs_dir_close(dir);
-            log_info("Save path detected at", save_directory, 0);
-            free_dir_name(result);
-            return;
-        }
-        free_dir_name(result);
-    }
-    strncpy(save_directory, ".", FILE_NAME_MAX - 1);
-#endif
-}
 
 static void set_assets_directory(void)
 {
@@ -402,7 +202,7 @@ static void set_assets_directory(void)
             if (!parent) {
                 continue;
             }
-            strncpy(parent, "/share/tiberius-game", FILE_NAME_MAX - (parent - assets_directory) - 1);
+            strncpy(parent, "/share/augustus-game", FILE_NAME_MAX - (parent - assets_directory) - 1);
 #endif
         } else if (strcmp(ASSET_DIRS[i], "***RELATIVE_EXEC_PATH***") == 0) {
 #if defined(_WIN32) || defined(__vita__) || defined(__SWITCH__) || defined(__APPLE__)
@@ -420,7 +220,7 @@ static void set_assets_directory(void)
             dirname(arg0_dir);
             size_t arg0_dir_length = strlen(arg0_dir);
             strncpy(assets_directory, arg0_dir, FILE_NAME_MAX);
-            strncpy(assets_directory + arg0_dir_length, "/../share/tiberius-game",
+            strncpy(assets_directory + arg0_dir_length, "/../share/augustus-game",
                     FILE_NAME_MAX - arg0_dir_length);
 #endif
         } else {
@@ -432,7 +232,7 @@ static void set_assets_directory(void)
 #ifdef __SWITCH__
         if (strcmp(assets_directory, "romfs:/") != 0) {
 #endif
-            strncpy(&assets_directory[offset], ASSETS_DIR_NAME, FILE_NAME_MAX - offset);
+        strncpy(&assets_directory[offset], ASSETS_DIR_NAME, FILE_NAME_MAX - offset);
 #ifdef __SWITCH__
         }
 #endif
@@ -451,19 +251,13 @@ static void set_assets_directory(void)
 #endif
 }
 
-void substring(char s[], char sub[], int p, int l) {
-    int c = 0;
-
-    while (c < l) {
-        sub[c] = s[p+c];
-        c++;
-    }
-    sub[c] = '\0';
+const char *platform_file_manager_asset_path(const char *asset) {
+    set_assets_directory();
+    return dir_get_asset(assets_directory, asset);
 }
 
-
 int platform_file_manager_list_directory_contents(
-    const char *dir, int type, const char *extension, int (*callback)(const char *))
+        const char *dir, int type, const char *extension, int (*callback)(const char *))
 {
     if (type == TYPE_NONE) {
         return LIST_ERROR;
@@ -476,15 +270,7 @@ int platform_file_manager_list_directory_contents(
     } else if (strcmp(dir, ASSETS_DIRECTORY) == 0) {
         set_assets_directory();
         current_dir = set_dir_name(assets_directory);
-    } else if (strcmp(dir, GUI_ASSETS_DIRECTORY) == 0) {
-        char gui_assets_dir[FILE_NAME_MAX];
-        substring(assets_directory, gui_assets_dir, 0, strlen(assets_directory) - 6);
-        strcat(gui_assets_dir, "gui");
-        current_dir = set_dir_name(gui_assets_dir);
-    } else if(strcmp(dir, SAVE_DIRECTORY) == 0) {
-        set_save_directory();
-        current_dir = set_dir_name(save_directory);
-    }  else {
+    } else {
         current_dir = set_dir_name(dir);
     }
 #ifdef __ANDROID__
@@ -580,7 +366,7 @@ int platform_file_manager_compare_filename_prefix(const char *filename, const ch
 int platform_file_manager_set_base_path(const char *path)
 {
     if (!path) {
-        log_error("set_base_path: path was not set. tiberius will probably crash.", 0, 0);
+        log_error("set_base_path: path was not set. Augustus will probably crash.", 0, 0);
         return 0;
     }
 #ifdef __ANDROID__
@@ -639,82 +425,6 @@ FILE *platform_file_manager_open_file(const char *filename, const char *mode)
     return fp;
 }
 
-FILE *platform_file_manager_open_save_file(const char *filename, const char *mode)
-{
-    set_save_directory();
-
-    char file[FILE_NAME_MAX];
-    strncpy(file, save_directory, FILE_NAME_MAX - 6);
-    strcat(file, filename);
-
-    wchar_t *wfile = utf8_to_wchar(file);
-    wchar_t *wmode = utf8_to_wchar(mode);
-
-    FILE *fp = _wfopen(wfile, wmode);
-
-    free(wfile);
-    free(wmode);
-
-    return fp;
-}
-
-FILE *platform_file_manager_open_settings_file(const char *filename, const char *mode)
-{
-    set_settings_directory();
-
-    char file[FILE_NAME_MAX];
-    strncpy(file, settings_directory, FILE_NAME_MAX - 6);
-    strcat(file, filename);
-
-    wchar_t *wfile = utf8_to_wchar(file);
-    wchar_t *wmode = utf8_to_wchar(mode);
-
-    FILE *fp = _wfopen(wfile, wmode);
-
-    free(wfile);
-    free(wmode);
-
-    return fp;
-}
-
-int platform_file_manager_remove_settings_file(const char *filename)
-{
-    set_settings_directory();
-    char file[FILE_NAME_MAX];
-    strncpy(file, settings_directory, FILE_NAME_MAX - 6);
-    strcat(file, filename);
-
-    wchar_t *wfile = utf8_to_wchar(file);
-    int result = _wremove(wfile);
-    free(wfile);
-    return result == 0;
-}
-
-FILE *platform_file_manager_open_asset_folder(const char *folder, const char *asset, const char *mode)
-{
-    set_assets_directory();
-
-    char gui_assets_dir[FILE_NAME_MAX];
-    substring(assets_directory, gui_assets_dir, 0, strlen(assets_directory) - 6);
-    strcat(gui_assets_dir, folder);
-
-    const char *cased_asset_path = dir_get_asset(gui_assets_dir, asset);
-
-    if (!cased_asset_path) {
-        return 0;
-    }
-
-    wchar_t *wfile = utf8_to_wchar(cased_asset_path);
-    wchar_t *wmode = utf8_to_wchar(mode);
-
-    FILE *fp = _wfopen(wfile, wmode);
-
-    free(wfile);
-    free(wmode);
-
-    return fp;
-}
-
 FILE *platform_file_manager_open_asset(const char *asset, const char *mode)
 {
     set_assets_directory();
@@ -733,11 +443,6 @@ FILE *platform_file_manager_open_asset(const char *asset, const char *mode)
     free(wmode);
 
     return fp;
-}
-
-const char *platform_file_manager_asset_path(const char *asset) {
-    set_assets_directory();
-    return dir_get_asset(assets_directory, asset);
 }
 
 int platform_file_manager_remove_file(const char *filename)
@@ -770,40 +475,18 @@ int platform_file_manager_remove_file(const char *filename)
 }
 
 #elif defined(__EMSCRIPTEN__)
+
 FILE *platform_file_manager_open_file(const char *filename, const char *mode)
 {
     writing_to_file = strchr(mode, 'w') != 0;
     return fopen(filename, mode);
 }
 
-FILE *platform_file_manager_open_save_file(const char *filename, const char *mode)
-{
-    set_save_directory();
-
-    char file[FILE_NAME_MAX];
-    strncpy(file, save_directory, FILE_NAME_MAX - 6);
-    strcat(file, filename);
-
-    writing_to_file = strchr(mode, 'w') != 0;
-    return fopen(file, mode);
-}
-
-FILE *platform_file_manager_open_settings_file(const char *filename, const char *mode)
-{
-    set_settings_directory();
-
-    char file[FILE_NAME_MAX];
-    strncpy(file, settings_directory, FILE_NAME_MAX - 6);
-    strcat(file, filename);
-
-    return fopen(file, mode);
-}
-
 int platform_file_manager_remove_file(const char *filename)
 {
     if (remove(filename) == 0) {
         EM_ASM(
-                Module.syncFS();
+            Module.syncFS();
         );
         return 1;
     }
@@ -817,67 +500,7 @@ FILE *platform_file_manager_open_asset(const char *asset, const char *mode)
     return fopen(cased_asset_path, mode);
 }
 
-const char *platform_file_manager_asset_path(const char *asset) {
-    set_assets_directory();
-    return dir_get_asset(assets_directory, asset);
-}
-
-FILE *platform_file_manager_open_asset_folder(const char *folder, const char *filename, const char *mode)
-{
-    set_assets_directory();
-
-    char folder_path[FILE_NAME_MAX];
-    substring(assets_directory, folder_path, 0, strlen(assets_directory) - 6);
-    strcat(folder_path, folder);
-
-    const char *cased_asset_path = dir_get_asset(folder_path, filename);
-    return fopen(cased_asset_path, mode);
-}
-
-int platform_file_manager_remove_settings_file(const char *filename)
-{
-    set_settings_directory();
-    char file[FILE_NAME_MAX];
-    strncpy(file, settings_directory, FILE_NAME_MAX - 6);
-    strcat(file, filename);
-
-    if (remove(filename) == 0) {
-        EM_ASM(
-                Module.syncFS();
-        );
-        return 1;
-    }
-    return 0;
-}
-
 #else
-
-FILE *platform_file_manager_open_save_file(const char *filename, const char *mode)
-{
-    set_save_directory();
-
-    char file[FILE_NAME_MAX];
-    strncpy(file, save_directory, FILE_NAME_MAX - 6);
-    strcat(file, filename);
-
-    return fopen(file, mode);
-}
-
-FILE *platform_file_manager_open_settings_file(const char *filename, const char *mode)
-{
-    set_settings_directory();
-
-    char file[FILE_NAME_MAX];
-    strncpy(file, settings_directory, FILE_NAME_MAX - 6);
-    strcat(file, filename);
-
-    return fopen(file, mode);
-}
-
-const char *platform_file_manager_asset_path(const char *asset) {
-    set_assets_directory();
-    return dir_get_asset(assets_directory, asset);
-}
 
 FILE *platform_file_manager_open_file(const char *filename, const char *mode)
 {
@@ -900,29 +523,6 @@ int platform_file_manager_remove_file(const char *filename)
 #endif
     return remove(filename) == 0;
 }
-
-int platform_file_manager_remove_settings_file(const char *filename)
-{
-    set_settings_directory();
-    char file[FILE_NAME_MAX];
-    strncpy(file, settings_directory, FILE_NAME_MAX - 6);
-    strcat(file, filename);
-
-    return remove(filename) == 0;
-}
-
-FILE *platform_file_manager_open_asset_folder(const char *folder, const char *filename, const char *mode)
-{
-    set_assets_directory();
-
-    char folder_path[FILE_NAME_MAX];
-    substring(assets_directory, folder_path, 0, strlen(assets_directory) - 6);
-    strcat(folder_path, folder);
-
-    const char *cased_asset_path = dir_get_asset(folder_path, filename);
-    return fopen(cased_asset_path, mode);
-}
-
 
 FILE *platform_file_manager_open_asset(const char *asset, const char *mode)
 {

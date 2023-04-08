@@ -10,6 +10,7 @@
 #include "core/image_packer.h"
 #include "core/png_read.h"
 #include "platform/file_manager.h"
+#include "assets.h"
 
 #define GUI_ASSET_ARRAY_SIZE 500
 #define XML_BUFFER_SIZE 1024
@@ -17,7 +18,9 @@
 
 static struct {
     char file_name[FILE_NAME_MAX];
+
     array(asset_image) asset_images;
+
     size_t file_name_position;
     asset_image *current_image;
     int atlas_width;
@@ -25,22 +28,25 @@ static struct {
 } gui_data;
 
 static int xml_start_assetlist_element(void);
+
 static int xml_start_image_element(void);
+
 static int xml_start_layer_element(void);
+
 static void xml_end_assetlist_element(void);
+
 static void xml_end_image_element(void);
 
 static const xml_parser_element xml_elements[XML_TOTAL_ELEMENTS] = {
-        { "assetlist", xml_start_assetlist_element, xml_end_assetlist_element },
-        { "image", xml_start_image_element, xml_end_image_element, "assetlist" },
-        { "layer", xml_start_layer_element, 0, "image" },
+        {"assetlist", xml_start_assetlist_element, xml_end_assetlist_element},
+        {"image",     xml_start_image_element,     xml_end_image_element, "assetlist"},
+        {"layer",     xml_start_layer_element,     0,                     "image"},
 };
 
-static const char *INVERT_VALUES[3] = { "horizontal", "vertical", "both" };
-static const char *ROTATE_VALUES[3] = { "90", "180", "270" };
+static const char *INVERT_VALUES[3] = {"horizontal", "vertical", "both"};
+static const char *ROTATE_VALUES[3] = {"90", "180", "270"};
 
-asset_image *image_get_from_id(int image_id)
-{
+asset_image *image_get_from_id(int image_id) {
     asset_image *last = array_last(gui_data.asset_images);
     if (image_id < 0 || !last || image_id > last->index) {
         return 0;
@@ -66,8 +72,7 @@ const image *gui_assets_get_image_id(const char *image_name) {
     return 0;
 }
 
-static void unload_image_layers(asset_image *img)
-{
+static void unload_image_layers(asset_image *img) {
     layer *l = img->last_layer;
     while (l) {
         layer *current = l;
@@ -77,8 +82,7 @@ static void unload_image_layers(asset_image *img)
     img->last_layer = &img->first_layer;
 }
 
-void gui_asset_image_unload(asset_image *img)
-{
+void gui_asset_image_unload(asset_image *img) {
     unload_image_layers(img);
     free((char *) img->id);
     free((color_t *) img->data); // Freeing a const pointer - ugly but necessary
@@ -92,8 +96,7 @@ void gui_asset_image_unload(asset_image *img)
     memset(&img->img, 0, sizeof(image));
 }
 
-static inline int layer_is_empty(const layer *l)
-{
+static inline int layer_is_empty(const layer *l) {
 #ifndef BUILDING_ASSET_PACKER
     return !l->width && !l->height;
 #else
@@ -101,8 +104,7 @@ static inline int layer_is_empty(const layer *l)
 #endif
 }
 
-static layer *create_layer_for_image(asset_image *img)
-{
+static layer *create_layer_for_image(asset_image *img) {
     if (layer_is_empty(img->last_layer)) {
         return img->last_layer;
     }
@@ -116,19 +118,16 @@ static layer *create_layer_for_image(asset_image *img)
     return l;
 }
 
-static void new_image(asset_image *img, int index)
-{
+static void new_image(asset_image *img, int index) {
     img->index = index;
     img->active = 1;
 }
 
-static int is_image_active(const asset_image *img)
-{
+static int is_image_active(const asset_image *img) {
     return img->active;
 }
 
-int gui_asset_image_init_array(void)
-{
+int gui_asset_image_init_array(void) {
     asset_image *image;
     array_foreach(gui_data.asset_images, image) {
         gui_asset_image_unload(image);
@@ -136,23 +135,20 @@ int gui_asset_image_init_array(void)
     return array_init(gui_data.asset_images, GUI_ASSET_ARRAY_SIZE, new_image, is_image_active);
 }
 
-asset_image *gui_asset_image_create(void)
-{
+asset_image *gui_asset_image_create(void) {
     asset_image *result;
     array_new_item(gui_data.asset_images, 1, result);
     return result;
 }
 
-void gui_xml_init(void)
-{
+void gui_xml_init(void) {
     xml_parser_init(xml_elements, XML_TOTAL_ELEMENTS);
 }
 
-int gui_xml_process_assetlist_file(const char *xml_file_name)
-{
+int gui_xml_process_assetlist_file(const char *xml_file_name) {
     log_info("Loading assetlist file", xml_file_name, 0);
 
-    FILE *xml_file = file_open_asset_folder(GUI_ASSETS_DIR_NAME, xml_file_name, "r");
+    FILE *xml_file = file_open_asset(xml_file_name, "r");
 
     if (!xml_file) {
         log_error("Error opening assetlist file", xml_file_name, 0);
@@ -178,25 +174,22 @@ int gui_xml_process_assetlist_file(const char *xml_file_name)
     return !error;
 }
 
-void gui_xml_finish(void)
-{
+void gui_xml_finish(void) {
     xml_parser_free();
 }
 
-static int load_image_layers(asset_image *img)
-{
+static int load_image_layers(asset_image *img) {
     int has_alpha_mask = 0;
     for (layer *l = img->last_layer; l; l = l->prev) {
         if (l->mask == LAYER_MASK_ALPHA) {
             has_alpha_mask = 1;
         }
-        layer_load_asset(GUI_ASSETS_DIR_NAME, l);
+        layer_load_asset(l);
     }
     return has_alpha_mask;
 }
 
-static int load_image(asset_image *img)
-{
+static int load_image(asset_image *img) {
     img->img.original.width = img->img.width;
     img->img.original.height = img->img.height;
 
@@ -312,8 +305,7 @@ static int load_image(asset_image *img)
     return 1;
 }
 
-int gui_asset_image_load_all()
-{
+int gui_asset_image_load_all() {
 #ifndef BUILDING_ASSET_PACKER
     image_packer packer;
     int max_width, max_height;
@@ -379,7 +371,9 @@ int gui_asset_image_load_all()
     image_packer_pack(&packer);
 
     const image_atlas_data *atlas_data = graphics_renderer()->prepare_image_atlas(ATLAS_GUI,
-                                                                                  packer.result.images_needed, packer.result.last_image_width, packer.result.last_image_height);
+                                                                                  packer.result.images_needed,
+                                                                                  packer.result.last_image_width,
+                                                                                  packer.result.last_image_height);
 
     if (!atlas_data) {
         log_error("Failed to create packed images atlas - out of memory", 0, 0);
@@ -406,11 +400,11 @@ int gui_asset_image_load_all()
             current_image->img.atlas.id += packer.rects[rect].output.image_index;
             int dst_side = atlas_data->image_widths[packer.rects[rect].output.image_index];
             image_copy_info copy = {
-                    .src = { current_image->img.x_offset, current_image->img.y_offset + original_y_offset,
-                             original_width, original_height, current_image->data },
-                    .dst = { current_image->img.atlas.x_offset, current_image->img.atlas.y_offset,
-                             dst_side, dst_side, atlas_data->buffers[packer.rects[rect].output.image_index] },
-                    .rect = { 0, 0, current_image->img.width, current_image->img.height }
+                    .src = {current_image->img.x_offset, current_image->img.y_offset + original_y_offset,
+                            original_width, original_height, current_image->data},
+                    .dst = {current_image->img.atlas.x_offset, current_image->img.atlas.y_offset,
+                            dst_side, dst_side, atlas_data->buffers[packer.rects[rect].output.image_index]},
+                    .rect = {0, 0, current_image->img.width, current_image->img.height}
             };
             image_copy(&copy);
             if (current_image->img.top) {
@@ -424,10 +418,10 @@ int gui_asset_image_load_all()
                 dst_side = atlas_data->image_widths[packer.rects[rect].output.image_index];
                 image_crop(top, current_image->data);
                 image_copy_info copy = {
-                        .src = { top->x_offset, top->y_offset, top_width, top_height, current_image->data },
-                        .dst = { top->atlas.x_offset, top->atlas.y_offset,
-                                 dst_side, dst_side, atlas_data->buffers[packer.rects[rect].output.image_index] },
-                        .rect = { 0, 0, top->width, top->height }
+                        .src = {top->x_offset, top->y_offset, top_width, top_height, current_image->data},
+                        .dst = {top->atlas.x_offset, top->atlas.y_offset,
+                                dst_side, dst_side, atlas_data->buffers[packer.rects[rect].output.image_index]},
+                        .rect = {0, 0, top->width, top->height}
                 };
                 image_copy(&copy);
             }
@@ -453,7 +447,7 @@ void gui_assets_init() {
 
     graphics_renderer()->free_image_atlas(ATLAS_GUI);
 
-    const dir_listing *xml_files = dir_find_files_with_extension(GUI_ASSETS_DIRECTORY, "xml");
+    const dir_listing *xml_files = dir_find_files_with_extension(ASSETS_DIRECTORY, "xml");
 
     if (!gui_asset_image_init_array()) {
         log_error("Not enough memory to initialize gui assets. The game will probably crash.", 0, 0);
@@ -461,7 +455,9 @@ void gui_assets_init() {
     gui_xml_init();
 
     for (int i = 0; i < xml_files->num_files; ++i) {
-        gui_xml_process_assetlist_file(xml_files->files[i]);
+        if (strcmp(xml_files->files[i], "gui.xml") == 0) {
+            gui_xml_process_assetlist_file(xml_files->files[i]);
+        }
     }
 
     gui_xml_finish();
@@ -469,8 +465,7 @@ void gui_assets_init() {
     gui_asset_image_load_all();
 }
 
-static void set_asset_image_base_path(const char *name)
-{
+static void set_asset_image_base_path(const char *name) {
     size_t position = 0;
     char *dst = gui_data.file_name;
     memset(dst, 0, FILE_NAME_MAX);
@@ -480,16 +475,14 @@ static void set_asset_image_base_path(const char *name)
     gui_data.file_name_position = position;
 }
 
-static int xml_start_assetlist_element(void)
-{
+static int xml_start_assetlist_element(void) {
     char *name = xml_parser_copy_attribute_string("name");
     set_asset_image_base_path(name);
     return 1;
 }
 
 
-static int xml_start_image_element(void)
-{
+static int xml_start_image_element(void) {
     if (xml_parser_get_total_attributes() > 12) {
         return 0;
     }
@@ -503,8 +496,7 @@ static int xml_start_image_element(void)
     return 1;
 }
 
-int gui_layer_add_from_image_path(layer *l, int src_x, int src_y, int offset_x, int offset_y, int width, int height)
-{
+int gui_layer_add_from_image_path(layer *l, int src_x, int src_y, int offset_x, int offset_y, int width, int height) {
     l->src_x = src_x;
     l->src_y = src_y;
     l->width = width;
@@ -514,7 +506,7 @@ int gui_layer_add_from_image_path(layer *l, int src_x, int src_y, int offset_x, 
     snprintf(l->asset_image_path, FILE_NAME_MAX, "%s.png", "gui");
 #ifndef BUILDING_ASSET_PACKER
     if (!l->width || !l->height) {
-        if (!png_get_image_size(GUI_ASSETS_DIR_NAME, l->asset_image_path, &width, &height)) {
+        if (!png_get_image_size(l->asset_image_path, &width, &height)) {
             log_info("Unable to load image", l->asset_image_path, 0);
             layer_unload(l);
             return 0;
@@ -535,8 +527,8 @@ int gui_layer_add_from_image_path(layer *l, int src_x, int src_y, int offset_x, 
 int gui_asset_image_add_layer(asset_image *img,
                               const char *path, const char *group_id, const char *image_id,
                               int src_x, int src_y, int offset_x, int offset_y, int width, int height,
-                              layer_invert_type invert, layer_rotate_type rotate, layer_isometric_part part, layer_mask mask)
-{
+                              layer_invert_type invert, layer_rotate_type rotate, layer_isometric_part part,
+                              layer_mask mask) {
     layer *current_layer = create_layer_for_image(img);
 
     if (!current_layer) {
@@ -579,8 +571,8 @@ static int xml_start_layer_element(void) {
         return 0;
     }
     asset_image *img = gui_data.current_image;
-    static const char *part_values[2] = { "footprint", "top" };
-    static const char *mask_values[2] = { "grayscale", "alpha" };
+    static const char *part_values[2] = {"footprint", "top"};
+    static const char *mask_values[2] = {"grayscale", "alpha"};
 
     const char *path = xml_parser_get_attribute_string("src");
     const char *group = xml_parser_get_attribute_string("group");
@@ -597,14 +589,14 @@ static int xml_start_layer_element(void) {
     layer_mask mask = xml_parser_get_attribute_enum("mask", mask_values, 2, LAYER_MASK_GRAYSCALE);
 
     if (!gui_asset_image_add_layer(img, path, group, image, src_x, src_y,
-                                   offset_x, offset_y, width, height, invert, rotate, part == PART_NONE ? PART_BOTH : part, mask)) {
+                                   offset_x, offset_y, width, height, invert, rotate,
+                                   part == PART_NONE ? PART_BOTH : part, mask)) {
         log_info("Invalid layer for image", img->id, 0);
     }
     return 1;
 }
 
-static void xml_end_image_element(void)
-{
+static void xml_end_image_element(void) {
     image *img = &gui_data.current_image->img;
     if (!img->width || !img->height) {
         gui_asset_image_unload(gui_data.current_image);
@@ -612,8 +604,7 @@ static void xml_end_image_element(void)
     }
 }
 
-static void xml_end_assetlist_element(void)
-{
+static void xml_end_assetlist_element(void) {
 
 }
 

@@ -9,6 +9,7 @@
 #include "scenario/building.h"
 #include "scenario/property.h"
 #include "translation/translation.h"
+#include "core/log.h"
 
 #define RESOURCE_ALL (RESOURCE_MAX + RESOURCE_TOTAL_SPECIAL)
 
@@ -116,6 +117,7 @@ resource_type resource_get_raw_material_for_good(resource_type good)
 
 void resource_init(void)
 {
+    log_info("resource_init", 0, 0);
     int food_index = 0;
     int good_index = 0;
 

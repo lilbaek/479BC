@@ -7,6 +7,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define SAVE_DIR_NAME "saves"
+#define SAVE_DIRECTORY "***" SAVE_DIR_NAME "***"
+
 /**
  * @file
  * File-related functions.
@@ -26,18 +29,13 @@
  */
 FILE *file_open(const char *filename, const char *mode);
 
-FILE *file_open_save_folder(const char *filename, const char *mode);
-
-FILE *file_open_settings_folder(const char *filename, const char *mode);
-
 /**
  * Wrapper for fopen converting filename to path in asset directory
- * @param folder Asset folder to use
  * @param filename Asset filename
  * @param mode Mode to open the asset file (e.g. "wb").
  * @return FILE
  */
-FILE *file_open_asset_folder(const char *folder, const char *asset, const char *mode);
+FILE *file_open_asset(const char *asset, const char *mode);
 
 /**
  * Wrapper to fclose
@@ -90,5 +88,4 @@ int file_exists(const char *filename, int localizable);
  */
 int file_remove(const char *filename);
 
-int file_remove_settings(const char *filename);
 #endif // CORE_FILE_H

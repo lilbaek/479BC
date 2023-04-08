@@ -36,7 +36,9 @@ void assets_init(int force_reload, color_t **main_images, int *main_image_widths
     xml_init();
 
     for (int i = 0; i < xml_files->num_files; ++i) {
-        xml_process_assetlist_file(xml_files->files[i]);
+        if (strcmp(xml_files->files[i], "gui.xml") != 0) {
+            xml_process_assetlist_file(xml_files->files[i]);
+        }
     }
 
     xml_finish();

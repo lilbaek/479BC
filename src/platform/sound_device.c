@@ -167,6 +167,7 @@ void sound_device_init_channels(int num_channels, char filenames[][CHANNEL_FILEN
             data.channels[i].chunk = 0;
             data.channels[i].filename = filenames[i][0] ? filenames[i] : 0;
         }
+        log_info("Done loading audio files", 0, 0);
     }
 }
 

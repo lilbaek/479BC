@@ -56,7 +56,7 @@ typedef struct layer {
 } layer;
 
 void layer_load(layer *l, color_t **main_data, int *main_image_widths);
-void layer_load_asset(const char *folder, layer *l);
+void layer_load_asset(layer *l);
 void layer_unload(layer *l);
 
 const color_t *layer_get_color_for_image_position(const layer *l, int x, int y);
