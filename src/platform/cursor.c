@@ -12,6 +12,7 @@
 
 #include "SDL.h"
 #include "assets/assets.h"
+#include "file_manager.h"
 
 #include <string.h>
 

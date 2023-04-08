@@ -3,6 +3,15 @@
 
 #include <stdio.h>
 
+#define ASSETS_DIR_NAME "assets"
+#define ASSETS_DIRECTORY "***" ASSETS_DIR_NAME "***"
+
+#define GUI_ASSETS_DIR_NAME "gui"
+#define GUI_ASSETS_DIRECTORY "***" GUI_ASSETS_DIR_NAME "***"
+
+#define SAVE_DIR_NAME "saves"
+#define SAVE_DIRECTORY "***" SAVE_DIR_NAME "***"
+
 enum {
     TYPE_NONE = 0,
     TYPE_DIR = 1,

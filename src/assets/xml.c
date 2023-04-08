@@ -11,6 +11,7 @@
 #include "core/xml_parser.h"
 #include "graphics/renderer.h"
 #include "assets.h"
+#include "platform/file_manager.h"
 
 #include <string.h>
 

@@ -10,6 +10,7 @@
 #include "platform/platform.h"
 #include "platform/vita/vita.h"
 
+
 #ifndef BUILDING_ASSET_PACKER
 
 #include "SDL.h"
@@ -471,8 +472,7 @@ int platform_file_manager_list_directory_contents(
     dir_name current_dir;
 
     if (!dir || !*dir || strcmp(dir, ".") == 0) {
-        set_save_directory();
-        current_dir = set_dir_name(save_directory);
+        current_dir = CURRENT_DIR;
     } else if (strcmp(dir, ASSETS_DIRECTORY) == 0) {
         set_assets_directory();
         current_dir = set_dir_name(assets_directory);
@@ -481,6 +481,9 @@ int platform_file_manager_list_directory_contents(
         substring(assets_directory, gui_assets_dir, 0, strlen(assets_directory) - 6);
         strcat(gui_assets_dir, "gui");
         current_dir = set_dir_name(gui_assets_dir);
+    } else if(strcmp(dir, SAVE_DIRECTORY) == 0) {
+        set_save_directory();
+        current_dir = set_dir_name(save_directory);
     }  else {
         current_dir = set_dir_name(dir);
     }
