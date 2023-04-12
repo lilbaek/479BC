@@ -13,7 +13,7 @@
 #include "core/png_read.h"
 #include "graphics/color.h"
 #include "platform/file_manager.h"
-
+#include "platform/prefs.h"
 #include "png.h"
 
 #include <sys/types.h>
