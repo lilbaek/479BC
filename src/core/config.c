@@ -116,7 +116,7 @@ static void set_defaults(void)
 void config_load(void)
 {
     set_defaults();
-    FILE *fp = pref_file_open(INI_FILENAME, "settings", "r");
+    FILE *fp = pref_file_open(INI_FILENAME, "settings", "rt");
     if (!fp) {
         return;
     }
@@ -146,7 +146,7 @@ void config_load(void)
 
 void config_save(void)
 {
-    FILE *fp = pref_file_open(INI_FILENAME, "settings", "w");
+    FILE *fp = pref_file_open(INI_FILENAME, "settings", "wt");
     if (!fp) {
         log_error("Unable to write configuration file", INI_FILENAME, 0);
         return;
