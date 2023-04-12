@@ -4,6 +4,7 @@
 #include "core/log.h"
 #include "game/system.h"
 #include "input/hotkey.h"
+#include "platform/prefs.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -262,7 +263,7 @@ static void load_defaults(void)
 static void load_file(void)
 {
     hotkey_config_clear();
-    FILE *fp = file_open(INI_FILENAME, "rt");
+    FILE *fp = pref_file_open(INI_FILENAME, "settings", "rt");
     if (!fp) {
         return;
     }
@@ -307,7 +308,7 @@ void hotkey_config_load(void)
 void hotkey_config_save(void)
 {
     hotkey_install_mapping(data.mappings, data.num_mappings);
-    FILE *fp = file_open(INI_FILENAME, "wt");
+    FILE *fp = pref_file_open(INI_FILENAME, "settings", "wt");
     if (!fp) {
         log_error("Unable to write hotkey configuration file", INI_FILENAME, 0);
         return;

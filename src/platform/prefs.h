@@ -11,4 +11,5 @@ const char *pref_data_dir(void);
 
 void pref_save_data_dir(const char *data_dir);
 
+void pref_remove_file(const char *filename, const char *folder);
 #endif // PLATFORM_PREFS_H
