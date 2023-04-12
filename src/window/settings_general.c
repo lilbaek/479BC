@@ -7,7 +7,7 @@
 #define NK_INCLUDE_DEFAULT_FONT
 
 #include <string.h>
-#include "settings_gameplay.h"
+#include "settings_general.h"
 #include "graphics/window.h"
 #include "ui_window.h"
 #include "translation/translation.h"
@@ -264,7 +264,7 @@ static void handle_fullscreen_change(int fullscreen) {
     }
 }
 
-void window_settings_gameplay_show() {
+void window_settings_general_show() {
     settings_gameplay_init();
     window_type window = {
             WINDOW_SETTINGS_GAMEPLAY_MENU,
