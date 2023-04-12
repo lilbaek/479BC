@@ -119,8 +119,8 @@ int game_init(void)
     sound_system_init();
     game_state_init();
     resource_init();
+    log_info("window_main_menu_show", 0, 0);
     window_main_menu_show(1);
-    //window_settings_menu_show();
     return 1;
 }
 

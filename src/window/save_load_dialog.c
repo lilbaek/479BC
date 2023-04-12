@@ -101,11 +101,8 @@ static void load_map() {
                                     gettext("Select game to load"), nothing, 0);
         return;
     }
-    if (NULL == file_open_save_folder(load_dialog_data.selected_file, "rb")) {
-        window_popup_dialog_show_ex(gettext("Unable to load game"),
-                                    gettext("File does not exist"), nothing, 0);
-        return;
-    }
+    window_popup_dialog_show_ex(gettext("Unable to load game"),
+                                gettext("File does not exist"), nothing, 0);
     int result = game_file_load_saved_game(load_dialog_data.selected_file);
     if (result == 1) {
         window_city_show();

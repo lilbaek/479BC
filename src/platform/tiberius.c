@@ -85,8 +85,8 @@ static void write_log(void *userdata, int category, SDL_LogPriority priority, co
 
 static void setup_logging(void) {
     // On some platforms (vita, android), not removing the file will not empty it when reopening for writing
-    file_remove_settings("tiberius-log.txt");
-    log_file = file_open_settings_folder("tiberius-log.txt", "wt");
+    pref_remove_file("tiberius-log.txt", "logs");
+    log_file = pref_file_open("tiberius-log.txt", "logs", "wt");
     SDL_LogSetOutputFunction(write_log, NULL);
 }
 
@@ -227,20 +227,16 @@ static void handle_event(SDL_Event *event) {
             break;
         case SDL_APP_DIDENTERFOREGROUND:
             platform_renderer_resume();
-#if SDL_VERSION_ATLEAST(2, 0, 2)
         case SDL_RENDER_TARGETS_RESET:
-#endif
             platform_renderer_invalidate_target_textures();
             window_invalidate();
             break;
-#if SDL_VERSION_ATLEAST(2, 0, 4)
         case SDL_RENDER_DEVICE_RESET:
             SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                      "Render device lost",
                                      "The rendering context was lost.The game will likely blackscreen.\n\n"
                                      "Please restart the game to fix the issue.",
                                      NULL);
-#endif
         case SDL_KEYDOWN:
             platform_handle_key_down(&event->key);
             break;
@@ -375,11 +371,13 @@ static void main_loop(void) {
 static int init_sdl(void) {
     SDL_Log("Initializing SDL");
 
-    // This hint must be set before initializing SDL, otherwise it won't work
-#if SDL_VERSION_ATLEAST(2, 0, 2)
-    SDL_SetHint(SDL_HINT_ACCELEROMETER_AS_JOYSTICK, "0");
-#endif
+    if (!platform_sdl_version_at_least(2, 0, 22)) {
+        SDL_Log("SDL not version 2.0.22 or later");
+        return 0;
+    }
 
+    // This hint must be set before initializing SDL, otherwise it won't work
+    SDL_SetHint(SDL_HINT_ACCELEROMETER_AS_JOYSTICK, "0");
     if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) != 0) {
         // Try starting SDL without joystick support
         if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) != 0) {
@@ -392,12 +390,8 @@ static int init_sdl(void) {
         platform_joystick_init();
     }
     SDL_SetEventFilter(handle_event_immediate, 0);
-#if SDL_VERSION_ATLEAST(2, 0, 10)
     SDL_SetHint(SDL_HINT_MOUSE_TOUCH_EVENTS, "0");
     SDL_SetHint(SDL_HINT_TOUCH_MOUSE_EVENTS, "0");
-#elif SDL_VERSION_ATLEAST(2, 0, 4)
-    SDL_SetHint(SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH, "1");
-#endif
 #ifdef __ANDROID__
     SDL_SetHint(SDL_HINT_ANDROID_TRAP_BACK_BUTTON, "1");
 #endif
@@ -467,7 +461,6 @@ static int pre_init(const char *custom_data_dir) {
         return 1;
     }
 
-#if SDL_VERSION_ATLEAST(2, 0, 1)
     if (platform_sdl_version_at_least(2, 0, 1)) {
         char *base_path = SDL_GetBasePath();
         if (base_path) {
@@ -481,7 +474,6 @@ static int pre_init(const char *custom_data_dir) {
             SDL_free(base_path);
         }
     }
-#endif
 
 #ifdef SHOW_FOLDER_SELECT_DIALOG
     const char *user_dir = pref_data_dir();

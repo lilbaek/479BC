@@ -35,7 +35,7 @@ static void unload_png(void)
     }
 }
 
-int png_load(const char *folder, const char *path)
+int png_load(const char *path)
 {
     if (strcmp(path, data.last_png.path) == 0) {
         return 1;
@@ -44,7 +44,7 @@ int png_load(const char *folder, const char *path)
     data.last_png.width = 0;
     data.last_png.height = 0;
     png_byte header[8];
-    data.fp = file_open_asset_folder(folder, path, "rb");
+    data.fp = file_open_asset(path, "rb");
     if (!data.fp) {
         log_error("Unable to open png file", path, 0);
         return 0;
@@ -81,11 +81,11 @@ int png_load(const char *folder, const char *path)
     return 1;
 }
 
-int png_get_image_size(const char *folder, const char *path, int *width, int *height)
+int png_get_image_size(const char *path, int *width, int *height)
 {
     *width = 0;
     *height = 0;
-    if (!png_load(folder, path)) {
+    if (!png_load(path)) {
         return 0;
     }
     *width = !data.last_png.width ? png_get_image_width(data.png_ptr, data.info_ptr) : data.last_png.width;
@@ -148,23 +148,23 @@ static int load_image(void)
 }
 
 static void set_pixels(color_t *pixels,
-    int src_x, int src_y, int width, int height, int dst_x, int dst_y, int dst_row_width, int rotate)
+                       int src_x, int src_y, int width, int height, int dst_x, int dst_y, int dst_row_width, int rotate)
 {
     int readable_height = (height + src_y <= data.last_png.height) ?
-        height : (data.last_png.height - src_y);
+                          height : (data.last_png.height - src_y);
     int readable_width = (width + src_x <= data.last_png.width) ? width : (data.last_png.width - src_x);
 
     if (!rotate) {
         for (int y = 0; y < readable_height; y++) {
             memcpy(&pixels[(y + dst_y) * dst_row_width + dst_x],
-                &data.last_png.pixels[(src_y + y) * data.last_png.width + src_x],
-                readable_width * sizeof(color_t));
+                   &data.last_png.pixels[(src_y + y) * data.last_png.width + src_x],
+                   readable_width * sizeof(color_t));
         }
     } else {
         for (int y = 0; y < readable_height; y++) {
             color_t *src_pixel = &data.last_png.pixels[(src_y + y) * data.last_png.width + src_x];
             color_t *dst_pixel = &pixels[(dst_y + width - 1) *
-                dst_row_width + y + dst_x];
+                                         dst_row_width + y + dst_x];
             for (int x = 0; x < readable_width; x++) {
                 *dst_pixel = *src_pixel++;
                 dst_pixel -= dst_row_width;
@@ -173,14 +173,14 @@ static void set_pixels(color_t *pixels,
     }
 }
 
-int png_read(const char *folder, const char *path, color_t *pixels,
-    int src_x, int src_y, int width, int height, int dst_x, int dst_y, int dst_row_width, int rotate)
+int png_read(const char *path, color_t *pixels,
+             int src_x, int src_y, int width, int height, int dst_x, int dst_y, int dst_row_width, int rotate)
 {
-    if (!png_load(folder, path)) {
+    if (!png_load(path)) {
         return 0;
     }
     if (!data.last_png.width && !data.last_png.height) {
-        png_get_image_size(folder, path, &data.last_png.width, &data.last_png.height);
+        png_get_image_size(path, &data.last_png.width, &data.last_png.height);
         if (!load_image()) {
             return 0;
         }

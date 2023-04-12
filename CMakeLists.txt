@@ -645,7 +645,7 @@ set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/map_generator.c
         ${PROJECT_SOURCE_DIR}/src/window/icons.h
         ${PROJECT_SOURCE_DIR}/src/window/settings.c
-        ${PROJECT_SOURCE_DIR}/src/window/settings_gameplay.c
+        ${PROJECT_SOURCE_DIR}/src/window/settings_general.c
         )
 set(EDITOR_FILES
         ${PROJECT_SOURCE_DIR}/src/editor/editor.c

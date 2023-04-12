@@ -250,7 +250,7 @@ int xml_process_assetlist_file(const char *xml_file_name)
 {
     log_info("Loading assetlist file", xml_file_name, 0);
 
-    FILE *xml_file = file_open_asset_folder(ASSETS_DIR_NAME, xml_file_name, "r");
+    FILE *xml_file = file_open_asset(xml_file_name, "r");
 
     if (!xml_file) {
         log_error("Error opening assetlist file", xml_file_name, 0);

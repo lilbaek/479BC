@@ -324,8 +324,3 @@ int game_file_write_saved_game(const char *filename)
 {
     return game_file_io_write_saved_game(filename);
 }
-
-int game_file_delete_saved_game(const char *filename)
-{
-    return game_file_io_delete_saved_game(filename);
-}
