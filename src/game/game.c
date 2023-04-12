@@ -61,6 +61,7 @@
 #include "scenario/editor.h"
 #include "city/data_private.h"
 #include "window/settings.h"
+#include "window/settings_general.h"
 
 static void errlog(const char *msg)
 {
@@ -121,6 +122,7 @@ int game_init(void)
     resource_init();
     log_info("window_main_menu_show", 0, 0);
     window_main_menu_show(1);
+    window_settings_menu_show();
     return 1;
 }
 
