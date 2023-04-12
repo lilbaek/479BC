@@ -78,7 +78,6 @@ static const uint8_t *display_text_music_volume(void);
 static const uint8_t *display_text_speech_volume(void);
 static const uint8_t *display_text_sound_effects_volume(void);
 static const uint8_t *display_text_city_sounds_volume(void);
-static const uint8_t *display_text_video_volume(void);
 static const uint8_t *display_text_scroll_speed(void);
 static const uint8_t *display_text_difficulty(void);
 static const uint8_t *display_text_max_grand_temples(void);
@@ -177,7 +176,6 @@ static config_widget all_widgets[CONFIG_PAGES][MAX_WIDGETS] = {
         {TYPE_NUMERICAL_RANGE, RANGE_DISPLAY_SCALE, 0, display_text_display_scale},
         {TYPE_NUMERICAL_DESC, RANGE_CURSOR_SCALE, TR_CONFIG_CURSOR_SCALE},
         {TYPE_NUMERICAL_RANGE, RANGE_CURSOR_SCALE, 0, display_text_cursor_scale},
-        {TYPE_CHECKBOX, CONFIG_SCREEN_COLOR_CURSORS, TR_CONFIG_USE_COLOR_CURSORS, 0, 5},
         {TYPE_SPACE, TR_CONFIG_AUDIO},
         {TYPE_HEADER, TR_CONFIG_AUDIO, 0, 0, 5},
         {TYPE_CHECKBOX, CONFIG_GENERAL_ENABLE_AUDIO, TR_CONFIG_ENABLE_AUDIO, 0, 5},
@@ -190,14 +188,11 @@ static config_widget all_widgets[CONFIG_PAGES][MAX_WIDGETS] = {
         {TYPE_NUMERICAL_RANGE, RANGE_SOUND_EFFECTS_VOLUME, 0, display_text_sound_effects_volume, 1},
         {TYPE_CHECKBOX, CONFIG_ORIGINAL_ENABLE_CITY_SOUNDS, TR_CONFIG_CITY_SOUNDS, 0, 5},
         {TYPE_NUMERICAL_RANGE, RANGE_CITY_SOUNDS_VOLUME, 0, display_text_city_sounds_volume, 1},
-        {TYPE_CHECKBOX, CONFIG_GENERAL_ENABLE_VIDEO_SOUND, TR_CONFIG_VIDEO_SOUND, 0, 5},
-        {TYPE_NUMERICAL_RANGE, RANGE_VIDEO_VOLUME, 0, display_text_video_volume, 1}
     },
     { // UI
         {TYPE_NUMERICAL_DESC, RANGE_SCROLL_SPEED, TR_CONFIG_SCROLL_SPEED},
         {TYPE_NUMERICAL_RANGE, RANGE_SCROLL_SPEED, 0, display_text_scroll_speed},
         {TYPE_SPACE},
-        {TYPE_CHECKBOX, CONFIG_UI_SHOW_INTRO_VIDEO, TR_CONFIG_SHOW_INTRO_VIDEO},
         {TYPE_CHECKBOX, CONFIG_UI_SIDEBAR_INFO, TR_CONFIG_SIDEBAR_INFO},
         {TYPE_CHECKBOX, CONFIG_UI_SMOOTH_SCROLLING, TR_CONFIG_SMOOTH_SCROLLING},
         {TYPE_CHECKBOX, CONFIG_UI_DISABLE_MOUSE_EDGE_SCROLLING, TR_CONFIG_DISABLE_MOUSE_EDGE_SCROLLING},
@@ -214,7 +209,6 @@ static config_widget all_widgets[CONFIG_PAGES][MAX_WIDGETS] = {
         {TYPE_CHECKBOX, CONFIG_UI_MESSAGE_ALERTS, TR_CONFIG_UI_MESSAGE_ALERTS},
         {TYPE_CHECKBOX, CONFIG_UI_SHOW_GRID, TR_CONFIG_UI_SHOW_GRID},
         {TYPE_CHECKBOX, CONFIG_UI_SHOW_PARTIAL_GRID_AROUND_CONSTRUCTION, TR_CONFIG_UI_SHOW_PARTIAL_GRID_AROUND_CONSTRUCTION},
-        {TYPE_CHECKBOX, CONFIG_UI_ALWAYS_SHOW_ROTATION_BUTTONS, TR_CONFIG_UI_ALWAYS_SHOW_ROTATION_BUTTONS},
         {TYPE_CHECKBOX, CONFIG_UI_SHOW_ROAMING_PATH, TR_CONFIG_SHOW_ROAMING_PATH },
     },
     { // Difficulty
@@ -353,8 +347,6 @@ static inline void set_custom_config_changes(void)
     data.config_values[CONFIG_ORIGINAL_WINDOWED_RESOLUTION].change_action = config_change_display_resolution;
     data.config_values[CONFIG_SCREEN_DISPLAY_SCALE].change_action = config_change_display_scale;
     data.config_values[CONFIG_SCREEN_CURSOR_SCALE].change_action = config_change_cursors;
-    data.config_values[CONFIG_SCREEN_COLOR_CURSORS].change_action = config_change_cursors;
-
     data.config_values[CONFIG_ORIGINAL_GAME_SPEED].change_action = config_change_game_speed;
     data.config_values[CONFIG_GENERAL_ENABLE_AUDIO].change_action = config_enable_audio;
     data.config_values[CONFIG_GENERAL_MASTER_VOLUME].change_action = config_set_master_volume;
@@ -385,7 +377,6 @@ static inline void set_range_values(void)
     ranges[RANGE_SPEECH_VOLUME].value = &data.config_values[CONFIG_ORIGINAL_SPEECH_VOLUME].new_value;
     ranges[RANGE_SOUND_EFFECTS_VOLUME].value = &data.config_values[CONFIG_ORIGINAL_SOUND_EFFECTS_VOLUME].new_value;
     ranges[RANGE_CITY_SOUNDS_VOLUME].value = &data.config_values[CONFIG_ORIGINAL_CITY_SOUNDS_VOLUME].new_value;
-    ranges[RANGE_VIDEO_VOLUME].value = &data.config_values[CONFIG_GENERAL_VIDEO_VOLUME].new_value;
 
     ranges[RANGE_SCROLL_SPEED].value = &data.config_values[CONFIG_ORIGINAL_SCROLL_SPEED].new_value;
     ranges[RANGE_DIFFICULTY].value = &data.config_values[CONFIG_ORIGINAL_DIFFICULTY].new_value;
@@ -618,12 +609,6 @@ static const uint8_t *display_text_speech_volume(void)
 static const uint8_t *display_text_sound_effects_volume(void)
 {
     percentage_string(volume_offset, data.config_values[CONFIG_ORIGINAL_SOUND_EFFECTS_VOLUME].new_value);
-    return volume_text;
-}
-
-static const uint8_t *display_text_video_volume(void)
-{
-    percentage_string(volume_offset, data.config_values[CONFIG_GENERAL_VIDEO_VOLUME].new_value);
     return volume_text;
 }
 

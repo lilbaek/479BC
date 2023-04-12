@@ -18,6 +18,10 @@
 #include "game/settings.h"
 #include "core/config.h"
 #include "game/system.h"
+#include "sound/speech.h"
+#include "sound/music.h"
+#include "sound/city.h"
+#include "sound/effect.h"
 
 typedef struct {
     int width;
@@ -39,6 +43,8 @@ static void save_changes();
 static void handle_fullscreen_change(int fullscreen);
 
 void find_current_resolution();
+
+static void create_graphics_options(struct nk_context *ctx);
 
 static const resolution resolutions[] = {
         {1024, 768},
@@ -118,51 +124,36 @@ static void cancel_values(void) {
     }
 }
 
+static void create_audio_row(struct nk_context *ctx, char* label, config_key checkbox, config_key volume) {
+    {
+        create_row(ctx);
+        nk_checkbox_label(ctx, label, &settings.config_values[checkbox].new_value);
+    }
+    {
+        nk_layout_row_begin(ctx, NK_DYNAMIC, 30, 3);
+        nk_layout_row_push(ctx, 0.01f);
+        nk_spacer(ctx);
+        nk_layout_row_push(ctx, 0.5f);
+        nk_labelf(ctx, NK_TEXT_LEFT, gettext("Volume: %u"),
+                  (int) settings.config_values[volume].new_value);
+        nk_layout_row_push(ctx, 0.49f);
+        nk_slider_int(ctx, 0, &settings.config_values[volume].new_value, 100, 1);
+    }
+}
+
 static void draw_foreground(void) {
     struct nk_context *ctx = ui_context();
     int w = 677;
     int h = 500;
-    ui_font_change(FONT_TYPE_LARGE_BOLD);;
-    if (nk_begin_titled(ctx, "settings_gameplay", gettext("Gameplay"),
+    ui_font_change(FONT_TYPE_LARGE_BOLD);
+    if (nk_begin_titled(ctx, "settings_general", gettext("General Settings"),
                         nk_recti((screen_width() / 2) - w / 2, (screen_height() / 2) - h / 2, w, h),
                         NK_WINDOW_BORDER | NK_WINDOW_NO_SCROLLBAR | NK_WINDOW_TITLE)) {
         ui_font_change(FONT_TYPE_STANDARD);
         nk_layout_space_begin(ctx, NK_STATIC, h - 40, 3);
         nk_layout_space_push(ctx, nk_rect(0, 0, 330, h - 105));
         if (nk_group_begin(ctx, "group_left", NK_WINDOW_BORDER)) {
-            {
-                ui_font_change(FONT_TYPE_LARGE_BOLD);;
-                create_row(ctx);
-                nk_label(ctx, gettext("Graphics"), NK_TEXT_LEFT);
-                ui_font_change(FONT_TYPE_STANDARD);
-            }
-            {
-                create_row(ctx);
-                nk_checkbox_label(ctx, gettext("Full screen"), &settings.config_values[CONFIG_SCREEN_FULLSCREEN].new_value);
-            }
-            {
-                create_row_label(ctx, gettext("Resolution"));
-                create_resolution_combo(ctx);
-            }
-            {
-                nk_layout_row_begin(ctx, NK_DYNAMIC, 30, 3);
-                nk_layout_row_push(ctx, 0.01f);
-                nk_spacer(ctx);
-                nk_layout_row_push(ctx, 0.5f);
-                nk_labelf(ctx, NK_TEXT_LEFT, gettext("Display scale: %u") , (int)settings.config_values[CONFIG_SCREEN_DISPLAY_SCALE].new_value);
-                nk_layout_row_push(ctx, 0.49f);
-                nk_slider_int(ctx, 50, &settings.config_values[CONFIG_SCREEN_DISPLAY_SCALE].new_value, 180, 5);
-            }
-            {
-                nk_layout_row_begin(ctx, NK_DYNAMIC, 30, 3);
-                nk_layout_row_push(ctx, 0.01f);
-                nk_spacer(ctx);
-                nk_layout_row_push(ctx, 0.5f);
-                nk_labelf(ctx, NK_TEXT_LEFT, gettext("Cursor scale: %u") , (int)settings.config_values[CONFIG_SCREEN_CURSOR_SCALE].new_value);
-                nk_layout_row_push(ctx, 0.49f);
-                nk_slider_int(ctx, 100, &settings.config_values[CONFIG_SCREEN_CURSOR_SCALE].new_value, 200, 50);
-            }
-            nk_group_end(ctx);
+            create_graphics_options(ctx);
         }
         nk_layout_space_push(ctx, nk_rect(335, 0, 328, h - 105));
         if (nk_group_begin(ctx, "group_right", NK_WINDOW_BORDER)) {
@@ -172,6 +163,11 @@ static void draw_foreground(void) {
                 nk_label(ctx, gettext("Sound"), NK_TEXT_LEFT);
                 ui_font_change(FONT_TYPE_STANDARD);
             }
+            create_audio_row(ctx, gettext("Enable audio"), CONFIG_GENERAL_ENABLE_AUDIO, CONFIG_GENERAL_MASTER_VOLUME);
+            create_audio_row(ctx, gettext("Enable music"), CONFIG_GENERAL_ENABLE_MUSIC, CONFIG_GENERAL_MUSIC_VOLUME);
+            create_audio_row(ctx, gettext("Enable speech"), CONFIG_GENERAL_ENABLE_SPEECH, CONFIG_GENERAL_SPEECH_VOLUME);
+            create_audio_row(ctx, gettext("Enable effects"), CONFIG_GENERAL_ENABLE_EFFECTS, CONFIG_GENERAL_EFFECTS_VOLUME);
+            create_audio_row(ctx, gettext("Enable city sounds"), CONFIG_GENERAL_ENABLE_CITY, CONFIG_GENERAL_CITY_VOLUME);
             nk_group_end(ctx);
         }
         ui_font_change(FONT_TYPE_LARGE_BOLD);
@@ -197,6 +193,42 @@ static void draw_foreground(void) {
     ui_font_change(FONT_TYPE_STANDARD);
 }
 
+static void create_graphics_options(struct nk_context *ctx) {
+    {
+        ui_font_change(FONT_TYPE_LARGE_BOLD);;
+        create_row(ctx);
+        nk_label(ctx, gettext("Graphics"), NK_TEXT_LEFT);
+        ui_font_change(FONT_TYPE_STANDARD);
+    }
+    {
+        create_row(ctx);
+        nk_checkbox_label(ctx, gettext("Full screen"), &settings.config_values[CONFIG_SCREEN_FULLSCREEN].new_value);
+    }
+    {
+        create_row_label(ctx, gettext("Resolution"));
+        create_resolution_combo(ctx);
+    }
+    {
+        nk_layout_row_begin(ctx, NK_DYNAMIC, 30, 3);
+        nk_layout_row_push(ctx, 0.01f);
+        nk_spacer(ctx);
+        nk_layout_row_push(ctx, 0.5f);
+        nk_labelf(ctx, NK_TEXT_LEFT, gettext("Display scale: %u") , (int)settings.config_values[CONFIG_SCREEN_DISPLAY_SCALE].new_value);
+        nk_layout_row_push(ctx, 0.49f);
+        nk_slider_int(ctx, 50, &settings.config_values[CONFIG_SCREEN_DISPLAY_SCALE].new_value, 180, 5);
+    }
+    {
+        nk_layout_row_begin(ctx, NK_DYNAMIC, 30, 3);
+        nk_layout_row_push(ctx, 0.01f);
+        nk_spacer(ctx);
+        nk_layout_row_push(ctx, 0.5f);
+        nk_labelf(ctx, NK_TEXT_LEFT, gettext("Cursor scale: %u") , (int)settings.config_values[CONFIG_SCREEN_CURSOR_SCALE].new_value);
+        nk_layout_row_push(ctx, 0.49f);
+        nk_slider_int(ctx, 100, &settings.config_values[CONFIG_SCREEN_CURSOR_SCALE].new_value, 200, 50);
+    }
+    nk_group_end(ctx);
+}
+
 static void handle_input(const mouse *m, const hotkeys *h) {
     if (h->escape_pressed) {
         cancel_values();
@@ -204,7 +236,7 @@ static void handle_input(const mouse *m, const hotkeys *h) {
     }
 }
 
-void settings_gameplay_init() {
+void settings_general_init() {
     for (int i = 0; i < CONFIG_MAX_ENTRIES; i++) {
         settings.config_values[i].original_value = config_get(i);
         settings.config_values[i].new_value = config_get(i);
@@ -236,6 +268,32 @@ static void save_changes() {
                 case CONFIG_SCREEN_DISPLAY_SCALE:
                     system_scale_display(config_get(CONFIG_SCREEN_DISPLAY_SCALE));
                     break;
+                case CONFIG_GENERAL_ENABLE_AUDIO:
+                    if (!config_get(CONFIG_GENERAL_ENABLE_AUDIO)) {
+                        sound_music_stop();
+                        sound_speech_stop();
+                    }
+                    break;
+                case CONFIG_GENERAL_ENABLE_MUSIC:
+                    if (!config_get(CONFIG_GENERAL_ENABLE_MUSIC)) {
+                        sound_music_stop();
+                    }
+                    break;
+                case CONFIG_GENERAL_ENABLE_SPEECH:
+                    if (!config_get(CONFIG_GENERAL_ENABLE_SPEECH)) {
+                        sound_speech_stop();
+                    }
+                    break;
+                case CONFIG_GENERAL_MASTER_VOLUME:
+                case CONFIG_GENERAL_MUSIC_VOLUME:
+                case CONFIG_GENERAL_SPEECH_VOLUME:
+                case CONFIG_GENERAL_EFFECTS_VOLUME:
+                case CONFIG_GENERAL_CITY_VOLUME:
+                    sound_music_set_volume(config_get(CONFIG_GENERAL_MUSIC_VOLUME));
+                    sound_speech_set_volume(config_get(CONFIG_GENERAL_SPEECH_VOLUME));
+                    sound_effect_set_volume(config_get(CONFIG_GENERAL_EFFECTS_VOLUME));
+                    sound_city_set_volume(config_get(CONFIG_GENERAL_CITY_VOLUME));
+                    break;
             }
         }
     }
@@ -265,9 +323,9 @@ static void handle_fullscreen_change(int fullscreen) {
 }
 
 void window_settings_general_show() {
-    settings_gameplay_init();
+    settings_general_init();
     window_type window = {
-            WINDOW_SETTINGS_GAMEPLAY_MENU,
+            WINDOW_SETTINGS_GENERAL_MENU,
             draw_background,
             draw_foreground,
             handle_input
