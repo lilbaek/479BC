@@ -54,6 +54,7 @@
 
 #include "window/demo/overview.c"
 #include "icons.h"
+#include "core/log.h"
 
 
 #endif
@@ -78,6 +79,7 @@ nk_rune ranges_icons[] = {
 };
 
 void ui_window_setup(SDL_Window *win, SDL_Renderer *renderer) {
+    log_info("ui_window_setup", 0, 0);
     float font_scale = 1;
     ui_data_struct.ctx = nk_sdl_init(win, renderer);
     {
@@ -115,6 +117,9 @@ void ui_window_setup(SDL_Window *win, SDL_Renderer *renderer) {
 
         /* this hack makes the font appear to be scaled down to the desired
          * size and is only necessary when font_scale > 1 */
+        if(ui_data_struct.proggy_clean == NULL) {
+            log_error("Could not load fonts", 0, 0);
+        }
         ui_data_struct.proggy_clean->handle.height /= font_scale;
         ui_data_struct.roboto_regular_large->handle.height /= font_scale;
         ui_data_struct.roboto_bold_large->handle.height /= font_scale;

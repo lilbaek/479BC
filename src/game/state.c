@@ -8,6 +8,7 @@
 #include "map/building.h"
 #include "map/tiles.h"
 #include "map/water_supply.h"
+#include "core/log.h"
 
 static struct {
     int paused;
@@ -17,6 +18,7 @@ static struct {
 
 void game_state_init(void)
 {
+    log_info("game_state_init", 0, 0);
     city_victory_reset();
     map_ring_init();
 

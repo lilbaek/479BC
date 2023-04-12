@@ -23,7 +23,7 @@ static void correct_channel_filenames(void)
             continue;
         }
         char *original = channel_filenames[i];
-        const char *corrected = platform_file_manager_asset_path(original);
+        const char *corrected = dir_get_file(original, MAY_BE_LOCALIZED); // TODO
         if (!corrected) {
             channel_filenames[i][0] = 0;
         } else if (corrected != original) {
