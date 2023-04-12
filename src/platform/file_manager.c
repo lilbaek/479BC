@@ -272,8 +272,10 @@ int platform_file_manager_list_directory_contents(
         set_assets_directory();
         current_dir = set_dir_name(assets_directory);
     } else if (strcmp(dir, SAVE_DIRECTORY) == 0) {
+#ifndef BUILDING_ASSET_PACKER
         pref_saves_path(saves_directory);
         current_dir = set_dir_name(saves_directory);
+#endif
     } else {
         current_dir = set_dir_name(dir);
     }
