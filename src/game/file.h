@@ -31,11 +31,4 @@ int game_file_load_saved_game(const char *filename);
  */
 int game_file_write_saved_game(const char *filename);
 
-/**
- * Delete saved game
- * @param filename File to delete
- * @return Boolean true on success, false on failure
- */
-int game_file_delete_saved_game(const char *filename);
-
 #endif // GAME_FILE_H

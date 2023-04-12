@@ -12,6 +12,8 @@
 
 #ifndef BUILDING_ASSET_PACKER
 #include "SDL.h"
+#include "prefs.h"
+
 #else
 #define SDL_VERSION_ATLEAST(x, y, z) 0
 #endif
@@ -147,7 +149,7 @@ static const char *ASSET_DIRS[MAX_ASSET_DIRS] = {
 };
 
 static char assets_directory[FILE_NAME_MAX];
-
+static char saves_directory[FILE_NAME_MAX];
 static int write_base_path_to(char *dest)
 {
 #if !defined(BUILDING_ASSET_PACKER) && SDL_VERSION_ATLEAST(2, 0, 1)
@@ -270,6 +272,9 @@ int platform_file_manager_list_directory_contents(
     } else if (strcmp(dir, ASSETS_DIRECTORY) == 0) {
         set_assets_directory();
         current_dir = set_dir_name(assets_directory);
+    } else if (strcmp(dir, SAVE_DIRECTORY) == 0) {
+        pref_saves_path(saves_directory);
+        current_dir = set_dir_name(saves_directory);
     } else {
         current_dir = set_dir_name(dir);
     }
