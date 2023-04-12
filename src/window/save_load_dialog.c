@@ -103,12 +103,6 @@ static void load_map() {
     }
     window_popup_dialog_show_ex(gettext("Unable to load game"),
                                 gettext("File does not exist"), nothing, 0);
-    /* // TODO
-    if (NULL == file_open_save_folder(load_dialog_data.selected_file, "rb")) {
-        window_popup_dialog_show_ex(gettext("Unable to load game"),
-                                    gettext("File does not exist"), nothing, 0);
-        return;
-    }
     int result = game_file_load_saved_game(load_dialog_data.selected_file);
     if (result == 1) {
         window_city_show();
@@ -120,7 +114,7 @@ static void load_map() {
         window_popup_dialog_show_ex(gettext("Unable to load game"),
                                     gettext("Upgrade game to load this file"), nothing, 0);
         return;
-    }*/
+    }
 }
 
 

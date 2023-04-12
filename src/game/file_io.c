@@ -55,6 +55,7 @@
 #include "widget/minimap.h"
 
 #include "zlib.h"
+#include "platform/prefs.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -747,7 +748,7 @@ static int prepare_dynamic_piece(FILE *fp, file_piece *piece) {
 }
 
 static int load_scenario_to_buffers(const char *filename, scenario_version *version) {
-    FILE *fp = file_open(dir_get_file(filename, NOT_LOCALIZED), "rb"); // TODO
+    FILE *fp = pref_file_open(filename, "saves", "rb");
     if (!fp) {
         return 0;
     }
@@ -882,7 +883,7 @@ int game_file_io_write_scenario(const char *filename) {
     init_scenario_data(SCENARIO_CURRENT_VERSION);
     scenario_save_to_state(&scenario_data.state);
 
-    FILE *fp = file_open(filename, "wb"); // TODO
+    FILE *fp = pref_file_open(filename, "saves", "wb");
     if (!fp) {
         log_error("Unable to save scenario", 0, 0);
         return 0;
@@ -982,7 +983,7 @@ static int get_savegame_versions(FILE *fp, savegame_version *save_version, resou
 
 int game_file_io_read_saved_game(const char *filename, int offset) {
     log_info("Loading saved game", filename, 0);
-    FILE *fp = file_open(dir_get_file(filename, NOT_LOCALIZED), "rb"); // TODO
+    FILE *fp = pref_file_open(filename, "saves", "rb");
     if (!fp) {
         log_error("Unable to load game, unable to open file.", 0, 0);
         return 0;
@@ -1233,7 +1234,7 @@ static savegame_load_status savegame_read_file_info(FILE *fp, saved_game_info *i
 }
 
 int game_file_io_read_saved_game_info(const char *filename, saved_game_info *info) {
-    FILE *fp = file_open(dir_get_file(filename, NOT_LOCALIZED), "rb"); // TODO
+    FILE *fp = pref_file_open(filename, "saves", "rb");
     if (!fp) {
         return SAVEGAME_STATUS_INVALID;
     }
@@ -1265,7 +1266,7 @@ int game_file_io_write_saved_game(const char *filename) {
     log_info("Saving game", filename, 0);
     savegame_save_to_state(&savegame_data.state);
 
-    FILE *fp = file_open(filename, "wb"); // TODO
+    FILE *fp = pref_file_open(filename, "saves", "wb");
     if (!fp) {
         log_error("Unable to save game", 0, 0);
         return 0;
@@ -1276,13 +1277,4 @@ int game_file_io_write_saved_game(const char *filename) {
     core_memory_block_free(&compress_buffer);
     file_close(fp);
     return 1;
-}
-
-int game_file_io_delete_saved_game(const char *filename) {
-    log_info("Deleting game", filename, 0);
-    int result = file_remove(filename);
-    if (!result) {
-        log_error("Unable to delete game", 0, 0);
-    }
-    return result;
 }
