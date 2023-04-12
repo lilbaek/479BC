@@ -9,11 +9,10 @@
 #include "platform/file_manager_cache.h"
 #include "platform/platform.h"
 #include "platform/vita/vita.h"
+#include "prefs.h"
 
 #ifndef BUILDING_ASSET_PACKER
 #include "SDL.h"
-#include "prefs.h"
-
 #else
 #define SDL_VERSION_ATLEAST(x, y, z) 0
 #endif
