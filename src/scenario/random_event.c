@@ -21,9 +21,7 @@ enum {
     EVENT_ROME_LOWERS_WAGES = 2,
     EVENT_LAND_TRADE_DISRUPTED = 3,
     EVENT_LAND_SEA_DISRUPTED = 4,
-    EVENT_CONTAMINATED_WATER = 5,
-    EVENT_IRON_MINE_COLLAPSED = 6,
-    EVENT_CLAY_PIT_FLOODED = 7
+    EVENT_CONTAMINATED_WATER = 5
 };
 
 #define COOLDOWN_MONTHS_ROME_WAGE_CHANGE 12
@@ -110,44 +108,6 @@ static void contaminate_water(void)
     }
 }
 
-static void destroy_iron_mine(void)
-{
-    if (scenario.random_events.iron_mine_collapse &&
-        city_data.building.months_since_last_destroyed_iron_mine > difficulty_random_event_cooldown_months()) {
-        if(config_get(CONFIG_GP_CH_RANDOM_COLLAPSES_TAKE_MONEY)) {
-            if(building_find(BUILDING_IRON_MINE)) {
-                city_finance_process_sundry(250);
-                city_message_post(1, MESSAGE_IRON_MINE_COLLAPED, 0, 0);
-            }
-        } else {
-            int grid_offset = building_destroy_first_of_type(BUILDING_IRON_MINE);
-            if (grid_offset) {
-                city_message_post(1, MESSAGE_IRON_MINE_COLLAPED, 0, grid_offset);
-            }
-        }
-        city_data.building.months_since_last_destroyed_iron_mine = 0;
-    }
-}
-
-static void destroy_clay_pit(void)
-{
-    if (scenario.random_events.clay_pit_flooded &&
-        city_data.building.months_since_last_flooded_clay_pit > difficulty_random_event_cooldown_months()) {
-        if(config_get(CONFIG_GP_CH_RANDOM_COLLAPSES_TAKE_MONEY)) {
-            if(building_find(BUILDING_CLAY_PIT)) {
-                city_finance_process_sundry(250);
-                city_message_post(1, MESSAGE_CLAY_PIT_FLOODED, 0, 0);
-            }
-        } else {
-            int grid_offset = building_destroy_first_of_type(BUILDING_CLAY_PIT);
-            if (grid_offset) {
-                city_message_post(1, MESSAGE_CLAY_PIT_FLOODED, 0, grid_offset);
-            }
-        }
-        city_data.building.months_since_last_flooded_clay_pit = 0;
-    }
-}
-
 static void increase_month_since_last_random_event(void)
 {
     city_data.labor.months_since_last_wage_change++;
@@ -189,16 +149,6 @@ void scenario_random_event_process(void)
         case EVENT_CONTAMINATED_WATER:
             if (!skip_event) {
                 contaminate_water();
-            }
-            break;
-        case EVENT_IRON_MINE_COLLAPSED:
-            if (!skip_event) {
-                destroy_iron_mine();
-            }
-            break;
-        case EVENT_CLAY_PIT_FLOODED:
-            if (!skip_event) {
-                destroy_clay_pit();
             }
             break;
     }

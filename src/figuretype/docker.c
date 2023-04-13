@@ -252,7 +252,7 @@ static int get_closest_building_for_export(int x, int y, int city_id, building *
             min_building_id = b->id;
         }
     }
-    if (resource_is_food(resource) && config_get(CONFIG_GP_CH_ALLOW_EXPORTING_FROM_GRANARIES)) {
+    if (resource_is_food(resource)) {
         for (building *b = building_first_of_type(BUILDING_GRANARY); b; b = b->next_of_type) {
             if (is_invalid_destination(b, dock) ||
                 !building_granary_resource_amount(resource, b)) {

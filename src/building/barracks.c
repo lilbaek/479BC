@@ -156,7 +156,7 @@ static building *get_unmanned_tower_of_type(building_type type, building *barrac
 {
     for (building *b = building_first_of_type(type); b; b = b->next_of_type) {
         if (b->state == BUILDING_STATE_IN_USE && b->num_workers > 0 &&
-            !b->figure_id && !b->figure_id4 && (b->road_network_id == barracks->road_network_id || config_get(CONFIG_GP_CH_TOWER_SENTRIES_GO_OFFROAD))) {
+            !b->figure_id && !b->figure_id4) {
             if (map_has_road_access(b->x, b->y, b->size, road)) {
                 return b;
             }
