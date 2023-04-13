@@ -374,7 +374,7 @@ static int is_fully_blocked(int map_x, int map_y, building_type type, int buildi
     if (type == BUILDING_CARAVANSERAI && city_buildings_has_caravanserai()) {
         return 1;
     }
-    if (type == BUILDING_BARRACKS && city_buildings_has_barracks() && !config_get(CONFIG_GP_CH_MULTIPLE_BARRACKS)) {
+    if (type == BUILDING_BARRACKS && city_buildings_has_barracks()) {
         return 1;
     }
     if (type == BUILDING_MESS_HALL && city_buildings_has_mess_hall()) {

@@ -161,10 +161,7 @@ static void init_roaming(figure *f, int roam_dir, int x, int y)
     f->roam_ticks_until_next_turn = -1;
     f->roam_turn_direction = 2;
     f->roam_length = 0;
-
-    if (config_get(CONFIG_GP_CH_ROAMERS_DONT_SKIP_CORNERS)) {
-        f->disallow_diagonal = 1;
-    }
+    f->disallow_diagonal = 1;
     switch (roam_dir) {
         case DIR_0_TOP: y -= 8; break;
         case DIR_2_RIGHT: x += 8; break;
@@ -211,7 +208,7 @@ void figure_roamer_preview_create(building_type b_type, int x, int y)
         return;
     }
 
-    if (fig_type == FIGURE_LABOR_SEEKER && config_get(CONFIG_GP_CH_GLOBAL_LABOUR)) {
+    if (fig_type == FIGURE_LABOR_SEEKER) {
         return;
     }
 
@@ -327,7 +324,7 @@ void figure_roamer_preview_reset(building_type type)
     map_grid_clear_u8(data.travelled_tiles.items);
     int show_other_roamers = 0;
     figure_type fig_type = building_type_to_figure_type(type);
-    if (fig_type == FIGURE_LABOR_SEEKER && config_get(CONFIG_GP_CH_GLOBAL_LABOUR)) {
+    if (fig_type == FIGURE_LABOR_SEEKER) {
         fig_type = FIGURE_NONE;
     }
     if (fig_type == FIGURE_NONE) {

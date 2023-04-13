@@ -31,6 +31,8 @@
 #include "save_load_dialog.h"
 #include "settings_general.h"
 #include "settings_gameplay.h"
+#include "hotkey_config.h"
+#include "settings_hotkey.h"
 
 static void draw_background(void) {
     image_draw_fullscreen_background(assets_get_image_id("mainmenu", "start-screen"));
@@ -66,8 +68,7 @@ static void draw_foreground(void) {
                 }
                 nk_layout_row_push(ctx, width);
                 if (nk_button_label(ctx, gettext("Controls"))) {
-                    game_init_editor();
-                    sound_music_play_editor();
+                    window_settings_hotkey_show();
                 }
                 nk_layout_row_push(ctx, width);
                 if (nk_button_label(ctx, gettext("Back"))) {

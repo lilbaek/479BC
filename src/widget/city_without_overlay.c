@@ -730,7 +730,7 @@ static int get_highlighted_formation_id(const map_tile *tile)
     if (!selected_formation_id && highlighted_formation->is_herd) {
         return 0;
     }
-    if (config_get(CONFIG_GP_CH_AUTO_KILL_ANIMALS) && highlighted_formation->is_herd) {
+    if (highlighted_formation->is_herd) {
         return 0;
     }
     return highlighted_formation_id;

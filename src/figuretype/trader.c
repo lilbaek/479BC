@@ -87,10 +87,6 @@ int figure_create_trade_ship(int x, int y, int city_id)
 int figure_trade_caravan_can_buy(figure *trader, int building_id, int city_id)
 {
     building *b = building_get(building_id);
-    if (b->type != BUILDING_WAREHOUSE &&
-        !(config_get(CONFIG_GP_CH_ALLOW_EXPORTING_FROM_GRANARIES) && b->type == BUILDING_GRANARY)) {
-        return 0;
-    }
     if (b->has_plague) {
         return 0;
     }
@@ -201,9 +197,6 @@ static int trader_get_buy_resource(int building_id, int city_id)
         return RESOURCE_NONE;
     }
     if (b->type == BUILDING_GRANARY) {
-        if (!config_get(CONFIG_GP_CH_ALLOW_EXPORTING_FROM_GRANARIES)) {
-            return RESOURCE_NONE;
-        }
         for (int r = RESOURCE_MIN_FOOD; r < RESOURCE_MAX_FOOD; r++) {
             if (empire_can_export_resource_to_city(city_id, r) && building_granary_remove_export(b, r, 1)) {
                 return r;
@@ -395,7 +388,7 @@ static int get_closest_storage(const figure *f, int x, int y, int city_id, map_p
             if (!resource_is_food(resource)) {
                 continue;
             }
-            if (config_get(CONFIG_GP_CH_ALLOW_EXPORTING_FROM_GRANARIES) && exportable[resource] &&
+            if (exportable[resource] &&
                 building_granary_resource_amount(resource, b) > 0 && distance_penalty == 32) {
                 distance_penalty--;
             }
