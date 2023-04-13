@@ -43,13 +43,6 @@ static void create_ok_button(struct nk_context *ctx) {
     ctx->style.button = button;
 }
 
-static void create_row(struct nk_context *ctx) {
-    nk_layout_row_begin(ctx, NK_DYNAMIC, 30, 2);
-    nk_layout_row_push(ctx, 0.01f);
-    nk_spacer(ctx);
-    nk_layout_row_push(ctx, 0.99f);
-}
-
 static void draw_foreground(void) {
     struct nk_context *ctx = ui_context();
     int w = 877;
