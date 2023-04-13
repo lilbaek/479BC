@@ -68,7 +68,7 @@ static void draw_foreground(void) {
                 }
                 nk_layout_row_push(ctx, width);
                 if (nk_button_label(ctx, gettext("Controls"))) {
-                    window_settings_hotkey_show();
+                    //window_settings_hotkey_show();
                 }
                 nk_layout_row_push(ctx, width);
                 if (nk_button_label(ctx, gettext("Back"))) {
