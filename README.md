@@ -6,6 +6,8 @@ Tiberius is a classic isometric city builder game based on a fork of [Augustus](
 
 Tiberius is licensed under the GNU AFFERO GENERAL PUBLIC LICENSE Version 3, but includes some 3rd party software under different licenses. See the section "Licensing" below for details.
 
+See [License](https://github.com/OpenTiberius/tiberius/blob/master/res/assets/LICENSE) for the license details of the assets.
+
 1.1) Downloading Tiberius
 -------------------------
 
