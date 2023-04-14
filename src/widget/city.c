@@ -196,7 +196,7 @@ static void draw_construction_buttons(void)
         graphics_reset_clip_rectangle();
     }
 
-    if ((mouse_get()->is_touch || config_get(CONFIG_UI_ALWAYS_SHOW_ROTATION_BUTTONS)) &&
+    if ((mouse_get()->is_touch) &&
         building_construction_can_rotate()) {
         if (!sidebar_extra_is_information_displayed(SIDEBAR_EXTRA_DISPLAY_GAME_SPEED)) {
             x_offset = 4 * BLOCK_SIZE + 8;
@@ -610,7 +610,7 @@ static void handle_mouse(const mouse *m)
         if (handle_legion_click(tile)) {
             return;
         }
-        if (config_get(CONFIG_UI_ALWAYS_SHOW_ROTATION_BUTTONS) && handle_construction_buttons(m->x, m->y, 0)) {
+        if (handle_construction_buttons(m->x, m->y, 0)) {
             return;
         }
         if (building_construction_type()) {

@@ -112,8 +112,7 @@ static hotkey_action JOYSTICK_MAPPING_TO_HOTKEY_ACTION[MAX_HOTKEYS] = {
     HOTKEY_ROTATE_MAP_RIGHT,
     HOTKEY_INCREASE_GAME_SPEED,
     HOTKEY_DECREASE_GAME_SPEED,
-    HOTKEY_TOGGLE_PAUSE,
-    HOTKEY_CYCLE_LEGION
+    HOTKEY_TOGGLE_PAUSE
 };
 
 static void update_hat(joystick_hat *hat, joystick_hat_position position)

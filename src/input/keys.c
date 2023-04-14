@@ -119,11 +119,9 @@ static int can_display(const char *key_name)
     return font_can_display(internal_name);
 }
 
-const uint8_t *key_combination_display_name(key_type key, key_modifier_type modifiers)
+const char *key_combination_display_name(key_type key, key_modifier_type modifiers)
 {
     static char result[100];
-    static uint8_t str_result[100];
-
     result[0] = 0;
     if (modifiers & KEY_MOD_CTRL) {
         strcat(result, system_keyboard_key_modifier_name(KEY_MOD_CTRL));
@@ -173,6 +171,5 @@ const uint8_t *key_combination_display_name(key_type key, key_modifier_type modi
         strcat(result, key_display_names[key]);
         strcat(result, ")");
     }
-    encoding_from_utf8(result, str_result, 100);
-    return str_result;
+    return result;
 }

@@ -63,7 +63,7 @@ endif ()
 if (CMAKE_COMPILER_IS_GNUCC)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror=implicit-function-declaration")
     if (CMAKE_C_COMPILER_VERSION VERSION_GREATER 5.0)
-        set(CMAKE_C_FLAGS "-Werror=incompatible-pointer-types -Werror=int-conversion -Wstrict-prototypes ${CMAKE_C_FLAGS}")
+        set(CMAKE_C_FLAGS "-Werror=incompatible-pointer-types -Werror=int-conversion ${CMAKE_C_FLAGS}")
     endif ()
 endif ()
 
@@ -609,7 +609,6 @@ set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/editor/starting_conditions.c
         ${PROJECT_SOURCE_DIR}/src/window/editor/win_criteria.c
         ${PROJECT_SOURCE_DIR}/src/window/cck_selection.c
-        ${PROJECT_SOURCE_DIR}/src/window/config.c
         ${PROJECT_SOURCE_DIR}/src/window/city.c
         ${PROJECT_SOURCE_DIR}/src/window/donate_to_city.c
         ${PROJECT_SOURCE_DIR}/src/window/empire.c
@@ -617,8 +616,6 @@ set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/gift_to_emperor.c
         ${PROJECT_SOURCE_DIR}/src/window/hold_games.c
         ${PROJECT_SOURCE_DIR}/src/window/hold_festival.c
-        ${PROJECT_SOURCE_DIR}/src/window/hotkey_config.c
-        ${PROJECT_SOURCE_DIR}/src/window/hotkey_editor.c
         ${PROJECT_SOURCE_DIR}/src/window/intermezzo.c
         ${PROJECT_SOURCE_DIR}/src/window/labor_priority.c
         ${PROJECT_SOURCE_DIR}/src/window/main_menu.c
@@ -646,6 +643,9 @@ set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/icons.h
         ${PROJECT_SOURCE_DIR}/src/window/settings.c
         ${PROJECT_SOURCE_DIR}/src/window/settings_general.c
+        ${PROJECT_SOURCE_DIR}/src/window/settings_gameplay.c
+        ${PROJECT_SOURCE_DIR}/src/window/settings_hotkey.c
+        ${PROJECT_SOURCE_DIR}/src/window/settings_hotkey_editor.c
         )
 set(EDITOR_FILES
         ${PROJECT_SOURCE_DIR}/src/editor/editor.c

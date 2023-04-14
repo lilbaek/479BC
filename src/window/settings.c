@@ -7,29 +7,18 @@
 #define NK_INCLUDE_DEFAULT_FONT
 
 #include "settings.h"
-#include "main_menu.h"
 #include "assets/assets.h"
-#include "core/calc.h"
-#include "core/string.h"
-#include "game/game.h"
 #include "game/system.h"
 #include "graphics/generic_button.h"
-#include "graphics/graphics.h"
 #include "graphics/image.h"
-#include "graphics/lang_text.h"
-#include "graphics/text.h"
 #include "graphics/screen.h"
 #include "graphics/window.h"
-#include "sound/music.h"
-#include "window/config.h"
-
 #include "window/plain_message_dialog.h"
-#include "window/popup_dialog.h"
 #include "window/nuklear.h"
 #include "window/ui_window.h"
-#include "map_generator.h"
-#include "save_load_dialog.h"
 #include "settings_general.h"
+#include "settings_gameplay.h"
+#include "settings_hotkey.h"
 
 static void draw_background(void) {
     image_draw_fullscreen_background(assets_get_image_id("mainmenu", "start-screen"));
@@ -61,12 +50,11 @@ static void draw_foreground(void) {
                 }
                 nk_layout_row_push(ctx, width);
                 if (nk_button_label(ctx, gettext("Gameplay"))) {
-                    window_save_load_dialog_show(0);
+                    window_settings_gameplay_show();
                 }
                 nk_layout_row_push(ctx, width);
                 if (nk_button_label(ctx, gettext("Controls"))) {
-                    game_init_editor();
-                    sound_music_play_editor();
+                    window_settings_hotkey_show();
                 }
                 nk_layout_row_push(ctx, width);
                 if (nk_button_label(ctx, gettext("Back"))) {

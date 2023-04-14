@@ -98,8 +98,6 @@ void render_bottom_bar(struct nk_context *ctx) {
         }
         if (nk_group_begin(ctx, "column2", NK_WINDOW_NO_SCROLLBAR)) {
             nk_layout_row_dynamic(ctx, 40, 1);
-            struct nk_rect rect = nk_widget_bounds(ctx);
-
             struct nk_style_button button;
             button = ctx->style.button;
             ctx->style.button.border = 1;

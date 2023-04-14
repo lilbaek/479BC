@@ -25,13 +25,11 @@
 #include "widget/city.h"
 #include "window/advisors.h"
 #include "window/city.h"
-#include "window/config.h"
-
-#include "window/hotkey_config.h"
 #include "window/main_menu.h"
 #include "window/message_dialog.h"
 #include "window/mission_briefing.h"
 #include "window/popup_dialog.h"
+#include "window/settings.h"
 
 enum {
     INFO_NONE = 0,
@@ -511,35 +509,35 @@ static void menu_options_general(int param)
 {
     clear_state();
     window_go_back();
-    window_config_show(CONFIG_PAGE_GENERAL, 0);
+    window_settings_menu_show();
 }
 
 static void menu_options_user_interface(int param)
 {
     clear_state();
     window_go_back();
-    window_config_show(CONFIG_PAGE_UI_CHANGES, 0);
+    window_settings_menu_show();
 }
 
 static void menu_options_gameplay(int param)
 {
     clear_state();
     window_go_back();
-    window_config_show(CONFIG_PAGE_GAMEPLAY_CHANGES, 0);
+    window_settings_menu_show();
 }
 
 static void menu_options_city_management(int param)
 {
     clear_state();
     window_go_back();
-    window_config_show(CONFIG_PAGE_CITY_MANAGEMENT_CHANGES, 0);
+    window_settings_menu_show();
 }
 
 static void menu_options_hotkeys(int param)
 {
     clear_state();
     window_go_back();
-    window_hotkey_config_show();
+    window_settings_menu_show();
 }
 
 static void menu_options_monthly_autosave(int param)

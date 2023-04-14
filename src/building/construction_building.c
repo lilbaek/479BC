@@ -434,7 +434,7 @@ int building_construction_place_building(building_type type, int x, int y)
         city_warning_show(WARNING_ONE_BUILDING_OF_TYPE, NEW_WARNING_SLOT);
         return 0;
     }
-    if (type == BUILDING_BARRACKS && city_buildings_has_barracks() && !config_get(CONFIG_GP_CH_MULTIPLE_BARRACKS)) {
+    if (type == BUILDING_BARRACKS && city_buildings_has_barracks()) {
         city_warning_show(WARNING_ONE_BUILDING_OF_TYPE, NEW_WARNING_SLOT);
         return 0;
     }
