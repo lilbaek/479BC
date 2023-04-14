@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE assetlist>
+<!-- Unless specifically mentioned, all assets created by OpenTiberius and copyright by OpenTiberius -->
 <assetlist name="terrain">
     <!-- Files related to grass_1 -->
     <image id="grass_1_01" src="grass_1_01"/>

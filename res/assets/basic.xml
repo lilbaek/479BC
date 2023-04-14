@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE assetlist>
+<!-- Unless specifically mentioned, all assets created by OpenTiberius and copyright by OpenTiberius -->
 <assetlist name="basic">
     <!-- Files related to flat_tile -->
     <image id="flat_tile_01" src="flat_tile_01"/>

@@ -31,9 +31,7 @@
 #endif
 
 #define ASSETS_IMAGE_SIZE 2048
-#define CURSOR_IMAGE_SIZE 256
 #define PACKED_ASSETS_DIR "packed_assets"
-#define CURSORS_DIR "Color_Cursors"
 #define BYTES_PER_PIXEL 4
 
 #ifdef FORMAT_XML
@@ -497,92 +495,6 @@ static void pack_group(int group_id)
     free(final_image_pixels);
 }
 
-static void pack_cursors(void)
-{
-    static const char *cursor_names[] = { "Arrow", "Shovel", "Sword" };
-    static const char *cursor_sizes[] = { "150", "200" };
-
-#define NUM_CURSOR_NAMES (sizeof(cursor_names) / sizeof(cursor_names[0]))
-#define NUM_CURSOR_SIZES (sizeof(cursor_sizes) / sizeof(cursor_sizes[0]) + 1)
-
-    static layer cursors[NUM_CURSOR_NAMES * NUM_CURSOR_SIZES];
-
-    image_packer packer;
-    image_packer_init(&packer, NUM_CURSOR_NAMES * NUM_CURSOR_SIZES, CURSOR_IMAGE_SIZE, CURSOR_IMAGE_SIZE);
-
-    packer.options.allow_rotation = 1;
-    packer.options.reduce_image_size = 1;
-    packer.options.sort_by = IMAGE_PACKER_SORT_BY_AREA;
-
-    for (int i = 0; i < NUM_CURSOR_NAMES; i++) {
-        for (int j = 0; j < NUM_CURSOR_SIZES; j++) {
-            int index = i * NUM_CURSOR_SIZES + j;
-            layer *cursor = &cursors[index];
-            cursor->calculated_image_id = index;
-            cursor->asset_image_path = malloc(FILE_NAME_MAX);
-            if (!cursor->asset_image_path) {
-                log_error("Out of memory.", 0, 0);
-                image_packer_free(&packer);
-                return;
-            }
-            if (j > 0) {
-                snprintf(cursor->asset_image_path, FILE_NAME_MAX, "%s/%s_%s.png", CURSORS_DIR,
-                         cursor_names[i], cursor_sizes[j - 1]);
-            } else {
-                snprintf(cursor->asset_image_path, FILE_NAME_MAX, "%s/%s.png", CURSORS_DIR, cursor_names[i]);
-            }
-            if (!png_get_image_size(cursor->asset_image_path, &cursor->width, &cursor->height)) {
-                image_packer_free(&packer);
-                return;
-            }
-            color_t *data = malloc(cursor->width * cursor->height * sizeof(color_t));
-            if (!data) {
-                log_error("Out of memory.", 0, 0);
-                image_packer_free(&packer);
-                return;
-            }
-            png_read(cursor->asset_image_path, data, 0, 0,
-                     cursor->width, cursor->height, 0, 0, cursor->width, 0);
-            packer.rects[index].input.width = cursor->width;
-            packer.rects[index].input.height = cursor->height;
-            cursor->data = data;
-        }
-    }
-
-    image_packer_pack(&packer);
-
-    final_image_width = packer.result.last_image_width;
-    final_image_height = packer.result.last_image_height;
-    final_image_pixels = malloc(sizeof(color_t) * final_image_width * final_image_height);
-    if (!final_image_pixels) {
-        log_error("Out of memory when creating the final cursor image.", 0, 0);
-        image_packer_free(&packer);
-        return;
-    }
-    memset(final_image_pixels, 0, sizeof(color_t) * final_image_width * final_image_height);
-
-    log_info("Cursor positions and sizes in packed image:", 0, 0);
-
-    printf("   Name             x       y      width      height\n");
-
-    for (int i = 0; i < NUM_CURSOR_NAMES * NUM_CURSOR_SIZES; i++) {
-        layer *cursor = &cursors[i];
-        pack_layer(&packer, cursor);
-        copy_to_final_image(cursor->data, &packer.rects[i]);
-        printf("%-16s  %3d     %3d        %3d         %3d\n",
-               cursor->asset_image_path + strlen(CURSORS_DIR) + 1,
-               packer.rects[i].output.x, packer.rects[i].output.y, cursor->width, cursor->height);
-    }
-
-    snprintf(current_file, FILE_NAME_MAX, "%s/%s.png", PACKED_ASSETS_DIR, CURSORS_DIR);
-
-    save_final_image(current_file, final_image_width, final_image_height, final_image_pixels);
-
-    free(final_image_pixels);
-
-    image_packer_free(&packer);
-}
-
 int main(int argc, char **argv)
 {
     int using_custom_path = 0;
@@ -629,14 +541,6 @@ int main(int argc, char **argv)
     for (int i = 0; i < group_get_total(); i++) {
         pack_group(i);
     }
-
-#endif
-
-#ifdef PACK_CURSORS
-
-    log_info("Packing cursors...", 0, 0);
-
-    pack_cursors();
 
 #endif
 

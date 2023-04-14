@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE assetlist>
+<!-- Unless specifically mentioned, all assets created by OpenTiberius and copyright by OpenTiberius -->
 <assetlist name="decoration">
     <!-- Files related to sign -->
     <image id="sign_01" src="sign_01"/>
