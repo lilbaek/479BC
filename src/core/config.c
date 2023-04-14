@@ -52,11 +52,11 @@ static const char *ini_keys[] = {
         "gameplay_difficulty",
         "gameplay_gods_enabled",
         "gameplay_last_advisor",
-        "gameplay_change_max_grand_temples",
-        "gameplay_change_jealous_gods",
-        "gameplay_change_only_deliver_to_accepting_granaries",
-        "gameplay_change_warehouses_dont_accept",
-        "gameplay_change_yearly_autosave",
+        "gameplay_max_grand_temples",
+        "gameplay_jealous_gods",
+        "gameplay_only_deliver_to_accepting_granaries",
+        "gameplay_warehouses_dont_accept",
+        "gameplay_yearly_autosave",
 };
 
 static int values[CONFIG_MAX_ENTRIES];
