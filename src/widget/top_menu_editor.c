@@ -14,14 +14,12 @@
 #include "scenario/empire.h"
 #include "scenario/scenario.h"
 #include "translation/translation.h"
-#include "window/config.h"
-
-#include "window/hotkey_config.h"
 #include "window/message_dialog.h"
 #include "window/popup_dialog.h"
 #include "window/select_list.h"
 #include "window/editor/empire.h"
 #include "window/editor/map.h"
+#include "window/settings.h"
 
 void menu_file_new_map(int param);
 static void menu_file_load_map(int param);
@@ -248,21 +246,21 @@ static void menu_options_general(int param)
 {
     clear_state();
     window_editor_map_show();
-    window_config_show(CONFIG_PAGE_GENERAL, 0);
+    window_settings_menu_show();
 }
 
 static void menu_options_user_interface(int param)
 {
     clear_state();
     window_go_back();
-    window_config_show(CONFIG_PAGE_UI_CHANGES, 0);
+    window_settings_menu_show();
 }
 
 static void menu_options_hotkeys(int param)
 {
     clear_state();
     window_go_back();
-    window_hotkey_config_show();
+    window_settings_menu_show();
 }
 
 static void menu_help_help(int param)

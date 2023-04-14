@@ -20,14 +20,13 @@
 #include "graphics/screen.h"
 #include "graphics/window.h"
 #include "sound/music.h"
-#include "window/config.h"
-
 #include "window/plain_message_dialog.h"
 #include "window/popup_dialog.h"
 #include "window/nuklear.h"
 #include "window/ui_window.h"
 #include "map_generator.h"
 #include "save_load_dialog.h"
+#include "settings.h"
 
 static void draw_version_string(void) {
     uint8_t version_string[100] = "tiberius v";
@@ -73,17 +72,16 @@ static void draw_foreground(void) {
                     window_map_generator_show();
                 }
                 nk_layout_row_push(ctx, width);
-                if (nk_button_label(ctx, gettext("Load saved game"))) {
+                if (nk_button_label(ctx, gettext("Load game"))) {
                     window_save_load_dialog_show(0);
                 }
                 nk_layout_row_push(ctx, width);
-                if (nk_button_label(ctx, gettext("Map editor"))) {
-                    game_init_editor();
-                    sound_music_play_editor();
+                if (nk_button_label(ctx, gettext("Settings"))) {
+                    window_settings_menu_show();
                 }
                 nk_layout_row_push(ctx, width);
-                if (nk_button_label(ctx, gettext("Options"))) {
-                    window_config_show(CONFIG_FIRST_PAGE, 1);
+                if (nk_button_label(ctx, gettext("About"))) {
+
                 }
                 nk_layout_row_push(ctx, width);
                 if (nk_button_label(ctx, gettext("Exit"))) {
