@@ -1,5 +1,5 @@
 /*
-Note: This file is a heavily stripped-down version of Tinyfiledialogs, customized for Julius.
+Note: This file is a heavily stripped-down version of Tinyfiledialogs
 
 If you are interested in Tinyfiledialogs, please download its original version from the links below.
 
