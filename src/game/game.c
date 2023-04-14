@@ -1,20 +1,15 @@
 #include "game.h"
 
-#include "assets/assets.h"
-#include "building/model.h"
 #include "building/properties.h"
 #include "city/view.h"
 #include "core/config.h"
-#include "core/hotkey_config.h"
 #include "core/image.h"
 #include "core/lang.h"
 #include "core/locale.h"
 #include "core/log.h"
 #include "core/random.h"
 #include "editor/editor.h"
-#include "figure/type.h"
 #include "game/animation.h"
-#include "game/file.h"
 #include "game/file_editor.h"
 #include "game/settings.h"
 #include "game/speed.h"
@@ -49,19 +44,13 @@
 #include "scenario/request.h"
 #include "scenario/demand_change.h"
 #include "scenario/price_change.h"
-#include "building/menu.h"
 #include "city/data.h"
 #include "scenario/empire.h"
 #include "empire/object.h"
-#include "figuretype/editor.h"
 #include "noise/mapgenerator.h"
 #include "empire/city.h"
 #include "map/image.h"
-#include "city/emperor.h"
-#include "scenario/editor.h"
 #include "city/data_private.h"
-#include "window/settings.h"
-#include "window/settings_general.h"
 
 static void errlog(const char *msg)
 {
@@ -122,7 +111,6 @@ int game_init(void)
     resource_init();
     log_info("window_main_menu_show", 0, 0);
     window_main_menu_show(1);
-    window_settings_menu_show();
     return 1;
 }
 
@@ -263,11 +251,6 @@ void game_exit_editor(void)
     }
     editor_set_active(0);
     window_main_menu_show(1);
-}
-
-int game_reload_language(void)
-{
-    return reload_language(0, 1);
 }
 
 void game_run(void)
