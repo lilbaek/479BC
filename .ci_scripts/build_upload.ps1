@@ -71,9 +71,9 @@ if ($repo -eq "release") {
 
     cd ..\..\..
 
-    xcopy /ei res\maps .\maps
+    xcopy /ei res\sounds .\sounds
     xcopy /ei res\manual .\manual
-    7z a "deploy\$deploy_file" tiberius.exe SDL2.dll SDL2_mixer.dll assets maps manual
+    7z a "deploy\$deploy_file" tiberius.exe SDL2.dll SDL2_mixer.dll assets sounds manual
 } else {
     7z a "deploy\$deploy_file" tiberius.exe SDL2.dll SDL2_mixer.dll
 }
