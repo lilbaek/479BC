@@ -113,6 +113,6 @@ const char *key_combination_name(key_type key, key_modifier_type modifiers);
 
 int key_combination_from_name(const char *name, key_type *key, key_modifier_type *modifiers);
 
-const uint8_t *key_combination_display_name(key_type key, key_modifier_type modifiers);
+const char *key_combination_display_name(key_type key, key_modifier_type modifiers);
 
 #endif // INPUT_KEYS_H

@@ -563,8 +563,7 @@ static int should_mark_for_construction(building_type type) {
         return 0;
     } else if (type == BUILDING_CITY_MINT && (city_buildings_has_city_mint() || !city_buildings_has_senate())) {
         return 0;
-    } else if (type == BUILDING_BARRACKS && city_buildings_has_barracks() &&
-               !config_get(CONFIG_GP_CH_MULTIPLE_BARRACKS)) {
+    } else if (type == BUILDING_BARRACKS && city_buildings_has_barracks()) {
         return 0;
     } else if (type == BUILDING_MESS_HALL && city_buildings_has_mess_hall()) {
         return 0;
@@ -742,11 +741,7 @@ void building_construction_update(int x, int y, int grid_offset) {
 static figure_type nearby_enemy_type(int x_start, int y_start, int x_end, int y_end) {
     for (int i = 1; i < figure_count(); i++) {
         figure *f = figure_get(i);
-        if (config_get(CONFIG_GP_CH_WOLVES_BLOCK)) {
-            if (f->state != FIGURE_STATE_ALIVE || (!figure_is_enemy(f) && f->type != FIGURE_WOLF)) {
-                continue;
-            }
-        } else if (f->state != FIGURE_STATE_ALIVE || !figure_is_enemy(f)) {
+        if (f->state != FIGURE_STATE_ALIVE || !figure_is_enemy(f)) {
             continue;
         }
         int distance = f->type == FIGURE_WOLF ? 6 : 12;

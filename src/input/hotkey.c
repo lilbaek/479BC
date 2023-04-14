@@ -8,9 +8,9 @@
 #include "graphics/screenshot.h"
 #include "graphics/window.h"
 #include "input/scroll.h"
-#include "window/hotkey_editor.h"
 #include "window/popup_dialog.h"
 #include "translation/translation.h"
+#include "window/settings_hotkey_editor.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -58,9 +58,6 @@ static void set_definition_for_action(hotkey_action action, hotkey_definition *d
         case HOTKEY_TOGGLE_OVERLAY:
             def->action = &data.hotkey_state.toggle_overlay;
             break;
-        case HOTKEY_CYCLE_LEGION:
-            def->action = &data.hotkey_state.cycle_legion;
-            break;
         case HOTKEY_INCREASE_GAME_SPEED:
             def->action = &data.hotkey_state.increase_game_speed;
             def->repeatable = 1;
@@ -75,6 +72,7 @@ static void set_definition_for_action(hotkey_action action, hotkey_definition *d
         case HOTKEY_ROTATE_MAP_RIGHT:
             def->action = &data.hotkey_state.rotate_map_right;
             break;
+            /*
         case HOTKEY_SHOW_ADVISOR_LABOR:
             def->action = &data.hotkey_state.show_advisor;
             def->value = ADVISOR_LABOR;
@@ -152,7 +150,7 @@ static void set_definition_for_action(hotkey_action action, hotkey_definition *d
             break;
         case HOTKEY_EDITOR_TOGGLE_BATTLE_INFO:
             def->action = &data.hotkey_state.toggle_editor_battle_info;
-            break;
+            break;*/
         case HOTKEY_LOAD_FILE:
             def->action = &data.hotkey_state.load_file;
             break;
@@ -203,26 +201,8 @@ static void set_definition_for_action(hotkey_action action, hotkey_definition *d
         case HOTKEY_TOGGLE_FULLSCREEN:
             def->action = &data.global_hotkey_state.toggle_fullscreen;
             break;
-        case HOTKEY_RESIZE_TO_640:
-            def->action = &data.global_hotkey_state.resize_to;
-            def->value = 640;
-            break;
-        case HOTKEY_RESIZE_TO_800:
-            def->action = &data.global_hotkey_state.resize_to;
-            def->value = 800;
-            break;
-        case HOTKEY_RESIZE_TO_1024:
-            def->action = &data.global_hotkey_state.resize_to;
-            def->value = 1024;
-            break;
         case HOTKEY_SAVE_SCREENSHOT:
             def->action = &data.global_hotkey_state.save_screenshot;
-            break;
-        case HOTKEY_SAVE_CITY_SCREENSHOT:
-            def->action = &data.global_hotkey_state.save_city_screenshot;
-            break;
-        case HOTKEY_SAVE_MINIMAP_SCREENSHOT:
-            def->action = &data.global_hotkey_state.save_minimap_screenshot;
             break;
         case HOTKEY_BUILD_VACANT_HOUSE:
             def->action = &data.hotkey_state.building;
@@ -310,6 +290,7 @@ static void set_definition_for_action(hotkey_action action, hotkey_definition *d
         case HOTKEY_PASTE_BUILDING_SETTINGS:
             def->action = &data.hotkey_state.paste_building_settings;
             break;
+            /*
         case HOTKEY_SHOW_OVERLAY_EFFICIENCY:
             def->action = &data.hotkey_state.show_overlay;
             def->value = OVERLAY_EFFICIENCY;
@@ -385,7 +366,7 @@ static void set_definition_for_action(hotkey_action action, hotkey_definition *d
         case HOTKEY_SHOW_OVERLAY_LEVY:
             def->action = &data.hotkey_state.show_overlay;
             def->value = OVERLAY_LEVY;
-            break;
+            break;*/
         case HOTKEY_ROTATE_MAP_NORTH:
             def->action = &data.hotkey_state.rotate_map_north;
             break;
@@ -534,8 +515,8 @@ void hotkey_key_pressed(key_type key, key_modifier_type modifiers, int repeat)
 {
     data.shift_pressed = modifiers == KEY_MOD_SHIFT;
 
-    if (window_is(WINDOW_HOTKEY_EDITOR)) {
-        window_hotkey_editor_key_pressed(key, modifiers);
+    if (window_is(WINDOW_SETTINGS_HOTKEY_EDITOR)) {
+        window_settings_hotkey_editor_key_pressed(key, modifiers);
         return;
     }
     if (key == KEY_TYPE_NONE) {
@@ -544,7 +525,7 @@ void hotkey_key_pressed(key_type key, key_modifier_type modifiers, int repeat)
     int found_action = 0;
     for (int i = 0; i < data.num_definitions; i++) {
         hotkey_definition *def = &data.definitions[i];
-        if ((window_is(WINDOW_ASSET_PREVIEWER) || window_is(WINDOW_EDITOR_EMPIRE)) && key == KEY_TYPE_F5 && def->action != &data.hotkey_state.f5_pressed) {
+        if ((window_is(WINDOW_EDITOR_EMPIRE)) && key == KEY_TYPE_F5 && def->action != &data.hotkey_state.f5_pressed) {
             continue;
         }
         if (def->key == key && def->modifiers == modifiers && (!repeat || def->repeatable)) {
@@ -567,8 +548,8 @@ void hotkey_key_released(key_type key, key_modifier_type modifiers)
 {
     data.shift_pressed = modifiers == KEY_MOD_SHIFT;
 
-    if (window_is(WINDOW_HOTKEY_EDITOR)) {
-        window_hotkey_editor_key_released(key, modifiers);
+    if (window_is(WINDOW_SETTINGS_HOTKEY_EDITOR)) {
+        window_settings_hotkey_editor_key_released(key, modifiers);
         return;
     }
     if (key == KEY_TYPE_NONE) {

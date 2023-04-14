@@ -278,13 +278,7 @@ static int is_valid_missile_target(figure *f, formation *formation)
     if (!figure_is_herd(f)) {
         return 0;
     }
-    if (f->type == FIGURE_WOLF || config_get(CONFIG_GP_CH_AUTO_KILL_ANIMALS)) {
-        return 1;
-    }
-    if (formation->target_formation_id && formation->target_formation_id == f->formation_id) {
-        return 1;
-    }
-    return 0;
+    return 1;
 }
 
 int figure_combat_get_missile_target_for_soldier(figure *shooter, int max_distance, map_point *tile)
@@ -375,13 +369,7 @@ static int can_attack_animal(int figure_category, int opponent_category, formati
     if (figure_category != FIGURE_CATEGORY_ARMED || opponent_category != FIGURE_CATEGORY_ANIMAL) {
         return 0;
     }
-    if (config_get(CONFIG_GP_CH_AUTO_KILL_ANIMALS)) {
-        return 1;
-    }
-    if (formation->target_formation_id && formation->target_formation_id == opponent->formation_id) {
-        return 1;
-    }
-    return 0;
+    return 1;
 }
 
 void figure_combat_attack_figure_at(figure *f, int grid_offset)

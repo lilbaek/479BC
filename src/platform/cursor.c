@@ -39,8 +39,7 @@ static const cursor *get_valid_cursor(const cursor *c)
 {
     const cursor *current = c;
     for (int i = 0; i < CURSOR_TYPE_MAX; i++, current++) {
-        if (current->type == CURSOR_TYPE_PNG &&
-            (!config_get(CONFIG_SCREEN_COLOR_CURSORS) || !png_load(current->data))) {
+        if (current->type == CURSOR_TYPE_PNG) {
             continue;
         }
         return current;

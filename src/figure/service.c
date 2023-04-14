@@ -532,9 +532,7 @@ int figure_service_provide_coverage(figure *f)
             houses_serviced = provide_market_goods(f->building_id, x, y);
             break;
         case FIGURE_MARKET_SUPPLIER:
-            if (!config_get(CONFIG_GP_CH_NO_SUPPLIER_DISTRIBUTION)) {
-                houses_serviced = provide_market_goods(f->building_id, x, y);
-            }
+            houses_serviced = provide_market_goods(f->building_id, x, y);
             break;
         case FIGURE_BATHHOUSE_WORKER:
             houses_serviced = provide_culture(x, y, bathhouse_coverage);
