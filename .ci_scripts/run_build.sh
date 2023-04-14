@@ -10,7 +10,7 @@ case "$BUILD_TARGET" in
 	docker exec switchdev /bin/bash -c "cd build && make -j4"
 	;;
 "mac")
-	cp -r res/maps ./build
+	cp -r res/sounds ./build
 	cd build
 	make -j4
 	make install
@@ -18,13 +18,13 @@ case "$BUILD_TARGET" in
 	hdiutil create -volname tiberius -srcfolder tiberius.app -ov -format UDZO tiberius.dmg
 	if [[ "$GITHUB_REF" =~ ^refs/tags/v ]]
 	then
-		zip -r tiberius.zip tiberius.dmg maps manual
+		zip -r tiberius.zip tiberius.dmg sounds manual
 	else
 		zip -r tiberius.zip tiberius.dmg
 	fi
 	;;
 "appimage")
-	cp -r res/maps ./build
+	cp -r res/sounds ./build
 	cd build
 	make -j4
 	make DESTDIR=AppDir install
@@ -32,7 +32,7 @@ case "$BUILD_TARGET" in
 	./.ci_scripts/package_appimage.sh
 	if [[ "$GITHUB_REF" =~ ^refs/tags/v ]]	
 	then
-		zip -r tiberius.zip . -i tiberius.AppImage maps manual
+		zip -r tiberius.zip . -i tiberius.AppImage sounds manual
 	else
 		zip -r tiberius.zip . -i tiberius.AppImage
 	fi
@@ -44,11 +44,11 @@ case "$BUILD_TARGET" in
 	else
 		cp -r res/assets ./build
 	fi
-	cp -r res/maps ./build
+	cp -r res/sounds ./build
 	cd build && make -j4
 	if [[ "$GITHUB_REF" =~ ^refs/tags/v ]]
 	then
-		zip -r tiberius.zip tiberius assets maps manual
+		zip -r tiberius.zip tiberius assets sounds manual
 	else
 		zip -r tiberius.zip tiberius
 	fi
