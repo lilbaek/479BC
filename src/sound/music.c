@@ -5,10 +5,11 @@
 #include "city/population.h"
 #include "game/settings.h"
 #include "sound/device.h"
+#include "platform/file_manager.h"
 
 enum {
     TRACK_NONE = 0,
-    TRACK_CITY_1 = 1,
+    TRACK_1 = 1,
     TRACK_CITY_2 = 2,
     TRACK_CITY_3 = 3,
     TRACK_CITY_4 = 4,
@@ -26,7 +27,7 @@ static struct {
 
 static const char mp3_tracks[][32] = {
     "",
-    "music/1.mp3",
+    "music/track1.mp3",
 };
 
 void sound_music_set_volume(int percentage)
@@ -40,26 +41,16 @@ static void play_track(int track)
     if (track <= TRACK_NONE || track >= TRACK_MAX) {
         return;
     }
-    return; // TODO add music
-    /*
     const char *mp3_track = platform_file_manager_asset_path(mp3_tracks[track]);
-
     int volume = setting_sound(SOUND_MUSIC)->volume;
     sound_device_play_music(mp3_track, volume);
-    data.current_track = track;*/
+    data.current_track = track;
 }
 
 void sound_music_play_intro(void)
 {
     if (setting_sound(SOUND_MUSIC)->enabled) {
-        play_track(TRACK_INTRO);
-    }
-}
-
-void sound_music_play_editor(void)
-{
-    if (setting_sound(SOUND_MUSIC)->enabled) {
-        play_track(TRACK_CITY_1);
+        play_track(TRACK_1);
     }
 }
 
@@ -80,7 +71,7 @@ void sound_music_update(int force)
     } else if (total_enemies > 0) {
         track = TRACK_COMBAT_SHORT;
     } else if (population < 1000) {
-        track = TRACK_CITY_1;
+        track = TRACK_1;
     } else if (population < 2000) {
         track = TRACK_CITY_2;
     } else if (population < 5000) {
@@ -95,7 +86,7 @@ void sound_music_update(int force)
         return;
     }
 
-    play_track(track);
+    play_track(TRACK_1);
     data.next_check = 10;
 }
 
