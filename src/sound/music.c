@@ -1,23 +1,16 @@
 #include "music.h"
 
-#include "core/dir.h"
-#include "city/figures.h"
 #include "city/population.h"
-#include "game/settings.h"
 #include "sound/device.h"
 #include "platform/file_manager.h"
+#include "core/config.h"
 
 enum {
     TRACK_NONE = 0,
-    TRACK_1 = 1,
-    TRACK_CITY_2 = 2,
-    TRACK_CITY_3 = 3,
-    TRACK_CITY_4 = 4,
-    TRACK_CITY_5 = 5,
-    TRACK_COMBAT_SHORT = 6,
-    TRACK_COMBAT_LONG = 7,
-    TRACK_INTRO = 8,
-    TRACK_MAX = 9
+    TRACK_INTRO = 1,
+    TRACK_CITY_1 = 2,
+    TRACK_CITY_2 = 3,
+    TRACK_MAX = 4
 };
 
 static struct {
@@ -28,6 +21,8 @@ static struct {
 static const char mp3_tracks[][32] = {
     "",
     "music/track1.mp3",
+    "music/track2.mp3",
+    "music/track3.mp3",
 };
 
 void sound_music_set_volume(int percentage)
@@ -42,15 +37,15 @@ static void play_track(int track)
         return;
     }
     const char *mp3_track = platform_file_manager_asset_path(mp3_tracks[track]);
-    int volume = setting_sound(SOUND_MUSIC)->volume;
+    int volume = config_get(CONFIG_GENERAL_MUSIC_VOLUME);
     sound_device_play_music(mp3_track, volume);
     data.current_track = track;
 }
 
 void sound_music_play_intro(void)
 {
-    if (setting_sound(SOUND_MUSIC)->enabled) {
-        play_track(TRACK_1);
+    if (config_get(CONFIG_GENERAL_ENABLE_MUSIC)) {
+        play_track(TRACK_INTRO);
     }
 }
 
@@ -60,33 +55,27 @@ void sound_music_update(int force)
         --data.next_check;
         return;
     }
-    if (!setting_sound(SOUND_MUSIC)->enabled) {
+    if (!config_get(CONFIG_GENERAL_ENABLE_MUSIC)) {
         return;
     }
     int track;
     int population = city_population();
-    int total_enemies = city_figures_total_invading_enemies();
-    if (total_enemies >= 32) {
-        track = TRACK_COMBAT_LONG;
-    } else if (total_enemies > 0) {
-        track = TRACK_COMBAT_SHORT;
-    } else if (population < 1000) {
-        track = TRACK_1;
-    } else if (population < 2000) {
+    if (population < 1000) {
         track = TRACK_CITY_2;
-    } else if (population < 5000) {
-        track = TRACK_CITY_3;
-    } else if (population < 7000) {
-        track = TRACK_CITY_4;
+    } else if (population < 2000) {
+        track = TRACK_CITY_1;
+    } else if (population < 3000) {
+        track = TRACK_CITY_2;
+    } else if (population < 4000) {
+        track = TRACK_CITY_1;
     } else {
-        track = TRACK_CITY_5;
+        track = TRACK_CITY_1;
     }
 
     if (track == data.current_track) {
         return;
     }
-
-    play_track(TRACK_1);
+    play_track(track);
     data.next_check = 10;
 }
 
