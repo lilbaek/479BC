@@ -9,7 +9,6 @@
 #include "core/config.h"
 #include "core/lang.h"
 #include "game/file.h"
-#include "game/settings.h"
 #include "game/state.h"
 #include "game/system.h"
 #include "game/time.h"
@@ -141,7 +140,7 @@ static void clear_state(void)
 
 static void set_text_for_monthly_autosave(void)
 {
-    menu_update_text(&menu[INDEX_OPTIONS], 5, setting_monthly_autosave() ? 51 : 52);
+    //menu_update_text(&menu[INDEX_OPTIONS], 5, setting_monthly_autosave() ? 51 : 52);
 }
 
 static void set_text_for_yearly_autosave(void)
@@ -153,26 +152,13 @@ static void set_text_for_yearly_autosave(void)
 
 static void set_text_for_tooltips(void)
 {
-    int new_text;
-    switch (setting_tooltips()) {
-        case TOOLTIPS_NONE:
-            new_text = 2;
-            break;
-        case TOOLTIPS_SOME:
-            new_text = 3;
-            break;
-        case TOOLTIPS_FULL:
-            new_text = 4;
-            break;
-        default:
-            return;
-    }
+    int new_text = 4;
     menu_update_text(&menu[INDEX_HELP], 1, new_text);
 }
 
 static void set_text_for_warnings(void)
 {
-    menu_update_text(&menu[INDEX_HELP], 2, setting_warnings() ? 6 : 5);
+    //menu_update_text(&menu[INDEX_HELP], 2, setting_warnings() ? 6 : 5);
 }
 
 static void init(void)
@@ -542,7 +528,7 @@ static void menu_options_hotkeys(int param)
 
 static void menu_options_monthly_autosave(int param)
 {
-    setting_toggle_monthly_autosave();
+  //  setting_toggle_monthly_autosave();
     set_text_for_monthly_autosave();
 }
 
@@ -561,13 +547,13 @@ static void menu_help_help(int param)
 
 static void menu_help_mouse_help(int param)
 {
-    setting_cycle_tooltips();
+   // setting_cycle_tooltips();
     set_text_for_tooltips();
 }
 
 static void menu_help_warnings(int param)
 {
-    setting_toggle_warnings();
+   // setting_toggle_warnings();
     set_text_for_warnings();
 }
 

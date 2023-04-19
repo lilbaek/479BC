@@ -1,7 +1,7 @@
 #include "difficulty.h"
 
 #include "core/calc.h"
-#include "game/settings.h"
+#include "core/config.h"
 
 static const struct {
     int money;
@@ -25,42 +25,42 @@ static const struct {
 
 int difficulty_starting_favor(void)
 {
-    return data[setting_difficulty()].starting_favor;
+    return data[config_get(CONFIG_GP_DIFFICULTY)].starting_favor;
 }
 
 int difficulty_sentiment(void)
 {
-    return data[setting_difficulty()].sentiment;
+    return data[config_get(CONFIG_GP_DIFFICULTY)].sentiment;
 }
 
 int difficulty_base_tax_rate(void)
 {
-    return data[setting_difficulty()].base_tax_rate;
+    return data[config_get(CONFIG_GP_DIFFICULTY)].base_tax_rate;
 }
 
 int difficulty_adjust_money(int money)
 {
-    return calc_adjust_with_percentage(money, data[setting_difficulty()].money);
+    return calc_adjust_with_percentage(money, data[config_get(CONFIG_GP_DIFFICULTY)].money);
 }
 
 int difficulty_adjust_enemies(int enemies)
 {
-    return calc_adjust_with_percentage(enemies, data[setting_difficulty()].enemies);
+    return calc_adjust_with_percentage(enemies, data[config_get(CONFIG_GP_DIFFICULTY)].enemies);
 }
 
 int difficulty_adjust_levies(int amount)
 {
-    return calc_adjust_with_percentage(amount, data[setting_difficulty()].levies);
+    return calc_adjust_with_percentage(amount, data[config_get(CONFIG_GP_DIFFICULTY)].levies);
 }
 
 int difficulty_adjust_soldier_food_consumption(int amount)
 {
-    return amount + data[setting_difficulty()].food_per_soldier;
+    return amount + data[config_get(CONFIG_GP_DIFFICULTY)].food_per_soldier;
 }
 
 int difficulty_adjust_wolf_attack(int attack)
 {
-    switch (setting_difficulty()) {
+    switch (config_get(CONFIG_GP_DIFFICULTY)) {
         case DIFFICULTY_VERY_EASY: return 2;
         case DIFFICULTY_EASY: return 4;
         case DIFFICULTY_NORMAL: return 6;
@@ -70,20 +70,20 @@ int difficulty_adjust_wolf_attack(int attack)
 
 int difficulty_favor_to_pause_emperor_attack(void)
 {
-    return data[setting_difficulty()].favor_to_pause_emperor_attack;
+    return data[config_get(CONFIG_GP_DIFFICULTY)].favor_to_pause_emperor_attack;
 }
 
 int difficulty_favor_to_stop_emperor_attack(void)
 {
-    return data[setting_difficulty()].favor_to_stop_emperor_attack;
+    return data[config_get(CONFIG_GP_DIFFICULTY)].favor_to_stop_emperor_attack;
 }
 
 int difficulty_random_event_cooldown_months(void)
 {
-    return data[setting_difficulty()].random_events_cooldown_months;
+    return data[config_get(CONFIG_GP_DIFFICULTY)].random_events_cooldown_months;
 }
 
 int difficulty_high_salary_punishment(void)
 {
-    return data[setting_difficulty()].high_salary_punishment;
+    return data[config_get(CONFIG_GP_DIFFICULTY)].high_salary_punishment;
 }

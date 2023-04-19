@@ -5,7 +5,6 @@
 #include "city/festival.h"
 #include "city/gods.h"
 #include "city/houses.h"
-#include "game/settings.h"
 #include "graphics/generic_button.h"
 #include "graphics/image.h"
 #include "graphics/lang_text.h"

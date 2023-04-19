@@ -15,6 +15,9 @@
 #include "map/routing_terrain.h"
 #include "map/terrain.h"
 #include "map/tiles.h"
+#include "map/building_tiles.h"
+#include "image.h"
+#include "map/image.h"
 
 #define DEVOLVE_DELAY 2
 #define DEVOLVE_DELAY_WITH_VENUS 20
@@ -208,10 +211,9 @@ static int has_devolve_delay(building *house, evolve_status status)
 static int evolve_small_tent(building *house, house_demands *demands)
 {
     if (house->house_population > 0) {
-        building_house_merge(house);
         evolve_status status = check_requirements(house, demands);
         if (status == EVOLVE) {
-            building_house_change_to(house, BUILDING_HOUSE_LARGE_TENT);
+            building_house_change_to(house, BUILDING_HOUSE_SMALL_HOVEL);
         }
     }
     return 0;
@@ -220,7 +222,6 @@ static int evolve_small_tent(building *house, house_demands *demands)
 static int evolve_large_tent(building *house, house_demands *demands)
 {
     if (house->house_population > 0) {
-        building_house_merge(house);
         evolve_status status = check_requirements(house, demands);
         if (!has_devolve_delay(house, status)) {
             if (status == EVOLVE) {
@@ -235,13 +236,16 @@ static int evolve_large_tent(building *house, house_demands *demands)
 
 static int evolve_small_shack(building *house, house_demands *demands)
 {
-    building_house_merge(house);
     int status = check_requirements(house, demands);
     if (!has_devolve_delay(house, status)) {
         if (status == EVOLVE) {
-            building_house_change_to(house, BUILDING_HOUSE_LARGE_SHACK);
+            building_house_change_to(house, BUILDING_HOUSE_SMALL_HOVEL);
         } else if (status == DEVOLVE) {
-            building_house_change_to(house, BUILDING_HOUSE_LARGE_TENT);
+            if(house->house_is_merged) {
+                split_size2(house, BUILDING_HOUSE_SMALL_TENT);
+            } else {
+                building_house_change_to(house, BUILDING_HOUSE_SMALL_TENT);
+            }
         }
     }
     return 0;
@@ -249,13 +253,16 @@ static int evolve_small_shack(building *house, house_demands *demands)
 
 static int evolve_large_shack(building *house, house_demands *demands)
 {
-    building_house_merge(house);
     int status = check_requirements(house, demands);
     if (!has_devolve_delay(house, status)) {
         if (status == EVOLVE) {
             building_house_change_to(house, BUILDING_HOUSE_SMALL_HOVEL);
         } else if (status == DEVOLVE) {
-            building_house_change_to(house, BUILDING_HOUSE_SMALL_SHACK);
+            if(house->house_is_merged) {
+                split_size2(house, BUILDING_HOUSE_SMALL_SHACK);
+            } else {
+                building_house_change_to(house, BUILDING_HOUSE_SMALL_SHACK);
+            }
         }
     }
     return 0;
@@ -263,11 +270,10 @@ static int evolve_large_shack(building *house, house_demands *demands)
 
 static int evolve_small_hovel(building *house, house_demands *demands)
 {
-    building_house_merge(house);
     int status = check_requirements(house, demands);
     if (!has_devolve_delay(house, status)) {
-        if (status == EVOLVE) {
-            building_house_change_to(house, BUILDING_HOUSE_LARGE_HOVEL);
+        if (status == EVOLVE && house->data.house.education >= 1  && house->data.house.num_foods > 1) {
+            building_house_change_to(house, BUILDING_HOUSE_SMALL_CASA);
         } else if (status == DEVOLVE) {
             building_house_change_to(house, BUILDING_HOUSE_LARGE_TENT);
         }
@@ -277,13 +283,16 @@ static int evolve_small_hovel(building *house, house_demands *demands)
 
 static int evolve_large_hovel(building *house, house_demands *demands)
 {
-    building_house_merge(house);
     int status = check_requirements(house, demands);
     if (!has_devolve_delay(house, status)) {
         if (status == EVOLVE) {
             building_house_change_to(house, BUILDING_HOUSE_SMALL_CASA);
         } else if (status == DEVOLVE) {
-            building_house_change_to(house, BUILDING_HOUSE_SMALL_HOVEL);
+            if(house->house_is_merged) {
+                split_size2(house, BUILDING_HOUSE_SMALL_HOVEL);
+            } else {
+                building_house_change_to(house, BUILDING_HOUSE_SMALL_HOVEL);
+            }
         }
     }
     return 0;
@@ -297,11 +306,16 @@ static int evolve_small_casa(building *house, house_demands *demands)
         if (status == EVOLVE) {
             building_house_change_to(house, BUILDING_HOUSE_LARGE_CASA);
         } else if (status == DEVOLVE) {
-            building_house_change_to(house, BUILDING_HOUSE_LARGE_HOVEL);
+            if(house->house_is_merged) {
+                split_size2(house, BUILDING_HOUSE_SMALL_HOVEL);
+            } else {
+                building_house_change_to(house, BUILDING_HOUSE_SMALL_HOVEL);
+            }
         }
     }
     return 0;
 }
+
 
 static int evolve_large_casa(building *house, house_demands *demands)
 {

@@ -2,7 +2,6 @@
 
 #include "building/type.h"
 #include "city/constants.h"
-#include "game/settings.h"
 #include "game/state.h"
 #include "game/system.h"
 #include "graphics/screenshot.h"
@@ -11,6 +10,7 @@
 #include "window/popup_dialog.h"
 #include "translation/translation.h"
 #include "window/settings_hotkey_editor.h"
+#include "core/config.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -585,13 +585,8 @@ void hotkey_handle_global_keys(void)
     if (data.global_hotkey_state.center_screen) {
         system_center();
     }
-    if (data.global_hotkey_state.resize_to) {
-        switch (data.global_hotkey_state.resize_to) {
-            case 1024: system_resize(1024, 768); break;
-        }
-    }
     if (data.global_hotkey_state.toggle_fullscreen) {
-        system_set_fullscreen(!setting_fullscreen());
+        system_set_fullscreen(!config_get(CONFIG_SCREEN_FULLSCREEN));
     }
     if (data.global_hotkey_state.save_screenshot) {
         graphics_save_screenshot(SCREENSHOT_DISPLAY);

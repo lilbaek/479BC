@@ -19,7 +19,6 @@
 #include "figure/formation_legion.h"
 #include "figure/roamer_preview.h"
 #include "game/orientation.h"
-#include "game/settings.h"
 #include "game/state.h"
 #include "game/time.h"
 #include "game/undo.h"
