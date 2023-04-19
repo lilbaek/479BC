@@ -15,7 +15,6 @@
 #include "core/random.h"
 #include "figure/formation_legion.h"
 #include "figuretype/water.h"
-#include "game/settings.h"
 #include "game/time.h"
 #include "scenario/property.h"
 #include "scenario/invasion.h"
@@ -236,7 +235,7 @@ static void update_god_moods(void)
             god_id = city_data.religion.least_happy_god - 1;
         }
     }
-    if (!setting_gods_enabled()) {
+    if (!config_get(CONFIG_GP_GODS)) {
         return;
     }
 

@@ -15,7 +15,6 @@
 #include "graphics/screen.h"
 #include "graphics/image.h"
 #include "assets/assets.h"
-#include "game/settings.h"
 #include "core/config.h"
 #include "game/system.h"
 #include "sound/speech.h"

@@ -4,7 +4,6 @@
 #include "core/calc.h"
 #include "core/config.h"
 #include "core/image.h"
-#include "game/settings.h"
 #include "game/system.h"
 #include "graphics/graphics.h"
 #include "graphics/menu.h"
@@ -195,7 +194,8 @@ int platform_screen_resize(int pixel_width, int pixel_height, int save)
     int logical_height = scale_pixels_to_logical(pixel_height);
 
     if (save) {
-        setting_set_display(config_get(CONFIG_SCREEN_FULLSCREEN), logical_width, logical_height);
+        config_set(CONFIG_SCREEN_WIDTH, logical_width);
+        config_set(CONFIG_SCREEN_HEIGHT, logical_height);
     }
 
     if (platform_renderer_create_render_texture(logical_width, logical_height)) {
@@ -249,7 +249,9 @@ void platform_screen_set_fullscreen(void)
         SDL_SetWindowGrab(SDL.window, SDL_TRUE);
     }
 #endif
-    setting_set_display(1, mode.w, mode.h);
+    config_set(CONFIG_SCREEN_WIDTH, mode.w);
+    config_set(CONFIG_SCREEN_HEIGHT, mode.h);
+    config_set(CONFIG_SCREEN_FULLSCREEN, 1);
 }
 
 void platform_screen_set_windowed(void)

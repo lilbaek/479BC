@@ -11,7 +11,6 @@
 #include "editor/editor.h"
 #include "game/animation.h"
 #include "game/file_editor.h"
-#include "game/settings.h"
 #include "game/speed.h"
 #include "game/state.h"
 #include "game/tick.h"
@@ -70,7 +69,6 @@ static encoding_type update_encoding(void)
 int game_pre_init(void)
 {
     SDL_Log("Running game_pre_init");
-    settings_load();
     SDL_Log("Running settings_load");
     scenario_settings_init();
     SDL_Log("Running scenario_settings_init");
@@ -273,7 +271,6 @@ void game_draw(void)
 
 void game_exit(void)
 {
-    settings_save();
     config_save();
     sound_system_shutdown();
 }

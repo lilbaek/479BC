@@ -6,10 +6,10 @@
 const model_house MODEL_SMALL_TENT = { -99,-10,0,0,0,0,0,0,0,1,0,0,0,0,3,5,1, };
 const model_house MODEL_LARGE_TENT = { -12,-5,0,1,0,0,0,0,0,1,0,0,0,0,3,7,1, };
 const model_house MODEL_SMALL_SHACK = { -7,0,0,1,0,0,1,0,0,1,0,0,0,0,3,9,1, };
-const model_house MODEL_LARGE_SHACK = { -6,0,1,1,0,1,0,0,1,0,0,0,0,3,11,1, };
-const model_house MODEL_SMALL_HOVEL = { -6,4,0,1,1,0,1,0,0,2,0,0,0,0,3,13,2, };
-const model_house MODEL_LARGE_HOVEL = { 6,12,10,1,1,0,1,0,0,2,0,0,0,0,3,15,2, };
-const model_house MODEL_SMALL_CASA = { 10,16,10,2,1,1,1,0,0,2,0,0,0,0,2,17,2, };
+const model_house MODEL_LARGE_SHACK = { -6,0,1,1,0,0,1,0,0,1,0,0,0,0,3,9, 1};
+const model_house MODEL_SMALL_HOVEL = { -6,12,1,1,1,0,1,0,0,1,0,0,0,0,3,13,2, };
+const model_house MODEL_LARGE_HOVEL = { 6,12,10,1,1,0,1,0,0,1,0,0,0,0,3,15,2, };
+const model_house MODEL_SMALL_CASA = { 8,16,10,2,1,1,1,0,0,2,0,0,0,0,2,17,2, };
 const model_house MODEL_LARGE_CASA = { 14,20,10,2,1,1,1,1,0,2,1,0,0,0,2,19,2, };
 const model_house MODEL_SMALL_INSULA = { 18,25,25,2,1,1,1,1,0,3,1,0,0,0,2,19,3, };
 const model_house MODEL_MEDIUM_INSULA = { 22,32,25,2,1,1,1,1,1,3,1,0,1,0,2,20,3, };

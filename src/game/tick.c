@@ -38,7 +38,6 @@
 #include "figure/formation.h"
 #include "figuretype/crime.h"
 #include "game/file.h"
-#include "game/settings.h"
 #include "game/time.h"
 #include "game/tutorial.h"
 #include "game/undo.h"
@@ -112,9 +111,7 @@ static void advance_month(void)
     city_games_decrement_month_counts();
     city_gods_update_blessings();
     tutorial_on_month_tick();
-    if (setting_monthly_autosave()) {
-        game_file_write_saved_game("autosave.fvx");
-    }
+    game_file_write_saved_game("autosave.fvx");
     if (new_year && config_get(CONFIG_GP_CH_YEARLY_AUTOSAVE)) {
         game_file_write_saved_game("autosave-year.fvx");
     }

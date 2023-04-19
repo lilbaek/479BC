@@ -6,7 +6,6 @@
 #include "core/lang.h"
 #include "core/string.h"
 #include "core/time.h"
-#include "game/settings.h"
 #include "graphics/graphics.h"
 #include "graphics/lang_text.h"
 #include "graphics/screen.h"
@@ -45,10 +44,6 @@ static void reset_timer(void)
 static int should_draw_tooltip(tooltip_context *c)
 {
     if (c->type == TOOLTIP_NONE) {
-        reset_timer();
-        return 0;
-    }
-    if (!c->high_priority && setting_tooltips() != TOOLTIPS_FULL) {
         reset_timer();
         return 0;
     }
@@ -363,7 +358,7 @@ void tooltip_handle(const mouse *m, void (*func)(tooltip_context *))
     }
     tooltip_context context = {m->x, m->y};
     context.text_group = DEFAULT_TEXT_GROUP;
-    if (setting_tooltips() && func) {
+    if (func) {
         func(&context);
     }
     if (should_draw_tooltip(&context)) {
