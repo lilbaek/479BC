@@ -77,7 +77,7 @@ static int default_values[CONFIG_MAX_ENTRIES] = {
         [CONFIG_UI_HIGHLIGHT_LEGIONS] = 1,
         [CONFIG_SCREEN_DISPLAY_SCALE] = 100,
         [CONFIG_SCREEN_CURSOR_SCALE] = 100,
-        [CONFIG_GP_GAME_SPEED] = 100,
+        [CONFIG_GP_GAME_SPEED] = 80,
         [CONFIG_GP_SCROLL_SPEED] = 100,
         [CONFIG_GP_DIFFICULTY] = DIFFICULTY_NORMAL,
         [CONFIG_GP_GODS] = 1,
@@ -108,7 +108,7 @@ int config_get_default_value(config_key key) {
 }
 
 void setting_set_default_game_speed(void) {
-    values[CONFIG_GP_GAME_SPEED] = 100;
+    values[CONFIG_GP_GAME_SPEED] = 80;
 }
 
 int setting_game_speed(void)

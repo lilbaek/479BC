@@ -170,7 +170,7 @@ static void initialize_scenario_data(const uint8_t *scenario_name)
 
     city_data_init_scenario();
 
-    config_set(CONFIG_GP_GAME_SPEED, 100);
+    setting_set_default_game_speed();
     game_state_unpause();
 }
 
@@ -243,7 +243,7 @@ static void initialize_saved_game(void)
 
     city_message_clear_scroll();
 
-    config_set(CONFIG_GP_GAME_SPEED, 100);
+    setting_set_default_game_speed();
 
     game_state_unpause();
 }
