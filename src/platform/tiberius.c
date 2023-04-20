@@ -7,7 +7,6 @@
 #include "core/log.h"
 #include "core/time.h"
 #include "game/game.h"
-#include "game/settings.h"
 #include "game/system.h"
 #include "graphics/screen.h"
 #include "graphics/window.h"
@@ -527,13 +526,6 @@ static void setup(const Tiberius_args *args) {
     if (!pre_init(args->data_directory)) {
         SDL_Log("Exiting: game pre-init failed");
         exit_with_status(1);
-    }
-
-    if (args->force_windowed && config_get(CONFIG_SCREEN_FULLSCREEN)) {
-        int w, h;
-        setting_window(&w, &h);
-        setting_set_display(0, w, h);
-        SDL_Log("Forcing windowed mode with size %d x %d", w, h);
     }
 
     // handle arguments

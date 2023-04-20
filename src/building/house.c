@@ -261,7 +261,7 @@ static void create_splitted_house_tile(building *main_house, building_type type,
                            building_image_get(house), TERRAIN_BUILDING);
 }
 
-static void split_size2(building *house, building_type new_type) {
+void split_size2(building *house, building_type new_type) {
     int inventory_per_tile[RESOURCE_MAX];
     int inventory_remainder[RESOURCE_MAX];
     for (int i = 0; i < RESOURCE_MAX; i++) {
@@ -330,7 +330,8 @@ static void split_size3(building *house) {
     create_splitted_house_tile(house, house->type, house->x + 2, house->y + 2, population_per_tile, inventory_per_tile);
 }
 
-static void split(building *house, int num_tiles) {
+
+void split(building *house, int num_tiles) {
     int grid_offset = map_grid_offset(merge_data.x, merge_data.y);
     for (int i = 0; i < num_tiles; i++) {
         int tile_offset = grid_offset + HOUSE_TILE_OFFSETS[i];

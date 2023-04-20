@@ -6,7 +6,6 @@
 #include "core/direction.h"
 #include "core/speed.h"
 #include "core/time.h"
-#include "game/settings.h"
 #include "game/system.h"
 #include "graphics/screen.h"
 #include "input/touch.h"
@@ -178,7 +177,7 @@ int scroll_in_progress(void)
 
 static int get_scroll_speed_factor(void)
 {
-    return calc_bound((100 - setting_scroll_speed()) / 10, 0, 10);
+    return calc_bound((100 - config_get(CONFIG_GP_SCROLL_SPEED)) / 10, 0, 10);
 }
 
 int scroll_is_smooth(void)

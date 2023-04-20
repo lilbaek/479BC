@@ -11,90 +11,35 @@
     <image id="overlay_01" src="overlay_01"/>
     <image id="overlay_02" src="overlay_02"/>
     <image id="overlay_03" src="overlay_03"/>
-    <image id="overlay_04" src="overlay_04"/>
-    <image id="overlay_05" src="overlay_05"/>
-    <image id="overlay_06" src="overlay_06"/>
-    <image id="overlay_07" src="overlay_07"/>
-    <image id="overlay_08" src="overlay_08"/>
-    <image id="overlay_09" src="overlay_09"/>
-    <image id="overlay_10" src="overlay_10"/>
-    <image id="overlay_11" src="overlay_11"/>
-    <image id="overlay_12" src="overlay_12"/>
-    <image id="overlay_13" src="overlay_13"/>
-    <image id="overlay_14" src="overlay_14"/>
-    <image id="overlay_15" src="overlay_15"/>
-    <image id="overlay_16" src="overlay_16"/>
-    <image id="overlay_17" src="overlay_17"/>
-    <image id="overlay_18" src="overlay_18"/>
-    <image id="overlay_19" src="overlay_19"/>
-    <image id="overlay_20" src="overlay_20"/>
-    <image id="overlay_21" src="overlay_21"/>
-    <image id="overlay_22" src="overlay_22"/>
-    <image id="overlay_23" src="overlay_23"/>
-    <image id="overlay_24" src="overlay_24"/>
-    <image id="overlay_25" src="overlay_25"/>
-    <image id="overlay_26" src="overlay_26"/>
-    <image id="overlay_27" src="overlay_27"/>
-    <image id="overlay_28" src="overlay_28"/>
-    <image id="overlay_29" src="overlay_29"/>
-    <image id="overlay_30" src="overlay_30"/>
-    <image id="overlay_31" src="overlay_31"/>
-    <image id="overlay_32" src="overlay_32"/>
-    <image id="overlay_33" src="overlay_33"/>
-    <image id="overlay_34" src="overlay_34"/>
-    <image id="overlay_35" src="overlay_35"/>
-    <image id="overlay_36" src="overlay_36"/>
-    <image id="overlay_37" src="overlay_37"/>
-    <image id="overlay_38" src="overlay_38"/>
-    <image id="overlay_39" src="overlay_39"/>
-    <image id="overlay_40" src="overlay_40"/>
-    <image id="overlay_41" src="overlay_41"/>
-    <image id="overlay_42" src="overlay_42"/>
-    <image id="overlay_43" src="overlay_43"/>
     <image id="overlay" src="overlay_01">
       <layer group="this" image="overlay_01" x="0" y="0"/>
       <layer group="this" image="overlay_02" x="0" y="0"/>
       <layer group="this" image="overlay_03" x="0" y="0"/>
-      <layer group="this" image="overlay_04" x="0" y="0"/>
-      <layer group="this" image="overlay_05" x="0" y="0"/>
-      <layer group="this" image="overlay_06" x="0" y="0"/>
-      <layer group="this" image="overlay_07" x="0" y="0"/>
-      <layer group="this" image="overlay_08" x="0" y="0"/>
-      <layer group="this" image="overlay_09" x="0" y="0"/>
-      <layer group="this" image="overlay_10" x="0" y="0"/>
-      <layer group="this" image="overlay_11" x="0" y="0"/>
-      <layer group="this" image="overlay_12" x="0" y="0"/>
-      <layer group="this" image="overlay_13" x="0" y="0"/>
-      <layer group="this" image="overlay_14" x="0" y="0"/>
-      <layer group="this" image="overlay_15" x="0" y="0"/>
-      <layer group="this" image="overlay_16" x="0" y="0"/>
-      <layer group="this" image="overlay_17" x="0" y="0"/>
-      <layer group="this" image="overlay_18" x="0" y="0"/>
-      <layer group="this" image="overlay_19" x="0" y="0"/>
-      <layer group="this" image="overlay_20" x="0" y="0"/>
-      <layer group="this" image="overlay_21" x="0" y="0"/>
-      <layer group="this" image="overlay_22" x="0" y="0"/>
-      <layer group="this" image="overlay_23" x="0" y="0"/>
-      <layer group="this" image="overlay_24" x="0" y="0"/>
-      <layer group="this" image="overlay_25" x="0" y="0"/>
-      <layer group="this" image="overlay_26" x="0" y="0"/>
-      <layer group="this" image="overlay_27" x="0" y="0"/>
-      <layer group="this" image="overlay_28" x="0" y="0"/>
-      <layer group="this" image="overlay_29" x="0" y="0"/>
-      <layer group="this" image="overlay_30" x="0" y="0"/>
-      <layer group="this" image="overlay_31" x="0" y="0"/>
-      <layer group="this" image="overlay_32" x="0" y="0"/>
-      <layer group="this" image="overlay_33" x="0" y="0"/>
-      <layer group="this" image="overlay_34" x="0" y="0"/>
-      <layer group="this" image="overlay_35" x="0" y="0"/>
-      <layer group="this" image="overlay_36" x="0" y="0"/>
-      <layer group="this" image="overlay_37" x="0" y="0"/>
-      <layer group="this" image="overlay_38" x="0" y="0"/>
-      <layer group="this" image="overlay_39" x="0" y="0"/>
-      <layer group="this" image="overlay_40" x="0" y="0"/>
-      <layer group="this" image="overlay_41" x="0" y="0"/>
-      <layer group="this" image="overlay_42" x="0" y="0"/>
-      <layer group="this" image="overlay_43" x="0" y="0"/>
+    </image>
+    <!-- Files related to overlayother -->
+    <image id="overlayother_01" src="overlayother_01"/>
+    <image id="overlayother_02" src="overlayother_02"/>
+    <image id="overlayother_03" src="overlayother_03"/>
+    <image id="overlayother_04" src="overlayother_04"/>
+    <image id="overlayother_05" src="overlayother_05"/>
+    <image id="overlayother_06" src="overlayother_06"/>
+    <image id="overlayother_07" src="overlayother_07"/>
+    <image id="overlayother_08" src="overlayother_08"/>
+    <image id="overlayother_09" src="overlayother_09"/>
+    <image id="overlayother_10" src="overlayother_10"/>
+    <image id="overlayother_11" src="overlayother_11"/>
+    <image id="overlayother" src="overlayother_01">
+      <layer group="this" image="overlayother_01" x="0" y="0"/>
+      <layer group="this" image="overlayother_02" x="0" y="0"/>
+      <layer group="this" image="overlayother_03" x="0" y="0"/>
+      <layer group="this" image="overlayother_04" x="0" y="0"/>
+      <layer group="this" image="overlayother_05" x="0" y="0"/>
+      <layer group="this" image="overlayother_06" x="0" y="0"/>
+      <layer group="this" image="overlayother_07" x="0" y="0"/>
+      <layer group="this" image="overlayother_08" x="0" y="0"/>
+      <layer group="this" image="overlayother_09" x="0" y="0"/>
+      <layer group="this" image="overlayother_10" x="0" y="0"/>
+      <layer group="this" image="overlayother_11" x="0" y="0"/>
     </image>
     <!-- Files related to plaza -->
     <image id="plaza_01" width="116" height="60" isometric="true">

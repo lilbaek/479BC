@@ -3,7 +3,6 @@
 #include "core/file.h"
 #include "core/log.h"
 #include "sound/device.h"
-#include "game/settings.h"
 #include "platform/platform.h"
 #include "platform/vita/vita.h"
 
@@ -308,108 +307,4 @@ void sound_device_stop_channel(int channel)
             ch->chunk = 0;
         }
     }
-}
-
-static void free_custom_audio_stream(void)
-{
-#ifdef USE_SDL_AUDIOSTREAM
-    if (custom_music.use_audiostream) {
-        if (custom_music.stream) {
-            SDL_FreeAudioStream(custom_music.stream);
-            custom_music.stream = 0;
-        }
-        return;
-    }
-#endif
-
-    if (custom_music.buffer) {
-        free(custom_music.buffer);
-        custom_music.buffer = 0;
-    }
-}
-
-static int create_custom_audio_stream(SDL_AudioFormat src_format, Uint8 src_channels, int src_rate,
-    SDL_AudioFormat dst_format, Uint8 dst_channels, int dst_rate)
-{
-    free_custom_audio_stream();
-
-    custom_music.dst_format = dst_format;
-
-#ifdef USE_SDL_AUDIOSTREAM
-    if (custom_music.use_audiostream) {
-        custom_music.stream = SDL_NewAudioStream(
-            src_format, src_channels, src_rate,
-            dst_format, dst_channels, dst_rate
-        );
-        return custom_music.stream != 0;
-    }
-#endif
-
-    int result = SDL_BuildAudioCVT(
-        &custom_music.cvt, src_format, src_channels, src_rate,
-        dst_format, dst_channels, dst_rate
-    );
-    if (result < 0) {
-        return 0;
-    }
-
-    // Allocate buffer large enough for 2 seconds of 16-bit audio
-    custom_music.buffer_size = dst_rate * dst_channels * 2 * 2;
-    custom_music.buffer = malloc(custom_music.buffer_size);
-    if (!custom_music.buffer) {
-        return 0;
-    }
-    custom_music.cur_read = 0;
-    custom_music.cur_write = 0;
-    return 1;
-}
-
-static int custom_audio_stream_active(void)
-{
-#ifdef USE_SDL_AUDIOSTREAM
-    if (custom_music.use_audiostream) {
-        return custom_music.stream != 0;
-    }
-#endif
-    return custom_music.buffer != 0;
-}
-
-static int put_custom_audio_stream(const void *audio_data, int len)
-{
-    if (!audio_data || len <= 0 || !custom_audio_stream_active()) {
-        return 0;
-    }
-
-#ifdef USE_SDL_AUDIOSTREAM
-    if (custom_music.use_audiostream) {
-        return SDL_AudioStreamPut(custom_music.stream, audio_data, len) == 0;
-    }
-#endif
-
-    // Convert audio to SDL format
-    custom_music.cvt.buf = (Uint8 *) malloc((size_t) (len * custom_music.cvt.len_mult));
-    if (!custom_music.cvt.buf) {
-        return 0;
-    }
-    memcpy(custom_music.cvt.buf, audio_data, len);
-    custom_music.cvt.len = len;
-    SDL_ConvertAudio(&custom_music.cvt);
-    int converted_len = custom_music.cvt.len_cvt;
-
-    // Copy data to circular buffer
-    if (converted_len + custom_music.cur_write <= custom_music.buffer_size) {
-        memcpy(&custom_music.buffer[custom_music.cur_write], custom_music.cvt.buf, converted_len);
-    } else {
-        int end_len = custom_music.buffer_size - custom_music.cur_write;
-        memcpy(&custom_music.buffer[custom_music.cur_write], custom_music.cvt.buf, end_len);
-        memcpy(custom_music.buffer, &custom_music.cvt.buf[end_len], converted_len - end_len);
-    }
-    custom_music.cur_write = (custom_music.cur_write + converted_len) % custom_music.buffer_size;
-
-    // Clean up
-    free(custom_music.cvt.buf);
-    custom_music.cvt.buf = 0;
-    custom_music.cvt.len = 0;
-
-    return 1;
 }

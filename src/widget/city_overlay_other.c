@@ -470,13 +470,13 @@ static int draw_footprint_water(int x, int y, float scale, int grid_offset)
         int image_offset;
         switch (terrain & (TERRAIN_RESERVOIR_RANGE | TERRAIN_FOUNTAIN_RANGE)) {
             case TERRAIN_RESERVOIR_RANGE | TERRAIN_FOUNTAIN_RANGE:
-                image_offset = 24;
+                image_offset = 2;
                 break;
             case TERRAIN_RESERVOIR_RANGE:
-                image_offset = 8;
+                image_offset = 1;
                 break;
             case TERRAIN_FOUNTAIN_RANGE:
-                image_offset = 16;
+                image_offset = 2;
                 break;
             default:
                 image_offset = 0;
@@ -487,13 +487,13 @@ static int draw_footprint_water(int x, int y, float scale, int grid_offset)
         int image_id = assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_OVERLAY);
         switch (map_terrain_get(grid_offset) & (TERRAIN_RESERVOIR_RANGE | TERRAIN_FOUNTAIN_RANGE)) {
             case TERRAIN_RESERVOIR_RANGE | TERRAIN_FOUNTAIN_RANGE:
-                image_id += 27;
+                image_id += 2;
                 break;
             case TERRAIN_RESERVOIR_RANGE:
-                image_id += 11;
+                image_id += 1;
                 break;
             case TERRAIN_FOUNTAIN_RANGE:
-                image_id += 19;
+                image_id += 2;
                 break;
             default:
                 image_id = map_image_at(grid_offset);

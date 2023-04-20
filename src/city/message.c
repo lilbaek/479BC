@@ -9,7 +9,6 @@
 #include "core/time.h"
 #include "figure/formation.h"
 #include "game/resource.h"
-#include "game/settings.h"
 #include "game/time.h"
 #include "graphics/window.h"
 #include "sound/effect.h"
@@ -197,7 +196,7 @@ void city_message_post(int use_popup, int message_type, int param1, int param2)
         city_warning_show_custom(lang_get_message(text_id)->title.text, NEW_WARNING_SLOT);
         use_popup = 0;
     }
-    if (is_invasion_message(msg->message_type) && setting_game_speed() > 70) {
+    if (is_invasion_message(msg->message_type) && config_get(CONFIG_GP_GAME_SPEED) > 70) {
         setting_set_default_game_speed();
     }
     if (use_popup && window_is(WINDOW_CITY)) {

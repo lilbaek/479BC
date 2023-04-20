@@ -3,22 +3,22 @@
 <!-- Unless specifically mentioned, all assets created by OpenTiberius and copyright by OpenTiberius -->
 <assetlist name="housing">
     <!-- Files related to casa -->
-    <image id="casa_01" width="116" height="72" isometric="true">
+    <image id="casa_01" width="116" height="60" isometric="true">
       <layer src="casa_01"/>
     </image>
     <image id="casa_02" width="116" height="70" isometric="true">
       <layer src="casa_02"/>
     </image>
-    <image id="casa_03" width="116" height="74" isometric="true">
+    <image id="casa_03" width="116" height="70" isometric="true">
       <layer src="casa_03"/>
     </image>
-    <image id="casa_04" width="116" height="84" isometric="true">
+    <image id="casa_04" width="116" height="60" isometric="true">
       <layer src="casa_04"/>
     </image>
     <image id="casa_05" width="236" height="136" isometric="true">
       <layer src="casa_05"/>
     </image>
-    <image id="casa_06" width="236" height="152" isometric="true">
+    <image id="casa_06" width="236" height="136" isometric="true">
       <layer src="casa_06"/>
     </image>
     <!-- Files related to hovel -->
@@ -34,17 +34,11 @@
     <image id="hovel_04" width="116" height="68" isometric="true">
       <layer src="hovel_04"/>
     </image>
-    <image id="hovel_05" width="236" height="142" isometric="true">
-      <layer src="hovel_05"/>
-    </image>
-    <image id="hovel_06" width="236" height="142" isometric="true">
-      <layer src="hovel_06"/>
-    </image>
     <!-- Files related to insula_1 -->
-    <image id="insula_1_01" width="116" height="98" isometric="true">
+    <image id="insula_1_01" width="116" height="116" isometric="true">
       <layer src="insula_1_01"/>
     </image>
-    <image id="insula_1_02" width="116" height="98" isometric="true">
+    <image id="insula_1_02" width="116" height="116" isometric="true">
       <layer src="insula_1_02"/>
     </image>
     <image id="insula_1_03" width="116" height="116" isometric="true">
@@ -99,12 +93,6 @@
     <image id="shack_04" width="116" height="68" isometric="true">
       <layer src="shack_04"/>
     </image>
-    <image id="shack_05" width="236" height="142" isometric="true">
-      <layer src="shack_05"/>
-    </image>
-    <image id="shack_06" width="236" height="142" isometric="true">
-      <layer src="shack_06"/>
-    </image>
     <!-- Files related to tent -->
     <image id="tent_01" width="116" height="60" isometric="true">
       <layer src="tent_01"/>
@@ -117,12 +105,6 @@
     </image>
     <image id="tent_04" width="116" height="68" isometric="true">
       <layer src="tent_04"/>
-    </image>
-    <image id="tent_05" width="236" height="124" isometric="true">
-      <layer src="tent_05"/>
-    </image>
-    <image id="tent_06" width="236" height="130" isometric="true">
-      <layer src="tent_06"/>
     </image>
     <!-- Files related to vacant -->
     <image id="vacant_01" width="116" height="60" isometric="true">

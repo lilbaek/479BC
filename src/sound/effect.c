@@ -1,8 +1,8 @@
 #include "effect.h"
 
-#include "game/settings.h"
 #include "sound/channel.h"
 #include "sound/device.h"
+#include "core/config.h"
 
 void sound_effect_set_volume(int percentage)
 {
@@ -13,11 +13,12 @@ void sound_effect_set_volume(int percentage)
 
 void sound_effect_play(int effect)
 {
-    if (!setting_sound(SOUND_EFFECTS)->enabled) {
+
+    if (!config_get(CONFIG_GENERAL_ENABLE_EFFECTS)) {
         return;
     }
     if (sound_device_is_channel_playing(effect)) {
         return;
     }
-    sound_device_play_channel(effect, setting_sound(SOUND_EFFECTS)->volume);
+    sound_device_play_channel(effect, config_get(CONFIG_GENERAL_EFFECTS_VOLUME));
 }

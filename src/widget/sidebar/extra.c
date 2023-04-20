@@ -16,7 +16,6 @@
 #include "core/string.h"
 #include "figure/formation_legion.h"
 #include "game/resource.h"
-#include "game/settings.h"
 #include "game/state.h"
 #include "graphics/arrow_button.h"
 #include "graphics/button.h"
