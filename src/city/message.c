@@ -197,7 +197,7 @@ void city_message_post(int use_popup, int message_type, int param1, int param2)
         use_popup = 0;
     }
     if (is_invasion_message(msg->message_type) && config_get(CONFIG_GP_GAME_SPEED) > 70) {
-        config_set(CONFIG_GP_GAME_SPEED, 100);
+        setting_set_default_game_speed();
     }
     if (use_popup && window_is(WINDOW_CITY)) {
         show_message_popup(id);
