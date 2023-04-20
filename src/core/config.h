@@ -2,6 +2,14 @@
 #define CORE_CONFIG_H
 
 typedef enum {
+    DIFFICULTY_VERY_EASY = 0,
+    DIFFICULTY_EASY = 1,
+    DIFFICULTY_NORMAL = 2,
+    DIFFICULTY_HARD = 3,
+    DIFFICULTY_VERY_HARD = 4
+} set_difficulty;
+
+typedef enum {
     CONFIG_SCREEN_FULLSCREEN,
     CONFIG_SCREEN_WIDTH,
     CONFIG_SCREEN_HEIGHT,
@@ -78,4 +86,8 @@ void config_load(void);
  */
 void config_save(void);
 
+void setting_set_default_game_speed(void);
+int setting_game_speed(void);
+void setting_increase_game_speed(void);
+void setting_decrease_game_speed(void);
 #endif // CORE_CONFIG_H

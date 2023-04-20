@@ -22,4 +22,6 @@ void building_house_check_for_corruption(building *house);
 
 void building_house_restore_population_after_undo(building *house);
 
+void split(building *house, int num_tiles);
+void split_size2(building *house, building_type new_type);
 #endif // BUILDING_HOUSE_H

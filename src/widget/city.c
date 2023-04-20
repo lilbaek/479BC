@@ -15,7 +15,6 @@
 #include "figure/formation_legion.h"
 #include "figure/roamer_preview.h"
 #include "game/cheats.h"
-#include "game/settings.h"
 #include "game/state.h"
 #include "graphics/button.h"
 #include "graphics/graphics.h"
@@ -753,9 +752,6 @@ int widget_city_current_grid_offset(void)
 
 void widget_city_get_tooltip(tooltip_context *c)
 {
-    if (setting_tooltips() == TOOLTIPS_NONE) {
-        return;
-    }
     if (!window_is(WINDOW_CITY)) {
         return;
     }

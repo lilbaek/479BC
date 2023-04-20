@@ -4,7 +4,6 @@
 #include "core/lang.h"
 #include "core/string.h"
 #include "core/time.h"
-#include "game/settings.h"
 #include "graphics/window.h"
 #include "translation/translation.h"
 
@@ -112,9 +111,6 @@ static warning *get_warning_slot(int id, const uint8_t *text)
 
 int city_warning_show_custom(const uint8_t *text, int id)
 {
-    if (!setting_warnings()) {
-        return 0;
-    }
     warning *w = get_warning_slot(id, text);
     if (!w) {
         return 0;

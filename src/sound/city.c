@@ -3,9 +3,9 @@
 #include "city/figures.h"
 #include "core/random.h"
 #include "core/time.h"
-#include "game/settings.h"
 #include "sound/channel.h"
 #include "sound/device.h"
+#include "core/config.h"
 
 #include <string.h>
 
@@ -264,7 +264,7 @@ void sound_city_progress_ambient(void)
 static void play_channel(int channel, int direction)
 {
     channel += CITY_CHANNEL_OFFSET;
-    if (!setting_sound(SOUND_CITY)->enabled) {
+    if (!config_get(CONFIG_GENERAL_ENABLE_CITY)) {
         return;
     }
     if (sound_device_is_channel_playing(channel)) {
@@ -288,7 +288,7 @@ static void play_channel(int channel, int direction)
             left_pan = right_pan = 0;
             break;
     }
-    sound_device_play_channel_panned(channel, setting_sound(SOUND_CITY)->volume, left_pan, right_pan);
+    sound_device_play_channel_panned(channel, config_get(CONFIG_GENERAL_CITY_VOLUME), left_pan, right_pan);
 }
 
 void sound_city_play(void)

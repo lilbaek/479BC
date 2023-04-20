@@ -12,7 +12,6 @@
 #include "city/warning.h"
 #include "core/image_group.h"
 #include "figure/formation.h"
-#include "game/settings.h"
 #include "game/tutorial.h"
 #include "graphics/generic_button.h"
 #include "graphics/graphics.h"
@@ -37,6 +36,7 @@
 #include "window/advisor/religion.h"
 #include "window/advisor/trade.h"
 #include "window/advisor/housing.h"
+#include "core/config.h"
 
 static void button_change_advisor(int advisor, int param2);
 static void button_help(int param1, int param2);
@@ -134,7 +134,7 @@ static void set_advisor_window(void)
 void window_advisors_set_advisor(advisor_type advisor)
 {
     current_advisor = advisor;
-    setting_set_last_advisor(advisor);
+    config_set(CONFIG_GP_LAST_ADVISOR, advisor);
     set_advisor_window();
 }
 
@@ -321,7 +321,7 @@ void window_advisors_show_checked(void)
 {
     tutorial_availability avail = tutorial_advisor_empire_availability();
     if (avail == AVAILABLE) {
-        window_advisors_set_advisor(setting_last_advisor());
+        window_advisors_set_advisor(config_get(CONFIG_GP_LAST_ADVISOR));
         window_advisors_show();
     } else {
         city_warning_show(avail == NOT_AVAILABLE ? WARNING_NOT_AVAILABLE : WARNING_NOT_AVAILABLE_YET, NEW_WARNING_SLOT);

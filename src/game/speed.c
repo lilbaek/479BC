@@ -2,10 +2,10 @@
 
 #include "building/construction.h"
 #include "core/time.h"
-#include "game/settings.h"
 #include "game/state.h"
 #include "graphics/window.h"
 #include "input/scroll.h"
+#include "core/config.h"
 
 #define MAX_TICKS_PER_FRAME 20
 
@@ -38,7 +38,7 @@ int game_speed_get_elapsed_ticks(void)
         case WINDOW_OVERLAY_MENU:
         case WINDOW_MILITARY_MENU:
         case WINDOW_BUILD_MENU: {
-            int speed = setting_game_speed();
+            int speed = config_get(CONFIG_GP_GAME_SPEED);
             if (speed < 10) {
                 return 0;
             } else if (speed <= 100) {

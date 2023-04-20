@@ -33,7 +33,6 @@
 #include "game/animation.h"
 #include "game/difficulty.h"
 #include "game/file_io.h"
-#include "game/settings.h"
 #include "game/state.h"
 #include "game/time.h"
 #include "game/tutorial.h"
@@ -70,6 +69,7 @@
 #include "scenario/scenario.h"
 #include "sound/city.h"
 #include "sound/music.h"
+#include "core/config.h"
 
 #include <string.h>
 
@@ -257,17 +257,11 @@ static int start_scenario(const uint8_t *scenario_name, const char *scenario_fil
         if (!load_custom_scenario(scenario_name, scenario_file)) {
             return 0;
         }
-        scenario_set_player_name(setting_player_name());
     } else {
         return 0;
     }
     scenario_set_campaign_mission(mission);
     scenario_set_campaign_rank(rank);
-
-    if (scenario_is_tutorial_1()) {
-        setting_set_personal_savings_for_mission(0, 0);
-    }
-
     scenario_settings_init_mission();
 
     city_emperor_init_scenario(rank);

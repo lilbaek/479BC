@@ -206,118 +206,109 @@ static int has_adjacent_deletion(int grid_offset) {
 
 static void draw_flattened_building_footprint(const building *b, int x, int y, int image_offset, color_t color_mask) {
     int image_base = assets_get_image_id(TEXTURE_BASIC_NAME, TEXTURE_BASIC_OVERLAY) + image_offset;
-    if (b->house_size) {
-        image_base += 4;
-    }
     if (b->size == 1) {
         image_draw_isometric_footprint_from_draw_tile(image_base, x, y, color_mask, scale);
     } else if (b->size == 2) {
-        const int x_tile_offset[] = {30, 0, 60, 30};
-        const int y_tile_offset[] = {-15, 0, 0, 15};
+        const int x_tile_offset[] = {30 * 2, 0 * 2, 60 * 2, 30 * 2};
+        const int y_tile_offset[] = {-15 * 2, 0 * 2, 0 * 2, 15 * 2};
         for (int i = 0; i < 4; i++) {
-            image_draw_isometric_footprint_from_draw_tile(image_base + i,
+            image_draw_isometric_footprint_from_draw_tile(image_base,
                                                           x + x_tile_offset[i], y + y_tile_offset[i], color_mask,
                                                           scale);
         }
     } else if (b->size == 3) {
-        const int image_tile_offset[] = {0, 1, 2, 1, 3, 2, 3, 3, 3};
-        const int x_tile_offset[] = {60, 30, 90, 0, 60, 120, 30, 90, 60};
-        const int y_tile_offset[] = {-30, -15, -15, 0, 0, 0, 15, 15, 30};
+        const int x_tile_offset[] = {60 * 2, 30 * 2, 90 * 2, 0 * 2, 60 * 2, 120 * 2, 30 * 2, 90 * 2, 60  * 2};
+        const int y_tile_offset[] = {-30 * 2, -15 * 2, -15 * 2, 0 * 2, 0 * 2, 0 * 2, 15 * 2, 15 * 2, 30  * 2};
         for (int i = 0; i < 9; i++) {
-            image_draw_isometric_footprint_from_draw_tile(image_base + image_tile_offset[i],
+            image_draw_isometric_footprint_from_draw_tile(image_base,
                                                           x + x_tile_offset[i], y + y_tile_offset[i], color_mask,
                                                           scale);
         }
     } else if (b->size == 4) {
-        const int image_tile_offset[] = {0, 1, 2, 1, 3, 2, 1, 3, 3, 2, 3, 3, 3, 3, 3, 3};
         const int x_tile_offset[] = {
-                90,
-                60, 120,
-                30, 90, 150,
-                0, 60, 120, 180,
-                30, 90, 150,
-                60, 120,
-                90
+                90 * 2,
+                60 * 2, 120 * 2,
+                30 * 2, 90 * 2, 150 * 2,
+                0 * 2, 60 * 2, 120 * 2, 180 * 2,
+                30 * 2, 90 * 2, 150 * 2,
+                60 * 2, 120 * 2,
+                90  * 2
         };
         const int y_tile_offset[] = {
-                -45,
-                -30, -30,
-                -15, -15, -15,
-                0, 0, 0, 0,
-                15, 15, 15,
-                30, 30,
-                45
+                -45 * 2,
+                -30 * 2, -30 * 2,
+                -15 * 2, -15 * 2, -15 * 2,
+                0 * 2, 0 * 2, 0 * 2, 0 * 2,
+                15 * 2, 15 * 2, 15 * 2,
+                30 * 2, 30 * 2,
+                45  * 2
         };
         for (int i = 0; i < 16; i++) {
-            image_draw_isometric_footprint_from_draw_tile(image_base + image_tile_offset[i],
+            image_draw_isometric_footprint_from_draw_tile(image_base,
                                                           x + x_tile_offset[i], y + y_tile_offset[i], color_mask,
                                                           scale);
         }
     } else if (b->size == 5) {
-        const int image_tile_offset[] = {0, 1, 2, 1, 3, 2, 1, 3, 3, 2, 1, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3};
         const int x_tile_offset[] = {
-                120,
-                90, 150,
-                60, 120, 180,
-                30, 90, 150, 210,
-                0, 60, 120, 180, 240,
-                30, 90, 150, 210,
-                60, 120, 180,
-                90, 150,
-                120
+                120 * 2,
+                90 * 2, 150 * 2,
+                60 * 2, 120 * 2, 180 * 2,
+                30 * 2, 90 * 2, 150 * 2, 210 * 2,
+                0 * 2, 60 * 2, 120 * 2, 180 * 2, 240 * 2,
+                30 * 2, 90 * 2, 150 * 2, 210 * 2,
+                60 * 2, 120 * 2, 180 * 2,
+                90 * 2, 150 * 2,
+                120 * 2
         };
         const int y_tile_offset[] = {
-                -60,
-                -45, -45,
-                -30, -30, -30,
-                -15, -15, -15, -15,
-                0, 0, 0, 0, 0,
-                15, 15, 15, 15,
-                30, 30, 30,
-                45, 45,
-                60
+                -60 * 2,
+                -45 * 2, -45 * 2,
+                -30 * 2, -30 * 2, -30 * 2,
+                -15 * 2, -15 * 2, -15 * 2, -15 * 2,
+                0 * 2, 0 * 2, 0 * 2, 0 * 2, 0 * 2,
+                15 * 2, 15 * 2, 15 * 2, 15 * 2,
+                30 * 2, 30 * 2, 30 * 2,
+                45 * 2, 45 * 2,
+                60 * 2
         };
         for (int i = 0; i < 25; i++) {
-            image_draw_isometric_footprint_from_draw_tile(image_base + image_tile_offset[i],
+            image_draw_isometric_footprint_from_draw_tile(image_base,
                                                           x + x_tile_offset[i], y + y_tile_offset[i], color_mask,
                                                           scale);
         }
     } else if (b->size == 7) {
-        const int image_tile_offset[] = {0, 1, 2, 1, 3, 2, 1, 3, 3, 2, 1, 3, 3, 3, 2, 1, 3, 3, 3, 3, 2, 1,
-                                         3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-                                         3};
         const int x_tile_offset[] = {
-                180,
-                150, 210,
-                120, 180, 240,
-                90, 150, 210, 270,
-                60, 120, 180, 240, 300,
-                30, 90, 150, 210, 270, 330,
-                0, 60, 120, 180, 240, 300, 360,
-                30, 90, 150, 210, 270, 330,
-                60, 120, 180, 240, 300,
-                90, 150, 210, 270,
-                120, 180, 240,
-                150, 210,
-                180,
+                180 * 2,
+                150 * 2, 210 * 2,
+                120 * 2, 180 * 2, 240 * 2,
+                90 * 2, 150 * 2, 210 * 2, 270 * 2,
+                60 * 2, 120 * 2, 180 * 2, 240 * 2, 300 * 2,
+                30 * 2, 90 * 2, 150 * 2, 210 * 2, 270 * 2, 330 * 2,
+                0 * 2, 60 * 2, 120 * 2, 180 * 2, 240 * 2, 300 * 2, 360 * 2,
+                30 * 2, 90 * 2, 150 * 2, 210 * 2, 270 * 2, 330 * 2,
+                60 * 2, 120 * 2, 180 * 2, 240 * 2, 300 * 2,
+                90 * 2, 150 * 2, 210 * 2, 270 * 2,
+                120 * 2, 180 * 2, 240 * 2,
+                150 * 2, 210 * 2,
+                180 * 2,
         };
         const int y_tile_offset[] = {
-                -90,
-                -75, -75,
-                -60, -60, -60,
-                -45, -45, -45, -45,
-                -30, -30, -30, -30, -30,
-                -15, -15, -15, -15, -15, -15,
-                0, 0, 0, 0, 0, 0, 0,
-                15, 15, 15, 15, 15, 15,
-                30, 30, 30, 30, 30,
-                45, 45, 45, 45,
-                60, 60, 60,
-                75, 75,
-                90,
+                -90 * 2,
+                -75 * 2, -75 * 2,
+                -60 * 2, -60 * 2, -60 * 2,
+                -45 * 2, -45 * 2, -45 * 2, -45 * 2,
+                -30 * 2, -30 * 2, -30 * 2, -30 * 2, -30 * 2,
+                -15 * 2, -15 * 2, -15 * 2, -15 * 2, -15 * 2, -15 * 2,
+                0 * 2, 0 * 2, 0 * 2, 0 * 2, 0 * 2, 0 * 2, 0 * 2,
+                15 * 2, 15 * 2, 15 * 2, 15 * 2, 15 * 2, 15 * 2,
+                30 * 2, 30 * 2, 30 * 2, 30 * 2, 30 * 2,
+                45 * 2, 45 * 2, 45 * 2, 45 * 2,
+                60 * 2, 60 * 2, 60 * 2,
+                75 * 2, 75 * 2,
+                90 * 2,
         };
         for (int i = 0; i < 49; i++) {
-            image_draw_isometric_footprint_from_draw_tile(image_base + image_tile_offset[i],
+            image_draw_isometric_footprint_from_draw_tile(image_base,
                                                           x + x_tile_offset[i], y + y_tile_offset[i], color_mask,
                                                           scale);
         }

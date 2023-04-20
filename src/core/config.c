@@ -3,8 +3,8 @@
 #include "core/file.h"
 #include "core/log.h"
 #include "platform/prefs.h"
-#include "game/settings.h"
 #include "city/constants.h"
+#include "calc.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -65,7 +65,7 @@ static int default_values[CONFIG_MAX_ENTRIES] = {
         [CONFIG_GENERAL_ENABLE_AUDIO] = 1,
         [CONFIG_GENERAL_MASTER_VOLUME] = 100,
         [CONFIG_GENERAL_ENABLE_MUSIC] = 1,
-        [CONFIG_GENERAL_MUSIC_VOLUME] = 80,
+        [CONFIG_GENERAL_MUSIC_VOLUME] = 60,
         [CONFIG_GENERAL_ENABLE_SPEECH] = 1,
         [CONFIG_GENERAL_SPEECH_VOLUME] = 90,
         [CONFIG_GENERAL_ENABLE_EFFECTS] = 1,
@@ -77,7 +77,7 @@ static int default_values[CONFIG_MAX_ENTRIES] = {
         [CONFIG_UI_HIGHLIGHT_LEGIONS] = 1,
         [CONFIG_SCREEN_DISPLAY_SCALE] = 100,
         [CONFIG_SCREEN_CURSOR_SCALE] = 100,
-        [CONFIG_GP_GAME_SPEED] = 100,
+        [CONFIG_GP_GAME_SPEED] = 80,
         [CONFIG_GP_SCROLL_SPEED] = 100,
         [CONFIG_GP_DIFFICULTY] = DIFFICULTY_NORMAL,
         [CONFIG_GP_GODS] = 1,
@@ -105,6 +105,35 @@ void config_set(config_key key, int value) {
 
 int config_get_default_value(config_key key) {
     return default_values[key];
+}
+
+void setting_set_default_game_speed(void) {
+    values[CONFIG_GP_GAME_SPEED] = 80;
+}
+
+int setting_game_speed(void)
+{
+    return values[CONFIG_GP_GAME_SPEED];
+}
+
+void setting_increase_game_speed(void)
+{
+    if (values[CONFIG_GP_GAME_SPEED] >= 100) {
+        if (values[CONFIG_GP_GAME_SPEED] < 500) {
+            values[CONFIG_GP_GAME_SPEED] += 100;
+        }
+    } else {
+        values[CONFIG_GP_GAME_SPEED] = calc_bound(values[CONFIG_GP_GAME_SPEED] + 10, 10, 100);
+    }
+}
+
+void setting_decrease_game_speed(void)
+{
+    if (values[CONFIG_GP_GAME_SPEED] > 100) {
+        values[CONFIG_GP_GAME_SPEED] -= 100;
+    } else {
+        values[CONFIG_GP_GAME_SPEED] = calc_bound(values[CONFIG_GP_GAME_SPEED] - 10, 10, 100);
+    }
 }
 
 static void set_defaults(void) {

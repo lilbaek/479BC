@@ -5,7 +5,6 @@
 #include "empire/trade_route.h"
 #include "game/difficulty.h"
 #include "game/save_version.h"
-#include "game/settings.h"
 #include "scenario/data.h"
 
 struct scenario_t scenario;
@@ -587,8 +586,7 @@ void scenario_settings_init(void)
 void scenario_settings_init_mission(void)
 {
     scenario.settings.starting_favor = difficulty_starting_favor();
-    scenario.settings.starting_personal_savings =
-        setting_personal_savings_for_mission(scenario.settings.campaign_rank);
+    scenario.settings.starting_personal_savings = 0;
 }
 
 void scenario_unlock_all_buildings(void) {
