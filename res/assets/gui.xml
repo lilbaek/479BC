@@ -3,7 +3,6 @@
 <!-- Unless specifically mentioned, all assets created by OpenTiberius and copyright by OpenTiberius -->
 <assetlist name="gui">
     <image id="button_anticlockwise_rotation" src="button_anticlockwise_rotation" />
-    <image id="button_aqueduct" src="button_aqueduct" />
     <image id="button_clockwise_rotation" src="button_clockwise_rotation" />
     <image id="button_education" src="button_education" />
     <image id="button_engineering" src="button_engineering" />

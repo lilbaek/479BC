@@ -49,6 +49,7 @@
 #include "window/message_list.h"
 #include "widget/bottombar/city.h"
 #include "save_load_dialog.h"
+#include "widget/topbar/city.h"
 
 static int mothball_warning_id;
 
@@ -122,6 +123,7 @@ static void draw_foreground(void)
     window_city_draw();
     widget_sidebar_city_draw_foreground();
     widget_bottom_bar_city_draw_foreground();
+    widget_top_bar_city_draw_foreground();
     if (window_is(WINDOW_CITY) || window_is(WINDOW_CITY_MILITARY)) {
         draw_time_left();
         widget_city_draw_construction_buttons();

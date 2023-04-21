@@ -34,7 +34,7 @@
       <layer src="market_01"/>
     </image>
     <!-- Files related to prefecture -->
-    <image id="prefecture_01" width="116" height="96" isometric="true">
+    <image id="prefecture_01" width="116" height="100" isometric="true">
       <layer src="prefecture_01"/>
     </image>
     <!-- Files related to reservoir -->
@@ -57,7 +57,7 @@
       <layer src="roadblock_01"/>
     </image>
     <!-- Files related to theater -->
-    <image id="theater_01" width="236" height="196" isometric="true">
+    <image id="theater_01" width="239" height="198" isometric="true">
       <layer src="theater_01"/>
     </image>
     <!-- Files related to tower -->

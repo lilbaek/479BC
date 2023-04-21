@@ -562,6 +562,7 @@ set(WIDGET_FILES
         ${PROJECT_SOURCE_DIR}/src/widget/sidebar/military.c
         ${PROJECT_SOURCE_DIR}/src/widget/sidebar/slide.c
         ${PROJECT_SOURCE_DIR}/src/widget/bottombar/city.c
+        ${PROJECT_SOURCE_DIR}/src/widget/topbar/city.c
         )
 set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/advisors.c
@@ -607,7 +608,6 @@ set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/editor/start_year.c
         ${PROJECT_SOURCE_DIR}/src/window/editor/starting_conditions.c
         ${PROJECT_SOURCE_DIR}/src/window/editor/win_criteria.c
-        ${PROJECT_SOURCE_DIR}/src/window/cck_selection.c
         ${PROJECT_SOURCE_DIR}/src/window/city.c
         ${PROJECT_SOURCE_DIR}/src/window/donate_to_city.c
         ${PROJECT_SOURCE_DIR}/src/window/empire.c
@@ -627,7 +627,6 @@ set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/numeric_input.c
         ${PROJECT_SOURCE_DIR}/src/window/option_popup.c
         ${PROJECT_SOURCE_DIR}/src/window/overlay_menu.c
-        ${PROJECT_SOURCE_DIR}/src/window/plain_message_dialog.c
         ${PROJECT_SOURCE_DIR}/src/window/popup_dialog.c
         ${PROJECT_SOURCE_DIR}/src/window/race_bet.c
         ${PROJECT_SOURCE_DIR}/src/window/resource_settings.c

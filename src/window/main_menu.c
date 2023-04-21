@@ -20,7 +20,6 @@
 #include "graphics/screen.h"
 #include "graphics/window.h"
 #include "sound/music.h"
-#include "window/plain_message_dialog.h"
 #include "window/popup_dialog.h"
 #include "window/nuklear.h"
 #include "window/ui_window.h"

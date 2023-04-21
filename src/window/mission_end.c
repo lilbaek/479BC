@@ -128,18 +128,7 @@ static void advance_to_next_mission(void)
 
     game_undo_disable();
     game_state_reset_overlay();
-
-    if (scenario_campaign_rank() >= 11 || scenario_is_custom()) {
-        window_main_menu_show(1);
-        if (!scenario_is_custom()) {
-          //  setting_clear_personal_savings();
-            scenario_settings_init();
-            scenario_set_campaign_rank(2);
-        }
-    } else {
-        scenario_set_campaign_mission(game_mission_peaceful());
-        window_mission_selection_show();
-    }
+    window_main_menu_show(1);
 }
 
 static void handle_input(const mouse *m, const hotkeys *h)
@@ -162,11 +151,7 @@ static void button_fired(int param1, int param2)
     sound_speech_stop();
     city_victory_stop_governing();
     game_undo_disable();
-    if (scenario_is_custom()) {
-        window_main_menu_show(1);
-    } else {
-        window_mission_selection_show();
-    }
+    window_main_menu_show(1);
 }
 
 static void show_end_dialog(void)
@@ -180,18 +165,9 @@ static void show_end_dialog(void)
     window_show(&window);
 }
 
-static void show_intermezzo(void)
-{
-    window_intermezzo_show(INTERMEZZO_WON, show_end_dialog);
-}
-
 void window_mission_end_show_won(void)
 {
     mouse_reset_up_state();
-    if (scenario_is_tutorial_1() || scenario_is_tutorial_2()) {
-        // tutorials: immediately go to next mission
-        show_intermezzo();
-    }
 }
 
 void window_mission_end_show_fired(void)
