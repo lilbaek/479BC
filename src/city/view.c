@@ -443,7 +443,7 @@ static void set_viewport_without_sidebar(void)
 
 void city_view_set_scale(int scale)
 {
-    scale = calc_bound(scale, 180, city_view_get_max_scale());
+    scale = calc_bound(scale, MIN_ZOOM, city_view_get_max_scale());
     data.scale = scale;
     if (data.sidebar_collapsed) {
         set_viewport_without_sidebar();

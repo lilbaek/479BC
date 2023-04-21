@@ -41,7 +41,6 @@ enum {
 #define BLACK_PANEL_MIDDLE_BLOCKS 4
 #define BLACK_PANEL_TOTAL_BLOCKS 6
 
-static void menu_file_replay_map(int param);
 static void menu_file_load_game(int param);
 static void menu_file_save_game(int param);
 static void menu_file_delete_game(int param);
@@ -64,7 +63,6 @@ static void menu_help_about(int param);
 static void menu_advisors_go_to(int advisor);
 
 static menu_item menu_file[] = {
-    {1, 2, menu_file_replay_map, 0},
     {1, 3, menu_file_load_game, 0},
     {1, 4, menu_file_save_game, 0},
     {1, 6, menu_file_delete_game, 0},
@@ -412,28 +410,6 @@ int widget_top_menu_get_tooltip_text(tooltip_context *c)
         return 59 + button_id;
     }
     return 0;
-}
-
-static void replay_map_confirmed(int confirmed)
-{
-    if (!confirmed) {
-        window_city_show();
-        return;
-    }
-    if (scenario_is_custom()) {
-        game_file_start_scenario_by_name(scenario_name());
-        window_city_show();
-    } else {
-        scenario_save_campaign_player_name();
-        window_mission_briefing_show();
-    }
-}
-
-static void menu_file_replay_map(int param)
-{
-    clear_state();
-    building_construction_clear_type();
-    window_popup_dialog_show_confirmation(gettext("Delete me"), "", replay_map_confirmed);
 }
 
 static void menu_file_load_game(int param)

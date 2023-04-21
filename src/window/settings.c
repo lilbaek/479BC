@@ -13,12 +13,12 @@
 #include "graphics/image.h"
 #include "graphics/screen.h"
 #include "graphics/window.h"
-#include "window/plain_message_dialog.h"
 #include "window/nuklear.h"
 #include "window/ui_window.h"
 #include "settings_general.h"
 #include "settings_gameplay.h"
 #include "settings_hotkey.h"
+#include "translation/translation.h"
 
 static void draw_background(void) {
     image_draw_fullscreen_background(assets_get_image_id("mainmenu", "start-screen"));

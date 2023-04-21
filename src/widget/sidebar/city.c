@@ -156,7 +156,6 @@ static void draw_collapsed_background(void)
 static void draw_expanded_background(int x_offset)
 {
     image_draw(image_group(GROUP_SIDE_PANEL) + 1, x_offset, 24, COLOR_MASK_NONE, SCALE_NONE);
-    draw_buttons_expanded(x_offset);
     draw_overlay_text(x_offset + 4);
     draw_number_of_messages(x_offset);
     image_draw(window_build_menu_image(), x_offset + 6, 239, COLOR_MASK_NONE, SCALE_NONE);
@@ -197,7 +196,6 @@ void widget_sidebar_city_draw_foreground(void)
         draw_buttons_collapsed(x_offset);
     } else {
         int x_offset = sidebar_common_get_x_offset_expanded();
-        draw_buttons_expanded(x_offset);
         draw_overlay_text(x_offset + 4);
         draw_number_of_messages(x_offset);
     }

@@ -14,6 +14,8 @@ typedef struct {
 
 typedef void (map_callback)(int x, int y, int grid_offset);
 
+static const int MIN_ZOOM = 150;
+
 void city_view_init(void);
 
 void city_view_set_custom_lookup(int start_offset, int width, int height, int border_size);

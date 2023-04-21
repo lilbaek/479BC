@@ -2,6 +2,23 @@
 <!DOCTYPE assetlist>
 <!-- Unless specifically mentioned, all assets created by OpenTiberius and copyright by OpenTiberius -->
 <assetlist name="decoration">
+    <!-- Files related to gardens -->
+    <image id="gardens_01" src="gardens_01"/>
+    <image id="gardens_02" src="gardens_02"/>
+    <image id="gardens_03" src="gardens_03"/>
+    <image id="gardens_04" src="gardens_04"/>
+    <image id="gardens_05" src="gardens_05"/>
+    <image id="gardens_06" src="gardens_06"/>
+    <image id="gardens_07" src="gardens_07"/>
+    <image id="gardens" src="gardens_01">
+      <layer group="this" image="gardens_01" x="0" y="0"/>
+      <layer group="this" image="gardens_02" x="0" y="0"/>
+      <layer group="this" image="gardens_03" x="0" y="0"/>
+      <layer group="this" image="gardens_04" x="0" y="0"/>
+      <layer group="this" image="gardens_05" x="0" y="0"/>
+      <layer group="this" image="gardens_06" x="0" y="0"/>
+      <layer group="this" image="gardens_07" x="0" y="0"/>
+    </image>
     <!-- Files related to sign -->
     <image id="sign_01" src="sign_01"/>
     <image id="sign_02" src="sign_02"/>
