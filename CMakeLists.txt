@@ -523,7 +523,7 @@ set(GRAPHICS_FILES
         ${PROJECT_SOURCE_DIR}/src/graphics/scrollbar.c
         ${PROJECT_SOURCE_DIR}/src/graphics/text.c
         ${PROJECT_SOURCE_DIR}/src/graphics/tooltip.c
-        ${PROJECT_SOURCE_DIR}/src/graphics/warning.c
+        src/widget/warning.c
         ${PROJECT_SOURCE_DIR}/src/graphics/window.c
         )
 set(SOUND_FILES
