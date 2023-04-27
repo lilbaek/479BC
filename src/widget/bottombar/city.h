@@ -3,7 +3,8 @@
 
 #include "graphics/tooltip.h"
 #include "input/mouse.h"
-
+#define MINIMAP_WIDTH 170
+#define MINIMAP_HEIGHT 170
 
 static const int SUBMENU_DEFAULT_HEIGHT = 100;
 

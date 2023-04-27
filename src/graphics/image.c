@@ -173,7 +173,7 @@ void image_draw_isometric_footprint(int image_id, int x, int y, color_t color_ma
         assets_load_unpacked_asset(image_id);
     }
     int num_tiles = (img->width + 2) / (FOOTPRINT_WIDTH + 2);
-    x -= 30 * (num_tiles - 1);
+    x -= FOOTPRINT_HALF_WIDTH * (num_tiles - 1);
     graphics_renderer()->draw_image(img, x, y, color_mask, scale);
 }
 
@@ -198,7 +198,7 @@ void image_draw_isometric_top(int image_id, int x, int y, color_t color_mask, fl
         assets_load_unpacked_asset(image_id);
     }
     int num_tiles = (img->width + 2) / (FOOTPRINT_WIDTH + 2);
-    x -= 30 * (num_tiles - 1);
+    x -= FOOTPRINT_HALF_WIDTH * (num_tiles - 1);
     y -= img->top->original.height - FOOTPRINT_HALF_HEIGHT * num_tiles;
     graphics_renderer()->draw_image(img->top, x, y, color_mask, scale);
 }

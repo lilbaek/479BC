@@ -6,19 +6,19 @@
     <image id="casa_01" width="116" height="60" isometric="true">
       <layer src="casa_01"/>
     </image>
-    <image id="casa_02" width="116" height="70" isometric="true">
+    <image id="casa_02" width="116" height="60" isometric="true">
       <layer src="casa_02"/>
     </image>
-    <image id="casa_03" width="116" height="70" isometric="true">
+    <image id="casa_03" width="116" height="60" isometric="true">
       <layer src="casa_03"/>
     </image>
     <image id="casa_04" width="116" height="60" isometric="true">
       <layer src="casa_04"/>
     </image>
-    <image id="casa_05" width="236" height="136" isometric="true">
+    <image id="casa_05" width="236" height="120" isometric="true">
       <layer src="casa_05"/>
     </image>
-    <image id="casa_06" width="236" height="136" isometric="true">
+    <image id="casa_06" width="236" height="120" isometric="true">
       <layer src="casa_06"/>
     </image>
     <!-- Files related to hovel -->

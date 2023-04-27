@@ -2,6 +2,9 @@
 <!DOCTYPE assetlist>
 <!-- Unless specifically mentioned, all assets created by OpenTiberius and copyright by OpenTiberius -->
 <assetlist name="basic">
+    <!-- Files related to dev -->
+    <image id="dev" src="">
+    </image>
     <!-- Files related to flat_tile -->
     <image id="flat_tile_01" src="flat_tile_01"/>
     <image id="flat_tile" src="flat_tile_01">

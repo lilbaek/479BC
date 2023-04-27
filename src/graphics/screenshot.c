@@ -247,7 +247,7 @@ static void create_window_screenshot(void)
 
 static void create_full_city_screenshot(void)
 {
-    if (!window_is(WINDOW_CITY) && !window_is(WINDOW_CITY_MILITARY)) {
+    if (!window_is(WINDOW_CITY)) {
         return;
     }
     pixel_offset original_camera_pixels;
@@ -328,7 +328,7 @@ static void create_full_city_screenshot(void)
 
 static void create_minimap_screenshot(void)
 {
-    if (!window_is(WINDOW_CITY) && !window_is(WINDOW_CITY_MILITARY)) {
+    if (!window_is(WINDOW_CITY)) {
         return;
     }
 
