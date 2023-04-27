@@ -99,14 +99,14 @@ int map_has_road_access_granary(int x, int y, map_point *road)
         (!building_type_is_roadblock(building_get(map_building_at(map_grid_offset(x + 1, y - 1)))->type))) {
         rx = x + 1;
         ry = y - 1;
-    } else if (map_terrain_is(map_grid_offset(x + 3, y + 1), TERRAIN_ROAD) &&
+    } else if (map_terrain_is(map_grid_offset(x + 2, y + 1), TERRAIN_ROAD) &&
         (!building_type_is_roadblock(building_get(map_building_at(map_grid_offset(x + 3, y + 1)))->type ))) {
-        rx = x + 3;
+        rx = x + 2;
         ry = y + 1;
-    } else if (map_terrain_is(map_grid_offset(x + 1, y + 3), TERRAIN_ROAD) &&
+    } else if (map_terrain_is(map_grid_offset(x + 1, y + 2), TERRAIN_ROAD) &&
         (!building_type_is_roadblock(building_get(map_building_at(map_grid_offset(x + 1, y + 3)))->type))) {
         rx = x + 1;
-        ry = y + 3;
+        ry = y + 2;
     } else if (map_terrain_is(map_grid_offset(x - 1, y + 1), TERRAIN_ROAD) &&
         (!building_type_is_roadblock(building_get(map_building_at(map_grid_offset(x - 1, y + 1)))->type))) {
         rx = x - 1;

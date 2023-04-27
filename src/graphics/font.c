@@ -197,7 +197,7 @@ static struct {
     const int *font_mapping;
     const font_definition *font_definitions;
     int multibyte;
-} data;
+} font_data;
 
 static int image_y_offset_none(uint8_t c, int image_height, int line_height)
 {
@@ -438,51 +438,51 @@ static int image_y_offset_japanese(uint8_t c, int image_height, int line_height)
 
 void font_set_encoding(encoding_type encoding)
 {
-    data.multibyte = MULTIBYTE_NONE;
+    font_data.multibyte = MULTIBYTE_NONE;
     if (encoding == ENCODING_EASTERN_EUROPE) {
-        data.font_mapping = CHAR_TO_FONT_IMAGE_EASTERN;
-        data.font_definitions = DEFINITIONS_EASTERN;
+        font_data.font_mapping = CHAR_TO_FONT_IMAGE_EASTERN;
+        font_data.font_definitions = DEFINITIONS_EASTERN;
     } else if (encoding == ENCODING_CYRILLIC) {
-        data.font_mapping = CHAR_TO_FONT_IMAGE_CYRILLIC;
-        data.font_definitions = DEFINITIONS_CYRILLIC;
+        font_data.font_mapping = CHAR_TO_FONT_IMAGE_CYRILLIC;
+        font_data.font_definitions = DEFINITIONS_CYRILLIC;
     } else if (encoding == ENCODING_TRADITIONAL_CHINESE) {
-        data.font_mapping = CHAR_TO_FONT_IMAGE_DEFAULT;
-        data.font_definitions = DEFINITIONS_TRADITIONAL_CHINESE;
-        data.multibyte = MULTIBYTE_TRADITIONAL_CHINESE;
+        font_data.font_mapping = CHAR_TO_FONT_IMAGE_DEFAULT;
+        font_data.font_definitions = DEFINITIONS_TRADITIONAL_CHINESE;
+        font_data.multibyte = MULTIBYTE_TRADITIONAL_CHINESE;
     } else if (encoding == ENCODING_SIMPLIFIED_CHINESE) {
-        data.font_mapping = CHAR_TO_FONT_IMAGE_DEFAULT;
-        data.font_definitions = DEFINITIONS_SIMPLIFIED_CHINESE;
-        data.multibyte = MULTIBYTE_SIMPLIFIED_CHINESE;
+        font_data.font_mapping = CHAR_TO_FONT_IMAGE_DEFAULT;
+        font_data.font_definitions = DEFINITIONS_SIMPLIFIED_CHINESE;
+        font_data.multibyte = MULTIBYTE_SIMPLIFIED_CHINESE;
     } else if (encoding == ENCODING_KOREAN) {
-        data.font_mapping = CHAR_TO_FONT_IMAGE_DEFAULT;
-        data.font_definitions = DEFINITIONS_KOREAN;
-        data.multibyte = MULTIBYTE_KOREAN;
+        font_data.font_mapping = CHAR_TO_FONT_IMAGE_DEFAULT;
+        font_data.font_definitions = DEFINITIONS_KOREAN;
+        font_data.multibyte = MULTIBYTE_KOREAN;
     } else if (encoding == ENCODING_JAPANESE) {
-        data.font_mapping = CHAR_TO_FONT_IMAGE_JAPANESE;
-        data.font_definitions = DEFINITIONS_JAPANESE;
-        data.multibyte = MULTIBYTE_JAPANESE;
+        font_data.font_mapping = CHAR_TO_FONT_IMAGE_JAPANESE;
+        font_data.font_definitions = DEFINITIONS_JAPANESE;
+        font_data.multibyte = MULTIBYTE_JAPANESE;
     } else {
-        data.font_mapping = CHAR_TO_FONT_IMAGE_DEFAULT;
-        data.font_definitions = DEFINITIONS_DEFAULT;
+        font_data.font_mapping = CHAR_TO_FONT_IMAGE_DEFAULT;
+        font_data.font_definitions = DEFINITIONS_DEFAULT;
     }
 }
 
 const font_definition *font_definition_for(font_t font)
 {
-    return &data.font_definitions[font];
+    return &font_data.font_definitions[font];
 }
 
 int font_can_display(const uint8_t *character)
 {
     int dummy;
-    return font_letter_id(&data.font_definitions[FONT_NORMAL_BLACK], character, &dummy) >= 0;
+    return font_letter_id(&font_data.font_definitions[FONT_NORMAL_BLACK], character, &dummy) >= 0;
 }
 
 int font_letter_id(const font_definition *def, const uint8_t *str, int *num_bytes)
 {
-    if (data.multibyte != MULTIBYTE_NONE && *str >= 0x80) {
+    if (font_data.multibyte != MULTIBYTE_NONE && *str >= 0x80) {
         *num_bytes = 2;
-        if (data.multibyte == MULTIBYTE_TRADITIONAL_CHINESE) {
+        if (font_data.multibyte == MULTIBYTE_TRADITIONAL_CHINESE) {
             int char_id = (str[0] & 0x7f) | ((str[1] & 0x7f) << 7);
             if (char_id >= IMAGE_FONT_MULTIBYTE_TRAD_CHINESE_MAX_CHARS) {
                 // lookup in table
@@ -493,13 +493,13 @@ int font_letter_id(const font_definition *def, const uint8_t *str, int *num_byte
                 }
             }
             return IMAGE_FONT_MULTIBYTE_OFFSET + def->multibyte_image_offset + char_id;
-        } else if (data.multibyte == MULTIBYTE_SIMPLIFIED_CHINESE) {
+        } else if (font_data.multibyte == MULTIBYTE_SIMPLIFIED_CHINESE) {
             int char_id = (str[0] & 0x7f) | ((str[1] & 0x7f) << 7);
             if (char_id >= IMAGE_FONT_MULTIBYTE_SIMP_CHINESE_MAX_CHARS) {
                 return -1;
             }
             return IMAGE_FONT_MULTIBYTE_OFFSET + def->multibyte_image_offset + char_id;
-        } else if (data.multibyte == MULTIBYTE_KOREAN) {
+        } else if (font_data.multibyte == MULTIBYTE_KOREAN) {
             int b0 = str[0] - 0xb0;
             int b1 = str[1] - 0xa1;
             int char_id = b0 * 94 + b1;
@@ -507,7 +507,7 @@ int font_letter_id(const font_definition *def, const uint8_t *str, int *num_byte
                 return -1;
             }
             return IMAGE_FONT_MULTIBYTE_OFFSET + def->multibyte_image_offset + char_id;
-        } else if (data.multibyte == MULTIBYTE_JAPANESE) {
+        } else if (font_data.multibyte == MULTIBYTE_JAPANESE) {
             int char_id;
             if (str[0] >= 0xa0 && str[0] < 0xe0) {
                 *num_bytes = 1;
@@ -524,9 +524,9 @@ int font_letter_id(const font_definition *def, const uint8_t *str, int *num_byte
         }
     } else {
         *num_bytes = 1;
-        if (!data.font_mapping[*str]) {
+        if (!font_data.font_mapping[*str]) {
             return -1;
         }
-        return data.font_mapping[*str] + def->image_offset - 1;
+        return font_data.font_mapping[*str] + def->image_offset - 1;
     }
 }

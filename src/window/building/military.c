@@ -562,7 +562,7 @@ static void button_layout(int index, int param2)
         case 3: sound_speech_play_file("wavs/cohort4.wav"); break;
         case 4: sound_speech_play_file("wavs/cohort5.wav"); break;
     }
-    window_city_military_show(data.context_for_callback->formation_id);
+    // window_city_military_show(data.context_for_callback->formation_id);
 }
 
 static void button_priority(int index, int param2)

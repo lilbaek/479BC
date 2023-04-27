@@ -79,7 +79,7 @@ Tiberius_building_properties_mapping Tiberius_building_properties[] = {
 
 #define Tiberius_BUILDINGS (sizeof(Tiberius_building_properties) / sizeof(Tiberius_building_properties_mapping))
 
-void init_Tiberius_building_properties(void) {
+void init_tiberius_building_properties(void) {
     for (int i = 0; i < Tiberius_BUILDINGS; ++i) {
         if (Tiberius_building_properties[i].asset_image_id) {
             Tiberius_building_properties[i].properties.image_group =
@@ -166,7 +166,7 @@ static building_properties properties[170] = {
         {3, 0, 74,                            1,  0, BUILDING_LARGE_TEMPLE_MARS},
         {3, 0, 75,                            1,  0, BUILDING_LARGE_TEMPLE_VENUS},
         {2, 0, 22,                            0,  0, BUILDING_MARKET,    TEXTURE_BUILDING_NAME,  TEXTURE_BUILDING_MARKET},
-        {3, 0, 99,                            0,  0, BUILDING_GRANARY,    TEXTURE_BUILDING_NAME, TEXTURE_BUILDING_GRANARY},
+        {2, 0, 99,                            0,  0, BUILDING_GRANARY,    TEXTURE_BUILDING_NAME, TEXTURE_BUILDING_GRANARY},
         {1, 1, 82,                            0,  0, BUILDING_WAREHOUSE},
         {1, 1, 82,                            0,  0, BUILDING_WAREHOUSE_SPACE},
         {2, 0, 77,                            0,  0, BUILDING_SHIPYARD},

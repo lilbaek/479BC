@@ -567,7 +567,6 @@ static int translate_mouse(void)
 static int window_has_map_scrolling(void)
 {
     return window_is(WINDOW_CITY) ||
-        window_is(WINDOW_CITY_MILITARY) ||
         window_is(WINDOW_EDITOR_MAP) ||
         window_is(WINDOW_EMPIRE) ||
         window_is(WINDOW_EDITOR_EMPIRE);

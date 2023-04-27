@@ -13,17 +13,12 @@
 #include "graphics/text.h"
 #include "graphics/window.h"
 #include "widget/map_editor.h"
-#include "widget/top_menu_editor.h"
-#include "widget/sidebar/editor.h"
-
 #include "window/popup_dialog.h"
 #include "window/editor/attributes.h"
 
 static void draw_background(void)
 {
     graphics_clear_screen();
-    widget_sidebar_editor_draw_background();
-    widget_top_menu_editor_draw();
 }
 
 static void draw_cancel_construction(void)
@@ -40,7 +35,6 @@ static void draw_cancel_construction(void)
 
 static void draw_foreground(void)
 {
-    widget_sidebar_editor_draw_foreground();
     widget_map_editor_draw();
     if (window_is(WINDOW_EDITOR_MAP)) {
         draw_cancel_construction();
@@ -55,12 +49,6 @@ static void handle_hotkeys(const hotkeys *h)
 static void handle_input(const mouse *m, const hotkeys *h)
 {
     handle_hotkeys(h);
-    if (widget_top_menu_editor_handle_input(m, h)) {
-        return;
-    }
-    if (widget_sidebar_editor_handle_mouse(m)) {
-        return;
-    }
     widget_map_editor_handle_input(m, h);
 }
 
