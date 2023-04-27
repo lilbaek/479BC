@@ -77,19 +77,6 @@ static void handle_input(const mouse *m, const hotkeys *h)
     }
 }
 
-static void replay_map_confirmed(int confirmed)
-{
-    if (confirmed) {
-        if (scenario_is_custom()) {
-            game_file_start_scenario_by_name(scenario_name());
-            window_city_show();
-        } else {
-            scenario_save_campaign_player_name();
-            window_mission_briefing_show();
-        }
-    }
-}
-
 static void main_menu_confirmed(int confirmed)
 {
     if (confirmed) {
@@ -112,7 +99,7 @@ static void button_click(int type, int param2)
     if (type == 1) {
         window_go_back();
     } else if (type == 2) {
-        window_popup_dialog_show_confirmation(gettext("Delete me"), "", replay_map_confirmed);
+        
     } else if (type == 3) {
         window_save_load_dialog_show(0);
     } else if (type == 4) {

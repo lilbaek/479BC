@@ -1,11 +1,9 @@
 #include "minimap.h"
 
-#include "assets/assets.h"
 #include "building/building.h"
 #include "building/industry.h"
 #include "building/monument.h"
 #include "city/view.h"
-#include "core/calc.h"
 #include "figure/formation.h"
 #include "graphics/graphics.h"
 #include "graphics/image.h"
@@ -16,8 +14,6 @@
 #include "map/property.h"
 #include "map/random.h"
 #include "map/terrain.h"
-
-#include <stdlib.h>
 #include <string.h>
 
 enum {

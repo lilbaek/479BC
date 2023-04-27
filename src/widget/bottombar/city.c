@@ -18,7 +18,6 @@
 #include "core/lang.h"
 #include "building/model.h"
 #include "widget/minimap.h"
-#include "widget/sidebar/common.h"
 #include "graphics/window.h"
 #include "game/orientation.h"
 #include "core/config.h"
@@ -27,21 +26,22 @@
 #include "menu_renders.c"
 #include "graphics/image.h"
 #include "platform/renderer.h"
+#include "window/icons.h"
+#include "game/state.h"
 
 struct nk_rect bottom_bar_bounds() {
-    return nk_recti(screen_dialog_offset_x() - 117, screen_height() - 150, 880, 150);
+    return nk_recti(screen_width() / 2 - (880 / 2), screen_height() - 150, 880, 150);
 }
 
-struct nk_rect minimap_button_bounds() { return nk_recti(0, screen_height() - 35, MINIMAP_WIDTH, 35); }
-
-
+struct nk_rect minimap_button_bounds() { return nk_recti(0, screen_height() - 35, MINIMAP_WIDTH - 1, 35); }
+struct nk_rect minimap_top_bounds() { return nk_recti(0, screen_height() - 35 - MINIMAP_HEIGHT - 38, MINIMAP_WIDTH - 1, 38); }
 
 void render_bottom_bar(struct nk_context *ctx) {
     if (nk_begin(ctx, "city_bottom_bar", bottom_bar_bounds(),
                  NK_WINDOW_BORDER | NK_WINDOW_NO_SCROLLBAR)) {
         nk_layout_row_dynamic(ctx, 6, 2);
 
-        float row_layout[3];
+        float row_layout[2];
         row_layout[0] = 810;
         row_layout[1] = 50;
         nk_layout_row(ctx, NK_STATIC, 88, 2, row_layout);
@@ -227,15 +227,15 @@ void render_minimap_bar(struct nk_context *ctx) {
             nk_spacer(ctx);
             nk_layout_row_push(ctx, 0.25f);
             if (nk_widget_is_hovered(ctx)) {
-                nk_tooltip_bottom(ctx, "Show/hide grid");
+                nk_tooltip_bottom(ctx, gettext("Show/hide grid"));
             }
-            if (render_nk_button_image(ctx, "button_grid")) {
+            if (nk_button_label(ctx, ICON_FA_EYE)) {
                 config_set(CONFIG_UI_SHOW_GRID, config_get(CONFIG_UI_SHOW_GRID) ^ 1);
             }
             ctx->style.button.image_padding = nk_vec2(4, 1);
             nk_layout_row_push(ctx, 0.22f);
             if (nk_widget_is_hovered(ctx)) {
-                nk_tooltip_bottom(ctx, "Reset rotation");
+                nk_tooltip_bottom(ctx, gettext("Reset rotation"));
             }
             if (render_nk_button_image(ctx, "button_reset_rotation")) {
                 game_orientation_rotate_north();
@@ -243,7 +243,7 @@ void render_minimap_bar(struct nk_context *ctx) {
             }
             nk_layout_row_push(ctx, 0.22f);
             if (nk_widget_is_hovered(ctx)) {
-                nk_tooltip_bottom(ctx, "Rotate left");
+                nk_tooltip_bottom(ctx, gettext("Rotate left"));
             }
             if (render_nk_button_image(ctx, "button_anticlockwise_rotation")) {
                 window_invalidate();
@@ -251,7 +251,7 @@ void render_minimap_bar(struct nk_context *ctx) {
             }
             nk_layout_row_push(ctx, 0.22f);
             if (nk_widget_is_hovered(ctx)) {
-                nk_tooltip_bottom(ctx, "Rotate right");
+                nk_tooltip_bottom(ctx, gettext("Rotate right"));
             }
             if (render_nk_button_image(ctx, "button_clockwise_rotation")) {
                 game_orientation_rotate_right();
@@ -265,10 +265,29 @@ void render_minimap_bar(struct nk_context *ctx) {
 }
 
 
+void render_minimap_speed(struct nk_context *ctx) {
+    if (nk_begin(ctx, "city_minimap_buttons", minimap_top_bounds(),
+                 NK_WINDOW_NO_SCROLLBAR | NK_WINDOW_BORDER)) {
+        nk_layout_row_static(ctx, 25, 35, 4);
+        if (nk_button_label(ctx, ICON_FA_ARROW_UP)) {
+            setting_increase_game_speed();
+        }
+        if (nk_button_label(ctx, ICON_FA_ARROW_DOWN)) {
+            setting_decrease_game_speed();
+        }
+        nk_labelf(ctx, NK_TEXT_CENTERED, "%u%%", setting_game_speed());
+        if (nk_button_label(ctx, ICON_FA_PAUSE)) {
+            game_state_toggle_paused();
+        }
+    }
+    nk_end(ctx);
+}
+
 void widget_bottom_bar_city_draw_foreground(void) {
     struct nk_context *ctx = ui_context();
     render_bottom_bar(ctx);
     render_minimap_bar(ctx);
+    render_minimap_speed(ctx);
     render_sub_menu(ctx);
     ui_font_change(FONT_TYPE_STANDARD);
     widget_minimap_draw_decorated(0, (screen_height() - MINIMAP_HEIGHT) - 35, MINIMAP_WIDTH, MINIMAP_HEIGHT);

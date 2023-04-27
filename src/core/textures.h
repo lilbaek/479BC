@@ -59,4 +59,5 @@
 //decoration
 #define TEXTURE_DECORATION_NAME "decoration"
 #define TEXTURE_DECORATION_SIGN "sign_01"
+#define TEXTURE_DECORATION_GARDEN "gardens_01"
 #endif // CORE_TEXTURES_H

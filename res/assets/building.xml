@@ -3,7 +3,7 @@
 <!-- Unless specifically mentioned, all assets created by OpenTiberius and copyright by OpenTiberius -->
 <assetlist name="building">
     <!-- Files related to actor_colony -->
-    <image id="actor_colony_01" width="356" height="210" isometric="true">
+    <image id="actor_colony_01" width="356" height="180" isometric="true">
       <layer src="actor_colony_01"/>
     </image>
     <!-- Files related to engineers_post -->
@@ -26,15 +26,15 @@
     </image>
     <!-- Files related to gatehouse -->
     <!-- Files related to grannary -->
-    <image id="grannary_01" width="356" height="308" isometric="true">
+    <image id="grannary_01" width="236" height="246" isometric="true">
       <layer src="grannary_01"/>
     </image>
     <!-- Files related to market -->
-    <image id="market_01" width="236" height="150" isometric="true">
+    <image id="market_01" width="236" height="120" isometric="true">
       <layer src="market_01"/>
     </image>
     <!-- Files related to prefecture -->
-    <image id="prefecture_01" width="116" height="96" isometric="true">
+    <image id="prefecture_01" width="116" height="100" isometric="true">
       <layer src="prefecture_01"/>
     </image>
     <!-- Files related to reservoir -->
@@ -57,7 +57,7 @@
       <layer src="roadblock_01"/>
     </image>
     <!-- Files related to theater -->
-    <image id="theater_01" width="236" height="196" isometric="true">
+    <image id="theater_01" width="236" height="120" isometric="true">
       <layer src="theater_01"/>
     </image>
     <!-- Files related to tower -->

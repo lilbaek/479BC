@@ -2,8 +2,7 @@
 
 #include "core/calc.h"
 
-int string_equals(const uint8_t *a, const uint8_t *b)
-{
+int string_equals(const uint8_t *a, const uint8_t *b) {
     while (*a && *b && *a == *b) {
         ++a;
         ++b;
@@ -15,8 +14,7 @@ int string_equals(const uint8_t *a, const uint8_t *b)
     }
 }
 
-uint8_t* string_copy(const uint8_t *src, uint8_t *dst, int maxlength)
-{
+uint8_t *string_copy(const uint8_t *src, uint8_t *dst, int maxlength) {
     int length = 0;
     while (length < maxlength && *src) {
         *dst = *src;
@@ -31,8 +29,7 @@ uint8_t* string_copy(const uint8_t *src, uint8_t *dst, int maxlength)
     return dst;
 }
 
-int string_length(const uint8_t *str)
-{
+int string_length(const uint8_t *str) {
     int length = 0;
     while (*str) {
         length++;
@@ -41,8 +38,7 @@ int string_length(const uint8_t *str)
     return length;
 }
 
-const uint8_t *string_from_ascii(const char *str)
-{
+const uint8_t *string_from_ascii(const char *str) {
     const char *s = str;
     while (*s) {
         if (*s & 0x80) {
@@ -53,8 +49,7 @@ const uint8_t *string_from_ascii(const char *str)
     return (const uint8_t *) str;
 }
 
-int string_to_int(const uint8_t *str)
-{
+int string_to_int(const uint8_t *str) {
     static const int multipliers[] = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000};
     const uint8_t *ptr = str;
     int negative = 0;
@@ -87,8 +82,7 @@ int string_to_int(const uint8_t *str)
     return result;
 }
 
-int string_from_int(uint8_t *dst, int value, int force_plus_sign)
-{
+int string_from_int(uint8_t *dst, int value, int force_plus_sign) {
     int total_chars = 0;
     if (value >= 0) {
         if (force_plus_sign) {

@@ -253,7 +253,7 @@ static void draw_regular_building(building_type type, int image_id, int x, int y
     } else if (type == BUILDING_WAREHOUSE) {
         image_draw_warehouse(image_id, x, y, color);
     } else if (type == BUILDING_GRANARY) {
-        draw_building(assets_get_image_id(TEXTURE_BUILDING_NAME, TEXTURE_BUILDING_GRANARY), x - 50, y , color);
+        draw_building(assets_get_image_id(TEXTURE_BUILDING_NAME, TEXTURE_BUILDING_GRANARY), x, y , color);
     } else if (type == BUILDING_HOUSE_VACANT_LOT) {
         draw_building(assets_get_image_id(TEXTURE_HOUSING_NAME, TEXTURE_HOUSING_VACANT), x, y, color);
     } else if (type == BUILDING_TRIUMPHAL_ARCH) {
@@ -481,7 +481,7 @@ static void draw_default(const map_tile *tile, int x_view, int y_view, building_
 
 static void draw_single_reservoir(int grid_offset, int x, int y, color_t color, int has_water, int draw_blocked)
 {
-    draw_building(assets_get_image_id(TEXTURE_BUILDING_NAME, TEXTURE_BUILDING_RESERVOIR), x - 60, y, color);
+    draw_building(assets_get_image_id(TEXTURE_BUILDING_NAME, TEXTURE_BUILDING_RESERVOIR), x, y, color);
     if (data.reservoir_range.blocked && draw_blocked) {
         for (int i = 0; i < 9; i++) {
             image_blend_footprint_color(x + view_offset_x(i), y + view_offset_y(i), COLOR_MASK_RED, data.scale);
