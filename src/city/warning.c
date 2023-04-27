@@ -1,7 +1,5 @@
-#include <vcruntime_string.h>
 #include <string.h>
 #include "warning.h"
-
 #include "city/view.h"
 #include "core/time.h"
 #include "graphics/window.h"

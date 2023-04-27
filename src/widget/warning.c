@@ -7,7 +7,6 @@
 #define NK_INCLUDE_DEFAULT_FONT
 
 #include "warning.h"
-
 #include "city/warning.h"
 #include "graphics/screen.h"
 #include "graphics/window.h"
