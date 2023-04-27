@@ -6,7 +6,6 @@
 #define NK_INCLUDE_FONT_BAKING
 #define NK_INCLUDE_DEFAULT_FONT
 
-#include <stdio.h>
 #include "information.h"
 #include "window/ui_window.h"
 #include "window/nuklear.h"
@@ -14,7 +13,6 @@
 #include "translation/translation.h"
 #include "city/labor.h"
 #include "city/gods.h"
-#include "window/icons.h"
 #include "scenario/criteria.h"
 #include "city/ratings.h"
 #include "city/message.h"

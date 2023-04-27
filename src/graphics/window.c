@@ -2,7 +2,7 @@
 
 #include "game/system.h"
 #include "graphics/graphics.h"
-#include "graphics/warning.h"
+#include "widget/warning.h"
 #include "input/cursor.h"
 #include "input/hotkey.h"
 #include "input/joystick.h"
