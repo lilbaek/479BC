@@ -3,8 +3,6 @@
 #include "warning.h"
 
 #include "city/view.h"
-#include "core/lang.h"
-#include "core/string.h"
 #include "core/time.h"
 #include "graphics/window.h"
 #include "translation/translation.h"
