@@ -118,6 +118,6 @@ void window_main_menu_show(int restart_music) {
             handle_input
     };
     window_show(&window);
-    game_file_load_saved_game("4324.fvx"); // TODO: Delete me!
-    window_city_show();
+    //game_file_load_saved_game("4324.fvx"); // TODO: Delete me!
+    //window_city_show();
 }
