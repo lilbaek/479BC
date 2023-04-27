@@ -433,17 +433,17 @@ static void set_viewport(int x_offset, int y_offset, int width, int height)
 
 static void set_viewport_with_sidebar(void)
 {
-    set_viewport(0, TOP_MENU_HEIGHT, data.screen_width - 160, data.screen_height - TOP_MENU_HEIGHT);
+    set_viewport(0, 0, data.screen_width, data.screen_height);
 }
 
 static void set_viewport_without_sidebar(void)
 {
-    set_viewport(0, TOP_MENU_HEIGHT, data.screen_width - 40, data.screen_height - TOP_MENU_HEIGHT);
+    set_viewport(0, 0, data.screen_width, data.screen_height);
 }
 
 void city_view_set_scale(int scale)
 {
-    scale = calc_bound(scale, 180, city_view_get_max_scale());
+    scale = calc_bound(scale, MIN_ZOOM, city_view_get_max_scale());
     data.scale = scale;
     if (data.sidebar_collapsed) {
         set_viewport_without_sidebar();

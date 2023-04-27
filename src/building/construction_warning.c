@@ -120,15 +120,6 @@ static void check_workers(int type)
     }
 }
 
-static void check_market(int type)
-{
-    if (!has_warning && type == BUILDING_GRANARY) {
-        if (building_count_active(BUILDING_MARKET) <= 0) {
-            show(WARNING_BUILD_MARKET);
-        }
-    }
-}
-
 static void check_barracks(int type)
 {
     if (!has_warning) {
@@ -221,7 +212,6 @@ void building_construction_warning_check_all(building_type type, int x, int y, i
 {
     building_construction_warning_check_food_stocks(type);
     check_workers(type);
-    check_market(type);
     check_actor_access(type);
     check_gladiator_access(type);
     check_lion_access(type);

@@ -14,7 +14,6 @@
 #include "scenario/property.h"
 #include "scenario/scenario.h"
 #include "translation/translation.h"
-#include "widget/top_menu_editor.h"
 #include "window/editor/attributes.h"
 #include "window/editor/map.h"
 
@@ -101,7 +100,7 @@ static void button_click(int type, int param2)
     if (type == 1) {
         window_go_back();
     } else if (type == 2) {
-        menu_file_new_map(1);
+        //menu_file_new_map(1);
     } else if (type == 3) {
 
     } else if (type == 4) {

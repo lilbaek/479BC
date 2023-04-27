@@ -94,15 +94,12 @@ int game_init(void)
         errlog("unable to load enemy graphics");
         return 0;
     }
-    if (!image_load_fonts(encoding_get())) {
-        errlog("unable to load font graphics");
-        if (encoding_get() == ENCODING_KOREAN || encoding_get() == ENCODING_JAPANESE) {
-            return 1;
-        } else {
-            return 0;
-        }
+    image_load_fonts(encoding_get());
+    if (encoding_get() != ENCODING_WESTERN_EUROPE && encoding_get() != ENCODING_EASTERN_EUROPE) {
+        errlog("unsupported encoding");
+        return 0;
     }
-    init_Tiberius_building_properties();
+    init_tiberius_building_properties();
     load_custom_messages();
     sound_system_init();
     game_state_init();

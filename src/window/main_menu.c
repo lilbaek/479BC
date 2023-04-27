@@ -20,13 +20,14 @@
 #include "graphics/screen.h"
 #include "graphics/window.h"
 #include "sound/music.h"
-#include "window/plain_message_dialog.h"
 #include "window/popup_dialog.h"
 #include "window/nuklear.h"
 #include "window/ui_window.h"
 #include "map_generator.h"
 #include "save_load_dialog.h"
 #include "settings.h"
+#include "game/file.h"
+#include "city.h"
 
 static void draw_version_string(void) {
     uint8_t version_string[100] = "tiberius v";
@@ -117,4 +118,6 @@ void window_main_menu_show(int restart_music) {
             handle_input
     };
     window_show(&window);
+    //game_file_load_saved_game("4324.fvx"); // TODO: Delete me!
+    //window_city_show();
 }

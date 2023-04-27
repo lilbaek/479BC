@@ -199,18 +199,18 @@ static void set_garden_image(int x, int y, int grid_offset) {
     if (map_terrain_is(grid_offset, TERRAIN_GARDEN) &&
         !map_terrain_is(grid_offset, TERRAIN_ELEVATION | TERRAIN_ACCESS_RAMP)) {
         if (!map_image_at(grid_offset)) {
-            image_id = image_group(GROUP_TERRAIN_GARDEN); // TODO
+            image_id = assets_get_image_id(TEXTURE_DECORATION_NAME, TEXTURE_DECORATION_GARDEN);
             if (is_all_terrain_in_area(x, y, 2, TERRAIN_GARDEN)) {
                 switch (map_random_get(grid_offset) & 3) {
                     case 0:
                     case 1:
-                        image_id += 6;
+                        image_id += 0;
                         break;
                     case 2:
-                        image_id += 5;
+                        image_id += 0;
                         break;
                     case 3:
-                        image_id += 4;
+                        image_id += 0;
                         break;
                 }
                 map_building_tiles_add(0, x, y, 2, image_id, TERRAIN_GARDEN);
@@ -317,7 +317,7 @@ void map_tiles_update_all_gardens(void) {
 }
 
 static void determine_garden_tile(int x, int y, int grid_offset) {
-    int base_image = image_group(GROUP_TERRAIN_GARDEN); // TODO
+    int base_image = assets_get_image_id(TEXTURE_DECORATION_NAME, TEXTURE_DECORATION_GARDEN);
     int image_id = map_image_at(grid_offset);
     if (image_id >= base_image && image_id <= base_image + 6) {
         map_terrain_add(grid_offset, TERRAIN_GARDEN);

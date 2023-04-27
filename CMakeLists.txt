@@ -523,7 +523,7 @@ set(GRAPHICS_FILES
         ${PROJECT_SOURCE_DIR}/src/graphics/scrollbar.c
         ${PROJECT_SOURCE_DIR}/src/graphics/text.c
         ${PROJECT_SOURCE_DIR}/src/graphics/tooltip.c
-        ${PROJECT_SOURCE_DIR}/src/graphics/warning.c
+        src/widget/warning.c
         ${PROJECT_SOURCE_DIR}/src/graphics/window.c
         )
 set(SOUND_FILES
@@ -553,15 +553,9 @@ set(WIDGET_FILES
         ${PROJECT_SOURCE_DIR}/src/widget/map_editor_tool.c
         ${PROJECT_SOURCE_DIR}/src/widget/map_editor_pause_menu.c
         ${PROJECT_SOURCE_DIR}/src/widget/minimap.c
-        ${PROJECT_SOURCE_DIR}/src/widget/top_menu.c
-        ${PROJECT_SOURCE_DIR}/src/widget/top_menu_editor.c
-        ${PROJECT_SOURCE_DIR}/src/widget/sidebar/city.c
-        ${PROJECT_SOURCE_DIR}/src/widget/sidebar/common.c
-        ${PROJECT_SOURCE_DIR}/src/widget/sidebar/editor.c
-        ${PROJECT_SOURCE_DIR}/src/widget/sidebar/extra.c
-        ${PROJECT_SOURCE_DIR}/src/widget/sidebar/military.c
-        ${PROJECT_SOURCE_DIR}/src/widget/sidebar/slide.c
         ${PROJECT_SOURCE_DIR}/src/widget/bottombar/city.c
+        ${PROJECT_SOURCE_DIR}/src/widget/topbar/city.c
+        ${PROJECT_SOURCE_DIR}/src/widget/sidebar/information.c
         )
 set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/advisors.c
@@ -578,7 +572,6 @@ set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/advisor/ratings.c
         ${PROJECT_SOURCE_DIR}/src/window/advisor/religion.c
         ${PROJECT_SOURCE_DIR}/src/window/advisor/trade.c
-        ${PROJECT_SOURCE_DIR}/src/window/build_menu.c
         ${PROJECT_SOURCE_DIR}/src/window/building_info.c
         ${PROJECT_SOURCE_DIR}/src/window/building/common.c
         ${PROJECT_SOURCE_DIR}/src/window/building/culture.c
@@ -592,7 +585,6 @@ set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/building/utility.c
         ${PROJECT_SOURCE_DIR}/src/window/editor/allowed_buildings.c
         ${PROJECT_SOURCE_DIR}/src/window/editor/attributes.c
-        ${PROJECT_SOURCE_DIR}/src/window/editor/build_menu.c
         ${PROJECT_SOURCE_DIR}/src/window/editor/demand_changes.c
         ${PROJECT_SOURCE_DIR}/src/window/editor/edit_demand_change.c
         ${PROJECT_SOURCE_DIR}/src/window/editor/edit_invasion.c
@@ -607,7 +599,6 @@ set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/editor/start_year.c
         ${PROJECT_SOURCE_DIR}/src/window/editor/starting_conditions.c
         ${PROJECT_SOURCE_DIR}/src/window/editor/win_criteria.c
-        ${PROJECT_SOURCE_DIR}/src/window/cck_selection.c
         ${PROJECT_SOURCE_DIR}/src/window/city.c
         ${PROJECT_SOURCE_DIR}/src/window/donate_to_city.c
         ${PROJECT_SOURCE_DIR}/src/window/empire.c
@@ -620,14 +611,12 @@ set(WINDOW_FILES
         ${PROJECT_SOURCE_DIR}/src/window/main_menu.c
         ${PROJECT_SOURCE_DIR}/src/window/message_dialog.c
         ${PROJECT_SOURCE_DIR}/src/window/message_list.c
-        ${PROJECT_SOURCE_DIR}/src/window/military_menu.c
         ${PROJECT_SOURCE_DIR}/src/window/mission_briefing.c
         ${PROJECT_SOURCE_DIR}/src/window/mission_end.c
         ${PROJECT_SOURCE_DIR}/src/window/mission_selection.c
         ${PROJECT_SOURCE_DIR}/src/window/numeric_input.c
         ${PROJECT_SOURCE_DIR}/src/window/option_popup.c
         ${PROJECT_SOURCE_DIR}/src/window/overlay_menu.c
-        ${PROJECT_SOURCE_DIR}/src/window/plain_message_dialog.c
         ${PROJECT_SOURCE_DIR}/src/window/popup_dialog.c
         ${PROJECT_SOURCE_DIR}/src/window/race_bet.c
         ${PROJECT_SOURCE_DIR}/src/window/resource_settings.c
