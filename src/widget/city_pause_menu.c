@@ -38,6 +38,7 @@ static generic_button buttons[] = {
 
 #define MAX_BUTTONS (sizeof(buttons) / sizeof(generic_button))
 
+// TODO: change me
 static void draw_foreground(void)
 {
     graphics_in_dialog();
