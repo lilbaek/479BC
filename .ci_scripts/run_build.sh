@@ -15,12 +15,12 @@ case "$BUILD_TARGET" in
 	make -j4
 	make install
 	echo "Creating disk image"
-	hdiutil create -volname tiberius -srcfolder tiberius.app -ov -format UDZO tiberius.dmg
+	hdiutil create -volname 479BC -srcfolder 479BC.app -ov -format UDZO 479BC.dmg
 	if [[ "$GITHUB_REF" =~ ^refs/tags/v ]]
 	then
-		zip -r tiberius.zip tiberius.dmg assets manual
+		zip -r 479BC.zip 479BC.dmg assets manual
 	else
-		zip -r tiberius.zip tiberius.dmg
+		zip -r 479BC.zip 479BC.dmg
 	fi
 	;;
 "appimage")
@@ -32,9 +32,9 @@ case "$BUILD_TARGET" in
 	./.ci_scripts/package_appimage.sh
 	if [[ "$GITHUB_REF" =~ ^refs/tags/v ]]	
 	then
-		zip -r tiberius.zip . -i tiberius.AppImage assets manual
+		zip -r 479BC.zip . -i 479BC.AppImage assets manual
 	else
-		zip -r tiberius.zip . -i tiberius.AppImage
+		zip -r 479BC.zip . -i 479BC.AppImage
 	fi
 	;;
 "linux")
@@ -48,14 +48,14 @@ case "$BUILD_TARGET" in
 	cd build && make -j4
 	if [[ "$GITHUB_REF" =~ ^refs/tags/v ]]
 	then
-		zip -r tiberius.zip tiberius assets manual
+		zip -r 479BC.zip 479BC assets manual
 	else
-		zip -r tiberius.zip tiberius
+		zip -r 479BC.zip 479BC
 	fi
 	;;
 "android")
 	cd android
-	if [ ! -f tiberius.keystore ]
+	if [ ! -f 479BC.keystore ]
 	then
 		COMMAND=assembleDebug
 	else
@@ -63,9 +63,9 @@ case "$BUILD_TARGET" in
 	fi
 	echo "Running ./gradlew $COMMAND"
 	TERM=dumb ./gradlew $COMMAND
-	if [ -f tiberius/build/outputs/apk/release/tiberius-release.apk ]
+	if [ -f 479BC/build/outputs/apk/release/479BC-release.apk ]
 	then
-		cp tiberius/build/outputs/apk/release/tiberius-release.apk ../build/tiberius.apk
+		cp 479BC/build/outputs/apk/release/479BC-release.apk ../build/479BC.apk
 	fi
 	;;
 "emscripten")

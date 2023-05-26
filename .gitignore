@@ -50,10 +50,10 @@ local.properties
 /android/build/
 /android/*/build/
 /android/*/release/
-/android/tiberius.keystore
+/android/479BC.keystore
 /android/julius.keystore
 /android/play-publisher.json
-/android/tiberius/src/main/play
+/android/479BC/src/main/play
 /android/julius/src/main/play
 
 # lib files

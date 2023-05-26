@@ -14,7 +14,7 @@ case "$BUILD_TARGET" in
 	# Decrypt the key files
 	if [ "$FILE_ENCRYPTION_KEY" ]
 	then
-        openssl aes-256-cbc -K $FILE_ENCRYPTION_KEY -iv $FILE_ENCRYPTION_IV -in android/tiberius.keystore.enc -out android/tiberius.keystore -d;
+        openssl aes-256-cbc -K $FILE_ENCRYPTION_KEY -iv $FILE_ENCRYPTION_IV -in android/479BC.keystore.enc -out android/479BC.keystore -d;
         # openssl aes-256-cbc -K $FILE_ENCRYPTION_KEY -iv $FILE_ENCRYPTION_IV -in android/play-publisher.json.enc -out android/play-publisher.json -d;
 	fi
 	;;

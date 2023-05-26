@@ -44,7 +44,7 @@ static int parse_decimal_as_percentage(const char *str)
     return percentage;
 }
 
-int platform_parse_arguments(int argc, char **argv, Tiberius_args *output_args)
+int platform_parse_arguments(int argc, char **argv, game_args *output_args)
 {
     int ok = 1;
 
@@ -105,7 +105,7 @@ int platform_parse_arguments(int argc, char **argv, Tiberius_args *output_args)
     }
 
     if (!ok) {
-        SDL_Log("Usage: tiberius [ARGS] [DATA_DIR]");
+        SDL_Log("Usage: 479BC [ARGS] [DATA_DIR]");
         SDL_Log("ARGS may be:");
         SDL_Log("--display-scale NUMBER");
         SDL_Log("          Scales the display by a factor of NUMBER. Number can be between 0.5 and 5");

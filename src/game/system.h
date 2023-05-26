@@ -10,7 +10,7 @@
  */
 
 /**
- * Gets the version of tiberius
+ * Gets the version of 479BC
  * @return Version number
  */
 const char *system_version(void);

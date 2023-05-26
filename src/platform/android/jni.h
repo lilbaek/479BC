@@ -12,8 +12,8 @@ typedef struct {
     jmethodID method;
 } jni_function_handler;
 
-#define CLASS_Tiberius_ACTIVITY "com/github/Keriew/tiberius/TiberiusMainActivity"
-#define CLASS_FILE_MANAGER "com/github/Keriew/tiberius/FileManager"
+#define CLASS_game_ACTIVITY "com/github/Keriew/479BC/479BCMainActivity"
+#define CLASS_FILE_MANAGER "com/github/Keriew/479BC/FileManager"
 
 int jni_init_function_handler(const char *class_name, jni_function_handler *handler);
 int jni_get_static_method_handler(

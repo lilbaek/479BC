@@ -99,7 +99,7 @@ int game_init(void)
         errlog("unsupported encoding");
         return 0;
     }
-    init_tiberius_building_properties();
+    init_game_building__properties();
     load_custom_messages();
     sound_system_init();
     game_state_init();

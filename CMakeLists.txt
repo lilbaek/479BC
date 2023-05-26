@@ -41,13 +41,13 @@ if (${TARGET_PLATFORM} STREQUAL "emscripten" AND NOT DEFINED CMAKE_TOOLCHAIN_FIL
     endif ()
 endif ()
 
-set(SHORT_NAME tiberius)
-set(USER_FRIENDLY_NAME tiberius)
+set(SHORT_NAME 479BC)
+set(USER_FRIENDLY_NAME 479BC)
 project(${SHORT_NAME} C)
 
 if (${TARGET_PLATFORM} STREQUAL "vita")
     include("${VITASDK}/share/vita.cmake" REQUIRED)
-    set(VITA_TITLEID "Tiberius1")
+    set(VITA_TITLEID "479BC1")
 endif ()
 
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${CMAKE_SOURCE_DIR}/cmake/")
@@ -214,7 +214,7 @@ set(ZLIB_FILES
 
 set(PLATFORM_FILES
         ${PROJECT_SOURCE_DIR}/src/platform/arguments.c
-        ${PROJECT_SOURCE_DIR}/src/platform/tiberius.c
+        ${PROJECT_SOURCE_DIR}/src/platform/479BC.c
         ${PROJECT_SOURCE_DIR}/src/platform/crash_handler.c
         ${PROJECT_SOURCE_DIR}/src/platform/cursor.c
         ${PROJECT_SOURCE_DIR}/src/platform/file_manager.c
@@ -670,7 +670,7 @@ if (APPLE)
     endfunction()
     resource(ASSET_SOURCES ${ASSETS_DIR} Resources/assets *)
     set(MACOSX_FILES
-            ${PROJECT_SOURCE_DIR}/res/tiberius.icns
+            ${PROJECT_SOURCE_DIR}/res/479BC.icns
             ${ASSET_SOURCES}
             )
 endif ()
@@ -700,7 +700,7 @@ set(SOURCE_FILES
         ${EDITOR_FILES}
         ${TRANSLATION_FILES}
         ${TINYFD_FILES}
-        ${PROJECT_SOURCE_DIR}/res/tiberius.rc
+        ${PROJECT_SOURCE_DIR}/res/479BC.rc
         ${MACOSX_FILES}
         ${NOISE_FILES}
         ${UI_FILES}
@@ -764,27 +764,27 @@ endif ()
 
 if (APPLE)
     # generating a macOS icns file (see https://stackoverflow.com/a/20703594)
-    add_custom_command(OUTPUT ${PROJECT_SOURCE_DIR}/res/tiberius.icns
-            COMMAND mkdir -p tiberius.iconset
-            COMMAND sips -z 16 16 Tiberius_256.png --out tiberius.iconset/icon_16x16.png
-            COMMAND sips -z 32 32 Tiberius_256.png --out tiberius.iconset/icon_16x16@2x.png
-            COMMAND sips -z 32 32 Tiberius_256.png --out tiberius.iconset/icon_32x32.png
-            COMMAND sips -z 64 64 Tiberius_256.png --out tiberius.iconset/icon_32x32@2x.png
-            COMMAND sips -z 128 128 Tiberius_256.png --out tiberius.iconset/icon_128x128.png
-            COMMAND sips -z 256 256 Tiberius_256.png --out tiberius.iconset/icon_128x128@2x.png
-            COMMAND sips -z 256 256 Tiberius_256.png --out tiberius.iconset/icon_256x256.png
-            COMMAND sips -z 512 512 Tiberius_512.png --out tiberius.iconset/icon_256x256@2x.png
-            COMMAND iconutil -c icns tiberius.iconset
-            COMMAND rm -R tiberius.iconset
+    add_custom_command(OUTPUT ${PROJECT_SOURCE_DIR}/res/479BC.icns
+            COMMAND mkdir -p 479BC.iconset
+            COMMAND sips -z 16 16 479BC_256.png --out 479BC.iconset/icon_16x16.png
+            COMMAND sips -z 32 32 479BC_256.png --out 479BC.iconset/icon_16x16@2x.png
+            COMMAND sips -z 32 32 479BC_256.png --out 479BC.iconset/icon_32x32.png
+            COMMAND sips -z 64 64 479BC_256.png --out 479BC.iconset/icon_32x32@2x.png
+            COMMAND sips -z 128 128 479BC_256.png --out 479BC.iconset/icon_128x128.png
+            COMMAND sips -z 256 256 479BC_256.png --out 479BC.iconset/icon_128x128@2x.png
+            COMMAND sips -z 256 256 479BC_256.png --out 479BC.iconset/icon_256x256.png
+            COMMAND sips -z 512 512 479BC_512.png --out 479BC.iconset/icon_256x256@2x.png
+            COMMAND iconutil -c icns 479BC.iconset
+            COMMAND rm -R 479BC.iconset
             WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/res)
-    set_source_files_properties(${PROJECT_SOURCE_DIR}/res/tiberius.icns PROPERTIES
+    set_source_files_properties(${PROJECT_SOURCE_DIR}/res/479BC.icns PROPERTIES
             MACOSX_PACKAGE_LOCATION "Resources")
 
     # setting variables that will populate Info.plist
-    set(MACOSX_BUNDLE_GUI_IDENTIFIER "pl.Keriew.tiberius")
+    set(MACOSX_BUNDLE_GUI_IDENTIFIER "pl.Keriew.479BC")
     set(MACOSX_BUNDLE_BUNDLE_NAME ${USER_FRIENDLY_NAME})
     set(CMAKE_OSX_DEPLOYMENT_TARGET "10.10" CACHE STRING "Minimum OS X deployment version" FORCE)
-    set(MACOSX_BUNDLE_ICON_FILE "tiberius.icns")
+    set(MACOSX_BUNDLE_ICON_FILE "479BC.icns")
     set(MACOSX_BUNDLE_BUNDLE_VERSION
             "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}${VERSION_REVISION}")
     set(MACOSX_BUNDLE_LONG_VERSION_STRING ${MACOSX_BUNDLE_BUNDLE_VERSION})
@@ -997,13 +997,13 @@ else ()
     endif ()
 
     if (UNIX AND NOT APPLE)
-        install(FILES "res/tiberius.desktop" DESTINATION "share/applications" RENAME "com.github.keriew.tiberius.desktop")
-        install(FILES "res/tiberius.metainfo.xml" DESTINATION "share/metainfo" RENAME "com.github.keriew.tiberius.metainfo.xml")
-        install(FILES "res/Tiberius_32.png" DESTINATION "share/icons/hicolor/32x32/apps" RENAME "com.github.keriew.tiberius.png")
-        install(FILES "res/Tiberius_48.png" DESTINATION "share/icons/hicolor/48x48/apps" RENAME "com.github.keriew.tiberius.png")
-        install(FILES "res/Tiberius_256.png" DESTINATION "share/icons/hicolor/256x256/apps" RENAME "com.github.keriew.tiberius.png")
-        install(FILES "res/Tiberius_512.png" DESTINATION "share/icons/hicolor/512x512/apps" RENAME "com.github.keriew.tiberius.png")
-        install(DIRECTORY "${ASSETS_DIR}/" DESTINATION "share/tiberius-game/assets")
+        install(FILES "res/479BC.desktop" DESTINATION "share/applications" RENAME "com.github.keriew.479BC.desktop")
+        install(FILES "res/479BC.metainfo.xml" DESTINATION "share/metainfo" RENAME "com.github.keriew.479BC.metainfo.xml")
+        install(FILES "res/479BC_32.png" DESTINATION "share/icons/hicolor/32x32/apps" RENAME "com.github.keriew.479BC.png")
+        install(FILES "res/479BC_48.png" DESTINATION "share/icons/hicolor/48x48/apps" RENAME "com.github.keriew.479BC.png")
+        install(FILES "res/479BC_256.png" DESTINATION "share/icons/hicolor/256x256/apps" RENAME "com.github.keriew.479BC.png")
+        install(FILES "res/479BC_512.png" DESTINATION "share/icons/hicolor/512x512/apps" RENAME "com.github.keriew.479BC.png")
+        install(DIRECTORY "${ASSETS_DIR}/" DESTINATION "share/479BC-game/assets")
     endif ()
 
 endif ()

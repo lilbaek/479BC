@@ -30,7 +30,7 @@
 #include "city.h"
 
 static void draw_version_string(void) {
-    uint8_t version_string[100] = "tiberius v";
+    uint8_t version_string[100] = "479BC v";
     int version_prefix_length = string_length(version_string);
     int text_y = screen_height() - 54;
 

@@ -1,11 +1,11 @@
-package com.github.Keriew.tiberius;
+package com.github.Keriew.479BC;
 
 import android.content.Intent;
 import android.net.Uri;
 
 import org.libsdl.app.SDLActivity;
 
-public class TiberiusMainActivity extends SDLActivity {
+public class 479BCMainActivity extends SDLActivity {
     private static final int GET_FOLDER_RESULT = 500;
 
     @Override
@@ -20,7 +20,7 @@ public class TiberiusMainActivity extends SDLActivity {
         return new String[]{
                 "SDL2",
                 "SDL2_mixer",
-                "tiberius"
+                "479BC"
         };
     }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE assetlist>
-<!-- Unless specifically mentioned, all assets created by OpenTiberius and copyright by OpenTiberius -->
+<!-- Unless specifically mentioned, all assets created by lilbaek and copyright by lilbaek -->
 <assetlist name="basic">
     <!-- Files related to dev -->
     <image id="dev" src="">

@@ -26,24 +26,24 @@ if ("$env:GITHUB_REF" -match "^refs/tags/v") {
 mkdir deploy
 if ("${env:COMPILER}" -eq "msvc") {
     $suffix = "windows-msvc"
-    CopyFile build/Release/tiberius.exe .
+    CopyFile build/Release/479BC.exe .
     CopyFile ext\SDL2\SDL2-${env:SDL_VERSION}\lib\x64\SDL2.dll .
     CopyFile ext\SDL2\SDL2_mixer-${env:SDL_MIXER_VERSION}\lib\x64\SDL2_mixer.dll .
 } elseif ("${env:COMPILER}" -eq "mingw-32") {
     $suffix = "windows"
-    CopyFile build/tiberius.exe .
+    CopyFile build/479BC.exe .
     CopyFile ext\SDL2\SDL2-${env:SDL_VERSION}\i686-w64-mingw32\bin\SDL2.dll .
     CopyFile ext\SDL2\SDL2_mixer-${env:SDL_MIXER_VERSION}\i686-w64-mingw32\bin\SDL2_mixer.dll .
 } elseif ("${env:COMPILER}" -eq "mingw-64") {
     $suffix = "windows-64bit"
-    CopyFile build/tiberius.exe .
+    CopyFile build/479BC.exe .
     CopyFile ext\SDL2\SDL2-${env:SDL_VERSION}\x86_64-w64-mingw32\bin\SDL2.dll .
     CopyFile ext\SDL2\SDL2_mixer-${env:SDL_MIXER_VERSION}\x86_64-w64-mingw32\bin\SDL2_mixer.dll .
 } else {
     throw "Unknown compiler: ${env:COMPILER}"
 }
 
-$deploy_file = "tiberius-$version-$suffix.zip"
+$deploy_file = "479BC-$version-$suffix.zip"
 
 $packed_assets = $false
 
@@ -73,9 +73,9 @@ if ($repo -eq "release") {
 
     xcopy /ei res\music .\assets\music
     xcopy /ei res\manual .\manual
-    7z a "deploy\$deploy_file" tiberius.exe SDL2.dll SDL2_mixer.dll assets manual
+    7z a "deploy\$deploy_file" 479BC.exe SDL2.dll SDL2_mixer.dll assets manual
 } else {
-    7z a "deploy\$deploy_file" tiberius.exe SDL2.dll SDL2_mixer.dll
+    7z a "deploy\$deploy_file" 479BC.exe SDL2.dll SDL2_mixer.dll
 }
 
 if (!$?) {
@@ -98,11 +98,11 @@ if (!$env:UPLOAD_TOKEN) {
 }
 
 echo "Uploading $deploy_file to $repo/windows/$version"
-curl -u "$env:UPLOAD_TOKEN" -T "deploy/$deploy_file" "https://tiberius.josecadete.net/upload/$repo/windows/$version/${deploy_file}"
+curl -u "$env:UPLOAD_TOKEN" -T "deploy/$deploy_file" "https://479BC.josecadete.net/upload/$repo/windows/$version/${deploy_file}"
 if (!$?) {
     throw "Unable to upload"
 }
-echo "Uploaded. URL: https://tiberius.josecadete.net/$repo.html"
+echo "Uploaded. URL: https://479BC.josecadete.net/$repo.html"
 
 if (!$packed_assets) {
     echo "Packing the assets"
@@ -132,7 +132,7 @@ $assets_file = "assets-$version-$repo.zip"
 7z a "$assets_file" assets
 
 echo "Uploading $assets_file to $repo/windows/$version"
-curl -u "$env:UPLOAD_TOKEN" -T "$assets_file" "https://tiberius.josecadete.net/upload/$repo/assets/$version/${assets_file}"
+curl -u "$env:UPLOAD_TOKEN" -T "$assets_file" "https://404/upload/$repo/assets/$version/${assets_file}"
 if (!$?) {
     throw "Unable to upload assets"
 }

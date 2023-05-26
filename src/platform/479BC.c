@@ -84,8 +84,8 @@ static void write_log(void *userdata, int category, SDL_LogPriority priority, co
 
 static void setup_logging(void) {
     // On some platforms (vita, android), not removing the file will not empty it when reopening for writing
-    pref_remove_file("tiberius-log.txt", "logs");
-    log_file = pref_file_open("tiberius-log.txt", "logs", "wt");
+    pref_remove_file("479BC-log.txt", "logs");
+    log_file = pref_file_open("479BC-log.txt", "logs", "wt");
     SDL_LogSetOutputFunction(write_log, NULL);
 }
 
@@ -427,7 +427,7 @@ static const char *ask_for_data_dir(int again) {
 #else
     if (again) {
         int result = tinyfd_messageBox("Wrong folder selected",
-                                       "tiberius requires the original files from todo to run.\n\n"
+                                       "479BC requires the original files from todo to run.\n\n"
                                        "The selected folder is not a proper todo folder.\n\n"
                                        "Press OK to select another folder or Cancel to exit.",
                                        "okcancel", "warning", 1);
@@ -498,25 +498,25 @@ static int pre_init(const char *custom_data_dir) {
 #elif defined(__vita__)
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
         "Error",
-        "tiberius requires the original files from todo to run.\n\n"
+        "479BC requires the original files from todo to run.\n\n"
         "Please add the files to:\n\n"
         VITA_PATH_PREFIX,
         NULL);
 #else
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR,
-        "tiberius requires the original files from todo to run.",
-        "Move the tiberius executable to the directory containing an existing "
-        "todo installation, or run:\ntiberius path-to-c3-directory",
+        "479BC requires the original files from todo to run.",
+        "Move the 479BC executable to the directory containing an existing "
+        "todo installation, or run:\n479BC path-to-c3-directory",
         NULL);
 #endif
     return 0;
 }
 
-static void setup(const Tiberius_args *args) {
+static void setup(const game_args *args) {
     system_setup_crash_handler();
     setup_logging();
 
-    SDL_Log("tiberius version %s", system_version());
+    SDL_Log("479BC version %s", system_version());
 
     if (!init_sdl()) {
         SDL_Log("Exiting: SDL init failed");
@@ -536,7 +536,7 @@ static void setup(const Tiberius_args *args) {
         config_set(CONFIG_SCREEN_CURSOR_SCALE, args->cursor_scale_percentage);
     }
 
-    if (!platform_screen_create("Tiberius", config_get(CONFIG_SCREEN_DISPLAY_SCALE))) {
+    if (!platform_screen_create("479BC", config_get(CONFIG_SCREEN_DISPLAY_SCALE))) {
         SDL_Log("Exiting: SDL create window failed");
         exit_with_status(-2);
     }
@@ -562,7 +562,7 @@ static void setup(const Tiberius_args *args) {
 }
 
 int main(int argc, char **argv) {
-    Tiberius_args args;
+    game_args args;
     platform_parse_arguments(argc, argv, &args);
 
     setup(&args);

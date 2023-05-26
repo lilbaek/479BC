@@ -6,7 +6,7 @@
 #include "core/textures.h"
 
 
-Tiberius_building_properties_mapping Tiberius_building_properties[] = {
+game_building__properties_mapping game_building__properties[] = {
         {BUILDING_ROADBLOCK,            {1, 1, 0, 0, 0},   TEXTURE_BUILDING_NAME,        TEXTURE_BUILDING_ROADBLOCK},
         {BUILDING_WORKCAMP,             {3, 0, 0, 0, 0},   "Logistics",        "Workcamp Central"},
         {BUILDING_GRAND_TEMPLE_CERES,   {7, 1, 0, 0, 0},   "Religion",         "Ceres Complex Off"},
@@ -77,17 +77,17 @@ Tiberius_building_properties_mapping Tiberius_building_properties[] = {
         {BUILDING_CITY_MINT,            {3, 0, 0, 0, 0},   "Administration",   "City_Mint_ON"}
 };
 
-#define Tiberius_BUILDINGS (sizeof(Tiberius_building_properties) / sizeof(Tiberius_building_properties_mapping))
+#define game_BUILDINGS (sizeof(game_building__properties) / sizeof(game_building__properties_mapping))
 
-void init_tiberius_building_properties(void) {
-    for (int i = 0; i < Tiberius_BUILDINGS; ++i) {
-        if (Tiberius_building_properties[i].asset_image_id) {
-            Tiberius_building_properties[i].properties.image_group =
-                    assets_get_image_id(Tiberius_building_properties[i].asset_name,
-                                        Tiberius_building_properties[i].asset_image_id);
+void init_game_building__properties(void) {
+    for (int i = 0; i < game_BUILDINGS; ++i) {
+        if (game_building__properties[i].asset_image_id) {
+            game_building__properties[i].properties.image_group =
+                    assets_get_image_id(game_building__properties[i].asset_name,
+                                        game_building__properties[i].asset_image_id);
         } else {
-            Tiberius_building_properties[i].properties.image_group =
-                    assets_get_group_id(Tiberius_building_properties[i].asset_name);
+            game_building__properties[i].properties.image_group =
+                    assets_get_group_id(game_building__properties[i].asset_name);
         }
     }
 }
@@ -265,9 +265,9 @@ const building_properties *building_properties_for_type(building_type type) {
         return &properties[0];
     }
     if (type >= BUILDING_ROADBLOCK || is_vanilla_building_with_changed_properties(type)) {
-        for (int i = 0; i < Tiberius_BUILDINGS; ++i) {
-            if (Tiberius_building_properties[i].type == type) {
-                return &Tiberius_building_properties[i].properties;
+        for (int i = 0; i < game_BUILDINGS; ++i) {
+            if (game_building__properties[i].type == type) {
+                return &game_building__properties[i].properties;
             }
         }
     }

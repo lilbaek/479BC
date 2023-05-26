@@ -10,6 +10,6 @@ chmod +x linuxdeploy*.AppImage
 
 ./linuxdeploy-x86_64.AppImage --appdir AppDir --output appimage
 
-mv tiberius*.AppImage tiberius.AppImage
+mv 479BC*.AppImage 479BC.AppImage
 
 cd ..

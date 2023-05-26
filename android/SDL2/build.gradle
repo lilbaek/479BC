@@ -75,7 +75,7 @@ android {
             headers "${findSDL2Mixer.includePath}"
         }
     }
-    namespace 'com.github.Keriew.tiberius.sdl2'
+    namespace 'com.github.lilbaek.479BC.sdl2'
 }
 
 repositories {

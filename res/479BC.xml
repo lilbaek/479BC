@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-	<id>com.github.opentiberius.tiberius</id>
+	<id>com.github.lilbaek.479BC</id>
 	<metadata_license>CC0-1.0</metadata_license>
 	<project_license>AGPL-3.0</project_license>
-	<name>tiberius</name>
+	<name>479BC</name>
 	<summary>Classic isometric city builder game </summary>
 	<description>
 
 	</description>
-	<launchable type="desktop-id">com.github.opentiberius.tiberius.desktop</launchable>
+	<launchable type="desktop-id">com.github.lilbaek.479BC.desktop</launchable>
 	<screenshots>
 		<screenshot type="default">
 			<image type="source"></image>
@@ -17,8 +17,8 @@
 	<releases>
 		<release version="0.1.0" date="2022-09-22"/>
 	</releases>
-	<url type="homepage">https://github.com/opentiberius/tiberius</url>
-	<developer_name>OpenTiberius</developer_name>
+	<url type="homepage">https://github.com/lilbaek/479BC</url>
+	<developer_name>479BC</developer_name>
 	<content_rating type="oars-1.1">
 		<content_attribute id="violence-fantasy">moderate</content_attribute>
 	</content_rating>

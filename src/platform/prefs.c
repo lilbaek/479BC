@@ -11,7 +11,7 @@
 
 static FILE *open_pref_file(const char *filename, const char *folder, const char *mode)
 {
-    char *pref_dir = SDL_GetPrefPath("tiberius", folder);
+    char *pref_dir = SDL_GetPrefPath("479BC", folder);
     log_info("open_pref_file - Location:",pref_dir,0);
     if (!pref_dir) {
         return NULL;
@@ -32,7 +32,7 @@ static FILE *open_pref_file(const char *filename, const char *folder, const char
 }
 
 void pref_remove_file(const char *filename, const char *folder) {
-    char *pref_dir = SDL_GetPrefPath("tiberius", folder);
+    char *pref_dir = SDL_GetPrefPath("479BC", folder);
     log_info("pref_remove_file - Location:",pref_dir,0);
     if (!pref_dir) {
         return;
@@ -50,7 +50,7 @@ void pref_remove_file(const char *filename, const char *folder) {
 }
 
 int pref_saves_path(char *dest) {
-    char *pref_dir = SDL_GetPrefPath("tiberius", "saves");
+    char *pref_dir = SDL_GetPrefPath("479BC", "saves");
     log_info("pref_saves_path - Location:",pref_dir,0);
     if (!pref_dir) {
         return 0;

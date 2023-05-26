@@ -29,43 +29,43 @@ DEPLOY_FILE=
 case "$DEPLOY" in
 "linux")
   PACKAGE=linux
-  DEPLOY_FILE=tiberius-$VERSION-linux-x86_64.zip
-  cp "${build_dir}/tiberius.zip" "deploy/$DEPLOY_FILE"
+  DEPLOY_FILE=479BC-$VERSION-linux-x86_64.zip
+  cp "${build_dir}/479BC.zip" "deploy/$DEPLOY_FILE"
   ;;
 "vita")
   PACKAGE=vita
-  DEPLOY_FILE=tiberius-$VERSION-vita.vpk
-  cp "${build_dir}/tiberius.vpk" "deploy/$DEPLOY_FILE"
+  DEPLOY_FILE=479BC-$VERSION-vita.vpk
+  cp "${build_dir}/479BC.vpk" "deploy/$DEPLOY_FILE"
   ;;
 "switch")
   PACKAGE=switch
-  DEPLOY_FILE=tiberius-$VERSION-switch.nro
-  cp "${build_dir}/tiberius.nro" "deploy/$DEPLOY_FILE"
+  DEPLOY_FILE=479BC-$VERSION-switch.nro
+  cp "${build_dir}/479BC.nro" "deploy/$DEPLOY_FILE"
   ;;
 "appimage")
   PACKAGE=linux-appimage
-  DEPLOY_FILE=tiberius-$VERSION-linux.AppImage
-  cp "${build_dir}/tiberius.AppImage" "deploy/$DEPLOY_FILE"
+  DEPLOY_FILE=479BC-$VERSION-linux.AppImage
+  cp "${build_dir}/479BC.AppImage" "deploy/$DEPLOY_FILE"
   ;;
 "mac")
   PACKAGE=mac
-  DEPLOY_FILE=tiberius-$VERSION-mac.dmg
-  cp "${build_dir}/tiberius.dmg" "deploy/$DEPLOY_FILE"
+  DEPLOY_FILE=479BC-$VERSION-mac.dmg
+  cp "${build_dir}/479BC.dmg" "deploy/$DEPLOY_FILE"
   ;;
 "android")
   PACKAGE=android
-  if [ -f "${build_dir}/tiberius.apk" ]
+  if [ -f "${build_dir}/479BC.apk" ]
   then
-    DEPLOY_FILE=tiberius-$VERSION-android.apk
-    cp "${build_dir}/tiberius.apk" "deploy/$DEPLOY_FILE"
+    DEPLOY_FILE=479BC-$VERSION-android.apk
+    cp "${build_dir}/479BC.apk" "deploy/$DEPLOY_FILE"
   fi
   ;;
 "emscripten")
   PACKAGE=emscripten
-  if [ -f "${build_dir}/tiberius.html" ]
+  if [ -f "${build_dir}/479BC.html" ]
   then
-    DEPLOY_FILE=tiberius-$VERSION-emscripten.html
-    cp "${build_dir}/tiberius.html" "deploy/$DEPLOY_FILE"
+    DEPLOY_FILE=479BC-$VERSION-emscripten.html
+    cp "${build_dir}/479BC.html" "deploy/$DEPLOY_FILE"
   fi
   ;;
 *)

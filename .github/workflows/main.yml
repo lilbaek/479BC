@@ -1,4 +1,4 @@
-name: Build tiberius
+name: Build 479BC
 on: 
   push:
     paths-ignore:

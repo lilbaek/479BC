@@ -996,7 +996,7 @@ int game_file_io_read_saved_game(const char *filename, int offset) {
     resource_version resource_version;
     if (get_savegame_versions(fp, &save_version, &resource_version)) {
         if (save_version > SAVE_GAME_CURRENT_VERSION || resource_version > RESOURCE_CURRENT_VERSION) {
-            log_error("Newer save game version than supported. Please update tiberius. Version:", 0, save_version);
+            log_error("Newer save game version than supported. Please update 479BC. Version:", 0, save_version);
             file_close(fp);
             return -1;
         }
